@@ -9,17 +9,17 @@ import {
 import { getSectionStyles } from '../Pagination.styles';
 import { getCurrentRangeString, getRangeMaxString } from '../utils';
 
-import { PaginationRangeViewProps } from './PaginationRangeView.types';
+import { SummaryProps } from './Summary.types';
 
 /**
- * PaginationRangeView is a component that displays the current range of items.
+ * Summary is a component that displays the current range of items.
  */
-function PaginationRangeView<T extends number>({
+function Summary<T extends number>({
   itemsPerPage = DEFAULT_ITEMS_PER_PAGE_OPTIONS[0] as T,
   currentPage = DEFAULT_CURRENT_PAGE,
   numTotalItems,
   className,
-}: PaginationRangeViewProps<T>) {
+}: SummaryProps<T>) {
   return (
     <div className={getSectionStyles({ className })}>
       <Body data-testid="lg-pagination-item-range">
@@ -30,6 +30,6 @@ function PaginationRangeView<T extends number>({
   );
 }
 
-PaginationRangeView.displayName = 'PaginationRangeView';
+Summary.displayName = 'Summary';
 
-export default PaginationRangeView;
+export default Summary;

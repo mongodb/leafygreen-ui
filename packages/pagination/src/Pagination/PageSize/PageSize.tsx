@@ -15,15 +15,18 @@ import { DEFAULT_ITEMS_PER_PAGE_OPTIONS } from '../constants';
 import { getSectionStyles } from '../Pagination.styles';
 import { areItemsPerPageValid } from '../utils';
 
-import { PaginationItemsPerPageProps } from './PaginationItemsPerPage.types';
+import { PageSizeProps } from './PageSize.types';
 
-function PaginationItemsPerPage<T extends number>({
+/**
+ * PageSize is a component that displays the number of items per page.
+ */
+function PageSize<T extends number>({
   id: idProp,
   itemsPerPage = DEFAULT_ITEMS_PER_PAGE_OPTIONS[0] as T,
   itemsPerPageOptions = DEFAULT_ITEMS_PER_PAGE_OPTIONS as Array<T>,
   onItemsPerPageOptionChange,
   className,
-}: PaginationItemsPerPageProps<T>) {
+}: PageSizeProps<T>) {
   const itemsPerPageLabelId = useIdAllocator({
     prefix: 'lg-pagination-items-per-page-label',
     id: idProp,
@@ -67,6 +70,6 @@ function PaginationItemsPerPage<T extends number>({
   );
 }
 
-PaginationItemsPerPage.displayName = 'PaginationItemsPerPage';
+PageSize.displayName = 'PageSize';
 
-export default PaginationItemsPerPage;
+export default PageSize;

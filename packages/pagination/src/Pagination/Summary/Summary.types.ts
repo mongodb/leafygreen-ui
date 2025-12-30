@@ -1,6 +1,6 @@
 import { PaginationProps } from '../Pagination.types';
 
-export type PaginationRangeViewProps<T extends number = number> = Pick<
+export type SummaryProps<T extends number = number> = Pick<
   PaginationProps<T>,
   'itemsPerPage' | 'currentPage' | 'numTotalItems' | 'className'
 >;

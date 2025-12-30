@@ -6,7 +6,7 @@ import { axe } from 'jest-axe';
 
 import { consoleOnce } from '@leafygreen-ui/lib';
 
-import PaginationCurrentPageControls from './PaginationCurrentPageControls';
+import PaginationCurrentPageControls from './Navigation';
 
 const onBackArrowClick = jest.fn();
 const onForwardArrowClick = jest.fn();

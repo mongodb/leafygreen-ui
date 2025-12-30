@@ -188,7 +188,7 @@ describe('PaginationRangeView', () => {
         />,
       );
       expect(getByTestId('lg-pagination-item-range').textContent).toBe(
-        '1 - 1 of 1 items',
+        '1 - 1 of 1 item',
       );
     });
 

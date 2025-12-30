@@ -1,12 +1,12 @@
 import Pagination from './Pagination';
 export { type PaginationProps } from './Pagination.types';
-export { default as PaginationCurrentPageControls } from './PaginationCurrentPageControls';
+export { default as PaginationCurrentPageControls } from './Navigation';
 export {
   default as PaginationItemsPerPage,
   type PaginationItemsPerPageProps,
-} from './PaginationItemsPerPage';
+} from './PageSize';
 export {
   default as PaginationRangeView,
   type PaginationRangeViewProps,
-} from './PaginationRangeView';
+} from './Summary';
 export default Pagination;

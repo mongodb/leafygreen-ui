@@ -21,13 +21,13 @@ import {
 import { getSectionStyles } from '../Pagination.styles';
 import { getTotalNumPages, isCurrentPageValid } from '../utils';
 
-import { PaginationCurrentPageControlsProps } from './PaginationCurrentPageControls.types';
+import { NavigationProps } from './Navigation.types';
 
 /**
- * PaginationCurrentPageControls is a component that displays the current page and the total number of pages.
+ * Navigation is a component that displays the current page and the total number of pages.
  * It also displays the previous and next page buttons.
  */
-function PaginationCurrentPageControls<T extends number>({
+function Navigation<T extends number>({
   onCurrentPageOptionChange,
   currentPage = DEFAULT_CURRENT_PAGE,
   numTotalItems,
@@ -37,7 +37,7 @@ function PaginationCurrentPageControls<T extends number>({
   onBackArrowClick,
   onForwardArrowClick,
   className,
-}: PaginationCurrentPageControlsProps) {
+}: NavigationProps) {
   const shouldDisableBackButton =
     shouldDisableBackArrow !== undefined
       ? shouldDisableBackArrow
@@ -106,6 +106,6 @@ function PaginationCurrentPageControls<T extends number>({
   );
 }
 
-PaginationCurrentPageControls.displayName = 'PaginationCurrentPageControls';
+Navigation.displayName = 'Navigation';
 
-export default PaginationCurrentPageControls;
+export default Navigation;

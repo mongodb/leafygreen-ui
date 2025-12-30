@@ -8,11 +8,11 @@ import {
   DEFAULT_CURRENT_PAGE,
   DEFAULT_ITEMS_PER_PAGE_OPTIONS,
 } from './constants';
+import Navigation from './Navigation';
+import PageSize from './PageSize';
 import { baseStyles } from './Pagination.styles';
 import { PaginationProps } from './Pagination.types';
-import PaginationCurrentPageControls from './PaginationCurrentPageControls';
-import PaginationItemsPerPage from './PaginationItemsPerPage';
-import PaginationRangeView from './PaginationRangeView';
+import PaginationRangeView from './Summary';
 
 /**
  * Pagination enables the segmentation of extensive content into smaller portions distributed across various pages. Implement a Pagination component when dealing with an abundance of results to prevent overwhelming users with excessive information on a single page.
@@ -38,7 +38,7 @@ function Pagination<T extends number>({
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <div className={cx(baseStyles, className)} {...rest}>
-        <PaginationItemsPerPage
+        <PageSize
           id={idProp}
           itemsPerPage={itemsPerPage}
           itemsPerPageOptions={itemsPerPageOptions}
@@ -49,7 +49,7 @@ function Pagination<T extends number>({
           currentPage={currentPage}
           numTotalItems={numTotalItems}
         />
-        <PaginationCurrentPageControls
+        <Navigation
           onCurrentPageOptionChange={onCurrentPageOptionChange}
           currentPage={currentPage}
           numTotalItems={numTotalItems}

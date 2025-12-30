@@ -1,17 +1,17 @@
 import Pagination from './Pagination';
 export type { PaginationProps } from './Pagination';
 export {
-  default as PaginationCurrentPageControls,
-  type PaginationCurrentPageControlsProps,
-} from './Pagination/PaginationCurrentPageControls';
+  type NavigationProps,
+  default as PaginationNavigation,
+} from './Pagination/Navigation';
 export {
-  default as PaginationItemsPerPage,
-  type PaginationItemsPerPageProps,
-} from './Pagination/PaginationItemsPerPage';
+  type PageSizeProps,
+  default as PaginationPageSize,
+} from './Pagination/PageSize';
 export {
-  default as PaginationRangeView,
-  type PaginationRangeViewProps,
-} from './Pagination/PaginationRangeView';
+  default as PaginationSummary,
+  type SummaryProps,
+} from './Pagination/Summary';
 
 /**
  * @deprecated Use named export `{ Pagination }` instead. See [named-exports codemod documentation](https://github.com/mongodb/leafygreen-ui/tree/main/tools/codemods#named-exports) for migration assistance.

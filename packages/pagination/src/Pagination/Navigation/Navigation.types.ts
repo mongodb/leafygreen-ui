@@ -1,6 +1,6 @@
 import { PaginationProps } from '../Pagination.types';
 
-export type PaginationCurrentPageControlsProps = Pick<
+export type NavigationProps = Pick<
   PaginationProps,
   | 'onCurrentPageOptionChange'
   | 'currentPage'
