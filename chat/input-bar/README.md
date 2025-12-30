@@ -59,7 +59,7 @@ const Example = () => {
 ```tsx
 import { useState } from 'react';
 import { InputBar } from '@lg-chat/input-bar';
-import { Button } from '@leafygreen-ui-button';
+import { Button } from '@leafygreen-ui/button';
 
 const Example = () => {
   const [state, setState] = useState<State>(State.Unset);

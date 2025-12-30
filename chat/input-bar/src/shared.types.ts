@@ -21,7 +21,7 @@ export interface SharedInputBarProps {
 
 /**
  * Static property names used to identify InputBar compound components.
- * This are implementation details for the compound component pattern and should not be exported.
+ * These are implementation details for the compound component pattern and should not be exported.
  */
 export const InputBarSubcomponentProperty = {
   AdditionalActions: 'isLGAdditionalActions',
