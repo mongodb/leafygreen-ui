@@ -10,19 +10,19 @@
   "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
-      "path": "../emotion"
+      "path": "../compound-component"
     },
     {
-      "path": "../lib"
+      "path": "../emotion"
     },
     {
       "path": "../leafygreen-provider"
     },
     {
-      "path": "../tokens"
+      "path": "../lib"
     },
     {
-      "path": "../compound-component"
+      "path": "../tokens"
     },
     {
       "path": "../typography"

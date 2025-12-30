@@ -1,1 +1,1 @@
-export { Title } from './Title';
+export { Title, type TitleProps } from './Title';
