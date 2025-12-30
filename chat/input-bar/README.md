@@ -58,7 +58,7 @@ const Example = () => {
 
 ```tsx
 import { useState } from 'react';
-import { InputBar } from '@lg-chat/input-bar';
+import { InputBar, State } from '@lg-chat/input-bar';
 import { Button } from '@leafygreen-ui/button';
 
 const Example = () => {

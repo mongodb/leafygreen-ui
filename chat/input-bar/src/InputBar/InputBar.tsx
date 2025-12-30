@@ -48,8 +48,8 @@ import { InputBarSubcomponentProperty, State } from '../shared.types';
 import { setReactTextAreaValue } from '../utils/setReactTextAreaValue';
 
 import {
-  actionContainerStyles,
   disclaimerTextStyles,
+  getActionContainerStyles,
   getContentWrapperStyles,
   getFormStyles,
   getInnerFocusContainerStyles,
@@ -136,7 +136,7 @@ export const InputBar = CompoundComponent(
       );
 
       const isStopButtonDisabled = disabled || !!disableSend;
-      const withTypeAhead = !isUndefined(remainingChildren);
+      const withTypeAhead = React.Children.count(remainingChildren) > 0;
 
       /**
        * Helper function that both counts the number of `SearchResult` descendants
@@ -448,7 +448,11 @@ export const InputBar = CompoundComponent(
                     onBlur={handleBlur}
                     ref={textareaRef}
                   />
-                  <div className={actionContainerStyles}>
+                  <div
+                    className={getActionContainerStyles({
+                      hasAdditionalActions: !!additionalActions,
+                    })}
+                  >
                     {additionalActions}
                     {isLoading ? (
                       <InputBarStopButton

@@ -15,6 +15,11 @@ describe('packages/input-bar/AdditionalActions', () => {
     });
   });
 
+  test('renders children', () => {
+    render(<AdditionalActions>Content</AdditionalActions>);
+    expect(screen.getByText('Content')).toBeInTheDocument();
+  });
+
   test('forwards ref correctly', () => {
     const ref = createRef<HTMLDivElement>();
 
