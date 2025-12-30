@@ -1,5 +1,7 @@
 import { InputSegmentChangeEventHandler } from '@leafygreen-ui/input-box';
 
+import { unitOptions } from './constants';
+
 export const DateTimePartKeys = {
   hour: 'hour',
   minute: 'minute',
@@ -54,3 +56,13 @@ export type TimeInputSegmentChangeEventHandler = InputSegmentChangeEventHandler<
   TimeSegment,
   string
 >;
+
+/**
+ * The type for the unit options
+ */
+export type UnitOptions = typeof unitOptions;
+
+/**
+ * The type for the unit option
+ */
+export type UnitOption = (typeof unitOptions)[number];

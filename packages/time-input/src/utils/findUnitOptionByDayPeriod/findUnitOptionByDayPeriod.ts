@@ -1,5 +1,4 @@
-import { DayPeriod } from '../../shared.types';
-import { UnitOption } from '../../TimeInputSelect/TimeInputSelect.types';
+import { DayPeriod, UnitOption, UnitOptions } from '../../shared.types';
 
 /**
  * Finds the select unit option based on the day period.
@@ -10,7 +9,7 @@ import { UnitOption } from '../../TimeInputSelect/TimeInputSelect.types';
  */
 export const findUnitOptionByDayPeriod = (
   dayPeriod: DayPeriod,
-  unitOptions: Array<UnitOption>,
+  unitOptions: UnitOptions,
 ): UnitOption => {
   const selectUnitOption = unitOptions.find(
     option => option.displayName === dayPeriod,

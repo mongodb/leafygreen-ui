@@ -4,10 +4,10 @@ import { unitOptions } from '../constants';
 import { useTimeInputContext, useTimeInputDisplayContext } from '../Context';
 import { useSelectUnit } from '../hooks';
 import { TimeSegmentsState } from '../shared.types';
+import { UnitOption } from '../shared.types';
 import { TimeFormField, TimeFormFieldInputContainer } from '../TimeFormField';
 import { TimeInputBox } from '../TimeInputBox/TimeInputBox';
 import { TimeInputSelect } from '../TimeInputSelect/TimeInputSelect';
-import { UnitOption } from '../TimeInputSelect/TimeInputSelect.types';
 import { getFormatPartsValues } from '../utils';
 
 import { wrapperBaseStyles } from './TimeInputInputs.styles';

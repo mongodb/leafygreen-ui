@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { DateType, isValidDate } from '@leafygreen-ui/date-utils';
 
-import { DayPeriod } from '../../shared.types';
-import { UnitOption } from '../../TimeInputSelect/TimeInputSelect.types';
+import { DayPeriod, UnitOption, UnitOptions } from '../../shared.types';
 
 interface UseSelectUnitReturn {
   selectUnit: UnitOption;
@@ -19,7 +18,7 @@ interface UseSelectUnitReturn {
  */
 const findSelectUnit = (
   dayPeriod: DayPeriod,
-  unitOptions: Array<UnitOption>,
+  unitOptions: UnitOptions,
 ): UnitOption => {
   const selectUnitOption = unitOptions.find(
     option => option.displayName === dayPeriod,
@@ -42,7 +41,7 @@ export const useSelectUnit = ({
 }: {
   dayPeriod: DayPeriod;
   value: DateType | undefined;
-  unitOptions: Array<UnitOption>;
+  unitOptions: UnitOptions;
 }): UseSelectUnitReturn => {
   const selectUnitOption = findSelectUnit(dayPeriod, unitOptions);
   const [selectUnit, setSelectUnit] = useState<UnitOption>(selectUnitOption);
