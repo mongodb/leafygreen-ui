@@ -4,12 +4,11 @@ import isNull from 'lodash/isNull';
 import isUndefined from 'lodash/isUndefined';
 
 import { DateType, isValidDate, LocaleString } from '@leafygreen-ui/date-utils';
-import { isSameUTCDayAndTime } from '@leafygreen-ui/date-utils';
+import { isSameUTCDateTime } from '@leafygreen-ui/date-utils';
 import { usePrevious } from '@leafygreen-ui/hooks';
 
 import { unitOptions } from '../../constants';
-import { DayPeriod, TimeSegment } from '../../shared.types';
-import { UnitOption } from '../../TimeInputSelect/TimeInputSelect.types';
+import { DayPeriod, TimeSegment, UnitOption } from '../../shared.types';
 import {
   findUnitOptionByDayPeriod,
   getFormatPartsValues,
@@ -59,7 +58,7 @@ export const useTimeSegmentsAndSelectUnit = ({
    */
   useEffect(() => {
     const isDateValid = isValidDate(date);
-    const hasDateAndTimeChanged = !isSameUTCDayAndTime(date, prevDate);
+    const hasDateAndTimeChanged = !isSameUTCDateTime(date, prevDate);
     const newSegments = getPaddedTimeSegmentsFromDate(date, locale, timeZone);
     const hasLocaleChanged = prevLocale !== locale;
     const hasTimeZoneChanged = prevTimeZone !== timeZone;
@@ -121,7 +120,7 @@ export const useTimeSegmentsAndSelectUnit = ({
    */
   useEffect(() => {
     const isDateValid = isValidDate(date);
-    const hasDateAndTimeChanged = !isSameUTCDayAndTime(date, prevDate);
+    const hasDateAndTimeChanged = !isSameUTCDateTime(date, prevDate);
     const newSegments = getPaddedTimeSegmentsFromDate(date, locale, timeZone);
     const hasLocaleChanged = prevLocale !== locale;
     const hasTimeZoneChanged = prevTimeZone !== timeZone;
@@ -174,7 +173,7 @@ export const useTimeSegmentsAndSelectUnit = ({
    */
   useEffect(() => {
     const isDateValid = isValidDate(date);
-    const hasDateAndTimeChanged = !isSameUTCDayAndTime(date, prevDate);
+    const hasDateAndTimeChanged = !isSameUTCDateTime(date, prevDate);
     const { dayPeriod } = getFormatPartsValues({
       locale,
       timeZone,

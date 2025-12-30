@@ -4,8 +4,8 @@ import { DateType, isValidDate } from '@leafygreen-ui/date-utils';
 import { isInvalidDateObject } from '@leafygreen-ui/date-utils';
 
 import { TimeSegmentsState } from '../../shared.types';
-import { isEverySegmentFilled } from '../isEverySegmentFilled/isEverySegmentFilled';
-import { isEverySegmentValueExplicit } from '../isEverySegmentValueExplicit/isEverySegmentValueExplicit';
+import { isEverySegmentFilled } from '../isEverySegmentFilled';
+import { isEverySegmentValueExplicit } from '../isEverySegmentValueExplicit';
 
 /**
  * Checks if the new date should be set.
@@ -33,7 +33,6 @@ export const shouldSetValue = ({
   segments: TimeSegmentsState;
   is12HourFormat: boolean;
 }): boolean => {
-  // If the date is valid and all segments are explicit, then the value should be set.
   const isValidDateAndSegmentsAreExplicit =
     isValidDate(newDate) &&
     isEverySegmentValueExplicit({

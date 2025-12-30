@@ -1,6 +1,6 @@
 import { doesSomeSegmentExist } from './doesSomeSegmentExist';
 
-describe('doesSomeSegmentExist', () => {
+describe('packages/time-input/utils/doesSomeSegmentExist', () => {
   test('returns true if at least one segment is filled', () => {
     expect(doesSomeSegmentExist({ hour: '', minute: '', second: '00' })).toBe(
       true,

@@ -1,5 +1,5 @@
 import { TimeSegmentsState } from '../../shared.types';
-import { UnitOption } from '../../TimeInputSelect/TimeInputSelect.types';
+import { UnitOption } from '../../shared.types';
 
 /**
  * Callback passed into the hook, called when any segment updates

@@ -5,6 +5,9 @@ import { isEverySegmentValid } from './isEverySegmentValid';
 
 describe('isEverySegmentValueValid', () => {
   describe('12 hour format', () => {
+    const defaultMinValues = getDefaultMin({ is12HourFormat: true });
+    const defaultMaxValues = getDefaultMax({ is12HourFormat: true });
+
     test('returns false if all segments are 00', () => {
       // when 12 hour format, 00 is not a valid value for the hour segment
       expect(
@@ -19,13 +22,9 @@ describe('isEverySegmentValueValid', () => {
       expect(
         isEverySegmentValid({
           segments: {
-            hour: getDefaultMin({ is12HourFormat: true })['hour'].toString(),
-            minute: getDefaultMin({ is12HourFormat: true })[
-              'minute'
-            ].toString(),
-            second: getDefaultMin({ is12HourFormat: true })[
-              'second'
-            ].toString(),
+            hour: defaultMinValues['hour'].toString(),
+            minute: defaultMinValues['minute'].toString(),
+            second: defaultMinValues['second'].toString(),
           },
           is12HourFormat: true,
         }),
@@ -36,13 +35,9 @@ describe('isEverySegmentValueValid', () => {
       expect(
         isEverySegmentValid({
           segments: {
-            hour: getDefaultMax({ is12HourFormat: true })['hour'].toString(),
-            minute: getDefaultMax({ is12HourFormat: true })[
-              'minute'
-            ].toString(),
-            second: getDefaultMax({ is12HourFormat: true })[
-              'second'
-            ].toString(),
+            hour: defaultMaxValues['hour'].toString(),
+            minute: defaultMaxValues['minute'].toString(),
+            second: defaultMaxValues['second'].toString(),
           },
           is12HourFormat: true,
         }),
@@ -54,9 +49,7 @@ describe('isEverySegmentValueValid', () => {
         expect(
           isEverySegmentValid({
             segments: {
-              hour: (
-                getDefaultMax({ is12HourFormat: true })['hour'] + 1
-              ).toString(),
+              hour: (defaultMaxValues['hour'] + 1).toString(),
               minute: '00',
               second: '00',
             },
@@ -72,9 +65,7 @@ describe('isEverySegmentValueValid', () => {
           isEverySegmentValid({
             segments: {
               hour: '00',
-              minute: (
-                getDefaultMax({ is12HourFormat: true })['minute'] + 1
-              ).toString(),
+              minute: (defaultMaxValues['minute'] + 1).toString(),
               second: '00',
             },
             is12HourFormat: true,
@@ -90,9 +81,7 @@ describe('isEverySegmentValueValid', () => {
             segments: {
               hour: '00',
               minute: '00',
-              second: (
-                getDefaultMax({ is12HourFormat: true })['second'] + 1
-              ).toString(),
+              second: (defaultMaxValues['second'] + 1).toString(),
             },
             is12HourFormat: true,
           }),
@@ -102,6 +91,8 @@ describe('isEverySegmentValueValid', () => {
   });
 
   describe('24 hour format', () => {
+    const defaultMaxValues = getDefaultMax({ is12HourFormat: false });
+
     test('returns true if all segments are 00', () => {
       expect(
         isEverySegmentValid({
@@ -125,9 +116,7 @@ describe('isEverySegmentValueValid', () => {
         expect(
           isEverySegmentValid({
             segments: {
-              hour: (
-                getDefaultMax({ is12HourFormat: false })['hour'] + 1
-              ).toString(),
+              hour: (defaultMaxValues['hour'] + 1).toString(),
               minute: '00',
               second: '00',
             },
@@ -143,9 +132,7 @@ describe('isEverySegmentValueValid', () => {
           isEverySegmentValid({
             segments: {
               hour: '00',
-              minute: (
-                getDefaultMax({ is12HourFormat: false })['minute'] + 1
-              ).toString(),
+              minute: (defaultMaxValues['minute'] + 1).toString(),
               second: '00',
             },
             is12HourFormat: false,
@@ -161,9 +148,7 @@ describe('isEverySegmentValueValid', () => {
             segments: {
               hour: '00',
               minute: '00',
-              second: (
-                getDefaultMax({ is12HourFormat: false })['second'] + 1
-              ).toString(),
+              second: (defaultMaxValues['second'] + 1).toString(),
             },
             is12HourFormat: false,
           }),

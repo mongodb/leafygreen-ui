@@ -4,7 +4,7 @@ import { consoleOnce } from '@leafygreen-ui/lib';
 
 import { convert12hTo24h } from './convert12hTo24h';
 
-describe('convert12hTo24h', () => {
+describe('packages/time-input/utils/convert12hTo24h', () => {
   describe('AM', () => {
     test('12 AM converts to 0', () => {
       expect(convert12hTo24h(12, 'AM')).toEqual(0);
