@@ -20,10 +20,10 @@ import { PaginationItemsPerPageProps } from './PaginationItemsPerPage.types';
 function PaginationItemsPerPage<T extends number>({
   id: idProp,
   itemsPerPage = DEFAULT_ITEMS_PER_PAGE_OPTIONS[0] as T,
-  itemsPerPageOptions = DEFAULT_ITEMS_PER_PAGE_OPTIONS,
+  itemsPerPageOptions = DEFAULT_ITEMS_PER_PAGE_OPTIONS as Array<T>,
   onItemsPerPageOptionChange,
   className,
-}: PaginationItemsPerPageProps) {
+}: PaginationItemsPerPageProps<T>) {
   const itemsPerPageLabelId = useIdAllocator({
     prefix: 'lg-pagination-items-per-page-label',
     id: idProp,

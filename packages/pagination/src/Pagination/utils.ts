@@ -10,7 +10,9 @@ export const getCurrentRangeString = (
 };
 
 export const getRangeMaxString = (numTotalItems?: number) => {
-  return numTotalItems ? `${numTotalItems} items` : 'many';
+  if (!numTotalItems) return 'many';
+
+  return numTotalItems === 1 ? '1 item' : `${numTotalItems} items`;
 };
 
 export const getTotalNumPages = (

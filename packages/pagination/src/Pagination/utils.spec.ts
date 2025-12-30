@@ -69,7 +69,7 @@ describe('Pagination utils', () => {
     });
 
     test('returns correct string for single item', () => {
-      expect(getRangeMaxString(1)).toBe('1 items');
+      expect(getRangeMaxString(1)).toBe('1 item');
     });
   });
 

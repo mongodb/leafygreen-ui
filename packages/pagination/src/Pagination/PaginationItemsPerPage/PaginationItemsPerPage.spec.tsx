@@ -130,6 +130,7 @@ describe('PaginationItemsPerPage', () => {
       render(
         <PaginationItemsPerPage
           itemsPerPageOptions={[10, 25, 50]}
+          // @ts-expect-error - intentionally passing invalid value to test error handling
           itemsPerPage={22}
           onItemsPerPageOptionChange={jest.fn()}
         />,
