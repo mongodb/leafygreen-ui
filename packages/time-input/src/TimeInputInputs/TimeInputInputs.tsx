@@ -85,8 +85,8 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       const hasAnySegmentChanged = !isEqual(newSegments, prevSegments);
       const hasSelectUnitChanged = !isEqual(newSelectUnit, prevSelectUnit);
 
-      // If any segment has changed or the select unit has changed and the time is in 12 hour format, then we need to update the date
-      // If the time is in 24h format we don't need to check for the select unit since it's not applicable.
+      // If any segment has changed or the select unit has changed and the time is in 12 hour format, then we need to update the date. If the time is in 24h format we don't need to check for the select unit since it's not applicable.
+      // Checking for these changes is necessary because the useEffect inside useTimeSegmentsAndSelectUnit that checks if the date has changed will trigger this function again but we don't want to update the date again since the segments and select unit have already been updated.
       if (hasAnySegmentChanged || (hasSelectUnitChanged && is12HourFormat)) {
         //Gets the time parts from the value
         const { month, day, year } = getFormatPartsValues({
@@ -182,9 +182,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
           <TimeFormFieldInputContainer onClick={handleInputClick}>
             <TimeInputBox
               segments={segments}
-              setSegment={(segment, value) => {
-                setSegment(segment, value);
-              }}
+              setSegment={setSegment}
               onSegmentChange={handleSegmentChange}
               segmentRefs={segmentRefs}
               onKeyDown={onKeyDown}
@@ -193,9 +191,7 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
           {is12HourFormat && (
             <TimeInputSelect
               unit={selectUnit.displayName}
-              onChange={unit => {
-                setSelectUnit(unit);
-              }}
+              onChange={setSelectUnit}
             />
           )}
           {is24HourFormat && (

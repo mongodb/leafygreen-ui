@@ -8,7 +8,7 @@ export const TWENTY_FOUR_HOURS_TEXT = '24 hours';
 export const unitOptions = [
   { displayName: 'AM', value: 'AM' },
   { displayName: 'PM', value: 'PM' },
-];
+] as const;
 
 /**
  * The default placeholders for each segment

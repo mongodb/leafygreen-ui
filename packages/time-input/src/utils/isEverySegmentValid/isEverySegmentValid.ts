@@ -18,19 +18,22 @@ export const isEverySegmentValid = ({
   segments: TimeSegmentsState;
   is12HourFormat: boolean;
 }) => {
-  const isEverySegmentValid = Object.entries(segments).every(
-    ([segment, value]) => {
-      const isSegmentValid = isValidValueForSegment({
-        segment: segment as TimeSegment,
-        value: value as string,
-        defaultMin: getDefaultMin({ is12HourFormat })[segment as TimeSegment],
-        defaultMax: getDefaultMax({ is12HourFormat })[segment as TimeSegment],
-        segmentEnum: TimeSegment,
-      });
+  const defaultMinValues = getDefaultMin({ is12HourFormat });
+  const defaultMaxValues = getDefaultMax({ is12HourFormat });
 
-      return isSegmentValid;
-    },
-  );
+  const isEverySegmentValid = (
+    Object.entries(segments) as Array<[TimeSegment, string]>
+  ).every(([segment, value]) => {
+    const isSegmentValid = isValidValueForSegment({
+      segment: segment,
+      value: value,
+      defaultMin: defaultMinValues[segment],
+      defaultMax: defaultMaxValues[segment],
+      segmentEnum: TimeSegment,
+    });
+
+    return isSegmentValid;
+  });
 
   return isEverySegmentValid;
 };

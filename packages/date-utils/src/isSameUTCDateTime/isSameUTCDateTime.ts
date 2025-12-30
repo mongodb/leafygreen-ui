@@ -2,13 +2,13 @@ import { isValidDate } from '../isValidDate';
 import { DateType } from '../types';
 
 /**
- * Checks if two dates are the same day and time in UTC.
+ * Checks if two dates are the same date and time in UTC.
  *
  * @param day1 - The first date to check
  * @param day2 - The second date to check
- * @returns Whether the two dates are the same day and time in UTC
+ * @returns Whether the two dates are the same date and time in UTC
  */
-export const isSameUTCDayAndTime = (
+export const isSameUTCDateTime = (
   day1?: DateType,
   day2?: DateType,
 ): boolean => {

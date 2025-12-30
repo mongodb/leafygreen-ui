@@ -14,7 +14,7 @@ describe('packages/time-input/utils/getPaddedTimeSegments', () => {
     });
   });
 
-  test('returns the padded time segments', () => {
+  test('returns the padded time segments if all segments are not 0', () => {
     const paddedTimeSegments = getPaddedTimeSegments({
       hour: '2',
       minute: '3',
