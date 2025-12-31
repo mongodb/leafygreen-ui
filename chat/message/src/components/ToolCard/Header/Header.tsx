@@ -8,6 +8,7 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { FontWeight } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
+import { State } from '../shared.types';
 import { useToolCardContext } from '../ToolCardContext';
 
 import {
@@ -29,9 +30,11 @@ export const Header = forwardRef<HTMLDivElement, HeaderProps>(
     const { theme } = useDarkMode();
     const { isExpanded, toggleExpand } = useToolCardContext();
 
+    const isErrorState = state === State.Error;
+
     return (
       <div
-        className={getContainerStyles({ className, theme })}
+        className={getContainerStyles({ className, isErrorState, theme })}
         ref={ref}
         {...rest}
       >

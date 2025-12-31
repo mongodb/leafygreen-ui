@@ -6,10 +6,8 @@ import QuestionMarkWithCircleIcon from '@leafygreen-ui/icon/dist/QuestionMarkWit
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import XWithCircleIcon from '@leafygreen-ui/icon/dist/XWithCircle';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import {
-  Size as SpinnerSize,
-  Spinner,
-} from '@leafygreen-ui/loading-indicator/spinner';
+import { Spinner } from '@leafygreen-ui/loading-indicator';
+import { Size } from '@leafygreen-ui/tokens';
 
 import { State, ToolCardStateProps } from '../../shared.types';
 
@@ -36,7 +34,15 @@ export const TitleIcon = ({ state }: ToolCardStateProps) => {
       );
 
     case State.Running:
-      return <Spinner size={SpinnerSize.XSmall} />;
+      return (
+        <Spinner
+          colorOverride={getIconFill({
+            theme,
+            variant: TitleIconVariant.Default,
+          })}
+          size={Size.XSmall}
+        />
+      );
 
     case State.Success:
       return (

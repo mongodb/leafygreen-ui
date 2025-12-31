@@ -7,10 +7,16 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
-export const getBaseContainerStyles = (theme: Theme) => css`
-  background-color: ${color[theme].background[Variant.Secondary][
-    InteractionState.Default
-  ]};
+export const getBaseContainerStyles = ({
+  isErrorState,
+  theme,
+}: {
+  isErrorState: boolean;
+  theme: Theme;
+}) => css`
+  background-color: ${color[theme].background[
+    isErrorState ? Variant.Error : Variant.Secondary
+  ][InteractionState.Default]};
   padding: ${spacing[200]}px ${spacing[200]}px ${spacing[300]}px
     ${spacing[300]}px;
   display: flex;
@@ -19,11 +25,13 @@ export const getBaseContainerStyles = (theme: Theme) => css`
 
 export const getContainerStyles = ({
   className,
+  isErrorState,
   theme,
 }: {
   className?: string;
+  isErrorState: boolean;
   theme: Theme;
-}) => cx(getBaseContainerStyles(theme), className);
+}) => cx(getBaseContainerStyles({ isErrorState, theme }), className);
 
 export const upperRowStyles = css`
   display: flex;
