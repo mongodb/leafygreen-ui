@@ -99,6 +99,7 @@ export const ToolCard = CompoundSubComponent(
               />
               <div
                 className={getContentContainerStyles({
+                  isErrorState,
                   shouldRenderBorderTop,
                   theme,
                 })}

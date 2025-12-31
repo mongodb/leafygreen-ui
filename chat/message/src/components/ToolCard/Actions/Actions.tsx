@@ -1,7 +1,8 @@
 import React, { forwardRef } from 'react';
 
-import { Button, Size, Variant } from '@leafygreen-ui/button';
+import { Button, Size as ButtonSize, Variant } from '@leafygreen-ui/button';
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
+import { Size as IconSize } from '@leafygreen-ui/icon';
 import ReturnIcon from '@leafygreen-ui/icon/dist/Return';
 
 import { ToolCardSubcomponentProperty } from '../shared.types';
@@ -18,7 +19,7 @@ export const Actions = CompoundSubComponent(
           <Button
             className={buttonStyles}
             onClick={onClickCancel}
-            size={Size.Small}
+            size={ButtonSize.Small}
             variant={Variant.Default}
           >
             Cancel
@@ -26,8 +27,8 @@ export const Actions = CompoundSubComponent(
           <Button
             className={buttonStyles}
             onClick={onClickRun}
-            rightGlyph={<ReturnIcon />}
-            size={Size.Small}
+            rightGlyph={<ReturnIcon size={IconSize.Small} />}
+            size={ButtonSize.Small}
             variant={Variant.Primary}
           >
             Run
