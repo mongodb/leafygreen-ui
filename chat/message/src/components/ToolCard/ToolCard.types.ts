@@ -11,6 +11,8 @@ export interface ToolCardProps
   /**
    * Initial state of the expandable section.
    * @default false
+   * @remarks This prop is ignored when `showExpandButton` is `false`
+   * to prevent an expanded state with no way to collapse.
    */
   initialIsExpanded?: boolean;
 
