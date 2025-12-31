@@ -2,8 +2,6 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import { State } from '../shared.types';
-
 import { ExpandableContent } from './ExpandableContent';
 import type { ExpandableContentProps } from './ExpandableContent.types';
 
@@ -28,8 +26,6 @@ const renderExpandableContent = (
 };
 
 const baseMockContext = {
-  showExpandButton: true,
-  state: State.Idle,
   toggleExpand: jest.fn(),
 };
 
