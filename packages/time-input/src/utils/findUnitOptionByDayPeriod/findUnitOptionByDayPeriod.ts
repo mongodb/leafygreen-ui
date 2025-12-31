@@ -11,9 +11,5 @@ export const findUnitOptionByDayPeriod = (
   dayPeriod: DayPeriod,
   unitOptions: UnitOptions,
 ): UnitOption => {
-  const selectUnitOption = unitOptions.find(
-    option => option.displayName === dayPeriod,
-  );
-
-  return selectUnitOption ?? unitOptions[0];
+  return unitOptions.find(option => option.displayName === dayPeriod)!;
 };
