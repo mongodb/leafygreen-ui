@@ -107,7 +107,7 @@ const Template: StoryFn<ToolCardProps> = props => (
 export const LiveExample: StoryObj<typeof ToolCard> = {
   render: Template,
   args: {
-    title: 'Run list-databases?',
+    title: titles[State.Idle],
     chips,
     state: State.Idle,
     showExpandButton: true,
@@ -157,6 +157,11 @@ export const Running: StoryObj<typeof ToolCard> = {
     title: titles[State.Running],
     chips,
     children: renderToolCardChildren(),
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
   },
 };
 

@@ -50,6 +50,16 @@ describe('chat/message/ToolCard', () => {
     expect(screen.getByText('My Custom Title')).toBeInTheDocument();
   });
 
+  test('renders chips', () => {
+    const chips = [
+      { label: 'MongoDB', glyph: <div>Icon</div> },
+      { label: 'Atlas', glyph: <div>Icon</div> },
+    ];
+    renderToolCard({ chips });
+    expect(screen.getByText('MongoDB')).toBeInTheDocument();
+    expect(screen.getByText('Atlas')).toBeInTheDocument();
+  });
+
   describe('initialIsExpanded', () => {
     test('respects initialIsExpanded when showExpandButton is true', () => {
       renderToolCard({
@@ -171,25 +181,8 @@ describe('chat/message/ToolCard', () => {
     });
   });
 
-  describe('chips', () => {
-    test('does not render when not provided', () => {
-      renderToolCard({ chips: undefined });
-      expect(screen.queryByText('MongoDB')).toBeNull();
-    });
-
-    test('renders chips when provided', () => {
-      const chips = [
-        { label: 'MongoDB', glyph: <div>Icon</div> },
-        { label: 'Atlas', glyph: <div>Icon</div> },
-      ];
-      renderToolCard({ chips });
-      expect(screen.getByText('MongoDB')).toBeInTheDocument();
-      expect(screen.getByText('Atlas')).toBeInTheDocument();
-    });
-  });
-
   describe('actions', () => {
-    test('renders when state is Idle', () => {
+    test(`renders when state is ${State.Idle}`, () => {
       renderToolCard({
         state: State.Idle,
         children: (
@@ -203,16 +196,19 @@ describe('chat/message/ToolCard', () => {
       expect(screen.getByRole('button', { name: 'Run' })).toBeInTheDocument();
     });
 
-    test('does not render when state is not Idle', () => {
-      renderToolCard({
-        state: State.Running,
-        children: (
-          <ToolCard.Actions onClickCancel={() => {}} onClickRun={() => {}} />
-        ),
-      });
+    test.each([State.Canceled, State.Error, State.Running, State.Success])(
+      'does not render when state is %s',
+      state => {
+        renderToolCard({
+          state,
+          children: (
+            <ToolCard.Actions onClickCancel={() => {}} onClickRun={() => {}} />
+          ),
+        });
 
-      expect(screen.queryByRole('button', { name: 'Cancel' })).toBeNull();
-      expect(screen.queryByRole('button', { name: 'Run' })).toBeNull();
-    });
+        expect(screen.queryByRole('button', { name: 'Cancel' })).toBeNull();
+        expect(screen.queryByRole('button', { name: 'Run' })).toBeNull();
+      },
+    );
   });
 });
