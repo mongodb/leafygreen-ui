@@ -2,18 +2,13 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { State } from '../shared.types';
-
 import { ToolCardProvider, useToolCardContext } from './ToolCardContext';
 
 const TestComponent: React.FC = () => {
-  const { isExpanded, showExpandButton, state, toggleExpand } =
-    useToolCardContext();
+  const { isExpanded, toggleExpand } = useToolCardContext();
   return (
     <div>
       <div data-testid="is-expanded">{String(isExpanded)}</div>
-      <div data-testid="show-expand-button">{String(showExpandButton)}</div>
-      <div data-testid="state">{state}</div>
       <button data-testid="toggle-button" onClick={toggleExpand}>
         Toggle
       </button>
@@ -26,8 +21,6 @@ describe('ToolCardContext', () => {
     const mockToggleExpand = jest.fn();
     const contextValue = {
       isExpanded: true,
-      showExpandButton: true,
-      state: State.Running,
       toggleExpand: mockToggleExpand,
     };
 
@@ -38,16 +31,12 @@ describe('ToolCardContext', () => {
     );
 
     expect(screen.getByTestId('is-expanded')).toHaveTextContent('true');
-    expect(screen.getByTestId('show-expand-button')).toHaveTextContent('true');
-    expect(screen.getByTestId('state')).toHaveTextContent(State.Running);
   });
 
   test('calls toggleExpand when toggle button is clicked', async () => {
     const mockToggleExpand = jest.fn();
     const contextValue = {
       isExpanded: false,
-      showExpandButton: true,
-      state: State.Idle,
       toggleExpand: mockToggleExpand,
     };
 

@@ -48,6 +48,9 @@
       "path": "../../packages/button"
     },
     {
+      "path": "../../packages/chip"
+    },
+    {
       "path": "../../packages/compound-component"
     },
     {

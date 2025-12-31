@@ -4,9 +4,9 @@ import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 const TRANSITION_DURATION = transitionDuration.slower;
 
 const baseContentWrapperStyles = css`
-  padding: ${spacing[300]}px;
+  padding: 0 ${spacing[300]}px;
   display: grid;
-  transition-property: grid-template-rows, opacity, visibility;
+  transition-property: grid-template-rows, opacity, padding, visibility;
   transition-duration: ${TRANSITION_DURATION}ms;
   transition-timing-function: ease-in-out;
   grid-template-rows: 0fr;
@@ -15,6 +15,7 @@ const baseContentWrapperStyles = css`
 `;
 
 const expandedContentWrapperStyles = css`
+  padding: ${spacing[300]}px;
   grid-template-rows: 1fr;
   opacity: 1;
   visibility: visible;

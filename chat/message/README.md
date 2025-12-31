@@ -141,15 +141,26 @@ const MessageWithPromotion = () => {
 
 ```tsx
 import React from 'react';
-import { Message } from '@lg-chat/message';
+import { Message, ToolCardState } from '@lg-chat/message';
+import DatabaseIcon from '@leafygreen-ui/icon/dist/Database';
 
 const MessageWithToolCard = () => {
   const handleCancel = () => console.log('Cancel clicked');
   const handleRun = () => console.log('Run clicked');
+  const handleToggleExpanded = (isOpen: boolean) => {
+    console.log('Expanded state:', isOpen);
+  };
 
   return (
     <Message isSender={false} messageBody="Test message">
-      <Message.ToolCard>
+      <Message.ToolCard
+        chips={[{ label: 'MongoDB', glyph: <DatabaseIcon /> }]}
+        initialIsExpanded={false}
+        onToggleExpanded={handleToggleExpanded}
+        showExpandButton={true}
+        state={ToolCardState.Idle}
+        title="Run list-databases?"
+      >
         <Message.ToolCard.ExpandableContent>
           {`# Tool Execution Result
 
@@ -193,7 +204,7 @@ const MessageWithVerifiedBanner = () => {
 
 ```tsx
 import React from 'react';
-import { Message } from '@lg-chat/message';
+import { Message, ToolCardState } from '@lg-chat/message';
 import { MessageRatingValue } from '@lg-chat/message-rating';
 
 const Example = () => {
@@ -235,7 +246,7 @@ const Example = () => {
 
   return (
     <Message isSender={false} messageBody="Test message">
-      <Message.ToolCard>
+      <Message.ToolCard title="Run list-databases?" state={ToolCardState.Idle}>
         <Message.ToolCard.ExpandableContent>
           {`# Tool Execution Result
 
@@ -313,11 +324,16 @@ This is a markdown content example showing tool execution results.`}
 
 ### Message.ToolCard
 
-| Prop       | Type                      | Description                                                                                          | Default |
-| ---------- | ------------------------- | ---------------------------------------------------------------------------------------------------- | ------- |
-| `children` | `ReactNode`               | Should contain `Message.ToolCard.ExpandableContent` and/or `Message.ToolCard.Actions` subcomponents. |         |
-| `darkMode` | `boolean`                 | Determines if the component will render in dark mode                                                 | `false` |
-| `...`      | `HTMLElementProps<'div'>` | Props spread on the container div element                                                            |         |
+| Prop                             | Type                                                        | Description                                                                                                                          | Default |
+| -------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------- |
+| `chips` _(optional)_             | `Array<{ label: string; glyph: ReactNode }>`                | Metadata chips (glyph and label) displayed in the header.                                                                            | `[]`    |
+| `darkMode` _(optional)_          | `boolean`                                                   | Determines if the component will render in dark mode                                                                                 | `false` |
+| `initialIsExpanded` _(optional)_ | `boolean`                                                   | Initial state of the expandable section. Ignored when `showExpandButton` is `false`.                                                 | `false` |
+| `onToggleExpanded` _(optional)_  | `(isOpen: boolean) => void`                                 | Callback fired when the expansion toggle is clicked. Receives the new open state as a parameter.                                     |         |
+| `showExpandButton` _(optional)_  | `boolean`                                                   | Whether the toggle button is visible.                                                                                                | `true`  |
+| `state`                          | `'idle' \| 'running' \| 'success' \| 'error' \| 'canceled'` | The current lifecycle state of the tool interaction. Can use string literals or import `ToolCardState` enum from `@lg-chat/message`. |         |
+| `title`                          | `ReactNode`                                                 | Primary label displayed in the Header.                                                                                               |         |
+| `...`                            | `HTMLElementProps<'div'>`                                   | Props spread on the container div element                                                                                            |         |
 
 #### Message.ToolCard.Actions
 

@@ -2,6 +2,8 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
+import { ToolCardState } from '../components';
+
 import { Message } from './Message';
 import { MessageProps } from './Message.types';
 
@@ -45,7 +47,7 @@ describe('Message', () => {
           <Message.Links
             links={[{ children: 'Test Link', href: 'https://example.com' }]}
           />
-          <Message.ToolCard>
+          <Message.ToolCard title="Tool Card Title" state={ToolCardState.Idle}>
             <div>Tool Card Content</div>
             <Message.ToolCard.ExpandableContent>
               Tool Card Expandable Content

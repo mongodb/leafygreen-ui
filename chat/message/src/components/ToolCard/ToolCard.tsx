@@ -1,4 +1,10 @@
-import React, { forwardRef, useCallback, useMemo, useState } from 'react';
+import React, {
+  Children,
+  forwardRef,
+  useCallback,
+  useMemo,
+  useState,
+} from 'react';
 
 import {
   CompoundSubComponent,
@@ -13,28 +19,48 @@ import { MessageSubcomponentProperty } from '../../shared.types';
 
 import { Actions } from './Actions';
 import { ExpandableContent } from './ExpandableContent';
+import { Header } from './Header';
 import { State, ToolCardSubcomponentProperty } from './shared.types';
-import { getContainerStyles } from './ToolCard.styles';
+import {
+  getContainerStyles,
+  getContentContainerStyles,
+} from './ToolCard.styles';
 import { ToolCardProps } from './ToolCard.types';
 import { ToolCardProvider } from './ToolCardContext';
 
 export const ToolCard = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
   forwardRef<HTMLDivElement, ToolCardProps>(
-    ({ children, className, darkMode: darkModeProp, ...rest }, fwdRef) => {
-      const { darkMode } = useDarkMode(darkModeProp);
+    (
+      {
+        children,
+        chips,
+        className,
+        darkMode: darkModeProp,
+        initialIsExpanded = false,
+        onToggleExpanded,
+        showExpandButton = true,
+        state = State.Idle,
+        title,
+        ...rest
+      },
+      fwdRef,
+    ) => {
+      const { darkMode, theme } = useDarkMode(darkModeProp);
 
-      const [isExpanded, setIsExpanded] = useState(true);
+      const [isExpanded, setIsExpanded] = useState(
+        showExpandButton ? initialIsExpanded : false,
+      );
 
       const toggleExpand = useCallback(() => {
-        setIsExpanded(prev => !prev);
-      }, [setIsExpanded]);
+        const newIsExpanded = !isExpanded;
+        setIsExpanded(newIsExpanded);
+        onToggleExpanded?.(newIsExpanded);
+      }, [isExpanded, onToggleExpanded, setIsExpanded]);
 
       const contextValue = useMemo(
         () => ({
           isExpanded,
-          showExpandButton: true,
-          state: State.Idle,
           toggleExpand,
         }),
         [isExpanded, toggleExpand],
@@ -50,17 +76,38 @@ export const ToolCard = CompoundSubComponent(
       );
       const actions = findChild(children, ToolCardSubcomponentProperty.Actions);
 
+      const isErrorState = state === State.Error;
+      const shouldRenderActions = !!actions && state === State.Idle;
+      const shouldRenderBorderTop =
+        Children.count(remainingChildren) > 0 ||
+        (!!expandableContent && isExpanded) ||
+        shouldRenderActions;
+
       return (
         <LeafyGreenProvider darkMode={darkMode}>
           <ToolCardProvider value={contextValue}>
             <div
+              className={getContainerStyles({ className, isErrorState, theme })}
               ref={fwdRef}
-              className={getContainerStyles(className)}
               {...rest}
             >
-              {remainingChildren}
-              {expandableContent}
-              {actions}
+              <Header
+                chips={chips}
+                showExpandButton={showExpandButton}
+                state={state}
+                title={title}
+              />
+              <div
+                className={getContentContainerStyles({
+                  isErrorState,
+                  shouldRenderBorderTop,
+                  theme,
+                })}
+              >
+                {remainingChildren}
+                {expandableContent}
+                {shouldRenderActions && actions}
+              </div>
             </div>
           </ToolCardProvider>
         </LeafyGreenProvider>
