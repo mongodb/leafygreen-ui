@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect } from 'react';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 
 import { isDateObject } from '@leafygreen-ui/date-utils';
 
