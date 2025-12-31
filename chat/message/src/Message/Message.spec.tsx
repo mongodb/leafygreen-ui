@@ -45,6 +45,16 @@ describe('Message', () => {
           <Message.Links
             links={[{ children: 'Test Link', href: 'https://example.com' }]}
           />
+          <Message.ToolCard>
+            <div>Tool Card Content</div>
+            <Message.ToolCard.ExpandableContent>
+              Tool Card Expandable Content
+            </Message.ToolCard.ExpandableContent>
+            <Message.ToolCard.Actions
+              onClickCancel={() => {}}
+              onClickRun={() => {}}
+            />
+          </Message.ToolCard>
           <div>Another regular child</div>
         </>
       ),
@@ -56,6 +66,12 @@ describe('Message', () => {
     expect(screen.getByText('Another regular child')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /copy/i })).toBeInTheDocument();
     expect(screen.getByText('Related Resources')).toBeInTheDocument();
+    expect(screen.getByText('Tool Card Content')).toBeInTheDocument();
+    expect(
+      screen.getByText('Tool Card Expandable Content'),
+    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /run/i })).toBeInTheDocument();
 
     // No duplication - each subcomponent should only render once
     const verifiedBanners = screen.getAllByText(/Verified by MongoDB Staff/);
@@ -66,5 +82,19 @@ describe('Message', () => {
 
     const linksHeadings = screen.getAllByText('Related Resources');
     expect(linksHeadings).toHaveLength(1);
+
+    const toolCardContents = screen.getAllByText('Tool Card Content');
+    expect(toolCardContents).toHaveLength(1);
+
+    const toolCardExpandableContents = screen.getAllByText(
+      'Tool Card Expandable Content',
+    );
+    expect(toolCardExpandableContents).toHaveLength(1);
+
+    const toolCardActions = screen.getAllByRole('button', { name: /cancel/i });
+    expect(toolCardActions).toHaveLength(1);
+
+    const toolCardRunActions = screen.getAllByRole('button', { name: /run/i });
+    expect(toolCardRunActions).toHaveLength(1);
   });
 });
