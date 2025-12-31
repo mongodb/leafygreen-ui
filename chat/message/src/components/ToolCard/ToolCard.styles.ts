@@ -38,15 +38,19 @@ export const getContainerStyles = ({
 }) => cx(getBaseContainerStyles({ isErrorState, theme }), className);
 
 export const getContentContainerStyles = ({
+  isErrorState,
   shouldRenderBorderTop,
   theme,
 }: {
+  isErrorState: boolean;
   shouldRenderBorderTop: boolean;
   theme: Theme;
 }) =>
   shouldRenderBorderTop
     ? css`
         border-top: 1px solid
-          ${color[theme].border[Variant.Secondary][InteractionState.Default]};
+          ${color[theme].border[
+            isErrorState ? Variant.OnError : Variant.Secondary
+          ][InteractionState.Default]};
       `
     : css``;
