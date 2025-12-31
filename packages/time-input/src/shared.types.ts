@@ -1,4 +1,6 @@
+import { DynamicRefGetter } from '@leafygreen-ui/hooks';
 import { InputSegmentChangeEventHandler } from '@leafygreen-ui/input-box';
+import { keyMap } from '@leafygreen-ui/lib';
 
 import { unitOptions } from './constants';
 
@@ -40,6 +42,14 @@ export type DateTimeParts = Record<DateTimePartKeysWithoutDayPeriod, string> & {
 
 export type DateParts = Pick<DateTimeParts, 'day' | 'month' | 'year'>;
 
+/**
+ * The type for the time input segment change event handler
+ */
+export type TimeInputSegmentChangeEventHandler = InputSegmentChangeEventHandler<
+  TimeSegment,
+  string
+>;
+
 /*
  * An enumerable object that maps the day period names to their values
  */
@@ -51,14 +61,6 @@ export const DayPeriod = {
 export type DayPeriod = (typeof DayPeriod)[keyof typeof DayPeriod];
 
 /**
- * The type for the time input segment change event handler
- */
-export type TimeInputSegmentChangeEventHandler = InputSegmentChangeEventHandler<
-  TimeSegment,
-  string
->;
-
-/**
  * The type for the unit options
  */
 export type UnitOptions = typeof unitOptions;
@@ -67,3 +69,23 @@ export type UnitOptions = typeof unitOptions;
  * The type for the unit option
  */
 export type UnitOption = (typeof unitOptions)[number];
+
+/**
+ * An object that maps the time segment names to their refs
+ */
+export type SegmentRefs = Record<
+  TimeSegment,
+  ReturnType<DynamicRefGetter<HTMLInputElement>>
+>;
+
+/**
+ * The type for the time input segment change event
+ */
+export interface TimeInputSegmentChangeEvent {
+  segment: TimeSegment;
+  value: string;
+  meta?: {
+    key?: (typeof keyMap)[keyof typeof keyMap];
+    [key: string]: any;
+  };
+}

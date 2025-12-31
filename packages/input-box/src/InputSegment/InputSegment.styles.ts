@@ -40,7 +40,7 @@ export const getSegmentThemeStyles = (theme: Theme) => {
     color: ${color[theme].text[Variant.Primary][InteractionState.Default]};
 
     &::placeholder {
-      color: ${color[theme].text[Variant.Placeholder][
+      color: ${color[theme].text[Variant.InverseSecondary][
         InteractionState.Default
       ]};
     }

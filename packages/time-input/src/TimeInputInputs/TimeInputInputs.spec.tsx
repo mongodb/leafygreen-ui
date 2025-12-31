@@ -5,6 +5,7 @@ import userEvent from '@testing-library/user-event';
 import { Month, newUTC, SupportedLocales } from '@leafygreen-ui/date-utils';
 import { getTestUtils as getSelectTestUtils } from '@leafygreen-ui/select/testing';
 
+import { TWENTY_FOUR_HOURS_TEXT } from '../constants';
 import { TimeInputProvider } from '../Context/TimeInputContext/TimeInputContext';
 import { TimeInputProviderProps } from '../Context/TimeInputContext/TimeInputContext.types';
 import { TimeInputDisplayProvider } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
@@ -67,6 +68,9 @@ const renderTimeInputInputs = ({
   const secondInput = result.container.querySelector(
     'input[aria-label="second"]',
   ) as HTMLInputElement;
+  const inputContainer = result.container.querySelector(
+    `[data-lgid="${lgIds.inputContainer}"]`,
+  ) as HTMLDivElement;
 
   if (!(hourInput && minuteInput && secondInput)) {
     throw new Error('Some or all input segments are missing');
@@ -78,6 +82,7 @@ const renderTimeInputInputs = ({
     hourInput,
     minuteInput,
     secondInput,
+    inputContainer,
   };
 };
 
@@ -256,16 +261,46 @@ describe('packages/time-input-inputs', () => {
       });
     });
 
-    test('does not render the select when the locale is 24h', () => {
-      const { queryByTestId } = renderTimeInputInputs({
-        displayProps: {
-          locale: SupportedLocales.ISO_8601,
-        },
+    describe('24 hour format', () => {
+      test('does not render the select', () => {
+        const { queryByTestId } = renderTimeInputInputs({
+          displayProps: {
+            locale: SupportedLocales.ISO_8601,
+          },
+        });
+        expect(queryByTestId(lgIds.select)).not.toBeInTheDocument();
       });
-      expect(queryByTestId(lgIds.select)).not.toBeInTheDocument();
+
+      test('renders 24 Hour label ', () => {
+        const { getByText } = renderTimeInputInputs({
+          displayProps: {
+            locale: SupportedLocales.ISO_8601,
+          },
+        });
+        expect(getByText(TWENTY_FOUR_HOURS_TEXT)).toBeInTheDocument();
+      });
     });
 
-    test.todo('renders 24 Hour label when the locale is 24h');
+    describe('12 hour format', () => {
+      test('renders the select', () => {
+        renderTimeInputInputs({
+          displayProps: {
+            locale: SupportedLocales.en_US,
+          },
+        });
+        const selectTestUtils = getSelectTestUtils(lgIds.select);
+        expect(selectTestUtils.getInput()).toBeInTheDocument();
+      });
+
+      test('does not render 24 Hour label', () => {
+        const { queryByText } = renderTimeInputInputs({
+          displayProps: {
+            locale: SupportedLocales.en_US,
+          },
+        });
+        expect(queryByText(TWENTY_FOUR_HOURS_TEXT)).not.toBeInTheDocument();
+      });
+    });
   });
 
   describe('Re-rendering', () => {
@@ -938,6 +973,58 @@ describe('packages/time-input-inputs', () => {
         expect(calledWith).toBeInstanceOf(Date);
         expect(calledWith.getTime()).toBeNaN();
       });
+    });
+  });
+
+  describe('Clicking the input', () => {
+    test('focuses the hour segment when clicked', async () => {
+      const { hourInput } = renderTimeInputInputs({
+        providerProps: { value: null },
+      });
+      userEvent.click(hourInput);
+      expect(hourInput).toHaveFocus();
+    });
+
+    test('focuses the minute segment when clicked', async () => {
+      const { minuteInput } = renderTimeInputInputs({
+        providerProps: { value: null },
+      });
+      userEvent.click(minuteInput);
+      expect(minuteInput).toHaveFocus();
+    });
+
+    test('focuses the second segment when clicked', async () => {
+      const { secondInput } = renderTimeInputInputs({
+        providerProps: { value: null },
+      });
+      userEvent.click(secondInput);
+      expect(secondInput).toHaveFocus();
+    });
+
+    test('focuses the first segment when all are empty', async () => {
+      const { hourInput, inputContainer } = renderTimeInputInputs({
+        providerProps: { value: null },
+      });
+      userEvent.click(inputContainer);
+      expect(hourInput).toHaveFocus();
+    });
+
+    test('focuses the first empty segment when some are empty', async () => {
+      const { hourInput, minuteInput, inputContainer } = renderTimeInputInputs({
+        providerProps: { value: null },
+      });
+      hourInput.value = '08';
+      hourInput.blur();
+      userEvent.click(inputContainer);
+      expect(minuteInput).toHaveFocus();
+    });
+
+    test('focuses the last segment when all are filled', async () => {
+      const { inputContainer, secondInput } = renderTimeInputInputs({
+        providerProps: { value: new Date('2025-01-01T00:00:00Z') },
+      });
+      userEvent.click(inputContainer);
+      expect(secondInput).toHaveFocus();
     });
   });
 });
