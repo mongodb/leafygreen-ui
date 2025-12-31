@@ -577,6 +577,9 @@ importers:
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../../packages/button
+      '@leafygreen-ui/chip':
+        specifier: workspace:^
+        version: link:../../packages/chip
       '@leafygreen-ui/compound-component':
         specifier: workspace:^
         version: link:../../packages/compound-component
