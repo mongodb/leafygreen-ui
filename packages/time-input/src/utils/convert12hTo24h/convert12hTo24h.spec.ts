@@ -1,0 +1,57 @@
+import range from 'lodash/range';
+
+import { consoleOnce } from '@leafygreen-ui/lib';
+
+import { convert12hTo24h } from './convert12hTo24h';
+
+describe('packages/time-input/utils/convert12hTo24h', () => {
+  describe('AM', () => {
+    test('12 AM converts to 0', () => {
+      expect(convert12hTo24h(12, 'AM')).toEqual(0);
+    });
+
+    test.each(range(1, 12).map(i => [i, i]))(
+      '%i AM converts to %i',
+      (input, expected) => {
+        expect(convert12hTo24h(input, 'AM')).toEqual(expected);
+      },
+    );
+  });
+
+  describe('PM', () => {
+    test('12 PM converts to 12', () => {
+      expect(convert12hTo24h(12, 'PM')).toEqual(12);
+    });
+
+    test.each(range(1, 12).map(i => [i, i + 12]))(
+      '%i PM converts to %i',
+      (input, expected) => {
+        expect(convert12hTo24h(input, 'PM')).toEqual(expected);
+      },
+    );
+  });
+
+  describe('Invalid hour', () => {
+    test('less than 1 returns the hour', () => {
+      const consoleWarnSpy = jest
+        .spyOn(consoleOnce, 'warn')
+        .mockImplementation(() => {});
+      expect(convert12hTo24h(0, 'AM')).toEqual(0);
+      expect(consoleWarnSpy).toHaveBeenCalledWith(
+        'convert12hTo24h > Invalid hour: 0',
+      );
+      consoleWarnSpy.mockRestore();
+    });
+
+    test('greater than 12 returns the hour', () => {
+      const consoleWarnSpy = jest
+        .spyOn(consoleOnce, 'warn')
+        .mockImplementation(() => {});
+      expect(convert12hTo24h(13, 'AM')).toEqual(13);
+      expect(consoleWarnSpy).toHaveBeenCalledWith(
+        'convert12hTo24h > Invalid hour: 13',
+      );
+      consoleWarnSpy.mockRestore();
+    });
+  });
+});

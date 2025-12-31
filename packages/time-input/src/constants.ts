@@ -6,7 +6,7 @@ import { DateTimeParts } from './shared.types';
 export const unitOptions = [
   { displayName: 'AM', value: 'AM' },
   { displayName: 'PM', value: 'PM' },
-];
+] as const;
 
 /**
  * The default placeholders for each segment

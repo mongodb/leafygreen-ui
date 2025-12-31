@@ -1,7 +1,7 @@
 import { getDefaultMin } from './getDefaultMin';
 
 describe('packages/time-input/utils/getDefaultMin', () => {
-  test('returns the default min', () => {
+  test('returns the default min for 12 hour format', () => {
     const defaultMin = getDefaultMin({ is12HourFormat: true });
     expect(defaultMin).toEqual({
       hour: 1,

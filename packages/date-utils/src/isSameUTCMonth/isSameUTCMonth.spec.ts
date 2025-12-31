@@ -5,24 +5,25 @@ import { mockTimeZone } from '../testing/mockTimeZone';
 
 import { isSameUTCMonth } from '.';
 
-const TZOffset = -5;
+const TZOffset = -4;
+const americaNewYorkTimeZone = 'America/New_York';
 
 describe('packages/date-utils/isSameUTCMonth', () => {
   beforeEach(() => {
-    mockTimeZone('America/New_York', TZOffset);
+    mockTimeZone(americaNewYorkTimeZone, TZOffset);
   });
   afterEach(() => {
     jest.resetAllMocks();
   });
 
   describe('when both dates are defined in UTC', () => {
-    test('true', () => {
+    test('returns true when both dates are the same month', () => {
       const utc1 = newUTC(2023, Month.September, 1);
       const utc2 = newUTC(2023, Month.September, 10);
       expect(isSameUTCMonth(utc1, utc2)).toBe(true);
     });
 
-    test('false', () => {
+    test('returns false when both dates are not the same month', () => {
       const utc1 = newUTC(2023, Month.September, 1);
       const utc2 = newUTC(2023, Month.August, 31);
       expect(isSameUTCMonth(utc1, utc2)).toBe(false);
@@ -30,40 +31,85 @@ describe('packages/date-utils/isSameUTCMonth', () => {
   });
 
   describe('when one date is defined locally', () => {
-    test('true', () => {
+    test('returns true when both dates are the same month in UTC', () => {
       const utc = newUTC(2023, Month.September, 10);
-      const local = newTZDate(TZOffset, 2023, Month.August, 31, 21, 0, 0);
+
+      // August 31, 2023 21:00 EDT (UTC-4) => September 01, 2023 01:00 UTC
+      const local = newTZDate({
+        timeZone: americaNewYorkTimeZone,
+        year: 2023,
+        month: Month.August,
+        date: 31,
+        hours: 21,
+        minutes: 0,
+      });
       expect(isSameUTCMonth(utc, local)).toBe(true);
     });
 
-    test('false', () => {
+    test('returns false when both dates are not the same month in UTC', () => {
       const utc = newUTC(2023, Month.September, 10);
-      const local = newTZDate(TZOffset, 2023, Month.August, 31, 12, 0);
+      // August 31, 2023 12:00 EDT (UTC-4) => August 31, 2023 16:00 UTC
+      const local = newTZDate({
+        timeZone: americaNewYorkTimeZone,
+        year: 2023,
+        month: Month.August,
+        date: 31,
+        hours: 12,
+        minutes: 0,
+      });
       expect(isSameUTCMonth(utc, local)).toBe(false);
     });
   });
 
   describe(' when both dates are defined locally', () => {
-    test('true', () => {
-      const local1 = newTZDate(TZOffset, 2023, Month.September, 1, 0, 0);
-      const local2 = newTZDate(TZOffset, 2023, Month.September, 30, 18, 0);
+    test('returns true when both dates are the same month in UTC', () => {
+      const local1 = newTZDate({
+        timeZone: americaNewYorkTimeZone,
+        year: 2023,
+        month: Month.September,
+        date: 1,
+        hours: 0,
+        minutes: 0,
+      });
+      const local2 = newTZDate({
+        timeZone: americaNewYorkTimeZone,
+        year: 2023,
+        month: Month.September,
+        date: 30,
+        hours: 18,
+        minutes: 0,
+      });
       expect(isSameUTCMonth(local1, local2)).toBe(true);
     });
 
-    test('false', () => {
-      const local1 = newTZDate(TZOffset, 2023, Month.September, 1, 0, 0);
-      const local2 = newTZDate(TZOffset, 2023, Month.September, 30, 20, 0);
+    test('returns false when both dates are not the same month in UTC', () => {
+      const local1 = newTZDate({
+        timeZone: americaNewYorkTimeZone,
+        year: 2023,
+        month: Month.September,
+        date: 1,
+        hours: 0,
+        minutes: 0,
+      });
+      const local2 = newTZDate({
+        timeZone: americaNewYorkTimeZone,
+        year: 2023,
+        month: Month.September,
+        date: 30,
+        hours: 20,
+        minutes: 0,
+      });
       expect(isSameUTCMonth(local1, local2)).toBe(false);
     });
   });
 
-  test('false: when one or both dates is null', () => {
+  test('returns false when one or both dates is null', () => {
     expect(isSameUTCMonth(new Date(), null)).toBe(false);
     expect(isSameUTCMonth(null, new Date())).toBe(false);
     expect(isSameUTCMonth(null, null)).toBe(false);
   });
 
-  test('false for different years', () => {
+  test('returns false for different years', () => {
     const utc1 = newUTC(2023, Month.September, 1);
     const utc2 = newUTC(2024, Month.September, 10);
     expect(isSameUTCMonth(utc1, utc2)).toBe(false);

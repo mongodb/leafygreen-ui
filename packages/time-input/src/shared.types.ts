@@ -1,20 +1,6 @@
 import { InputSegmentChangeEventHandler } from '@leafygreen-ui/input-box';
-import { keyMap } from '@leafygreen-ui/lib';
 
-export const DateTimePartKeys = {
-  hour: 'hour',
-  minute: 'minute',
-  second: 'second',
-  month: 'month',
-  day: 'day',
-  year: 'year',
-  dayPeriod: 'dayPeriod',
-} as const;
-
-export type DateTimePartKeys =
-  (typeof DateTimePartKeys)[keyof typeof DateTimePartKeys];
-
-export type DateTimeParts = Record<DateTimePartKeys, string>;
+import { unitOptions } from './constants';
 
 /**
  * An enumerable object that maps the time segment names to their values
@@ -30,9 +16,54 @@ export type TimeSegment = (typeof TimeSegment)[keyof typeof TimeSegment];
 export type TimeSegmentsState = Record<TimeSegment, string>;
 
 /**
+ * An enumerable object that maps the date and time segment names to their values
+ */
+export const DateTimePartKeys = {
+  ...TimeSegment,
+  Month: 'month',
+  Day: 'day',
+  Year: 'year',
+  DayPeriod: 'dayPeriod',
+} as const;
+
+export type DateTimePartKeys =
+  (typeof DateTimePartKeys)[keyof typeof DateTimePartKeys];
+
+export type DateTimePartKeysWithoutDayPeriod = Exclude<
+  DateTimePartKeys,
+  typeof DateTimePartKeys.DayPeriod
+>;
+
+export type DateTimeParts = Record<DateTimePartKeysWithoutDayPeriod, string> & {
+  [DateTimePartKeys.DayPeriod]: DayPeriod;
+};
+
+export type DateParts = Pick<DateTimeParts, 'day' | 'month' | 'year'>;
+
+/*
+ * An enumerable object that maps the day period names to their values
+ */
+export const DayPeriod = {
+  AM: 'AM',
+  PM: 'PM',
+} as const;
+
+export type DayPeriod = (typeof DayPeriod)[keyof typeof DayPeriod];
+
+/**
  * The type for the time input segment change event handler
  */
 export type TimeInputSegmentChangeEventHandler = InputSegmentChangeEventHandler<
   TimeSegment,
   string
 >;
+
+/**
+ * The type for the unit options
+ */
+export type UnitOptions = typeof unitOptions;
+
+/**
+ * The type for the unit option
+ */
+export type UnitOption = (typeof unitOptions)[number];

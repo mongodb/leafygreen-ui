@@ -1,7 +1,7 @@
 import { getFormattedDateTimeParts } from './getFormattedDateTimeParts';
 
 describe('packages/time-input/utils/getFormattedDateTimeParts', () => {
-  test('returns the formatted date time parts with the default date time parts', () => {
+  test('returns the formatted date time parts with the default date time parts when not all date time parts are present', () => {
     const formattedDateTimeParts = getFormattedDateTimeParts([
       { type: 'day', value: '12' },
       { type: 'month', value: '01' },
@@ -18,7 +18,7 @@ describe('packages/time-input/utils/getFormattedDateTimeParts', () => {
     });
   });
 
-  test('returns the formatted time parts without the default time parts', () => {
+  test('returns the formatted date time parts without the default date time parts when all date time parts are present', () => {
     const formattedDateTimeParts = getFormattedDateTimeParts([
       { type: 'hour', value: '12' },
       { type: 'minute', value: '30' },
@@ -39,7 +39,7 @@ describe('packages/time-input/utils/getFormattedDateTimeParts', () => {
     });
   });
 
-  test('returns the formatted time parts with the default time parts when time parts is an empty array', () => {
+  test('returns the formatted date time parts with the default date time parts when date time parts is an empty array', () => {
     const formattedDateTimeParts = getFormattedDateTimeParts([]);
     expect(formattedDateTimeParts).toEqual({
       hour: '',
