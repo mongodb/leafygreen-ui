@@ -1,3 +1,7 @@
+import { ReactNode } from 'react';
+
+import { ChipProps } from '@leafygreen-ui/chip';
+
 /**
  * State enum for tool interaction lifecycle states
  */
@@ -9,6 +13,13 @@ export const State = {
   Success: 'success',
 } as const;
 export type State = (typeof State)[keyof typeof State];
+
+export interface ToolCardStateProps {
+  /**
+   * The current lifecycle state of the tool interaction.
+   */
+  state: State;
+}
 
 /**
  * Static property names used to identify ToolCard compound components.
@@ -24,3 +35,27 @@ export const ToolCardSubcomponentProperty = {
  */
 export type ToolCardSubcomponentProperty =
   (typeof ToolCardSubcomponentProperty)[keyof typeof ToolCardSubcomponentProperty];
+
+/**
+ * Metadata chip with glyph and label
+ */
+export type ToolCardChipProps = Pick<ChipProps, 'glyph' | 'label'>;
+
+export interface SharedToolCardProps extends ToolCardStateProps {
+  /**
+   * Metadata chips (glyph and label) displayed in the Header.
+   * @default []
+   */
+  chips?: Array<ToolCardChipProps>;
+
+  /**
+   * Whether the toggle button is visible.
+   * @default true
+   */
+  showExpandButton?: boolean;
+
+  /**
+   * Primary label displayed in the Header.
+   */
+  title: ReactNode;
+}
