@@ -6,10 +6,12 @@ import {
   isInRange as getIsInRange,
   isOnOrBeforeDateTime,
   isValidDate,
-  newTZDate,
 } from '@leafygreen-ui/date-utils';
 
-import { getFormatPartsValues, getFormattedTimeString } from '../../utils';
+import {
+  getFormattedTimeString,
+  getMinAndMaxFromLocalToUTC,
+} from '../../utils';
 import { useTimeInputDisplayContext } from '../TimeInputDisplayContext';
 
 import {
@@ -45,47 +47,14 @@ export const TimeInputProvider = ({
    */
   const handleValidation = (val?: DateType) => {
     if (isValidDate(val)) {
-      // The local month, day, and year.
-      const { month, day, year } = getFormatPartsValues({
-        locale: locale,
-        timeZone: timeZone,
-        value: value,
-      });
-
-      // With the local hour, minute, and second parts, along with the UTC month, day, and year parts a min UTC date object is created. If the min is 08, it will be 08 in every time zone. E.g. 08 in New York, 08 in London, 08 in Tokyo, etc.
-      const minUTC = newTZDate({
-        year: Number(year),
-        month: Number(month) - 1,
-        date: Number(day),
-        hours: min.getUTCHours(),
-        minutes: min.getUTCMinutes(),
-        seconds: min.getUTCSeconds(),
+      const { minUTC, maxUTC } = getMinAndMaxFromLocalToUTC({
+        min,
+        max,
         timeZone,
+        newDate: val,
       });
 
-      // With the local hour, minute, and second parts, along with the UTC month, day, and year parts a max UTC date object is created. If the min is 08, it will be 08 in every time zone. E.g. 08 in New York, 08 in London, 08 in Tokyo, etc.
-      const maxUTC = newTZDate({
-        year: Number(year),
-        month: Number(month) - 1,
-        date: Number(day),
-        hours: max.getUTCHours(),
-        minutes: max.getUTCMinutes(),
-        seconds: max.getUTCSeconds(),
-        timeZone,
-      });
-
-      //// TESTING ////
-
-      console.log('🪼 handleValidation', {
-        value: val.toISOString(),
-        min: min.toISOString(),
-        max: max.toISOString(),
-        timeZone,
-        minUTC: minUTC.toISOString(),
-        maxUTC: maxUTC.toISOString(),
-      });
-
-      const isInRange = getIsInRange(minUTC, maxUTC);
+      const isInRange = getIsInRange(minUTC!, maxUTC!);
 
       // Check if the value in UTC is in the range of the min and max UTC date objects.
       if (isInRange(val)) {

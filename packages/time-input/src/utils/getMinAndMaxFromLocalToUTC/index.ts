@@ -1,0 +1,1 @@
+export { getMinAndMaxFromLocalToUTC } from './getMinAndMaxFromLocalToUTC';

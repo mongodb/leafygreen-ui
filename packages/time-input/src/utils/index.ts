@@ -8,6 +8,7 @@ export { getFormatPartsValues } from './getFormatPartsValues';
 export { getFormattedTimeString } from './getFormattedTimeString';
 export { getFormatter } from './getFormatter';
 export { getLgIds } from './getLgIds';
+export { getMinAndMaxFromLocalToUTC } from './getMinAndMaxFromLocalToUTC';
 export { getNewUTCDateFromSegments } from './getNewUTCDateFromSegments';
 export { getPaddedTimeSegmentsFromDate } from './getPaddedTimeSegmentsFromDate';
 export { getTimeSegmentRules } from './getTimeSegmentRules';
