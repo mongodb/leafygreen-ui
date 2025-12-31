@@ -39,7 +39,7 @@ describe('Message', () => {
       children: (
         <>
           <TestChild />
-          <Message.Actions onClickCopy={() => {}} />
+          <Message.Actions onClickCopy={jest.fn()} />
           <Message.VerifiedBanner
             verifier="MongoDB Staff"
             verifiedAt={new Date('2023-08-24T16:20:00Z')}
@@ -53,8 +53,8 @@ describe('Message', () => {
               Tool Card Expandable Content
             </Message.ToolCard.ExpandableContent>
             <Message.ToolCard.Actions
-              onClickCancel={() => {}}
-              onClickRun={() => {}}
+              onClickCancel={jest.fn()}
+              onClickRun={jest.fn()}
             />
           </Message.ToolCard>
           <div>Another regular child</div>
@@ -62,41 +62,39 @@ describe('Message', () => {
       ),
     });
 
-    // All components should render
-    expect(screen.getByText(/Verified by MongoDB Staff/)).toBeInTheDocument();
-    expect(screen.getByText('Regular child')).toBeInTheDocument();
-    expect(screen.getByText('Another regular child')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /copy/i })).toBeInTheDocument();
-    expect(screen.getByText('Related Resources')).toBeInTheDocument();
-    expect(screen.getByText('Tool Card Content')).toBeInTheDocument();
-    expect(
-      screen.getByText('Tool Card Expandable Content'),
-    ).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /run/i })).toBeInTheDocument();
-
-    // No duplication - each subcomponent should only render once
-    const verifiedBanners = screen.getAllByText(/Verified by MongoDB Staff/);
-    expect(verifiedBanners).toHaveLength(1);
-
-    const copyButtons = screen.getAllByRole('button', { name: /copy/i });
-    expect(copyButtons).toHaveLength(1);
-
-    const linksHeadings = screen.getAllByText('Related Resources');
-    expect(linksHeadings).toHaveLength(1);
-
-    const toolCardContents = screen.getAllByText('Tool Card Content');
-    expect(toolCardContents).toHaveLength(1);
-
-    const toolCardExpandableContents = screen.getAllByText(
+    // Verify all components render
+    const expectedContent = [
+      /Verified by MongoDB Staff/,
+      'Regular child',
+      'Another regular child',
+      'Related Resources',
+      'Tool Card Content',
       'Tool Card Expandable Content',
-    );
-    expect(toolCardExpandableContents).toHaveLength(1);
+    ];
 
-    const toolCardActions = screen.getAllByRole('button', { name: /cancel/i });
-    expect(toolCardActions).toHaveLength(1);
+    expectedContent.forEach((content) => {
+      expect(screen.getByText(content)).toBeInTheDocument();
+    });
 
-    const toolCardRunActions = screen.getAllByRole('button', { name: /run/i });
-    expect(toolCardRunActions).toHaveLength(1);
+    const expectedButtons = [
+      { name: /copy/i },
+      { name: /cancel/i },
+      { name: /run/i },
+    ];
+
+    expectedButtons.forEach((button) => {
+      expect(screen.getByRole('button', button)).toBeInTheDocument();
+    });
+
+    // Verify no duplication - each subcomponent renders only once
+    expect(screen.getAllByText(/Verified by MongoDB Staff/)).toHaveLength(1);
+    expect(screen.getAllByRole('button', { name: /copy/i })).toHaveLength(1);
+    expect(screen.getAllByText('Related Resources')).toHaveLength(1);
+    expect(screen.getAllByText('Tool Card Content')).toHaveLength(1);
+    expect(
+      screen.getAllByText('Tool Card Expandable Content'),
+    ).toHaveLength(1);
+    expect(screen.getAllByRole('button', { name: /cancel/i })).toHaveLength(1);
+    expect(screen.getAllByRole('button', { name: /run/i })).toHaveLength(1);
   });
 });
