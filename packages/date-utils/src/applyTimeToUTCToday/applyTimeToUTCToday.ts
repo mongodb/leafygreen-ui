@@ -10,7 +10,7 @@ import { isValidDate } from '../isValidDate';
  * ```js
  * Today is February 20, 2026
  * const date = new Date('2026-01-01T04:00:00Z'); // January 1st, 2026 at 4:00:00 AM
- * const normalizedDate = applyTimeToUTCToday({ date });
+ * const newUTCDate = applyTimeToUTCToday({ date });
  * // '2026-02-20T04:00:00Z' // February 20th, 2026 at 4:00:00 AM
  * ```
  */

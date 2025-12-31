@@ -15,3 +15,4 @@ export { isEverySegmentFilled } from './isEverySegmentFilled';
 export { isEverySegmentValid } from './isEverySegmentValid';
 export { isEverySegmentValueExplicit } from './isEverySegmentValueExplicit';
 export { shouldSetValue } from './shouldSetValue';
+export { getFormattedTimeString } from './getFormattedTimeString';

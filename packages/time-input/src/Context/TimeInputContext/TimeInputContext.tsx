@@ -5,7 +5,7 @@ import {
   isValidDate,
   isInRange as getIsInRange,
   newTZDate,
-  isSameUTCDateTime,
+  isOnOrBeforeDateTime,
 } from '@leafygreen-ui/date-utils';
 
 import isNull from 'lodash/isNull';
@@ -16,8 +16,7 @@ import {
 } from './TimeInputContext.types';
 import { useTimeInputComponentRefs } from './useTimeInputComponentRefs';
 import { useTimeInputDisplayContext } from '../TimeInputDisplayContext';
-import { getFormatPartsValues, hasDayPeriod } from '../../utils';
-import { isBefore } from 'date-fns';
+import { getFormatPartsValues, getFormattedTimeString } from '../../utils';
 
 export const TimeInputContext = createContext<TimeInputContextProps>(
   {} as TimeInputContextProps,
@@ -150,48 +149,4 @@ export const TimeInputProvider = ({
 
 export const useTimeInputContext = () => {
   return useContext(TimeInputContext);
-};
-
-// TODO: move this to date-utils
-/**
- * Checks if a date is on or before a date and time
- * @param date - The date to check
- * @param dateToCompare - The date to compare to
- * @returns True if the date is on or before the date and time, false otherwise
- */
-const isOnOrBeforeDateTime = (date: DateType, dateToCompare: DateType) => {
-  return (
-    isValidDate(date) &&
-    isValidDate(dateToCompare) &&
-    (isSameUTCDateTime(date, dateToCompare) || isBefore(date, dateToCompare))
-  );
-};
-
-/**
- * Formats a date to a time string
- * @param date - The date to format
- * @param locale - The locale to format the date to
- * @param timeZone - The time zone to format the date to
- * @returns The formatted time string
- */
-const getFormattedTimeString = ({
-  date,
-  locale,
-  timeZone,
-}: {
-  date: DateType;
-  locale: string;
-  timeZone: string;
-}) => {
-  const { hour, minute, second, dayPeriod } = getFormatPartsValues({
-    locale,
-    timeZone,
-    value: date,
-  });
-
-  if (hasDayPeriod(locale)) {
-    return `${hour}:${minute}:${second} ${dayPeriod}`;
-  }
-
-  return `${hour}:${minute}:${second}`;
 };

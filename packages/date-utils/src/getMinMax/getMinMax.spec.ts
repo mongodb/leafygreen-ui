@@ -3,6 +3,7 @@ import { consoleOnce } from '@leafygreen-ui/lib';
 
 import { getMinMax } from './getMinMax';
 
+// TODO: make sure these all make sense
 describe('packages/date-utils/getMinMax', () => {
   const defaultMin = new Date('2020-01-01');
   const defaultMax = new Date('2025-12-31');
@@ -190,4 +191,6 @@ describe('packages/date-utils/getMinMax', () => {
       expect(consoleErrorSpy).not.toHaveBeenCalled();
     });
   });
+
+  // TODO: add tests for consoleLogDatePortionOnly
 });

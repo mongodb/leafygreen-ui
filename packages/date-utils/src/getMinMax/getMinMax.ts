@@ -4,6 +4,7 @@ import { getISODate } from '../getISODate/getISODate';
 import { isValidDate } from '../isValidDate/isValidDate';
 import { DateType } from '../types';
 
+// TODO: move these to a separate file
 /**
  * Returns the Date and Time portion of the ISOString for a given date
  * i.e. 2023-11-01T00:00:00.000Z => 2023-11-01
@@ -34,7 +35,7 @@ export const getMinMax = ({
   defaultMin,
   defaultMax,
   componentName,
-  consoleLogDatePortionOnly,
+  consoleLogDatePortionOnly = true, // TODO: is this negative? think of better name
 }: {
   min: Date | null;
   max: Date | null;
@@ -45,16 +46,16 @@ export const getMinMax = ({
 }): [Date, Date] => {
   const defaultRange: [Date, Date] = [defaultMin, defaultMax];
   const getISODateFormat = consoleLogDatePortionOnly ? getISODate : getISOTime;
+  const getDefaultMaxDate = getISODateFormat(defaultMax);
+  const getDefaultMinDate = getISODateFormat(defaultMin);
+  const maxDate = getISODateFormat(max);
+  const minDate = getISODateFormat(min);
 
   // if both are defined
   if (min && max) {
     if (isBefore(max, min)) {
       consoleOnce.error(
-        `LeafyGreen ${componentName}: Provided max date (${getISODateFormat(
-          max,
-        )}) is before provided min date (${getISODateFormat(
-          min,
-        )}). Using default values.`,
+        `LeafyGreen ${componentName}: Provided max date (${maxDate}) is before provided min date (${minDate}). Using default values.`,
       );
       return defaultRange;
     }
@@ -63,11 +64,7 @@ export const getMinMax = ({
   } else if (min) {
     if (isBefore(defaultMax, min)) {
       consoleOnce.error(
-        `LeafyGreen ${componentName}: Provided min date (${getISODateFormat(
-          min,
-        )}) is after the default max date (${getISODateFormat(
-          defaultMax,
-        )}). Using default values.`,
+        `LeafyGreen ${componentName}: Provided min date (${minDate}) is after the default max date (${getDefaultMaxDate}). Using default values.`,
       );
       return defaultRange;
     }
@@ -76,11 +73,7 @@ export const getMinMax = ({
   } else if (max) {
     if (isBefore(max, defaultMin)) {
       consoleOnce.error(
-        `LeafyGreen ${componentName}: Provided max date (${getISODateFormat(
-          max,
-        )}) is before the default min date (${getISODateFormat(
-          defaultMin,
-        )}). Using default values.`,
+        `LeafyGreen ${componentName}: Provided max date (${maxDate}) is before the default min date (${getDefaultMinDate}). Using default values.`,
       );
       return defaultRange;
     }
