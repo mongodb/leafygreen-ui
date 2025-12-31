@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 import {
   CompoundComponent,
@@ -17,33 +17,36 @@ import { getCollectionToolbarStyles } from './CollectionToolbar.styles';
 import { CollectionToolbarProps } from './CollectionToolbar.types';
 
 export const CollectionToolbar = CompoundComponent(
-  ({
-    size = Size.Default,
-    variant = Variant.Default,
-    className,
-    children,
-  }: CollectionToolbarProps) => {
-    const lgIds = getLgIds();
-    const title = findChild(
+  // eslint-disable-next-line react/display-name
+  forwardRef<HTMLDivElement, CollectionToolbarProps>(
+    ({
+      size = Size.Default,
+      variant = Variant.Default,
+      className,
       children,
-      CollectionToolbarSubComponentProperty.Title,
-    );
+      ...rest
+    }) => {
+      const lgIds = getLgIds();
+      const title = findChild(
+        children,
+        CollectionToolbarSubComponentProperty.Title,
+      );
 
-    const showTitle = title && variant === Variant.Collapsible;
+      const showTitle = title && variant === Variant.Collapsible;
 
-    return (
-      <div
-        data-lgid={lgIds.root}
-        className={getCollectionToolbarStyles({ size, variant, className })}
-      >
-        {showTitle && title}
-      </div>
-    );
-  },
+      return (
+        <div
+          data-lgid={lgIds.root}
+          className={getCollectionToolbarStyles({ size, variant, className })}
+          {...rest}
+        >
+          {showTitle && title}
+        </div>
+      );
+    },
+  ),
   {
     displayName: 'CollectionToolbar',
     Title,
   },
 );
-
-CollectionToolbar.displayName = 'CollectionToolbar';

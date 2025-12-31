@@ -1,8 +1,10 @@
-import { ComponentPropsWithRef } from 'react';
-
-import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 import { Size as ImportedSize } from '@leafygreen-ui/tokens';
 
+/**
+ * Variant options for CollectionToolbar.
+ *
+ * @default 'default'
+ */
 export const Variant = {
   Compact: 'compact',
   Default: 'default',
@@ -10,16 +12,16 @@ export const Variant = {
 } as const;
 export type Variant = (typeof Variant)[keyof typeof Variant];
 
+/**
+ * Size options for CollectionToolbar.
+ *
+ * @default 'default'
+ */
 export const Size = {
   Default: ImportedSize.Default,
   Small: ImportedSize.Small,
 } as const;
 export type Size = (typeof Size)[keyof typeof Size];
-
-export interface SharedCollectionToolbarProps
-  extends ComponentPropsWithRef<'div'>,
-    DarkModeProps,
-    LgIdProps {}
 
 /**
  * Static property names used to identify CollectionToolbar compound components.
