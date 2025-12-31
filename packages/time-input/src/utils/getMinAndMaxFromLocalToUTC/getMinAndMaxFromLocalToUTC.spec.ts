@@ -28,7 +28,7 @@ describe('packages/time-input/utils/getMinAndMaxFromLocalToUTC', () => {
       timeZone: 'America/New_York',
     });
 
-    // March 1, 2025 00:00:00 UTC in UTC is February 28, 2025 19:00:00 in America/New_York
+    // March 1, 2025 00:00:00Z is February 28, 2025 19:00:00 in America/New_York
     // February 28, 2025 02:30:00 in America/New_York is February 28, 2025 07:30:00 UTC
     // February 28, 2025 20:30:10 in America/New_York is March 1, 2025 01:30:10 UTC
 
@@ -44,7 +44,7 @@ describe('packages/time-input/utils/getMinAndMaxFromLocalToUTC', () => {
       timeZone: 'Pacific/Kiritimati',
     });
 
-    // March 1, 2025 00:00:00 UTC is March 1, 2025 14:00:00 in Pacific/Kiritimati
+    // March 1, 2025 00:00:00Z is March 1, 2025 14:00:00 in Pacific/Kiritimati
     // March 1, 2025 02:30:00 in Pacific/Kiritimati is February 28, 2025 12:30:00 UTC
     // March 1, 2025 20:30:10 in Pacific/Kiritimati is March 1, 2025 06:30:10 UTC
 

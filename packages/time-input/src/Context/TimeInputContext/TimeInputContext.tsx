@@ -43,25 +43,25 @@ export const TimeInputProvider = ({
 
   /**
    * Handles the validation of the time input value
-   * @param val - The value to validate in UTC
+   * @param value - The value to validate in UTC
    */
-  const handleValidation = (val?: DateType) => {
-    if (isValidDate(val)) {
+  const handleValidation = (value?: DateType) => {
+    if (isValidDate(value)) {
       const { minUTC, maxUTC } = getMinAndMaxFromLocalToUTC({
         min,
         max,
         timeZone,
-        newDate: val,
+        newDate: value,
       });
 
       const isInRange = getIsInRange(minUTC!, maxUTC!);
 
       // Check if the value in UTC is in the range of the min and max UTC date objects.
-      if (isInRange(val)) {
+      if (isInRange(value)) {
         // clearInternalErrorMessage();
         console.log('🌈is in range');
       } else {
-        if (isOnOrBeforeDateTime(val, minUTC)) {
+        if (isOnOrBeforeDateTime(value, minUTC)) {
           // setInternalErrorMessage(
           //   `Date must be after ${getFormattedDateString(min, locale)}`,
           // );
@@ -72,7 +72,7 @@ export const TimeInputProvider = ({
               timeZone,
             })}`,
             {
-              val: val?.toISOString(),
+              val: value?.toISOString(),
               minUTC: minUTC?.toISOString(),
             },
           );
@@ -87,19 +87,19 @@ export const TimeInputProvider = ({
               timeZone,
             })}`,
             {
-              val: val?.toISOString(),
+              val: value?.toISOString(),
               maxUTC: maxUTC?.toISOString(),
             },
           );
         }
       }
-    } else if (isNull(val)) {
+    } else if (isNull(value)) {
       // This could still be an error, but it's not defined internally
       // clearInternalErrorMessage();
       console.log('🌈is null');
     }
 
-    _handleValidation?.(val);
+    _handleValidation?.(value);
   };
 
   return (
