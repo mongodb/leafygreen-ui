@@ -1,5 +1,11 @@
 # @lg-chat/message
 
+## 10.1.4
+
+### Patch Changes
+
+- b30e37e: Move `Message` sub-component property from internal `MessageBanner` to `MessageVerifiedBanner`
+
 ## 10.1.3
 
 ### Patch Changes

@@ -3,6 +3,8 @@ import { LeafyGreenChatProvider } from '@lg-chat/leafygreen-chat-provider';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 
+import { Button } from '@leafygreen-ui/button';
+
 import {
   InputBar,
   type InputBarProps,
@@ -185,6 +187,25 @@ export const Controlled = (_: InputBarProps) => {
       </LeafyGreenChatProvider>
     </div>
   );
+};
+
+export const WithAdditionalActions: StoryObj<InputBarProps> = {
+  render: Template,
+  args: {
+    children: (
+      <InputBar.AdditionalActions>
+        <Button
+          onClick={() => {
+            // eslint-disable-next-line no-console
+            console.log('Attach clicked');
+          }}
+          size="small"
+        >
+          Attach file
+        </Button>
+      </InputBar.AdditionalActions>
+    ),
+  },
 };
 
 export const Generated: StoryObj<InputBarProps> = {

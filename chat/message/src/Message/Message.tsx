@@ -13,11 +13,11 @@ import LeafyGreenProvider, {
 import { Body } from '@leafygreen-ui/typography';
 
 import { MessageActions } from '../MessageActions';
-import { MessageVerifiedBanner } from '../MessageBanner';
 import { MessageContent } from '../MessageContent';
 import { MessageContext } from '../MessageContext';
 import { MessageLinks } from '../MessageLinks';
 import { MessagePromotion } from '../MessagePromotion';
+import { MessageVerifiedBanner } from '../MessageVerifiedBanner';
 import { MessageSubcomponentProperty } from '../shared.types';
 
 import {

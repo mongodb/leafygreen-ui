@@ -155,10 +155,13 @@ export const getTextAreaStyles = ({
   theme: Theme;
 }) => cx(getBaseTextAreaStyles({ theme }), className);
 
-export const actionContainerStyles = css`
+export const getActionContainerStyles = ({
+  hasAdditionalActions,
+}: {
+  hasAdditionalActions: boolean;
+}) => css`
   display: flex;
-  align-items: flex-end;
-  align-self: flex-end;
+  justify-content: ${hasAdditionalActions ? 'space-between' : 'flex-end'};
   gap: ${spacing[200]}px;
   padding: ${spacing[100]}px;
 `;

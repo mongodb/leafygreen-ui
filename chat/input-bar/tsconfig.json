@@ -30,6 +30,9 @@
       "path": "../../packages/button"
     },
     {
+      "path": "../../packages/compound-component"
+    },
+    {
       "path": "../../packages/emotion"
     },
     {

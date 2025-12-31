@@ -1,6 +1,7 @@
-import React from 'react';
+import { ComponentPropsWithRef } from 'react';
 
-export interface BaseMessageVerifiedBannerProps {
+export interface MessageVerifiedBannerProps
+  extends ComponentPropsWithRef<'div'> {
   /**
    * URL to learn more about the verification.
    */
@@ -18,7 +19,3 @@ export interface BaseMessageVerifiedBannerProps {
    */
   verifier?: string;
 }
-
-export interface MessageVerifiedBannerProps
-  extends BaseMessageVerifiedBannerProps,
-    React.ComponentPropsWithoutRef<'div'> {}

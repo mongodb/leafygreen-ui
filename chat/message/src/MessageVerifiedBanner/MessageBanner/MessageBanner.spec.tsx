@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import { MessageBanner, type MessageBannerProps } from '.';
+import { MessageBanner } from './MessageBanner';
+import { MessageBannerProps } from './MessageBanner.types';
 
 function renderMessageBanner({
   children,
