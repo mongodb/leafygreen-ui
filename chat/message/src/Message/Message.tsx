@@ -12,6 +12,7 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
+import { ToolCard } from '../components';
 import { MessageActions } from '../MessageActions';
 import { MessageContent } from '../MessageContent';
 import { MessageContext } from '../MessageContext';
@@ -54,16 +55,20 @@ export const Message = CompoundComponent(
       );
 
       // Find subcomponents
+      const toolCard = findChild(
+        children,
+        MessageSubcomponentProperty.ToolCard,
+      );
+      const promotion = findChild(
+        children,
+        MessageSubcomponentProperty.Promotion,
+      );
       const actions = findChild(children, MessageSubcomponentProperty.Actions);
       const verifiedBanner = findChild(
         children,
         MessageSubcomponentProperty.VerifiedBanner,
       );
       const links = findChild(children, MessageSubcomponentProperty.Links);
-      const promotion = findChild(
-        children,
-        MessageSubcomponentProperty.Promotion,
-      );
 
       // Filter out subcomponents from children
       const remainingChildren = filterChildren(
@@ -98,6 +103,7 @@ export const Message = CompoundComponent(
                 <MessageContent sourceType={sourceType} {...markdownProps}>
                   {messageBody ?? ''}
                 </MessageContent>
+                {toolCard}
                 {promotion}
                 {actions}
                 {verifiedBanner}
@@ -116,5 +122,6 @@ export const Message = CompoundComponent(
     Links: MessageLinks,
     VerifiedBanner: MessageVerifiedBanner,
     Promotion: MessagePromotion,
+    ToolCard,
   },
 );
