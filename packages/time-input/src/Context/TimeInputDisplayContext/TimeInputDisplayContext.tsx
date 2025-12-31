@@ -7,10 +7,12 @@ import React, {
 import defaults from 'lodash/defaults';
 
 import {
-  getMinMax,
   applyTimeToUTCToday,
+  getMinMax,
   toDate,
 } from '@leafygreen-ui/date-utils';
+
+import { MAX_DATE, MIN_DATE } from '../../constants';
 import { getFormatParts, hasDayPeriod } from '../../utils';
 
 import {
@@ -18,7 +20,6 @@ import {
   TimeInputDisplayProviderProps,
 } from './TimeInputDisplayContext.types';
 import { defaultTimeInputDisplayContext } from './TimeInputDisplayContext.utils';
-import { MAX_DATE, MIN_DATE } from '../../constants';
 
 export const TimeInputDisplayContext =
   createContext<TimeInputDisplayContextProps>(defaultTimeInputDisplayContext);

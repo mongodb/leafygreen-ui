@@ -31,7 +31,6 @@ import {
   getWrapperStyles,
 } from './TimeInputInputs.styles';
 import { TimeInputInputsProps } from './TimeInputInputs.types';
-import { TimeSegmentsState } from '../shared.types';
 
 /**
  * @internal
@@ -50,8 +49,6 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
       setIsDirty,
       disabled,
       formatParts,
-      min,
-      max,
     } = useTimeInputDisplayContext();
     const {
       value,
@@ -119,43 +116,6 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
           segments: newSegments,
           is12HourFormat,
         });
-
-        // TODO: maybe these can be generated in the handleValidation function
-        // const minSegments: TimeSegmentsState = {
-        //   hour: min.getUTCHours().toString(),
-        //   minute: min.getUTCMinutes().toString(),
-        //   second: min.getUTCSeconds().toString(),
-        // };
-
-        // const newMinDate = getNewUTCDateFromSegments({
-        //   segments: minSegments,
-        //   is12HourFormat,
-        //   dateValues: {
-        //     day,
-        //     month,
-        //     year,
-        //   },
-        //   timeZone,
-        //   dayPeriod: newSelectUnit.displayName,
-        // });
-
-        // const maxSegments: TimeSegmentsState = {
-        //   hour: max.getUTCHours().toString(),
-        //   minute: max.getUTCMinutes().toString(),
-        //   second: max.getUTCSeconds().toString(),
-        // };
-
-        // const newMaxDate = getNewUTCDateFromSegments({
-        //   segments: maxSegments,
-        //   is12HourFormat,
-        //   dateValues: {
-        //     day,
-        //     month,
-        //     year,
-        //   },
-        //   timeZone,
-        //   dayPeriod: newSelectUnit.displayName,
-        // });
 
         // TODO: There will be a few more checks added once validation is implemented
         if (shouldSetNewValue) {

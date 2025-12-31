@@ -1,4 +1,5 @@
 import { Month, newUTC, SupportedLocales } from '@leafygreen-ui/date-utils';
+
 import { getFormattedTimeString } from './getFormattedTimeString';
 
 describe('packages/time-input/utils/getFormattedTimeString', () => {

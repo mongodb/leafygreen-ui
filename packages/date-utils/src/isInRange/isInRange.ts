@@ -1,4 +1,5 @@
 import { isWithinInterval } from 'date-fns';
+
 import { isValidDate } from '../isValidDate';
 import { DateType } from '../types';
 

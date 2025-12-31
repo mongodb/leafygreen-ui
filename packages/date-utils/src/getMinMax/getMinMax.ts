@@ -1,20 +1,16 @@
-import { consoleOnce } from '@leafygreen-ui/lib';
 import { isBefore } from 'date-fns';
+
+import { consoleOnce } from '@leafygreen-ui/lib';
+
 import { getISODate } from '../getISODate/getISODate';
-import { isValidDate } from '../isValidDate/isValidDate';
-import { DateType } from '../types';
+import { getISOTime } from '../getISOTime';
 
-// TODO: move these to a separate file
-/**
- * Returns the Date and Time portion of the ISOString for a given date
- * i.e. 2023-11-01T00:00:00.000Z => 2023-11-01
- */
-export const getISOTime = (date: DateType): string => {
-  if (!isValidDate(date)) return '';
+const LogMessage = {
+  Date: 'date',
+  Time: 'time',
+} as const;
 
-  // return only the time portion of the ISOString
-  return date.toISOString().split('T')[1];
-};
+type LogMessage = (typeof LogMessage)[keyof typeof LogMessage];
 
 /**
  * This function is used to get the min and max dates for a component.
@@ -27,6 +23,9 @@ export const getISOTime = (date: DateType): string => {
  * @param {Date} params.defaultMin - The default min date
  * @param {Date} params.defaultMax - The default max date
  * @param {string} params.componentName - The name of the component
+ * @param {LogMessage} params.logMessage - The type of log to use
+ *   - Date: Log the date portion of the date
+ *   - Time: Log the time portion of the date
  * @returns - The min and max dates
  */
 export const getMinMax = ({
@@ -35,27 +34,29 @@ export const getMinMax = ({
   defaultMin,
   defaultMax,
   componentName,
-  consoleLogDatePortionOnly = true, // TODO: is this negative? think of better name
+  logMessage = LogMessage.Date,
 }: {
   min: Date | null;
   max: Date | null;
   defaultMin: Date;
   defaultMax: Date;
   componentName: string;
-  consoleLogDatePortionOnly?: boolean;
+  logMessage?: LogMessage;
 }): [Date, Date] => {
   const defaultRange: [Date, Date] = [defaultMin, defaultMax];
-  const getISODateFormat = consoleLogDatePortionOnly ? getISODate : getISOTime;
-  const getDefaultMaxDate = getISODateFormat(defaultMax);
-  const getDefaultMinDate = getISODateFormat(defaultMin);
+  const getISODateFormat =
+    logMessage === LogMessage.Date ? getISODate : getISOTime;
+  const defaultMaxDate = getISODateFormat(defaultMax);
+  const defaultMinDate = getISODateFormat(defaultMin);
   const maxDate = getISODateFormat(max);
   const minDate = getISODateFormat(min);
+  const errorType = logMessage === LogMessage.Date ? 'date' : 'time';
 
   // if both are defined
   if (min && max) {
     if (isBefore(max, min)) {
       consoleOnce.error(
-        `LeafyGreen ${componentName}: Provided max date (${maxDate}) is before provided min date (${minDate}). Using default values.`,
+        `LeafyGreen ${componentName}: Provided max ${errorType} (${maxDate}) is before provided min ${errorType} (${minDate}). Using default values.`,
       );
       return defaultRange;
     }
@@ -64,7 +65,7 @@ export const getMinMax = ({
   } else if (min) {
     if (isBefore(defaultMax, min)) {
       consoleOnce.error(
-        `LeafyGreen ${componentName}: Provided min date (${minDate}) is after the default max date (${getDefaultMaxDate}). Using default values.`,
+        `LeafyGreen ${componentName}: Provided min ${errorType} (${minDate}) is after the default max ${errorType} (${defaultMaxDate}). Using default values.`,
       );
       return defaultRange;
     }
@@ -73,7 +74,7 @@ export const getMinMax = ({
   } else if (max) {
     if (isBefore(max, defaultMin)) {
       consoleOnce.error(
-        `LeafyGreen ${componentName}: Provided max date (${maxDate}) is before the default min date (${getDefaultMinDate}). Using default values.`,
+        `LeafyGreen ${componentName}: Provided max ${errorType} (${maxDate}) is before the default min ${errorType} (${defaultMinDate}). Using default values.`,
       );
       return defaultRange;
     }

@@ -1,6 +1,7 @@
 import { SupportedLocales } from '@leafygreen-ui/date-utils';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
+import { MAX_DATE, MIN_DATE } from '../../constants';
 import { Size } from '../../TimeInput/TimeInput.types';
 import { getLgIds } from '../../utils/getLgIds';
 
@@ -8,7 +9,6 @@ import {
   TimeInputDisplayContextProps,
   TimeInputDisplayProviderProps,
 } from './TimeInputDisplayContext.types';
-import { MAX_DATE, MIN_DATE } from '../../constants';
 
 export type DisplayContextPropKeys = Exclude<
   keyof TimeInputDisplayProviderProps,

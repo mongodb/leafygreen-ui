@@ -9,8 +9,8 @@ import { StoryFn } from '@storybook/react';
 import { DateType, SupportedLocales } from '@leafygreen-ui/date-utils';
 
 import { Size } from './TimeInput/TimeInput.types';
-import { TimeInput } from '.';
 import { MAX_DATE, MIN_DATE } from './constants';
+import { TimeInput } from '.';
 
 const meta: StoryMetaType<typeof TimeInput> = {
   title: 'Components/Inputs/TimeInput',

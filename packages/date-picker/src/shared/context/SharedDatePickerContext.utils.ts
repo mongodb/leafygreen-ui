@@ -1,16 +1,14 @@
-import { isBefore } from 'date-fns';
 import defaults from 'lodash/defaults';
 import defaultTo from 'lodash/defaultTo';
 
 import {
-  getISODate,
+  getMinMax,
+  isInRange as getIsInRange,
   MAX_DATE,
   MIN_DATE,
   SupportedLocales,
   toDate,
-  isInRange as getIsInRange,
 } from '@leafygreen-ui/date-utils';
-import { consoleOnce } from '@leafygreen-ui/lib';
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
 import { AutoComplete, BaseDatePickerProps, DatePickerState } from '../types';
@@ -145,77 +143,4 @@ export const getContextProps = (
   const formatParts = getFormatParts(providerValue.locale);
 
   return { ...providerValue, isInRange, formatParts };
-};
-
-/**
- * This function is used to get the min and max dates for a component.
- * It will return the default min and max dates if the provided min and max are not valid.
- * It will also console an error if the provided min and max are not valid.
- *
- * @param {Object} params
- * @param {Date | null} params.min - The min date to check
- * @param {Date | null} params.max - The max date to check
- * @param {Date} params.defaultMin - The default min date
- * @param {Date} params.defaultMax - The default max date
- * @param {string} params.componentName - The name of the component
- * @returns - The min and max dates
- */
-const getMinMax = ({
-  min,
-  max,
-  defaultMin,
-  defaultMax,
-  componentName,
-}: {
-  min: Date | null;
-  max: Date | null;
-  defaultMin: Date;
-  defaultMax: Date;
-  componentName: string;
-}): [Date, Date] => {
-  const defaultRange: [Date, Date] = [defaultMin, defaultMax];
-
-  // if both are defined
-  if (min && max) {
-    if (isBefore(max, min)) {
-      consoleOnce.error(
-        `LeafyGreen ${componentName}: Provided max date (${getISODate(
-          max,
-        )}) is before provided min date (${getISODate(
-          min,
-        )}). Using default values.`,
-      );
-      return defaultRange;
-    }
-
-    return [min, max];
-  } else if (min) {
-    if (isBefore(defaultMax, min)) {
-      consoleOnce.error(
-        `LeafyGreen ${componentName}: Provided min date (${getISODate(
-          min,
-        )}) is after the default max date (${getISODate(
-          defaultMax,
-        )}). Using default values.`,
-      );
-      return defaultRange;
-    }
-
-    return [min, defaultMax];
-  } else if (max) {
-    if (isBefore(max, defaultMin)) {
-      consoleOnce.error(
-        `LeafyGreen ${componentName}: Provided max date (${getISODate(
-          max,
-        )}) is before the default min date (${getISODate(
-          defaultMin,
-        )}). Using default values.`,
-      );
-      return defaultRange;
-    }
-
-    return [defaultMin, max];
-  }
-
-  return defaultRange;
 };

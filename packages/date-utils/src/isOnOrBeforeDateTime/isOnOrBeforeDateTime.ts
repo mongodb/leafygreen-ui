@@ -1,7 +1,8 @@
+import { isBefore } from 'date-fns';
+
+import { isSameUTCDateTime } from '../isSameUTCDateTime';
 import { isValidDate } from '../isValidDate';
 import { DateType } from '../types';
-import { isSameUTCDateTime } from '../isSameUTCDateTime';
-import { isBefore } from 'date-fns';
 /**
  * Checks if a date is on or before a date and time
  * @param date - The date to check

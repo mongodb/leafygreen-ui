@@ -1,22 +1,22 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
+import isNull from 'lodash/isNull';
 
 import {
   DateType,
-  isValidDate,
   isInRange as getIsInRange,
-  newTZDate,
   isOnOrBeforeDateTime,
+  isValidDate,
+  newTZDate,
 } from '@leafygreen-ui/date-utils';
 
-import isNull from 'lodash/isNull';
+import { getFormatPartsValues, getFormattedTimeString } from '../../utils';
+import { useTimeInputDisplayContext } from '../TimeInputDisplayContext';
 
 import {
   TimeInputContextProps,
   TimeInputProviderProps,
 } from './TimeInputContext.types';
 import { useTimeInputComponentRefs } from './useTimeInputComponentRefs';
-import { useTimeInputDisplayContext } from '../TimeInputDisplayContext';
-import { getFormatPartsValues, getFormattedTimeString } from '../../utils';
 
 export const TimeInputContext = createContext<TimeInputContextProps>(
   {} as TimeInputContextProps,
