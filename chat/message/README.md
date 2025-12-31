@@ -35,7 +35,7 @@ return (
 
 ### Compound Components
 
-The `Message` component uses a compound component pattern, allowing you to compose different parts of a message using subcomponents like `Message.Actions`, `Message.Links`, `Message.Promotion`, and `Message.VerifiedBanner`.
+The `Message` component uses a compound component pattern, allowing you to compose different parts of a message using subcomponents like `Message.Actions`, `Message.Links`, `Message.Promotion`, `Message.ToolCard`, and `Message.VerifiedBanner`.
 
 **Note:** The layout and order of compound components are enforced by the `Message` component itself. Even if you change the order of subcomponents in your JSX, they will be rendered in the correct, intended order within the message bubble. This ensures consistent UI and accessibility regardless of how you compose your message children.
 
@@ -137,6 +137,39 @@ const MessageWithPromotion = () => {
 };
 ```
 
+### Message.ToolCard
+
+```tsx
+import React from 'react';
+import { Message } from '@lg-chat/message';
+
+const MessageWithToolCard = () => {
+  const handleCancel = () => console.log('Cancel clicked');
+  const handleRun = () => console.log('Run clicked');
+
+  return (
+    <Message isSender={false} messageBody="Test message">
+      <Message.ToolCard>
+        <Message.ToolCard.ExpandableContent>
+          {`# Tool Execution Result
+
+This is a markdown content example showing tool execution results.
+
+\`\`\`javascript
+const result = await tool.execute();
+console.log(result);
+\`\`\``}
+        </Message.ToolCard.ExpandableContent>
+        <Message.ToolCard.Actions
+          onClickCancel={handleCancel}
+          onClickRun={handleRun}
+        />
+      </Message.ToolCard>
+    </Message>
+  );
+};
+```
+
 ### Message.VerifiedBanner
 
 ```tsx
@@ -197,8 +230,22 @@ const Example = () => {
   const handleLinkClick = () => console.log('Link clicked');
   const handlePromotionClick = () => console.log('Promotion clicked');
 
+  const handleToolCancel = () => console.log('Tool cancel clicked');
+  const handleToolRun = () => console.log('Tool run clicked');
+
   return (
     <Message isSender={false} messageBody="Test message">
+      <Message.ToolCard>
+        <Message.ToolCard.ExpandableContent>
+          {`# Tool Execution Result
+
+This is a markdown content example showing tool execution results.`}
+        </Message.ToolCard.ExpandableContent>
+        <Message.ToolCard.Actions
+          onClickCancel={handleToolCancel}
+          onClickRun={handleToolRun}
+        />
+      </Message.ToolCard>
       <Message.Promotion
         promotionText="Go learn more about this skill!"
         promotionUrl="https://learn.mongodb.com/skills"
@@ -263,6 +310,29 @@ const Example = () => {
 | `promotionUrl`                      | `string`                  | Promotion URL for the "Learn More" link. |         |
 | `onPromotionLinkClick` _(optional)_ | `() => void`              | Promotion onClick callback handler.      |         |
 | `...`                               | `HTMLElementProps<'div'>` | Props spread on the root element         |         |
+
+### Message.ToolCard
+
+| Prop       | Type                      | Description                                                                                          | Default |
+| ---------- | ------------------------- | ---------------------------------------------------------------------------------------------------- | ------- |
+| `children` | `ReactNode`               | Should contain `Message.ToolCard.ExpandableContent` and/or `Message.ToolCard.Actions` subcomponents. |         |
+| `darkMode` | `boolean`                 | Determines if the component will render in dark mode                                                 | `false` |
+| `...`      | `HTMLElementProps<'div'>` | Props spread on the container div element                                                            |         |
+
+#### Message.ToolCard.Actions
+
+| Prop            | Type                      | Description                                                 | Default |
+| --------------- | ------------------------- | ----------------------------------------------------------- | ------- |
+| `onClickCancel` | `MouseEventHandler`       | Callback function called when the Cancel button is clicked. |         |
+| `onClickRun`    | `MouseEventHandler`       | Callback function called when the Run button is clicked.    |         |
+| `...`           | `HTMLElementProps<'div'>` | Props spread on the container div element                   |         |
+
+#### Message.ToolCard.ExpandableContent
+
+| Prop       | Type                      | Description                                                                  | Default |
+| ---------- | ------------------------- | ---------------------------------------------------------------------------- | ------- |
+| `children` | `string`                  | Markdown content to render in the expandable content area. Must be a string. |         |
+| `...`      | `HTMLElementProps<'div'>` | Props spread on the container div element                                    |         |
 
 ### Message.VerifiedBanner
 
