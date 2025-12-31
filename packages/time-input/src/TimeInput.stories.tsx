@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React, { useState } from 'react';
 import {
   storybookArgTypes,
@@ -52,11 +53,25 @@ export default meta;
 
 const Template: StoryFn<typeof TimeInput> = props => {
   const [value, setValue] = useState<DateType | undefined>(
-    new Date('1990-02-20T14:30:50Z'),
+    new Date('2026-02-20T04:00:00Z'),
   );
 
   return (
-    <TimeInput {...props} value={value} onTimeChange={time => setValue(time)} />
+    <div>
+      <TimeInput
+        {...props}
+        value={value}
+        onTimeChange={time => {
+          setValue(time);
+          console.log('Storybook: onTimeChange ⏰', {
+            localTime: time,
+            utcTime: time?.toUTCString(),
+          });
+        }}
+      />
+      <p>Time zone: {props.timeZone}</p>
+      <p>UTC value: {value?.toUTCString()}</p>
+    </div>
   );
 };
 

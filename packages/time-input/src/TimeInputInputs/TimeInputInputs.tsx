@@ -1,80 +1,117 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useEffect } from 'react';
+import isEqual from 'lodash/isEqual';
 
-import { unitOptions } from '../constants';
-import { useTimeInputContext, useTimeInputDisplayContext } from '../Context';
-import { useSelectUnit } from '../hooks';
-import { TimeSegmentsState } from '../shared.types';
-import { UnitOption } from '../shared.types';
+import { isDateObject } from '@leafygreen-ui/date-utils';
+
+import { useTimeInputContext } from '../Context/TimeInputContext/TimeInputContext';
+import { useTimeInputDisplayContext } from '../Context/TimeInputDisplayContext/TimeInputDisplayContext';
+import { OnUpdateCallback, useTimeSegmentsAndSelectUnit } from '../hooks';
+import { DayPeriod } from '../shared.types';
 import { TimeFormField, TimeFormFieldInputContainer } from '../TimeFormField';
 import { TimeInputBox } from '../TimeInputBox/TimeInputBox';
 import { TimeInputSelect } from '../TimeInputSelect/TimeInputSelect';
-import { getFormatPartsValues } from '../utils';
+import {
+  getFormatPartsValues,
+  getNewUTCDateFromSegments,
+  shouldSetValue,
+} from '../utils';
 
 import { wrapperBaseStyles } from './TimeInputInputs.styles';
 import { TimeInputInputsProps } from './TimeInputInputs.types';
 
 /**
  * @internal
+ * This component renders and updates the time segments and select unit.
  */
 export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
   (_props: TimeInputInputsProps, forwardedRef) => {
-    const { is12HourFormat, timeZone, locale } = useTimeInputDisplayContext();
-    const { value } = useTimeInputContext();
+    const { is12HourFormat, timeZone, locale, isDirty, setIsDirty } =
+      useTimeInputDisplayContext();
+    const { value, setValue } = useTimeInputContext();
 
-    const handleSelectChange = (unit: UnitOption) => {
-      setSelectUnit(unit);
+    /** if the value is a `Date` the component is dirty, meaning the component has been interacted with */
+    useEffect(() => {
+      if (isDateObject(value) && !isDirty) {
+        setIsDirty(true);
+      }
+    }, [isDirty, setIsDirty, value]);
+
+    /**
+     * Handles the update of the segments and select unit.
+     *
+     * @param newSegments - The new segments
+     * @param prevSegments - The previous segments
+     * @param newSelectUnit - The new select unit
+     * @param prevSelectUnit - The previous select unit
+     */
+    const handleSegmentAndSelectUpdate: OnUpdateCallback = ({
+      newSegments,
+      prevSegments,
+      newSelectUnit,
+      prevSelectUnit,
+    }) => {
+      const hasAnySegmentChanged = !isEqual(newSegments, prevSegments);
+      const hasSelectUnitChanged = !isEqual(newSelectUnit, prevSelectUnit);
+
+      // If any segment has changed or the select unit has changed and the time is in 12 hour format, then we need to update the date. If the time is in 24h format we don't need to check for the select unit since it's not applicable.
+      // Checking for these changes is necessary because the useEffect inside useTimeSegmentsAndSelectUnit that checks if the date has changed will trigger this function again but we don't want to update the date again since the segments and select unit have already been updated.
+      if (hasAnySegmentChanged || (hasSelectUnitChanged && is12HourFormat)) {
+        //Gets the time parts from the value
+        const { month, day, year } = getFormatPartsValues({
+          locale: locale,
+          timeZone: timeZone,
+          value: value,
+        });
+
+        // Constructs a date object in UTC from day, month, year segments
+        const newDate = getNewUTCDateFromSegments({
+          segments: newSegments,
+          is12HourFormat,
+          dateValues: {
+            day,
+            month,
+            year,
+          },
+          timeZone,
+          dayPeriod: newSelectUnit.displayName as DayPeriod,
+        });
+
+        // Checks if the new date should be set
+        const shouldSetNewValue = shouldSetValue({
+          newDate,
+          isDirty,
+          segments: newSegments,
+          is12HourFormat,
+        });
+
+        // TODO: There will be a few more checks added once validation is implemented
+        if (shouldSetNewValue) setValue(newDate);
+      }
     };
 
     /**
-     * Gets the time parts from the value
+     * Hook to manage the time segments and select unit
      */
-    const timeParts = getFormatPartsValues({
-      locale: locale,
-      timeZone: timeZone,
-      value: value,
-    });
-
-    const { hour, minute, second } = timeParts;
-
-    /**
-     * Creates time segments object
-     * // TODO: these are temp and will be replaced in the next PR
-     */
-    const segmentObj: TimeSegmentsState = {
-      hour,
-      minute,
-      second,
-    };
-
-    /**
-     * Hook to manage the select unit
-     * // TODO: This is temp and will be replaced in the next PR
-     */
-    const { selectUnit, setSelectUnit } = useSelectUnit({
-      dayPeriod: timeParts.dayPeriod,
-      value,
-      unitOptions,
-    });
+    const { segments, setSegment, setSelectUnit, selectUnit } =
+      useTimeSegmentsAndSelectUnit({
+        date: value,
+        locale,
+        timeZone,
+        options: {
+          onUpdate: handleSegmentAndSelectUpdate,
+        },
+      });
 
     return (
       <TimeFormField ref={forwardedRef}>
         <div className={wrapperBaseStyles}>
           <TimeFormFieldInputContainer>
-            <TimeInputBox
-              segments={segmentObj}
-              setSegment={(segment, value) => {
-                // TODO: This is temp and will be replaced in the next PR
-                // eslint-disable-next-line no-console
-                console.log({ segment, value });
-              }}
-            />
+            <TimeInputBox segments={segments} setSegment={setSegment} />
           </TimeFormFieldInputContainer>
           {is12HourFormat && (
             <TimeInputSelect
               unit={selectUnit.displayName}
-              onChange={unit => {
-                handleSelectChange(unit);
-              }}
+              onChange={setSelectUnit}
             />
           )}
         </div>
