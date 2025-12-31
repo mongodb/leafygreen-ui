@@ -1,5 +1,6 @@
 ---
-'@lg-charts/core': patch
+'@lg-charts/core': minor
 ---
 
-Small values including zero will show at least a thin bar (1px line minimum) on Bar charts for visibility
+Small values including zero will show at least a thin bar (1px line minimum) on Bar charts for
+visibility
