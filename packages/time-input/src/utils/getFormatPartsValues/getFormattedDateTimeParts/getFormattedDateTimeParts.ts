@@ -40,7 +40,7 @@ export const getFormattedDateTimeParts = (
   const formattedDateTimeParts = dateTimeParts.reduce((acc, part) => {
     if (part.type === 'dayPeriod') {
       acc.dayPeriod = part.value as DayPeriod;
-    } else if (part.type in DateTimePartKeys) {
+    } else if (Object.values(DateTimePartKeys).includes(part.type as any)) {
       acc[part.type as DateTimePartKeysWithoutDayPeriod] = part.value;
     }
 
