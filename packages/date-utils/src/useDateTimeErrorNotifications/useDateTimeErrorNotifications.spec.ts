@@ -1,9 +1,11 @@
 import { act, renderHook } from '@leafygreen-ui/testing-lib';
+
+import { DateTimeState } from '../types';
+
 import {
   useDateTimeErrorNotifications,
   UseDateTimeErrorNotificationsProps,
 } from './useDateTimeErrorNotifications';
-import { DateTimeState } from '../types';
 
 const renderUseDateTimeErrorNotifications = (
   props?: Partial<UseDateTimeErrorNotificationsProps>,
