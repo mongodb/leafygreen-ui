@@ -13,8 +13,9 @@ import {
   defaultSharedDatePickerContext,
   getContextProps,
 } from './SharedDatePickerContext.utils';
-import { useDatePickerErrorNotifications } from './useDatePickerErrorNotifications';
+// import { useDatePickerErrorNotifications } from './useDatePickerErrorNotifications';
 
+import { useDateTimeErrorNotifications } from '@leafygreen-ui/date-utils';
 /** Create the SharedDatePickerContext */
 export const SharedDatePickerContext =
   createContext<SharedDatePickerContextProps>(defaultSharedDatePickerContext);
@@ -45,7 +46,10 @@ export const SharedDatePickerProvider = ({
     stateNotification,
     setInternalErrorMessage,
     clearInternalErrorMessage,
-  } = useDatePickerErrorNotifications(state, errorMessage);
+  } = useDateTimeErrorNotifications({
+    externalState: state,
+    externalErrorMessage: errorMessage,
+  });
 
   if (!label && !ariaLabelledbyProp && !ariaLabelProp) {
     console.warn(
