@@ -43,7 +43,8 @@ function PageSize<T extends number>({
     );
   }
 
-  if (!onItemsPerPageOptionChange) return null;
+  if (!onItemsPerPageOptionChange)
+    return <div className={getSectionStyles({ className })} />;
 
   return (
     <div className={getSectionStyles({ className })}>
