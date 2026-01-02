@@ -3,8 +3,8 @@ import React from 'react';
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 import { H3 } from '@leafygreen-ui/typography';
 
+import { useCollectionToolbarContext } from '../../Context/CollectionToolbarProvider';
 import { CollectionToolbarSubComponentProperty } from '../../shared.types';
-import { getLgIds } from '../../utils';
 
 import { TitleProps } from './Title.types';
 
@@ -14,7 +14,7 @@ import { TitleProps } from './Title.types';
  */
 const Title = CompoundSubComponent(
   ({ className, children, ...rest }: TitleProps) => {
-    const lgIds = getLgIds();
+    const { lgIds } = useCollectionToolbarContext();
     return (
       <H3 data-lgid={lgIds.title} className={className} {...rest}>
         {children}
