@@ -7,20 +7,11 @@ import { DisplayTimeInputProps } from '../../TimeInput/TimeInput.types';
 import { GetLgIdsReturnType } from '../../utils/getLgIds';
 // import { State } from '../../TimeInput/TimeInput.types';
 
+// import { UseDateTimeErrorNotificationsReturnObject } from '@leafygreen-ui/date-utils';
+
 type AriaLabelKeys = keyof AriaLabelPropsWithLabel;
 type AriaLabelKeysWithoutLabel = Exclude<AriaLabelKeys, 'label'>;
 type DarkModeKeys = keyof DarkModeProps;
-
-// TODO: temporary types for error notifications. Will be updated in the next PR.
-// export interface StateNotification {
-//   state: State;
-//   message: string;
-// }
-// export interface UseTimeInputErrorNotificationsReturnObject {
-//   stateNotification: StateNotification;
-//   setInternalErrorMessage: (msg: string) => void;
-//   clearInternalErrorMessage: () => void;
-// }
 
 /**
  * Dynamically generated LGIDs that will be used for the data-lgid and data-testid attributes in child components
