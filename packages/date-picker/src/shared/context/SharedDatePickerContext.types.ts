@@ -2,12 +2,12 @@ import { ReactNode } from 'react';
 
 import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
 import { DateType } from '@leafygreen-ui/date-utils';
+import { UseDateTimeErrorNotificationsReturnObject } from '@leafygreen-ui/date-utils';
 
 import { BaseDatePickerProps, DatePickerState } from '../types';
 import { ModifiedPopoverProps } from '../types/BaseDatePickerProps.types';
 
 import { ModifiedPopoverPropkeys } from './SharedDatePickerContext.utils';
-import { UseDatePickerErrorNotificationsReturnObject } from './useDatePickerErrorNotifications';
 
 export interface StateNotification {
   state: DatePickerState;
@@ -38,7 +38,7 @@ export interface SharedDatePickerContextProps
       'state' | AriaLabelKeysWithoutLabel | ModifiedPopoverPropkeys
     >,
     OptionalModifiedPopoverProps,
-    UseDatePickerErrorNotificationsReturnObject {
+    UseDateTimeErrorNotificationsReturnObject {
   /** The earliest date accepted */
   min: Date;
 

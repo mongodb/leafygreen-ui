@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { createContext, PropsWithChildren, useContext } from 'react';
 
+// import { useDatePickerErrorNotifications } from './useDatePickerErrorNotifications';
+import { useDateTimeErrorNotifications } from '@leafygreen-ui/date-utils';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 
 import { AutoComplete } from '../types';
@@ -13,9 +15,6 @@ import {
   defaultSharedDatePickerContext,
   getContextProps,
 } from './SharedDatePickerContext.utils';
-// import { useDatePickerErrorNotifications } from './useDatePickerErrorNotifications';
-
-import { useDateTimeErrorNotifications } from '@leafygreen-ui/date-utils';
 /** Create the SharedDatePickerContext */
 export const SharedDatePickerContext =
   createContext<SharedDatePickerContextProps>(defaultSharedDatePickerContext);
