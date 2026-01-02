@@ -1,5 +1,7 @@
 import { InvalidDate } from './InvalidDate';
 import { SupportedLocales } from './locales';
+
+export * from './DateTime';
 export type DateType = Date | InvalidDate | null;
 export type DateRangeType = [DateType, DateType];
 export type LocaleString = SupportedLocales | string;
