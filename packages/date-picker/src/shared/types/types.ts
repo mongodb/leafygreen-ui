@@ -1,10 +1,6 @@
-import omit from 'lodash/omit';
+import { DateTimeState } from '@leafygreen-ui/date-utils';
 
-import { FormFieldState } from '@leafygreen-ui/form-field';
-
-export const DatePickerState = omit(FormFieldState, 'Valid');
-export type DatePickerState =
-  (typeof DatePickerState)[keyof typeof DatePickerState];
+export { DateTimeState as DatePickerState };
 
 export const AutoComplete = {
   Off: 'off',
