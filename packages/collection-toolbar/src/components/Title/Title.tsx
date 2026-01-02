@@ -13,10 +13,10 @@ import { TitleProps } from './Title.types';
  * It will only render if the CollectionToolbar variant is set to Collapsible.
  */
 const Title = CompoundSubComponent(
-  ({ className, children, ...rest }: TitleProps) => {
+  ({ className, children, as = 'h2', ...rest }: TitleProps) => {
     const { lgIds } = useCollectionToolbarContext();
     return (
-      <H3 data-lgid={lgIds.title} className={className} {...rest}>
+      <H3 data-lgid={lgIds.title} className={className} as={as} {...rest}>
         {children}
       </H3>
     );

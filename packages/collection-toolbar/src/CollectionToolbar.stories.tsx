@@ -40,7 +40,6 @@ const meta: StoryMetaType<typeof CollectionToolbar> = {
       control: 'select',
       options: Object.values(Size),
     },
-    darkMode: storybookArgTypes.darkMode,
   },
 };
 
