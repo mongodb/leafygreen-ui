@@ -1,6 +1,6 @@
 export {
   CollectionToolbar,
   type CollectionToolbarProps,
-  Size,
-  Variant,
 } from './CollectionToolbar';
+export { type TitleProps as CollectionToolbarTitleProps } from './components';
+export { Size, Variant } from './shared.types';

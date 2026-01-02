@@ -1,12 +1,10 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 
-import { Size, Variant } from './CollectionToolbar.types';
+import { Size, Variant } from '../shared.types';
 
 export const baseStyles = css``;
 
 export const getCollectionToolbarStyles = ({
-  size,
-  variant,
   className,
 }: {
   size?: Size;
