@@ -1,5 +1,16 @@
 # @lg-chat/message
 
+## 10.2.0
+
+### Minor Changes
+
+- b686f2d: [LG-5574](https://jira.mongodb.org/browse/LG-5574): Add `Message.ToolCard`, `Message.ToolCard.Actions`, and `Message.ToolCard.ExpandableContent` as subcomponents for tool-calling workflows. Also exports the following types:
+  - `ToolCardActionProps`
+  - `ToolCardChipProps`
+  - `ToolCardExpandableContentProps`
+  - `ToolCardProps`
+  - `ToolCardState` enum
+
 ## 10.1.4
 
 ### Patch Changes
