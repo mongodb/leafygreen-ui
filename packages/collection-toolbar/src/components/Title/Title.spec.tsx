@@ -32,9 +32,9 @@ describe('packages/collection-toolbar/CollectionToolbar/components/Title', () =>
     expect(utils.getTitle()).toBeInTheDocument();
   });
 
-  test('renders as an h3 element as default', () => {
+  test('renders as an h2 element as default', () => {
     render(<Title>Test Title</Title>);
-    expect(screen.getByRole('heading', { level: 3 })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2 })).toBeInTheDocument();
   });
 
   test('renders as a p element when using as prop', () => {

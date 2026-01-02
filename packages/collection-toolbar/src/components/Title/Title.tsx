@@ -13,7 +13,6 @@ import { TitleProps } from './Title.types';
  * It will only render if the CollectionToolbar variant is set to Collapsible.
  */
 const Title = CompoundSubComponent(
-<<<<<<< HEAD
   // eslint-disable-next-line react/display-name
   forwardRef<HTMLHeadingElement, TitleProps>(
     ({ className, children, ...rest }, fwdRef) => {
@@ -30,16 +29,6 @@ const Title = CompoundSubComponent(
       );
     },
   ),
-=======
-  ({ className, children, ...rest }: TitleProps) => {
-    const { lgIds } = useCollectionToolbarContext();
-    return (
-      <H3 data-lgid={lgIds.title} className={className} {...rest}>
-        {children}
-      </H3>
-    );
-  },
->>>>>>> 9e650eabb (added context provider)
   {
     displayName: 'Title',
     key: CollectionToolbarSubComponentProperty.Title,
