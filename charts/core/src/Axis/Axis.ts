@@ -27,6 +27,7 @@ export const getAxisOptions = (
       : {
           min: props.min,
           max: props.max,
+          ...(splitNumber !== undefined ? { splitNumber } : {}),
         }),
     axisLine: {
       show: true,
@@ -55,7 +56,6 @@ export const getAxisOptions = (
       fontSize: 11,
       color: color[theme].text[Variant.Secondary][InteractionState.Default],
     },
-    splitNumber: splitNumber,
   };
 };
 

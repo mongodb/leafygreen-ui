@@ -144,14 +144,14 @@ Renders an x-axis.
 
 #### Props
 
-| Name                       | Description                                                                                                                                                        | Type                                       | Default |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------ | ------- |
-| `type`                     | Type of axis.                                                                                                                                                      | `'log' \| 'time' \| 'value'`               |         |
-| `label` _(optional)_       | Label name to be rendered on the axis.                                                                                                                             | `string`                                   |         |
-| `formatter` _(optional)_   | Callback function for formatting tick values.                                                                                                                      | `(value: string, index: number) => string` |         |
-| `min` _(optional)_         | Minimum value of the axis.                                                                                                                                         | `number`                                   |         |
-| `max` _(optional)_         | Maximum value of the axis.                                                                                                                                         | `number`                                   |         |
-| `splitNumber` _(optional)_ | Number of segments that the axis is split into. Note that this number serves only as a recommendation, and the true segments may be adjusted based on readability. | `number`                                   |         |
+| Name                       | Description                                                                                                                                                                                               | Type                                       | Default |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ | ------- |
+| `type`                     | Type of axis.                                                                                                                                                                                             | `'log' \| 'time' \| 'value'`               |         |
+| `label` _(optional)_       | Label name to be rendered on the axis.                                                                                                                                                                    | `string`                                   |         |
+| `formatter` _(optional)_   | Callback function for formatting tick values.                                                                                                                                                             | `(value: string, index: number) => string` |         |
+| `min` _(optional)_         | Minimum value of the axis.                                                                                                                                                                                | `number`                                   |         |
+| `max` _(optional)_         | Maximum value of the axis.                                                                                                                                                                                | `number`                                   |         |
+| `splitNumber` _(optional)_ | Number of segments that the axis is split into. Note that this number serves only as a recommendation, and the true segments may be adjusted based on readability. This is unavailable for category axis. | `number`                                   |         |
 
 ### `YAxis`
 
@@ -159,14 +159,14 @@ Renders a y-axis.
 
 #### Props
 
-| Name                       | Description                                                                                                                                                        | Type                                       | Default |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------ | ------- |
-| `type`                     | Type of axis.                                                                                                                                                      | `'log' \| 'time' \| 'value'`               |         |
-| `label` _(optional)_       | Label name to be rendered on the axis.                                                                                                                             | `string`                                   |         |
-| `formatter` _(optional)_   | Callback function for formatting tick values.                                                                                                                      | `(value: string, index: number) => string` |         |
-| `min` _(optional)_         | Minimum value of the axis.                                                                                                                                         | `number`                                   |         |
-| `max` _(optional)_         | Maximum value of the axis.                                                                                                                                         | `number`                                   |         |
-| `splitNumber` _(optional)_ | Number of segments that the axis is split into. Note that this number serves only as a recommendation, and the true segments may be adjusted based on readability. | `number`                                   |         |
+| Name                       | Description                                                                                                                                                                                               | Type                                       | Default |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------ | ------- |
+| `type`                     | Type of axis.                                                                                                                                                                                             | `'log' \| 'time' \| 'value'`               |         |
+| `label` _(optional)_       | Label name to be rendered on the axis.                                                                                                                                                                    | `string`                                   |         |
+| `formatter` _(optional)_   | Callback function for formatting tick values.                                                                                                                                                             | `(value: string, index: number) => string` |         |
+| `min` _(optional)_         | Minimum value of the axis.                                                                                                                                                                                | `number`                                   |         |
+| `max` _(optional)_         | Maximum value of the axis.                                                                                                                                                                                | `number`                                   |         |
+| `splitNumber` _(optional)_ | Number of segments that the axis is split into. Note that this number serves only as a recommendation, and the true segments may be adjusted based on readability. This is unavailable for category axis. | `number`                                   |         |
 
 ### `ChartTooltip`
 
