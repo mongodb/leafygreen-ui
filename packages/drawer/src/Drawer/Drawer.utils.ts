@@ -135,6 +135,7 @@ const restoreEmbeddedPreviousFocus = (
   drawerElement: HTMLDivElement,
   previouslyFocusedRef: React.MutableRefObject<HTMLElement | null>,
 ) => {
+  // If the active element is not in the drawer, do not restore focus
   if (!drawerElement?.contains(document.activeElement)) {
     previouslyFocusedRef.current = null;
     return;
@@ -142,13 +143,44 @@ const restoreEmbeddedPreviousFocus = (
 
   // Restore focus when closing (only if we had handled focus during this session)
   if (previouslyFocusedRef.current) {
+    // Blur the currently focused element first to ensure focus moves
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+    console.log(
+      '🫟previouslyFocusedRef.current',
+      previouslyFocusedRef.current.tagName,
+    );
     // Check if the previously focused element is still in the DOM
     if (document.contains(previouslyFocusedRef.current)) {
       previouslyFocusedRef.current.focus();
+      console.log('🫟focused', previouslyFocusedRef.current.tagName);
+      // if the previously focused element has the autoFocus attribute, focus the body
+
+      // TODO: this seems wrong
+      // if (
+      //   previouslyFocusedRef.current.hasAttribute('autofocus') &&
+      //   drawerElement.contains(previouslyFocusedRef.current)
+      // ) {
+      //   // Make body focusable temporarily, then focus it
+      //   const originalTabIndex = document.body.getAttribute('tabindex');
+      //   document.body.setAttribute('tabindex', '-1');
+      //   document.body.focus();
+      //   // Restore original tabindex
+      //   if (originalTabIndex === null) {
+      //     document.body.removeAttribute('tabindex');
+      //   } else {
+      //     document.body.setAttribute('tabindex', originalTabIndex);
+      //   }
+      //   console.log(
+      //     '🫟body focused because the previously focused element has the autoFocus attribute',
+      //   );
+      // }
     } else {
       // If the previously focused element is no longer in the DOM, focus the body
       // This mimics the behavior of the native HTML Dialog element
       document.body.focus();
+      console.log('🫟body focused');
     }
     previouslyFocusedRef.current = null; // Clear the ref
   }
