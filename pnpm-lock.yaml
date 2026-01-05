@@ -1425,12 +1425,18 @@ importers:
 
   packages/collection-toolbar:
     dependencies:
+      '@leafygreen-ui/button':
+        specifier: workspace:^
+        version: link:../button
       '@leafygreen-ui/compound-component':
         specifier: workspace:^
         version: link:../compound-component
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion
+      '@leafygreen-ui/icon-button':
+        specifier: workspace:^
+        version: link:../icon-button
       '@leafygreen-ui/leafygreen-provider':
         specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
         version: link:../leafygreen-provider
