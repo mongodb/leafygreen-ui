@@ -2,7 +2,7 @@ import React from 'react';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import { CollectionToolbar, Size, Variant } from '.';
+import { CollectionToolbar, Size, Variant, ButtonVariant } from '.';
 
 const meta: StoryMetaType<typeof CollectionToolbar> = {
   title: 'Components/CollectionToolbar',
@@ -48,6 +48,14 @@ export default meta;
 export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
   <CollectionToolbar {...props}>
     <CollectionToolbar.Title>Collection Title</CollectionToolbar.Title>
+    <CollectionToolbar.Actions>
+      <CollectionToolbar.Actions.Button variant={ButtonVariant.Default}>
+        Action Button
+      </CollectionToolbar.Actions.Button>
+      <CollectionToolbar.Actions.Button variant={ButtonVariant.Primary}>
+        Action Button
+      </CollectionToolbar.Actions.Button>
+    </CollectionToolbar.Actions>
   </CollectionToolbar>
 );
 

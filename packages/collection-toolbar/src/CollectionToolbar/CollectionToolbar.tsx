@@ -5,7 +5,7 @@ import {
   findChild,
 } from '@leafygreen-ui/compound-component';
 
-import { Title } from '../components';
+import { Actions, Title } from '../components';
 import { CollectionToolbarProvider } from '../Context/CollectionToolbarProvider';
 import {
   CollectionToolbarSubComponentProperty,
@@ -38,6 +38,8 @@ export const CollectionToolbar = CompoundComponent(
         CollectionToolbarSubComponentProperty.Title,
       );
 
+      // const
+
       const showTitle = title && variant === Variant.Collapsible;
 
       return (
@@ -61,5 +63,6 @@ export const CollectionToolbar = CompoundComponent(
   {
     displayName: 'CollectionToolbar',
     Title,
+    Actions,
   },
 );

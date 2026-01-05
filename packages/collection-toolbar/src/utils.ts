@@ -6,6 +6,7 @@ export const getLgIds = (root: LgIdString = DEFAULT_LGID_ROOT) => {
   const ids = {
     root,
     title: `${root}-title`,
+    actions: `${root}-actions`,
   } as const;
   return ids;
 };
