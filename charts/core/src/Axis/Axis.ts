@@ -16,7 +16,7 @@ export const getAxisOptions = (
   theme: Theme,
   props: AxisProps,
 ): CartesianAxisOption => {
-  const { label, type } = props;
+  const { label, splitNumber, type } = props;
 
   return {
     type,
@@ -55,6 +55,7 @@ export const getAxisOptions = (
       fontSize: 11,
       color: color[theme].text[Variant.Secondary][InteractionState.Default],
     },
+    splitNumber: splitNumber,
   };
 };
 
