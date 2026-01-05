@@ -41,6 +41,9 @@ export type BarProps = SeriesProps & {
   /**
    * Minimum height of bar in pixels. Ensures small values (including zero) are still visible.
    * Useful when charts have large differences in value magnitudes.
+   *
+   * Note: Bars with zero values are rendered with 30% opacity to visually differentiate them
+   * from bars with small non-zero values that are displayed at the minimum height.
    * @default 1
    */
   barMinHeight?: number;
@@ -53,6 +56,24 @@ export const Bar = ({
   hoverBehavior = BarHoverBehavior.None,
   barMinHeight = 1,
 }: BarProps) => {
+  // Transform data to apply opacity to zero values only
+  const transformedData = React.useMemo(() => {
+    return data.map(([x, y]) => {
+      const value = y as number;
+      // Apply 30% opacity (0.3) to zero values to differentiate from 1px minimum height
+      if (value === 0) {
+        return {
+          value: [x, y],
+          itemStyle: {
+            opacity: 0.3,
+          },
+        };
+      }
+      // Keep non-zero values in array format for tooltip compatibility
+      return [x, y];
+    });
+  }, [data]);
+
   const options = useCallback<
     (stylingContext: StylingContext) => EChartSeriesOptions['bar']['options']
   >(
@@ -70,7 +91,9 @@ export const Bar = ({
     [stack, hoverBehavior, barMinHeight],
   );
 
-  return <Series type="bar" name={name} data={data} options={options} />;
+  return (
+    <Series type="bar" name={name} data={transformedData} options={options} />
+  );
 };
 
 Bar.displayName = 'Bar';

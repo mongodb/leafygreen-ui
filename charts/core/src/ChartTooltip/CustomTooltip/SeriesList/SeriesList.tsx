@@ -1,7 +1,7 @@
 import React from 'react';
 import { SeriesName } from '@lg-charts/series-provider';
 
-import { OptionDataValue } from '../../ChartTooltip.types';
+import { getDataArray, OptionDataValue } from '../../ChartTooltip.types';
 import { SeriesListItem } from '../SeriesListItem';
 
 import { getSeriesListStyles } from './SeriesList.styles';
@@ -32,8 +32,11 @@ export function SeriesList({
     <ul className={getSeriesListStyles({ theme, tooltipPinned })} {...rest}>
       {seriesData
         .sort((a, b) => {
-          const [nameA, valueA] = a.data;
-          const [nameB, valueB] = b.data;
+          // Extract data arrays from either format (array or object with value property)
+          const dataArrayA = getDataArray(a.data) || [];
+          const dataArrayB = getDataArray(b.data) || [];
+          const [nameA, valueA] = dataArrayA;
+          const [nameB, valueB] = dataArrayB;
 
           if (sort) {
             return sort(
@@ -44,16 +47,20 @@ export function SeriesList({
 
           return descendingCompareFn(valueA, valueB);
         })
-        .map(({ seriesName, data, color }) => (
-          <SeriesListItem
-            key={seriesName}
-            seriesName={seriesName}
-            data={data}
-            color={color}
-            seriesValueFormatter={seriesValueFormatter}
-            seriesNameFormatter={seriesNameFormatter}
-          />
-        ))}
+        .map(({ seriesName, data, color }) => {
+          // Extract data array from either format
+          const dataArray = getDataArray(data) || [];
+          return (
+            <SeriesListItem
+              key={seriesName}
+              seriesName={seriesName}
+              data={dataArray}
+              color={color}
+              seriesValueFormatter={seriesValueFormatter}
+              seriesNameFormatter={seriesNameFormatter}
+            />
+          );
+        })}
     </ul>
   );
 }

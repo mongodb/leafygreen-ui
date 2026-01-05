@@ -1,4 +1,7 @@
-import { CallbackSeriesDataPoint } from '../../ChartTooltip.types';
+import {
+  CallbackSeriesDataPoint,
+  OptionDataValue,
+} from '../../ChartTooltip.types';
 import { SeriesListProps } from '../SeriesList/SeriesList.types';
 
 export interface SeriesListItemProps
@@ -7,6 +10,7 @@ export interface SeriesListItemProps
     'seriesValueFormatter' | 'seriesNameFormatter'
   > {
   seriesName?: CallbackSeriesDataPoint['seriesName'];
-  data: CallbackSeriesDataPoint['data'];
+  /** Data array in [x, y] format (already extracted from object format if needed) */
+  data: Array<OptionDataValue>;
   color: CallbackSeriesDataPoint['color'];
 }
