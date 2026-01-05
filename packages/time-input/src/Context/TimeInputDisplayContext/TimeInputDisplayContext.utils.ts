@@ -2,7 +2,7 @@ import { SupportedLocales } from '@leafygreen-ui/date-utils';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 import { MAX_DATE, MIN_DATE } from '../../constants';
-import { Size } from '../../TimeInput/TimeInput.types';
+import { Size, State } from '../../TimeInput/TimeInput.types';
 import { getLgIds } from '../../utils/getLgIds';
 
 import {
@@ -56,4 +56,10 @@ export const defaultTimeInputDisplayContext: TimeInputDisplayContextProps = {
   is12HourFormat: false,
   showSeconds: true,
   lgIds: getLgIds(),
+  stateNotification: {
+    state: State.None,
+    message: '',
+  },
+  setInternalErrorMessage: () => {},
+  clearInternalErrorMessage: () => {},
 };

@@ -115,13 +115,6 @@ export const getContextProps = (
     Intl.DateTimeFormat().resolvedOptions().timeZone,
   );
 
-  console.log('🦄 min/max', {
-    min: minProp,
-    max: maxProp,
-    defaultMin: defaultSharedDatePickerContext.min,
-    defaultMax: defaultSharedDatePickerContext.max,
-  });
-
   const [min, max] = getMinMax({
     min: toDate(minProp),
     max: toDate(maxProp),

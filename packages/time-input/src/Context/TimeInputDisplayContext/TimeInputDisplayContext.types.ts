@@ -7,7 +7,7 @@ import { DisplayTimeInputProps } from '../../TimeInput/TimeInput.types';
 import { GetLgIdsReturnType } from '../../utils/getLgIds';
 // import { State } from '../../TimeInput/TimeInput.types';
 
-// import { UseDateTimeErrorNotificationsReturnObject } from '@leafygreen-ui/date-utils';
+import { UseDateTimeErrorNotificationsReturnObject } from '@leafygreen-ui/date-utils';
 
 type AriaLabelKeys = keyof AriaLabelPropsWithLabel;
 type AriaLabelKeysWithoutLabel = Exclude<AriaLabelKeys, 'label'>;
@@ -30,7 +30,8 @@ export type TimeInputDisplayContextProps = Omit<
   Required<DisplayTimeInputProps>,
   AriaLabelKeysWithoutLabel | 'state' | DarkModeKeys
 > &
-  LgIds & {
+  LgIds &
+  UseDateTimeErrorNotificationsReturnObject & {
     /**
      *  The aria-label prop
      */

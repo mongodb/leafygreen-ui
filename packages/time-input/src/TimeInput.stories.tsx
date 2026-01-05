@@ -8,7 +8,7 @@ import { StoryFn } from '@storybook/react';
 
 import { DateType, SupportedLocales } from '@leafygreen-ui/date-utils';
 
-import { Size } from './TimeInput/TimeInput.types';
+import { Size, State } from './TimeInput/TimeInput.types';
 import { MAX_DATE, MIN_DATE } from './constants';
 import { TimeInput } from '.';
 
@@ -53,10 +53,12 @@ const meta: StoryMetaType<typeof TimeInput> = {
     darkMode: false,
     size: Size.Default,
     disabled: false,
+    state: State.None,
+    errorMessage: '',
     // min: MIN_DATE,
     // max: MAX_DATE,
-    min: new Date('2026-02-20T08:22:00Z'), // 8:22AM in every timezone
-    max: new Date('2026-02-21T22:00:00Z'), // 10PM in every timezone
+    min: new Date('2026-02-20T08:22:00Z'), // 08:22/8:22AM in every timezone
+    max: new Date('2026-02-21T22:00:00Z'), // 22:00/10PM in every timezone
   },
   argTypes: {
     locale: { control: 'select', options: Object.values(SupportedLocales) },
@@ -72,6 +74,7 @@ const meta: StoryMetaType<typeof TimeInput> = {
     },
     darkMode: storybookArgTypes.darkMode,
     size: { control: 'select', options: Object.values(Size) },
+    state: { control: 'select', options: Object.values(State) },
     min: { control: 'date' },
     max: { control: 'date' },
   },
@@ -83,6 +86,7 @@ const Template: StoryFn<typeof TimeInput> = props => {
   const [value, setValue] = useState<DateType | undefined>(
     new Date('2026-02-20T00:00:00Z'),
   );
+  // const [value, setValue] = useState<DateType | undefined>();
 
   return (
     <div>
@@ -98,6 +102,11 @@ const Template: StoryFn<typeof TimeInput> = props => {
         }}
         onChange={e => {
           console.log('Storybook: onChange ⏰', { value: e.target.value });
+        }}
+        handleValidation={value => {
+          console.log('Storybook: handleValidation ⏰', {
+            value: value?.toUTCString(),
+          });
         }}
       />
       <p>Time zone: {props.timeZone}</p>

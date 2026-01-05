@@ -21,6 +21,7 @@ export const TimeFormField = React.forwardRef<
     size,
     ariaLabelProp,
     ariaLabelledbyProp,
+    stateNotification: { state, message: errorMessage },
   } = useTimeInputDisplayContext();
 
   return (
@@ -29,6 +30,8 @@ export const TimeFormField = React.forwardRef<
       description={description}
       disabled={disabled}
       size={size}
+      state={state}
+      errorMessage={errorMessage}
       ref={fwdRef}
       aria-label={ariaLabelProp}
       aria-labelledby={ariaLabelledbyProp}

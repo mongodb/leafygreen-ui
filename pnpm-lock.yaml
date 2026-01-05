@@ -1676,6 +1676,9 @@ importers:
 
   packages/date-utils:
     dependencies:
+      '@leafygreen-ui/form-field':
+        specifier: workspace:^
+        version: link:../form-field
       '@leafygreen-ui/lib':
         specifier: workspace:^
         version: link:../lib

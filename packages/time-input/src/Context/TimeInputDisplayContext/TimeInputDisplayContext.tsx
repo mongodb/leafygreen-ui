@@ -10,6 +10,7 @@ import {
   applyTimeToUTCToday,
   getMinMax,
   toDate,
+  useDateTimeErrorNotifications,
 } from '@leafygreen-ui/date-utils';
 
 import { MAX_DATE, MIN_DATE } from '../../constants';
@@ -32,6 +33,8 @@ export const TimeInputDisplayProvider = ({
   label = '',
   'aria-label': ariaLabelProp = '',
   'aria-labelledby': ariaLabelledbyProp = '',
+  errorMessage,
+  state,
   ...rest
 }: PropsWithChildren<TimeInputDisplayProviderProps>) => {
   /**
@@ -73,6 +76,16 @@ export const TimeInputDisplayProvider = ({
     componentName: 'TimeInput',
   });
 
+  /** Error state handling */
+  const {
+    stateNotification,
+    setInternalErrorMessage,
+    clearInternalErrorMessage,
+  } = useDateTimeErrorNotifications({
+    externalState: state,
+    externalErrorMessage: errorMessage,
+  });
+
   return (
     <TimeInputDisplayContext.Provider
       value={{
@@ -86,6 +99,9 @@ export const TimeInputDisplayProvider = ({
         formatParts,
         min,
         max,
+        stateNotification,
+        setInternalErrorMessage,
+        clearInternalErrorMessage,
       }}
     >
       {children}

@@ -1,12 +1,13 @@
 import React, {
   ChangeEvent,
+  FocusEventHandler,
   forwardRef,
   MouseEventHandler,
   useEffect,
 } from 'react';
 import { isEqual } from 'lodash';
 
-import { isDateObject } from '@leafygreen-ui/date-utils';
+import { isDateObject, isSameUTCDateTime } from '@leafygreen-ui/date-utils';
 import { focusAndSelectSegment } from '@leafygreen-ui/input-box';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { createSyntheticEvent } from '@leafygreen-ui/lib';
@@ -117,10 +118,14 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
           is12HourFormat,
         });
 
-        // TODO: There will be a few more checks added once validation is implemented
         if (shouldSetNewValue) {
           setValue(newDate);
-          handleValidation(newDate);
+
+          if (!isSameUTCDateTime(newDate, value)) {
+            handleValidation(newDate);
+          }
+
+          // TODO: add error message for invalid date
         }
       }
     };
@@ -155,6 +160,23 @@ export const TimeInputInputs = forwardRef<HTMLDivElement, TimeInputInputsProps>(
           formatParts,
           segmentRefs,
         });
+      }
+    };
+
+    /**
+     * Called when any child of TimePickerInputs is blurred.
+     * Calls the validation handler.
+     */
+    // TODO: this should also be triggered when the select unit is blurred
+    const handleInputBlur: FocusEventHandler = e => {
+      const nextFocus = e.relatedTarget as HTMLInputElement;
+      const isNextFocusElementASegment = Object.values(segmentRefs)
+        .map(ref => ref.current)
+        .includes(nextFocus);
+
+      if (!isNextFocusElementASegment) {
+        setIsDirty(true);
+        handleValidation?.(value);
       }
     };
 

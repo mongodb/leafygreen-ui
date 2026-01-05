@@ -35,7 +35,14 @@ export const TimeInputProvider = ({
 }: PropsWithChildren<TimeInputProviderProps>) => {
   const refs = useTimeInputComponentRefs();
 
-  const { locale, timeZone, min, max } = useTimeInputDisplayContext();
+  const {
+    locale,
+    timeZone,
+    min,
+    max,
+    setInternalErrorMessage,
+    clearInternalErrorMessage,
+  } = useTimeInputDisplayContext();
 
   const setValue = (newVal?: DateType) => {
     _setValue(newVal ?? null);
@@ -54,48 +61,34 @@ export const TimeInputProvider = ({
         newDate: value,
       });
 
-      const isInRange = getIsInRange(minUTC!, maxUTC!);
+      const isInRange = getIsInRange(minUTC!, maxUTC!); // TODO: why can these be undefined?
+
+      // TODO: should make seconds optional
+      const getFormattedTimeStringHelper = (date: DateType) => {
+        return getFormattedTimeString({
+          date,
+          locale,
+          timeZone,
+        });
+      };
 
       // Check if the value in UTC is in the range of the min and max UTC date objects.
       if (isInRange(value)) {
-        // clearInternalErrorMessage();
-        console.log('🌈is in range');
+        clearInternalErrorMessage();
       } else {
         if (isOnOrBeforeDateTime(value, minUTC)) {
-          // setInternalErrorMessage(
-          //   `Date must be after ${getFormattedDateString(min, locale)}`,
-          // );
-          console.log(
-            `❌❌❌date must be AFTER ${getFormattedTimeString({
-              date: minUTC,
-              locale,
-              timeZone,
-            })}`,
-            {
-              val: value?.toISOString(),
-              minUTC: minUTC?.toISOString(),
-            },
+          setInternalErrorMessage(
+            `Time must be after ${getFormattedTimeStringHelper(minUTC)}`,
           );
         } else {
-          // setInternalErrorMessage(
-          //   `Date must be before ${getFormattedDateString(max, locale)}`,
-          // );
-          console.log(
-            `❌❌❌date must be BEFORE ${getFormattedTimeString({
-              date: maxUTC,
-              locale,
-              timeZone,
-            })}`,
-            {
-              val: value?.toISOString(),
-              maxUTC: maxUTC?.toISOString(),
-            },
+          setInternalErrorMessage(
+            `Time must be before ${getFormattedTimeStringHelper(maxUTC)}`,
           );
         }
       }
     } else if (isNull(value)) {
       // This could still be an error, but it's not defined internally
-      // clearInternalErrorMessage();
+      clearInternalErrorMessage();
       console.log('🌈is null');
     }
 

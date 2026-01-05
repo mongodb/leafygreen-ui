@@ -1,15 +1,15 @@
 import { ChangeEvent, ComponentPropsWithRef } from 'react';
-import omit from 'lodash/omit';
 
 import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
-import { DateType, LocaleString } from '@leafygreen-ui/date-utils';
-import { FormFieldState } from '@leafygreen-ui/form-field';
+import {
+  DateType,
+  LocaleString,
+  DateTimeState as State,
+} from '@leafygreen-ui/date-utils';
 import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 import { BaseFontSize, Size } from '@leafygreen-ui/tokens';
 
-export const State = omit(FormFieldState, 'Valid');
-export type State = (typeof State)[keyof typeof State];
-
+export { State };
 export { Size };
 
 /**
