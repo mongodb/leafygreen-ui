@@ -424,6 +424,28 @@ test('CodeEditor structure and panel work correctly', async () => {
 });
 ```
 
+### Testing Considerations
+
+The `CodeEditor` component uses the native `HTMLDialogElement` API for better accessibility and browser-native behavior. However, `JSDOM` (used by `Jest` and other test runners) does not fully support this API. You'll need to mock the `show` and `close` methods in your test setup:
+
+```tsx
+beforeAll(() => {
+  HTMLDialogElement.prototype.show = jest.fn(function mock(
+    this: HTMLDialogElement,
+  ) {
+    this.open = true;
+  });
+
+  HTMLDialogElement.prototype.close = jest.fn(function mock(
+    this: HTMLDialogElement,
+  ) {
+    this.open = false;
+  });
+});
+```
+
+This mock can be placed in a `beforeAll` block in your test file, or in a global test setup file.
+
 ## CodeMirror Extension Hooks
 
 The `CodeEditor` component is built on [CodeMirror v6](https://codemirror.net/) and provides a complete, ready-to-use editor experience. However, some applications may need highly customized CodeMirror implementations that don't fit the standard `CodeEditor` API, while still wanting to maintain consistency with the LeafyGreen design system.

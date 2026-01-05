@@ -553,7 +553,8 @@ const DrawerCustomTitle = () => {
 ### Usage
 
 ```tsx
-import { Drawer, getTestUtils } from '@leafygreen-ui/drawer';
+import { Drawer } from '@leafygreen-ui/drawer';
+import { getTestUtils } from '@leafygreen-ui/drawer/testing';
 
 const utils = getTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `Drawer`. It defaults to 'lg-drawer' if left empty.
 ```
@@ -710,3 +711,25 @@ const {
 | `isOpen`              | Checks the `aria-hidden` attribute and that the drawer element is visible based on CSS properties for `display`, `opacity`, `transform`, and `visibility` | `boolean`                                                                                                                  |
 | `queryDrawer`         | Returns the drawer element or `null` if no elements match and throws if more than one match is found.                                                     | `HTMLDivElement`                                                                                                           |
 | `getToolbarTestUtils` | Returns the Toolbar test utils for the Toolbar                                                                                                            | [Toolbar test utils return type](https://github.com/mongodb/leafygreen-ui/blob/main/packages/toolbar/README.md#test-utils) |
+
+### Testing Considerations
+
+The `Drawer` component uses the native `HTMLDialogElement` API for better accessibility and browser-native behavior. However, `JSDOM` (used by `Jest` and other test runners) does not fully support this API. You'll need to mock the `show` and `close` methods in your test setup:
+
+```tsx
+beforeAll(() => {
+  HTMLDialogElement.prototype.show = jest.fn(function mock(
+    this: HTMLDialogElement,
+  ) {
+    this.open = true;
+  });
+
+  HTMLDialogElement.prototype.close = jest.fn(function mock(
+    this: HTMLDialogElement,
+  ) {
+    this.open = false;
+  });
+});
+```
+
+This mock can be placed in a `beforeAll` block in your test file, or in a global test setup file.

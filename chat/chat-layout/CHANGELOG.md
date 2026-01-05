@@ -1,5 +1,14 @@
 # @lg-chat/chat-layout
 
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [117d242]
+- Updated dependencies [75e6998]
+  - @leafygreen-ui/compound-component@0.2.0
+  - @leafygreen-ui/icon@14.8.0
+
 ## 0.2.0
 
 ### Minor Changes

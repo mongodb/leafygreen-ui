@@ -1,5 +1,24 @@
 # @leafygreen-ui/confirmation-modal
 
+## 10.3.0
+
+### Minor Changes
+
+- bda019e: Updated Button types to use ButtonProps instead of BaseButtonProps to extend props that can be passed in, such as 'id'
+
+### Patch Changes
+
+- Updated dependencies [60080b8]
+- Updated dependencies [76d5a8f]
+  - @leafygreen-ui/tokens@4.2.0
+
+## 10.2.4
+
+### Patch Changes
+
+- Updated dependencies [fda2d29]
+  - @leafygreen-ui/modal@21.0.0
+
 ## 10.2.3
 
 ### Patch Changes

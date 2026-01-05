@@ -9,7 +9,7 @@ import { axe } from 'jest-axe';
 
 import { Option, OptionGroup, Select } from '@leafygreen-ui/select';
 
-import { getTestUtils } from '../utils/getTestUtils';
+import { getTestUtils } from '../testing';
 import { Modal } from '..';
 import ModalView from '..';
 

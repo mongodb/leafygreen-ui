@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/message",
-  "version": "10.1.1",
+  "version": "10.2.0",
   "description": "lg-chat Message",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -17,11 +17,15 @@
     "@leafygreen-ui/avatar": "workspace:^",
     "@leafygreen-ui/badge": "workspace:^",
     "@leafygreen-ui/banner": "workspace:^",
+    "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/chip": "workspace:^",
+    "@leafygreen-ui/compound-component": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/hooks": "workspace:^",
     "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/icon-button": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
+    "@leafygreen-ui/loading-indicator": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/polymorphic": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
@@ -48,5 +52,13 @@
       "require": "./dist/umd/index.js"
     }
   },
-  "typesVersions": {}
+  "typesVersions": {},
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/chat/message",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/LG/summary"
+  }
 }

@@ -1,5 +1,40 @@
 # @lg-chat/message
 
+## 10.2.0
+
+### Minor Changes
+
+- b686f2d: [LG-5574](https://jira.mongodb.org/browse/LG-5574): Add `Message.ToolCard`, `Message.ToolCard.Actions`, and `Message.ToolCard.ExpandableContent` as subcomponents for tool-calling workflows. Also exports the following types:
+  - `ToolCardActionProps`
+  - `ToolCardChipProps`
+  - `ToolCardExpandableContentProps`
+  - `ToolCardProps`
+  - `ToolCardState` enum
+
+## 10.1.4
+
+### Patch Changes
+
+- b30e37e: Move `Message` sub-component property from internal `MessageBanner` to `MessageVerifiedBanner`
+
+## 10.1.3
+
+### Patch Changes
+
+- 7b80cd4: Refactor to use compound component utils from `@leafygreen-ui/compound-component`
+- Updated dependencies [117d242]
+- Updated dependencies [75e6998]
+  - @leafygreen-ui/compound-component@0.2.0
+  - @leafygreen-ui/icon@14.8.0
+
+## 10.1.2
+
+### Patch Changes
+
+- 26e5267: Deprecated clickable styling and functionality for Card component. Updated styles (removed shadows and added border) for Card component.
+- Updated dependencies [26e5267]
+  - @lg-chat/rich-links@4.0.7
+
 ## 10.1.1
 
 ### Patch Changes

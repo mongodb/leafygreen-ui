@@ -1,9 +1,14 @@
 import React, { forwardRef, MouseEventHandler } from 'react';
 
-import { isSameUTCMonth, setUTCMonth } from '@leafygreen-ui/date-utils';
+import {
+  getMonthName,
+  isSameUTCMonth,
+  setUTCMonth,
+} from '@leafygreen-ui/date-utils';
 import { SupportedLocales } from '@leafygreen-ui/date-utils';
 import { Icon } from '@leafygreen-ui/icon';
 import { IconButton } from '@leafygreen-ui/icon-button';
+import { isDefined } from '@leafygreen-ui/lib';
 
 import { useSharedDatePickerContext } from '../../../shared/context';
 import { useDatePickerContext } from '../../DatePickerContext';
@@ -42,6 +47,12 @@ export const DatePickerMenuHeader = forwardRef<
 
   const isIsoFormat = locale === SupportedLocales.ISO_8601;
 
+  const formatMonth = (date: Date) => {
+    const monthName = getMonthName(date.getUTCMonth(), locale);
+    const year = date.getUTCFullYear().toString();
+    return `${monthName.long} ${year}`;
+  };
+
   /**
    * If the month is not in range and is not the last valid month
    * e.g.
@@ -64,6 +75,48 @@ export const DatePickerMenuHeader = forwardRef<
   };
 
   /**
+   * Given a direction (left/right), computes the nearest valid adjacent month
+   *
+   * @example
+   * max: new Date(Date.UTC(2038, Month.January, 19));
+   * current month date: new Date(Date.UTC(2038, Month.March, 19));
+   * `left` chevron will change the month back to January 2038
+   *
+   * @example
+   * min: new Date(Date.UTC(1970, Month.January, 1));
+   * current month date: new Date(Date.UTC(1969, Month.November, 19));
+   * "right" chevron will change the month back to January 1970
+   */
+  const getNewMonth = (dir: 'left' | 'right'): Date => {
+    if (isMonthInvalid(dir)) {
+      const closestValidDate = dir === 'left' ? max : min;
+      const newMonthIndex = closestValidDate.getUTCMonth();
+      const newMonth = setUTCMonth(closestValidDate, newMonthIndex);
+      return newMonth;
+    } else {
+      const increment = dir === 'left' ? -1 : 1;
+      const newMonthIndex = month.getUTCMonth() + increment;
+      const newMonth = setUTCMonth(month, newMonthIndex);
+      return newMonth;
+    }
+  };
+
+  const getChevronButtonLabel = (dir: 'left' | 'right') => {
+    const dirLabel = dir === 'left' ? 'Previous' : 'Next';
+    const isNewMonthInvalid = isMonthInvalid(dir);
+    const newMonth = getNewMonth(dir);
+    const newMonthString = formatMonth(newMonth);
+    return [
+      dirLabel,
+      isNewMonthInvalid ? 'valid' : undefined,
+      'month',
+      `(${newMonthString})`,
+    ]
+      .filter(isDefined)
+      .join(' ');
+  };
+
+  /**
    * Calls the `updateMonth` helper with the appropriate month when a Chevron is clicked
    */
   const handleChevronClick =
@@ -71,35 +124,16 @@ export const DatePickerMenuHeader = forwardRef<
     e => {
       e.stopPropagation();
       e.preventDefault();
-
-      // e.g.
-      // max: new Date(Date.UTC(2038, Month.January, 19));
-      // current month date: new Date(Date.UTC(2038, Month.March, 19));
-      // left chevron will change the month back to January 2038
-      // e.g.
-      // min: new Date(Date.UTC(1970, Month.January, 1));
-      // current month date: new Date(Date.UTC(1969, Month.November, 19));
-      // right chevron will change the month back to January 1970
-      if (isMonthInvalid(dir)) {
-        const closestValidDate = dir === 'left' ? max : min;
-        const newMonthIndex = closestValidDate.getUTCMonth();
-        const newMonth = setUTCMonth(closestValidDate, newMonthIndex);
-        updateMonth(newMonth);
-      } else {
-        const increment = dir === 'left' ? -1 : 1;
-        const newMonthIndex = month.getUTCMonth() + increment;
-        const newMonth = setUTCMonth(month, newMonthIndex);
-        updateMonth(newMonth);
-      }
+      const newMonth = getNewMonth(dir);
+      updateMonth(newMonth);
     };
 
   return (
     <div ref={fwdRef} className={menuHeaderStyles} {...rest}>
       <IconButton
         ref={refs.chevronButtonRefs.left}
-        aria-label={
-          isMonthInvalid('left') ? 'Previous valid month' : 'Previous month'
-        }
+        data-testid="lg-date_picker-menu-prev_month_button"
+        aria-label={getChevronButtonLabel('left')}
         disabled={shouldChevronBeDisabled('left', month, min)}
         onClick={handleChevronClick('left')}
       >
@@ -120,7 +154,8 @@ export const DatePickerMenuHeader = forwardRef<
       </div>
       <IconButton
         ref={refs.chevronButtonRefs.right}
-        aria-label={isMonthInvalid('right') ? 'Next valid month' : 'Next month'}
+        data-testid="lg-date_picker-menu-next_month_button"
+        aria-label={getChevronButtonLabel('right')}
         disabled={shouldChevronBeDisabled('right', month, max)}
         onClick={handleChevronClick('right')}
       >

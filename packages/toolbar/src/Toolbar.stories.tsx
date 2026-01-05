@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React, { useMemo } from 'react';
 import { faker } from '@faker-js/faker';
-import { StoryFn } from '@storybook/react';
+import { StoryFn, StoryObj } from '@storybook/react';
 
 import { Button } from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
@@ -59,20 +59,20 @@ export default {
     children: (
       <>
         <ToolbarIconButton
+          label="MongoDB Assistant"
+          glyph="Assistant"
+          onClick={() => console.log('ASSISTANT')}
+        />
+        <ToolbarIconButton
           label="View Code"
           glyph="Code"
           onClick={() => console.log('CODE')}
         />
         <ToolbarIconButton
-          label="Key"
+          label={<div>Key</div>}
           glyph="Key"
           active
           onClick={() => console.log('KEY')}
-        />
-        <ToolbarIconButton
-          label={<div>Megaphone</div>}
-          glyph="Megaphone"
-          onClick={() => console.log('MEGAPHONE')}
         />
         <ToolbarIconButton
           label="List"
@@ -92,7 +92,14 @@ export default {
 
 const Template: StoryFn<typeof Toolbar> = props => <Toolbar {...props} />;
 
-export const LiveExample = Template.bind({});
+export const LiveExample: StoryObj<ToolbarProps> = {
+  render: Template,
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
+    },
+  },
+};
 
 export const InLayout: StoryFn<ToolbarProps> = (args: ToolbarProps) => {
   const theme = args.darkMode ? 'dark' : 'light';
@@ -119,4 +126,11 @@ InLayout.parameters = {
   },
 };
 
-export const Generated = () => <></>;
+export const Generated: StoryObj<ToolbarProps> = {
+  render: () => <></>,
+  parameters: {
+    chromatic: {
+      delay: 2500,
+    },
+  },
+};

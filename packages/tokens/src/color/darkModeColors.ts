@@ -93,6 +93,26 @@ const darkModeBorderColors = {
     [InteractionState.Hover]: gray.dark2,
     [InteractionState.Focus]: gray.dark2,
   },
+  [Variant.Info]: {
+    [InteractionState.Default]: blue.light1,
+    [InteractionState.Hover]: blue.light1,
+    [InteractionState.Focus]: blue.light1,
+  },
+  [Variant.OnInfo]: {
+    [InteractionState.Default]: blue.dark2,
+    [InteractionState.Hover]: blue.dark2,
+    [InteractionState.Focus]: blue.dark2,
+  },
+  [Variant.Warning]: {
+    [InteractionState.Default]: yellow.dark2,
+    [InteractionState.Hover]: yellow.dark2,
+    [InteractionState.Focus]: yellow.dark2,
+  },
+  [Variant.OnWarning]: {
+    [InteractionState.Default]: yellow.dark2,
+    [InteractionState.Hover]: yellow.dark2,
+    [InteractionState.Focus]: yellow.dark2,
+  },
 } as const satisfies VariantColorRecord;
 
 const darkModeIconColors = {
@@ -107,7 +127,7 @@ const darkModeIconColors = {
     [InteractionState.Focus]: blue.light3,
   },
   [Variant.InversePrimary]: {
-    [InteractionState.Default]: white,
+    [InteractionState.Default]: black,
     [InteractionState.Hover]: black,
     [InteractionState.Focus]: blue.dark2,
   },
@@ -145,9 +165,9 @@ const darkModeTextColors = {
     [InteractionState.Focus]: blue.light3,
   },
   [Variant.Placeholder]: {
-    [InteractionState.Default]: gray.dark1,
-    [InteractionState.Hover]: gray.dark1,
-    [InteractionState.Focus]: gray.dark1,
+    [InteractionState.Default]: gray.light1,
+    [InteractionState.Hover]: gray.light1,
+    [InteractionState.Focus]: gray.light1,
   },
   [Variant.Secondary]: {
     [InteractionState.Default]: gray.light1,
@@ -198,6 +218,26 @@ const darkModeTextColors = {
     [InteractionState.Default]: blue.light1,
     [InteractionState.Hover]: blue.light1,
     [InteractionState.Focus]: blue.light1,
+  },
+  [Variant.Info]: {
+    [InteractionState.Default]: blue.light2,
+    [InteractionState.Hover]: blue.light2,
+    [InteractionState.Focus]: blue.light2,
+  },
+  [Variant.OnInfo]: {
+    [InteractionState.Default]: blue.light2,
+    [InteractionState.Hover]: blue.light2,
+    [InteractionState.Focus]: blue.light2,
+  },
+  [Variant.Warning]: {
+    [InteractionState.Default]: yellow.base,
+    [InteractionState.Hover]: yellow.base,
+    [InteractionState.Focus]: yellow.base,
+  },
+  [Variant.OnWarning]: {
+    [InteractionState.Default]: yellow.light2,
+    [InteractionState.Hover]: yellow.light2,
+    [InteractionState.Focus]: yellow.light2,
   },
 } as const satisfies VariantColorRecord;
 

@@ -5,10 +5,10 @@
   "license": "Apache-2.0",
   "private": true,
   "engines": {
-    "node": ">= 18.20.8",
-    "pnpm": ">= 10.18.3"
+    "node": ">= 22.21.0",
+    "pnpm": ">= 10.26.0"
   },
-  "packageManager": "pnpm@10.18.3",
+  "packageManager": "pnpm@10.26.0",
   "scripts": {
     "init": "pnpm install && pnpm build",
     "init:react17": "pnpm clean; npx node ./scripts/react17/init.mjs; pnpm run init",
@@ -34,7 +34,7 @@
     "prepublishOnly": "pnpm run build && pnpm build:ts-downlevel && pnpm build:docs",
     "publish": "pnpm changeset publish --public",
     "reset:react17": "npx node ./scripts/react17/reset.mjs; pnpm run init",
-    "slackbot": "lg slackbot",
+    "slackbot": "lg slackbot release",
     "start": "npx storybook dev -p 9001 --no-version-updates --no-open",
     "serve": "npx http-server storybook-static -c5",
     "test": "lg test",
@@ -66,7 +66,7 @@
     "@types/node": "^20.12.5",
     "@types/react": "18.2.23",
     "@types/react-dom": "18.2.8",
-    "chromatic": "^11.0.0",
+    "chromatic": "^13.3.4",
     "dotenv": "^10.0.0",
     "lodash": "^4.17.21",
     "npm-package-json-lint": "8.0.0",
@@ -74,7 +74,7 @@
     "prettier": "2.8.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "storybook": "8.6.14",
+    "storybook": "8.6.15",
     "stream": "^0.0.3",
     "ts-node": "10.9.2",
     "turbo": "^2.0.6",
@@ -98,8 +98,7 @@
       "@leafygreen-ui": "packages",
       "@lg-charts": "charts",
       "@lg-chat": "chat",
-      "@lg-tools": "tools",
-      "@lg-mcp-ui": "mcp-ui"
+      "@lg-tools": "tools"
     }
   },
   "keywords": [

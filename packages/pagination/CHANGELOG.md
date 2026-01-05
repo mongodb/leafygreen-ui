@@ -1,5 +1,11 @@
 # @leafygreen-ui/pagination
 
+## 4.2.0
+
+### Minor Changes
+
+- e34b3e2: Exports `PaginationRangeView`, `PaginationItemsPerPage`, and `PaginationCurrentPageControls` components, allowing consumers to import only the specific parts of the Pagination UI they need
+
 ## 4.1.5
 
 ### Patch Changes

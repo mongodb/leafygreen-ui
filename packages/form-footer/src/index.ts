@@ -5,5 +5,16 @@ export {
   default,
   default as FormFooter,
 } from './FormFooter';
-export { type FormFooterProps } from './FormFooter.types';
+export {
+  type BackButtonProps,
+  type BackSplitButtonProps,
+  type BackStandardButtonProps,
+  type CancelButtonProps,
+  type CancelSplitButtonProps,
+  type CancelStandardButtonProps,
+  type FormFooterProps,
+  type PrimaryButtonProps,
+  type PrimarySplitButtonProps,
+  type PrimaryStandardButtonProps,
+} from './FormFooter.types';
 export { getLgIds } from './utils';

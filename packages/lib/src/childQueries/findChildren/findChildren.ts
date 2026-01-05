@@ -15,7 +15,7 @@ import { unwrapRootFragment } from '../unwrapRootFragment';
  * **Styled Component Support:** Checks component.target and component.__emotion_base
  * for styled() wrapped components.
  *
- *  * @example
+ * @example
  * ```ts
  * // ✅ Will find: Direct children
  * findChildren([
@@ -56,7 +56,9 @@ export const findChildren = (
 
   if (!allChildren) return [];
 
-  return allChildren.filter(child =>
-    isChildWithProperty(child, staticProperty),
-  ) as Array<ReactElement>;
+  return allChildren
+    .flat()
+    .filter(child =>
+      isChildWithProperty(child, staticProperty),
+    ) as Array<ReactElement>;
 };

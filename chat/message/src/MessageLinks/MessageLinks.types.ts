@@ -5,7 +5,7 @@ import { DarkModeProps } from '@leafygreen-ui/lib';
 
 export interface MessageLinksProps
   extends DarkModeProps,
-    Omit<React.ComponentProps<'div'>, 'children'> {
+    Omit<React.ComponentPropsWithRef<'div'>, 'children'> {
   /**
    * The text to display as the heading of the links section.
    */

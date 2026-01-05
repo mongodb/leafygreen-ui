@@ -3,6 +3,7 @@ import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
 import {
   boxShadows,
+  color,
   focusRing,
   fontFamilies,
   transitionDuration,
@@ -24,11 +25,10 @@ const darkHoverBoxShadow = boxShadows[Theme.Dark][2];
 const lightFocusBoxShadow = focusRing.light.default;
 const darkFocusBoxShadow = focusRing.dark.default;
 
-export const colorSet: Record<Theme, ColorSet> = {
+const colorSet: Record<Theme, ColorSet> = {
   [Theme.Light]: {
     containerStyle: css`
-      border: 1px solid ${palette.gray.light2};
-      box-shadow: ${lightBaseBoxShadow};
+      border: 1px solid ${color[Theme.Light].border.tertiary.default};
       background-color: ${palette.white};
       color: ${palette.gray.dark3};
     `,
@@ -53,8 +53,7 @@ export const colorSet: Record<Theme, ColorSet> = {
   },
   [Theme.Dark]: {
     containerStyle: css`
-      border: 1px solid ${palette.gray.dark2};
-      box-shadow: ${darkBaseBoxShadow};
+      border: 1px solid ${color[Theme.Dark].border.tertiary.default};
       background-color: ${palette.black};
       color: ${palette.white};
     `,
@@ -77,7 +76,7 @@ export const colorSet: Record<Theme, ColorSet> = {
   },
 };
 
-export const containerStyle = css`
+const containerStyle = css`
   position: relative;
   transition: ${transitionDuration.default}ms ease-in-out;
   transition-property: border, box-shadow;
@@ -95,13 +94,13 @@ export const getCardStyles = ({
   className,
 }: {
   theme: Theme;
-  contentStyle: ContentStyle;
+  contentStyle?: ContentStyle;
   className?: string;
 }) =>
   cx(
     containerStyle,
+    colorSet[theme].containerStyle,
     {
-      [colorSet[theme].containerStyle]: true,
       [colorSet[theme].clickableStyle]: contentStyle === ContentStyle.Clickable,
     },
     className,

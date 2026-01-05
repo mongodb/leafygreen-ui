@@ -20,26 +20,30 @@ type OmittedSplitButtonProps = Omit<
   'children' | 'variant'
 >;
 
-type BackStandardButtonProps = ButtonPropsOmittingVariant & {
+export type BackStandardButtonProps = ButtonPropsOmittingVariant & {
   variant?: Extract<ButtonVariant, 'default' | 'dangerOutline'>;
 };
-type BackSplitButtonProps = OmittedSplitButtonProps & {
+export type BackSplitButtonProps = OmittedSplitButtonProps & {
   variant?: Extract<SplitButtonVariant, 'default' | 'danger'>;
 };
-type BackButtonProps = BackStandardButtonProps | BackSplitButtonProps;
+export type BackButtonProps = BackStandardButtonProps | BackSplitButtonProps;
 
-type CancelStandardButtonProps = ButtonPropsOmittingVariant;
-type CancelSplitButtonProps = OmittedSplitButtonProps;
-type CancelButtonProps = CancelStandardButtonProps | CancelSplitButtonProps;
+export type CancelStandardButtonProps = ButtonPropsOmittingVariant;
+export type CancelSplitButtonProps = OmittedSplitButtonProps;
+export type CancelButtonProps =
+  | CancelStandardButtonProps
+  | CancelSplitButtonProps;
 
-type PrimaryStandardButtonProps = ButtonPropsOmittingVariant &
+export type PrimaryStandardButtonProps = ButtonPropsOmittingVariant &
   ButtonPropsWithRequiredChildren & {
     variant?: Extract<ButtonVariant, 'primary' | 'danger'>;
   };
-type PrimarySplitButtonProps = OmittedSplitButtonProps & {
+export type PrimarySplitButtonProps = OmittedSplitButtonProps & {
   variant?: Extract<SplitButtonVariant, 'primary' | 'danger'>;
 };
-type PrimaryButtonProps = PrimaryStandardButtonProps | PrimarySplitButtonProps;
+export type PrimaryButtonProps =
+  | PrimaryStandardButtonProps
+  | PrimarySplitButtonProps;
 
 export interface FormFooterProps
   extends React.ComponentProps<'footer'>,

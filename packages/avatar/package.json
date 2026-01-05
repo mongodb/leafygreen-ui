@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/avatar",
-  "version": "3.1.6",
+  "version": "3.2.0",
   "description": "LeafyGreen UI Avatar",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@leafygreen-ui/emotion": "workspace:^",
+    "@leafygreen-ui/hooks": "workspace:^",
     "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/logo": "workspace:^",
@@ -37,5 +38,13 @@
       "require": "./dist/umd/index.js"
     }
   },
-  "typesVersions": {}
+  "typesVersions": {},
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/avatar",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/LG/summary"
+  }
 }

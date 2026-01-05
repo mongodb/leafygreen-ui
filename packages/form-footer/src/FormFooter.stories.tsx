@@ -11,7 +11,7 @@ import { css } from '@leafygreen-ui/emotion';
 import { Icon } from '@leafygreen-ui/icon';
 import { MenuItem } from '@leafygreen-ui/menu';
 
-import FormFooter, { FormFooterProps } from '.';
+import { FormFooter, FormFooterProps } from '.';
 
 const wrapperStyle = css`
   min-width: 40vw;
@@ -80,6 +80,31 @@ const Template: StoryType<typeof FormFooter> = ({
   />
 );
 
+const StickyTemplate: StoryType<typeof FormFooter> = ({
+  primaryButtonProps,
+  ...args
+}: FormFooterStoryProps) => (
+  <div style={{ margin: `-100px` }}>
+    <div
+      className={css`
+        padding: 24px;
+        height: 100vh;
+        overflow: hidden;
+      `}
+    >
+      <h2>Scroll down to see the sticky footer in action</h2>
+      <p>This content creates scrollable space...</p>
+    </div>
+    <FormFooter
+      {...args}
+      primaryButtonProps={{ children: 'Button', variant: 'primary' }}
+      className={css`
+        position: sticky;
+        bottom: 0;
+      `}
+    />
+  </div>
+);
 export const LiveExample: StoryObj<FormFooterProps> = {
   render: Template,
   parameters: {
@@ -118,5 +143,17 @@ export const DarkMode: StoryObj<typeof FormFooter> = {
   render: Template,
   args: {
     darkMode: true,
+  },
+};
+
+export const StickyFooter: StoryObj<typeof FormFooter> = {
+  render: StickyTemplate,
+  decorators: [],
+  parameters: {
+    layout: 'fullscreen',
+  },
+  args: {
+    backButtonProps: { children: 'Back' },
+    cancelButtonProps: { children: 'Cancel' },
   },
 };

@@ -1,5 +1,23 @@
 # @leafygreen-ui/form-footer
 
+## 9.3.0
+
+### Minor Changes
+
+- 9930f12: Exports button prop interfaces
+
+### Patch Changes
+
+- 9930f12: Passes `data-lgid` to the root `footer` element
+- Updated dependencies [9930f12]
+  - @leafygreen-ui/lib@15.7.0
+
+## 9.2.3
+
+### Patch Changes
+
+- 9e5932c: Added internal container to preserve component styles when sticky positioning is applied externally
+
 ## 9.2.2
 
 ### Patch Changes

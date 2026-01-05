@@ -1,5 +1,13 @@
 # @lg-tools/storybook-utils
 
+## 0.3.4
+
+### Patch Changes
+
+- 4a34047: Updates Storybook packages to latest patch, re: 12/17 security advisory.
+
+  For details see https://storybook.js.org/blog/security-advisory/
+
 ## 0.3.3
 
 ### Patch Changes

@@ -4,9 +4,12 @@ import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 import { userEvent, within } from '@storybook/test';
 
+import DatabaseIcon from '@leafygreen-ui/icon/dist/Database';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { Message, MessageProps, MessageSourceType } from '..';
+
+import { ToolCardState } from './components';
 
 const MARKDOWN_TEXT = `
 # Heading 1
@@ -149,6 +152,32 @@ const getPromotionChild = () => (
     // eslint-disable-next-line no-console
     onPromotionLinkClick={() => console.log('Promotion clicked')}
   />
+);
+
+const getToolCardChild = () => (
+  <Message.ToolCard
+    chips={[{ label: 'MongoDB', glyph: <DatabaseIcon /> }]}
+    state={ToolCardState.Idle}
+    title="Run list-databases?"
+  >
+    <Message.ToolCard.ExpandableContent>
+      {`#### ARGUMENTS
+
+\`\`\`javascript
+{}
+\`\`\``}
+    </Message.ToolCard.ExpandableContent>
+    <Message.ToolCard.Actions
+      onClickCancel={() => {
+        // eslint-disable-next-line no-console
+        console.log('Cancel clicked');
+      }}
+      onClickRun={() => {
+        // eslint-disable-next-line no-console
+        console.log('Run clicked');
+      }}
+    />
+  </Message.ToolCard>
 );
 
 const meta: StoryMetaType<typeof Message> = {
@@ -304,6 +333,15 @@ export const WithPromotion: StoryObj<MessageProps> = {
   },
 };
 
+export const WithToolCard: StoryObj<MessageProps> = {
+  render: Template,
+  args: {
+    children: getToolCardChild(),
+    isSender: false,
+    messageBody: ASSISTANT_TEXT,
+  },
+};
+
 export const WithAllSubComponents: StoryObj<MessageProps> = {
   render: Template,
   args: {
@@ -312,6 +350,7 @@ export const WithAllSubComponents: StoryObj<MessageProps> = {
         {getActionsChild()}
         {getLinksChild()}
         {getPromotionChild()}
+        {getToolCardChild()}
         {getVerifiedBannerChild()}
       </>
     ),

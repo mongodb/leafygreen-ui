@@ -45,6 +45,15 @@
       "path": "../../packages/banner"
     },
     {
+      "path": "../../packages/button"
+    },
+    {
+      "path": "../../packages/chip"
+    },
+    {
+      "path": "../../packages/compound-component"
+    },
+    {
       "path": "../../packages/emotion"
     },
     {
@@ -61,6 +70,9 @@
     },
     {
       "path": "../../packages/lib"
+    },
+    {
+      "path": "../../packages/loading-indicator"
     },
     {
       "path": "../../packages/palette"
