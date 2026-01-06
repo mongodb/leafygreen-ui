@@ -14,18 +14,26 @@ import {
   rootStyles,
 } from './ParagraphSkeleton.styles';
 import { ParagraphSkeletonProps } from '.';
+import { getLgIds } from '../utils/getLgIds';
 
 export function ParagraphSkeleton({
   darkMode: darkModeProp,
   enableAnimations,
   withHeader = false,
   className,
+  'data-lgid': dataLgId,
   ...rest
 }: ParagraphSkeletonProps) {
   const { darkMode } = useDarkMode(darkModeProp);
+  const lgIds = getLgIds(dataLgId);
   return (
     <LeafyGreenProvider darkMode={darkMode}>
-      <div {...rest} className={cx(rootStyles, className)} aria-busy>
+      <div
+        {...rest}
+        className={cx(rootStyles, className)}
+        aria-busy
+        data-lgid={lgIds.root}
+      >
         {withHeader && (
           <Skeleton
             enableAnimations={enableAnimations}

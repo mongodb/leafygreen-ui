@@ -13,20 +13,23 @@ import {
   skeletonListWrapperStyles,
 } from './ListSkeleton.styles';
 import { ListSkeletonProps } from './ListSkeleton.types';
+import { getLgIds } from '../utils/getLgIds';
 
 export function ListSkeleton({
   darkMode: darkModeProp,
   enableAnimations,
   count = 5,
   bulletsOnly,
+  'data-lgid': dataLgId,
   ...rest
 }: ListSkeletonProps) {
   const { darkMode } = useDarkMode(darkModeProp);
-
+  const lgIds = getLgIds(dataLgId);
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <ul
         className={skeletonListWrapperStyles}
+        data-lgid={lgIds.root}
         data-testid="lg-skeleton-list"
         aria-busy
         {...rest}

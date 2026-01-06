@@ -10,15 +10,19 @@ import {
 } from './Skeleton.styles';
 import { Size } from './Skeleton.types';
 import { SkeletonProps } from '.';
+import { getLgIds } from '../utils/getLgIds';
 
 export function Skeleton({
   enableAnimations = true,
   size = Size.Default,
   darkMode,
   className,
+  'data-lgid': dataLgId,
   ...rest
 }: SkeletonProps) {
   const { theme } = useDarkMode(darkMode);
+  const lgIds = getLgIds(dataLgId);
+
   return (
     <div
       className={cx(
@@ -28,6 +32,7 @@ export function Skeleton({
         className,
       )}
       aria-hidden
+      data-lgid={lgIds.root}
       {...rest}
     />
   );
