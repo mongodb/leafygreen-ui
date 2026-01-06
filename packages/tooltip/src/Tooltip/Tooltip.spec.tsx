@@ -257,7 +257,7 @@ describe('packages/tooltip', () => {
       });
       await waitFor(() => expect(tooltip).toBeVisible());
 
-      await userEvent.type(button, '{esc}');
+      await userEvent.keyboard('{Escape}');
       await waitForElementToBeRemoved(tooltip);
     });
 
@@ -688,7 +688,7 @@ describe('packages/tooltip', () => {
         'hover',
         <button onFocus={focusHandler}>{buttonText}</button>,
       );
-      await userEvent.click(trigger);
+      trigger.focus();
       expect(focusHandler).toHaveBeenCalled();
     });
 
@@ -699,6 +699,7 @@ describe('packages/tooltip', () => {
         <button onBlur={blurHandler}>{buttonText}</button>,
       );
       await userEvent.click(trigger);
+      expect(trigger).toHaveFocus();
       await userEvent.tab();
       expect(blurHandler).toHaveBeenCalled();
     });
@@ -742,7 +743,7 @@ describe('packages/tooltip', () => {
       });
       await waitFor(() => expect(tooltip).toBeVisible());
 
-      await userEvent.type(button, '{esc}');
+      await userEvent.keyboard('{Escape}');
       expect(onClose).toHaveBeenCalledTimes(1);
       await waitForElementToBeRemoved(tooltip);
     });
