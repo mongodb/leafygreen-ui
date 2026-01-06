@@ -62,7 +62,7 @@ export const Header = forwardRef<HTMLDivElement, HeaderProps>(
                 chipCharacterLimit={CHIP_CHARACTER_LIMIT}
                 glyph={glyph}
                 label={label}
-                variant={ChipVariant.Gray}
+                variant={ChipVariant.White}
               />
             ))}
           </div>
