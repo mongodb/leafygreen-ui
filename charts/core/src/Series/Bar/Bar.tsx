@@ -37,16 +37,6 @@ export type BarProps = SeriesProps & {
    * - `none`: Other bars will not be affected by the hover. (default)
    */
   hoverBehavior?: BarHoverBehavior;
-
-  /**
-   * Minimum height of bar in pixels. Ensures small values (including zero) are still visible.
-   * Useful when charts have large differences in value magnitudes.
-   *
-   * Note: Bars with zero values are rendered with 30% opacity to visually differentiate them
-   * from bars with small non-zero values that are displayed at the minimum height.
-   * @default 1
-   */
-  barMinHeight?: number;
 };
 
 export const Bar = ({
@@ -54,7 +44,6 @@ export const Bar = ({
   data,
   stack,
   hoverBehavior = BarHoverBehavior.None,
-  barMinHeight = 1,
 }: BarProps) => {
   // Transform data to apply opacity to zero values only
   const transformedData = React.useMemo(() => {
@@ -82,7 +71,7 @@ export const Bar = ({
     stylingContext => ({
       clip: false,
       stack,
-      barMinHeight,
+      barMinHeight: 1,
       emphasis: {
         focus: getEmphasisFocus(hoverBehavior),
       },
@@ -90,7 +79,7 @@ export const Bar = ({
         color: stylingContext.seriesColor,
       },
     }),
-    [stack, hoverBehavior, barMinHeight],
+    [stack, hoverBehavior],
   );
 
   return (
