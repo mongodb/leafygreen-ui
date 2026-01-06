@@ -85,8 +85,8 @@ export const getResolvedDrawerSizes = (size: Size, hasToolbar?: boolean) => {
  * @param initialFocus - The initial focus element.
  */
 const focusExplicitElement = (
-  drawerElement: HTMLDialogElement | HTMLDivElement,
-  initialFocus: 'auto' | string | RefObject<HTMLElement>,
+  drawerElement: HTMLElement,
+  initialFocus: string | RefObject<HTMLElement>,
 ) => {
   let targetElement: HTMLElement | null = null;
 
@@ -113,11 +113,15 @@ const handleAutoFocus = (drawerElement: HTMLDivElement) => {
   ) as HTMLElement;
 
   if (autoFocusElement) {
-    // Auto focus element found, focus it
+    // the autofocus attribute only works on initial load, so we need to focus it manually in the embedded drawer.
     autoFocusElement.focus();
-  } else {
+    return;
+  }
+
+  const firstFocusableElement = queryFirstFocusableElement(drawerElement);
+
+  if (firstFocusableElement) {
     // Find and focus the first focusable element in the drawer
-    const firstFocusableElement = queryFirstFocusableElement(drawerElement);
     firstFocusableElement?.focus();
   }
 };
@@ -164,10 +168,7 @@ const restoreEmbeddedPreviousFocus = (
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
-    console.log(
-      '🫟previouslyFocusedRef.current',
-      previouslyFocusedRef.current.tagName,
-    );
+
     // Check if the previously focused element is still in the DOM
     if (document.contains(previouslyFocusedRef.current)) {
       // If the drawer is initially opened, the previously focused element is the element with the autoFocus attribute within the drawer. If this happens, we need to focus the body.
@@ -176,18 +177,12 @@ const restoreEmbeddedPreviousFocus = (
         drawerElement.contains(previouslyFocusedRef.current)
       ) {
         focusBody();
-        console.log(
-          '🫟body focused because the previously focused element has the autoFocus attribute',
-        );
       } else {
         previouslyFocusedRef.current.focus();
-        console.log('🫟focused', previouslyFocusedRef.current.tagName);
       }
     } else {
-      // If the previously focused element is no longer in the DOM, focus the body
-      // This mimics the behavior of the native HTML Dialog element
+      // If the previously focused element is no longer in the DOM, focus the body, which mimics the behavior of the native HTML Dialog element
       focusBody();
-      console.log('🫟body focused');
     }
     previouslyFocusedRef.current = null; // Clear the ref
   }
@@ -211,7 +206,6 @@ export const setEmbeddedDrawerFocus = (
   if (open && !hasHandledFocusRef.current) {
     // Set the hasHandledFocusRef to true so that we know we have handled focus for this session.
     hasHandledFocusRef.current = true;
-    // Store the currently focused element when opening
     previouslyFocusedRef.current = document.activeElement as HTMLElement;
 
     if (initialFocus !== 'auto') {
@@ -219,12 +213,10 @@ export const setEmbeddedDrawerFocus = (
       return;
     }
 
-    // If no auto focus element is found, focus the first focusable element in the drawer
     handleAutoFocus(drawerElement);
   } else if (!open && hasHandledFocusRef.current) {
     // If the drawer is closed and we have handled focus(hasHandledFocusRef.current is true), we need to reset the hasHandledFocusRef to false so that the next time the drawer is opened, we can handle focus again.
     hasHandledFocusRef.current = false;
-    // Restore the previously focused element when closing
     restoreEmbeddedPreviousFocus(drawerElement, previouslyFocusedRef);
   }
 };

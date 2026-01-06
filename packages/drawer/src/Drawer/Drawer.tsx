@@ -137,7 +137,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         drawerElement.show();
         setShouldAnimate(true);
         setOverlayDrawerFocus(drawerElement, initialFocus);
-      } else {
+      } else if (!open) {
         drawerElement.close();
       }
     }, [ref, open, initialFocus]);
