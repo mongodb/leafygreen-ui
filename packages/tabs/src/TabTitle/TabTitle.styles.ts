@@ -71,14 +71,12 @@ const baseStyles = css`
     transform: scaleX(0.8);
   }
 
-  &:hover:after {
+  &:hover::after {
     transform: scaleX(0.95);
   }
 
-  &:active:after {
-    &::after {
-      transform: scaleX(1);
-    }
+  &:active::after {
+    transform: scaleX(1);
   }
 `;
 
