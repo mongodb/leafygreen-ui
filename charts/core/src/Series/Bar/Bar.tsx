@@ -60,6 +60,7 @@ export const Bar = ({
   const transformedData = React.useMemo(() => {
     return data.map(([x, y]) => {
       const value = y as number;
+
       // Apply 30% opacity (0.3) to zero values to differentiate from 1px minimum height
       if (value === 0) {
         return {
@@ -69,6 +70,7 @@ export const Bar = ({
           },
         };
       }
+
       // Keep non-zero values in array format for tooltip compatibility
       return [x, y];
     });
