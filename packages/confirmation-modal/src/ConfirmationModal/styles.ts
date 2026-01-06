@@ -1,7 +1,7 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
 import { palette } from '@leafygreen-ui/palette';
-import { typeScales } from '@leafygreen-ui/tokens';
+import { spacing, typeScales } from '@leafygreen-ui/tokens';
 
 import { Variant } from './ConfirmationModal.types';
 
@@ -44,15 +44,7 @@ export const textEntryInputStyle = css`
 `;
 
 export const buttonStyle = css`
-  margin: 0 2px;
-
-  &:first-of-type {
-    margin: 0 0 0 5px;
-  }
-
-  &:last-of-type {
-    margin: 0 5px 0 0;
-  }
+  margin: 0 0 0 ${spacing[200]}px;
 `;
 
 export const warningIconStyle = css`
