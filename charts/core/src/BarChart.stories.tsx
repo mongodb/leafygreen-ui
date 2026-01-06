@@ -259,7 +259,10 @@ export const BarWithMinimumHeight: StoryObj<{
           type="time"
           formatter={value => {
             const date = new Date(value);
-            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            return date.toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric',
+            });
           }}
         />
         <YAxis type="value" />
