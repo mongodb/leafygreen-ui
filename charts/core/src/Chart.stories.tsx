@@ -66,12 +66,14 @@ interface LiveExampleProps {
   xAxisLabel: XAxisProps['label'];
   xAxisMin?: ContinuousAxisProps['min'];
   xAxisMax?: ContinuousAxisProps['max'];
+  xAxisSplitNumber?: ContinuousAxisProps['splitNumber'];
   renderYAxis: boolean;
   yAxisType: YAxisProps['type'];
   yAxisFormatter: ContinuousAxisProps['formatter'];
   yAxisLabel: YAxisProps['label'];
   yAxisMin?: ContinuousAxisProps['min'];
   yAxisMax?: ContinuousAxisProps['max'];
+  yAxisSplitNumber?: ContinuousAxisProps['splitNumber'];
   renderTooltip: boolean;
   tooltipSeriesValueFormatter: ChartTooltipProps['seriesValueFormatter'];
   renderHeader: boolean;
@@ -144,11 +146,13 @@ export const LiveExample: StoryObj<LiveExampleProps> = {
     xAxisLabel: 'X-Axis Label',
     xAxisMin,
     xAxisMax,
+    xAxisSplitNumber: undefined,
     renderYAxis: true,
     yAxisType: 'value',
     yAxisLabel: 'Y-Axis Label',
     yAxisMin,
     yAxisMax,
+    yAxisSplitNumber: undefined,
     renderTooltip: true,
     renderHeader: true,
     headerTitle: 'LeafyGreen Chart Header',
@@ -259,6 +263,16 @@ export const LiveExample: StoryObj<LiveExampleProps> = {
         category: 'XAxis',
       },
     },
+    xAxisSplitNumber: {
+      control: 'number',
+      type: { name: 'number' },
+      description:
+        'Number of segments that the axis is split into. Note that this number serves only as a recommendation, and the true segments may be adjusted based on readability.',
+      name: 'SplitNumber',
+      table: {
+        category: 'XAxis',
+      },
+    },
     renderYAxis: {
       control: 'boolean',
       description: 'Render Y-axis',
@@ -303,6 +317,16 @@ export const LiveExample: StoryObj<LiveExampleProps> = {
       control: 'number',
       description: 'Maximum value of y-axis',
       name: 'Max',
+      table: {
+        category: 'YAxis',
+      },
+    },
+    yAxisSplitNumber: {
+      control: 'number',
+      type: { name: 'number' },
+      description:
+        'Number of segments that the axis is split into. Note that this number serves only as a recommendation, and the true segments may be adjusted based on readability.',
+      name: 'SplitNumber',
       table: {
         category: 'YAxis',
       },
@@ -514,10 +538,12 @@ export const LiveExample: StoryObj<LiveExampleProps> = {
     xAxisFormatter,
     xAxisMin,
     xAxisMax,
+    xAxisSplitNumber,
     yAxisType,
     yAxisFormatter,
     yAxisMin,
     yAxisMax,
+    yAxisSplitNumber,
     xAxisLabel,
     yAxisLabel,
     renderTooltip,
@@ -543,7 +569,7 @@ export const LiveExample: StoryObj<LiveExampleProps> = {
     thresholdLineLabel,
     thresholdLineValue,
     thresholdLinePosition,
-  }) => {
+  }: LiveExampleProps) => {
     return (
       <Chart
         zoomSelect={{
@@ -587,6 +613,7 @@ export const LiveExample: StoryObj<LiveExampleProps> = {
             label={xAxisLabel}
             min={xAxisMin}
             max={xAxisMax}
+            splitNumber={xAxisSplitNumber}
           />
         )}
         {renderYAxis && (
@@ -596,6 +623,7 @@ export const LiveExample: StoryObj<LiveExampleProps> = {
             label={yAxisLabel}
             min={yAxisMin}
             max={yAxisMax}
+            splitNumber={yAxisSplitNumber}
           />
         )}
         {data.map(({ name, data }) => (

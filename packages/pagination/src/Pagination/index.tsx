@@ -1,3 +1,8 @@
-import Pagination from './Pagination';
+export {
+  type NavigationProps,
+  default as PaginationNavigation,
+} from './Navigation';
+export { type PageSizeProps, default as PaginationPageSize } from './PageSize';
+export { default as Pagination } from './Pagination';
 export { type PaginationProps } from './Pagination.types';
-export default Pagination;
+export { default as PaginationSummary, type SummaryProps } from './Summary';

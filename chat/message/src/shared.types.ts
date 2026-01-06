@@ -6,6 +6,7 @@ export const MessageSubcomponentProperty = {
   Actions: 'isLGMessageActions',
   Links: 'isLGMessageLinks',
   Promotion: 'isLGMessagePromotion',
+  ToolCard: 'isLGMessageToolCard',
   VerifiedBanner: 'isLGMessageVerifiedBanner',
 } as const;
 
