@@ -13,6 +13,7 @@ import {
   spacing,
   transitionDuration,
   typeScales,
+  Variant as ColorVariant,
 } from '@leafygreen-ui/tokens';
 
 import { Variant } from './Chip.types';
@@ -212,6 +213,32 @@ export const variantColor = {
       },
     },
   },
+  [Variant.White]: {
+    [Theme.Dark]: {
+      [Property.Background]: {
+        [InteractionState.Default]: palette.black,
+        [InteractionState.Focus]: palette.gray.base,
+      },
+      [Property.Text]: {
+        [InteractionState.Default]: palette.gray.light2,
+      },
+      [Property.Icon]: {
+        [InteractionState.Default]: palette.gray.light1,
+      },
+    },
+    [Theme.Light]: {
+      [Property.Background]: {
+        [InteractionState.Default]: palette.white,
+        [InteractionState.Focus]: palette.gray.light1,
+      },
+      [Property.Text]: {
+        [InteractionState.Default]: palette.black,
+      },
+      [Property.Icon]: {
+        [InteractionState.Default]: palette.gray.dark1,
+      },
+    },
+  },
 } as const satisfies RecursiveRecord<
   [Variant, Theme, Property, InteractionState, string],
   false
@@ -245,6 +272,11 @@ export const wrapperBaseStyles = (
   transition: background-color ${transitionDuration.faster}ms ease-in-out;
 `;
 
+const getWrapperWhiteStyles = (theme: Theme) => css`
+  border: 1px solid
+    ${color[theme].border[ColorVariant.Secondary][InteractionState.Default]};
+`;
+
 export const wrapperDisabledStyles = (theme: Theme) =>
   cx(
     css`
@@ -269,6 +301,7 @@ export const getWrapperStyles = (
   isDisabled = false,
 ) =>
   cx(wrapperBaseStyles(baseFontSize, variant, theme), {
+    [getWrapperWhiteStyles(theme)]: variant === Variant.White,
     [wrapperDisabledStyles(theme)]: isDisabled,
   });
 
