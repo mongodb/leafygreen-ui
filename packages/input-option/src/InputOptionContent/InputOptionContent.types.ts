@@ -31,4 +31,9 @@ export interface InputOptionContentProps extends ComponentProps<'div'> {
    * @default {true}
    */
   preserveIconSpace?: boolean;
+
+  /**
+   * Optional className to be applied to the description
+   */
+  descriptionClassName?: string;
 }

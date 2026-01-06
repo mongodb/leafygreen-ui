@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ReactElement } from 'react';
+import { ComponentPropsWithoutRef, ReactElement, ReactNode } from 'react';
 
 import { Either } from '@leafygreen-ui/lib';
 
@@ -77,4 +77,5 @@ export interface InternalComboboxOptionProps
   isFocused: boolean;
   setSelected: () => void;
   index: number;
+  badge?: ReactNode;
 }

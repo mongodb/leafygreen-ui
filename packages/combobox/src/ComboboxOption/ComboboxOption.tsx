@@ -4,12 +4,14 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { Badge } from '@leafygreen-ui/badge';
 
 import { ComboboxContext } from '../ComboboxContext';
 import { ComboboxSize } from '../types';
 import { wrapJSX } from '../utils';
 
 import {
+  badgeDescriptionClassName,
   displayNameStyle,
   largeStyles,
   multiselectIconLargePosition,
@@ -20,6 +22,7 @@ import {
   InternalComboboxOptionProps,
 } from './ComboboxOption.types';
 import { getGlyphs } from './getGlyphs';
+import { isBadgeComponent } from '../utils/wrapJSX';
 
 /**
  * Internal ComboboxOption Component for use within Combobox only.
@@ -43,6 +46,7 @@ export const InternalComboboxOption = React.forwardRef<
       value,
       onClick,
       disabled = false,
+      badge,
       ...rest
     }: InternalComboboxOptionProps,
     forwardedRef,
@@ -99,6 +103,8 @@ export const InternalComboboxOption = React.forwardRef<
     // When multiselect and withoutIcons the Checkbox is aligned to the top instead of centered.
     const multiSelectWithoutIcons = multiselect && !withIcons;
 
+    const shouldRenderBadge = useMemo(() => isBadgeComponent(badge), [badge]);
+
     return (
       <InputOption
         {...rest}
@@ -124,9 +130,19 @@ export const InternalComboboxOption = React.forwardRef<
           leftGlyph={leftGlyph}
           rightGlyph={rightGlyph}
           description={description}
+          descriptionClassName={cx({
+            [badgeDescriptionClassName]: shouldRenderBadge,
+          })}
         >
-          <span id={optionTextId} className={displayNameStyle(isSelected)}>
+          <span
+            id={optionTextId}
+            className={displayNameStyle({
+              isSelected,
+              hasBadge: shouldRenderBadge,
+            })}
+          >
             {wrapJSX(displayName, inputValue, 'strong')}
+            {shouldRenderBadge && badge}
           </span>
         </InputOptionContent>
       </InputOption>

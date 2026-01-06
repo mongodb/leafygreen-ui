@@ -34,6 +34,7 @@ export const InputOptionContent = ({
   rightGlyph,
   preserveIconSpace = true,
   className,
+  descriptionClassName: descriptionClassNameProp,
   ...rest
 }: InputOptionContentProps) => {
   const { disabled, highlighted, darkMode } = useInputOptionContext();
@@ -71,7 +72,11 @@ export const InputOptionContent = ({
         </div>
         {description && (
           <Description
-            className={cx(descriptionClassName, getDescriptionStyles())}
+            className={cx(
+              descriptionClassName,
+              getDescriptionStyles(),
+              descriptionClassNameProp,
+            )}
             darkMode={darkMode}
             disabled={disabled}
           >

@@ -50,8 +50,25 @@ export const disallowPointer = css`
   pointer-events: none;
 `;
 
-export const displayNameStyle = (isSelected: boolean) => css`
+export const displayNameStyle = ({
+  isSelected,
+  hasBadge,
+}: {
+  isSelected: boolean;
+  hasBadge: boolean;
+}) => css`
   font-weight: ${isSelected ? fontWeights.semiBold : fontWeights.regular};
+  ${hasBadge &&
+  css`
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: ${spacing[200]}px;
+  `}
+`;
+
+export const badgeDescriptionClassName = css`
+  margin-top: ${spacing[100]}px;
 `;
 
 export const iconThemeStyles: Record<Theme, string> = {
