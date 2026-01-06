@@ -80,8 +80,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const [shouldAnimate, setShouldAnimate] = useState(false);
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
     const [previousWidth, setPreviousWidth] = useState(0);
-    const isInitialMountRef = useRef<boolean>(true);
-    const previouslyFocusedReff = useRef<HTMLElement | null>(null);
 
     // Returns the resolved displayMode, open state, and onClose function based on the component and context props.
     const { displayMode, open, onClose, size, initialFocus } =
@@ -97,17 +95,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         componentInitialFocus: initialFocusProp,
         contextInitialFocus: initialFocusContextProp,
       });
-
-    // Capture the previously focused element BEFORE the drawer renders
-    // This runs during render, before the drawer DOM exists
-    // if (isInitialMountRef.current && open) {
-    //   previouslyFocusedReff.current = document.activeElement as HTMLElement;
-    //   console.log(
-    //     '🌼🌼🌼previouslyFocusedRef.current',
-    //     previouslyFocusedReff.current.tagName,
-    //   );
-    //   isInitialMountRef.current = false;
-    // }
 
     // Returns the resolved drawer sizes based on whether a toolbar is present.
     const { initialSize, resizableMinWidth, resizableMaxWidth } =

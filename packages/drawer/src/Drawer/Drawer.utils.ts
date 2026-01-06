@@ -123,6 +123,23 @@ const handleAutoFocus = (drawerElement: HTMLDivElement) => {
 };
 
 /**
+ * Focuses the body element by temporarily setting the tabindex to -1.
+ * @returns void
+ */
+const focusBody = () => {
+  const originalTabIndex = document.body.getAttribute('tabindex');
+  document.body.setAttribute('tabindex', '-1');
+  document.body.focus();
+
+  // Restore original tabindex
+  if (originalTabIndex === null) {
+    document.body.removeAttribute('tabindex');
+  } else {
+    document.body.setAttribute('tabindex', originalTabIndex);
+  }
+};
+
+/**
  * Restores the previously focused element when closing an embedded drawer.
  *
  * If the active focus is not in the drawer, this means the user has navigated away from the drawer and we should not restore focus.
@@ -153,33 +170,23 @@ const restoreEmbeddedPreviousFocus = (
     );
     // Check if the previously focused element is still in the DOM
     if (document.contains(previouslyFocusedRef.current)) {
-      previouslyFocusedRef.current.focus();
-      console.log('🫟focused', previouslyFocusedRef.current.tagName);
-      // if the previously focused element has the autoFocus attribute, focus the body
-
-      // TODO: this seems wrong
-      // if (
-      //   previouslyFocusedRef.current.hasAttribute('autofocus') &&
-      //   drawerElement.contains(previouslyFocusedRef.current)
-      // ) {
-      //   // Make body focusable temporarily, then focus it
-      //   const originalTabIndex = document.body.getAttribute('tabindex');
-      //   document.body.setAttribute('tabindex', '-1');
-      //   document.body.focus();
-      //   // Restore original tabindex
-      //   if (originalTabIndex === null) {
-      //     document.body.removeAttribute('tabindex');
-      //   } else {
-      //     document.body.setAttribute('tabindex', originalTabIndex);
-      //   }
-      //   console.log(
-      //     '🫟body focused because the previously focused element has the autoFocus attribute',
-      //   );
-      // }
+      // If the drawer is initially opened, the previously focused element is the element with the autoFocus attribute within the drawer. If this happens, we need to focus the body.
+      if (
+        previouslyFocusedRef.current.hasAttribute('autofocus') &&
+        drawerElement.contains(previouslyFocusedRef.current)
+      ) {
+        focusBody();
+        console.log(
+          '🫟body focused because the previously focused element has the autoFocus attribute',
+        );
+      } else {
+        previouslyFocusedRef.current.focus();
+        console.log('🫟focused', previouslyFocusedRef.current.tagName);
+      }
     } else {
       // If the previously focused element is no longer in the DOM, focus the body
       // This mimics the behavior of the native HTML Dialog element
-      document.body.focus();
+      focusBody();
       console.log('🫟body focused');
     }
     previouslyFocusedRef.current = null; // Clear the ref

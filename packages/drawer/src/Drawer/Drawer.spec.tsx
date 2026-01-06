@@ -399,7 +399,7 @@ describe('packages/drawer', () => {
           expect(secondaryButton).toHaveFocus();
         });
 
-        test.skip('when the drawer is initially opened, focus returns to the body when the drawer is closed', async () => {
+        test('when the drawer is initially opened, focus returns to the body when the drawer is closed', async () => {
           render(<TestComponent isOpenProp={true} />);
           const { isOpen, getCloseButtonUtils } = getTestUtils();
 
