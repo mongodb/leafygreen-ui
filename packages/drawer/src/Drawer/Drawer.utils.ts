@@ -1,6 +1,10 @@
 import { RefObject } from 'react';
 
-import { queryFirstFocusableElement } from '../../../lib/src/queryFocusableElements';
+import {
+  focusExplicitElement,
+  queryFirstFocusableElement,
+} from '@leafygreen-ui/lib';
+
 import { DRAWER_TOOLBAR_WIDTH, DRAWER_WIDTHS } from '../constants';
 import {
   DRAWER_MAX_WIDTH,
@@ -10,6 +14,7 @@ import {
 } from '../constants';
 
 import { DisplayMode, DrawerProps, Size } from './Drawer.types';
+import { focusBodyElement } from '../utils';
 
 /**
  * Returns the width of the drawer based on the size.
@@ -80,28 +85,6 @@ export const getResolvedDrawerSizes = (size: Size, hasToolbar?: boolean) => {
 };
 
 /**
- * Focuses an explicit drawer child element.
- * @param drawerElement - The drawer element.
- * @param initialFocus - The initial focus element.
- */
-const focusExplicitElement = (
-  drawerElement: HTMLElement,
-  initialFocus: string | RefObject<HTMLElement>,
-) => {
-  let targetElement: HTMLElement | null = null;
-
-  if (typeof initialFocus === 'string') {
-    targetElement = drawerElement.querySelector(initialFocus);
-  } else if ('current' in initialFocus) {
-    targetElement = initialFocus.current;
-  }
-
-  if (targetElement) {
-    targetElement.focus();
-  }
-};
-
-/**
  * Handles the auto focus behavior for embedded drawers. Mimics the native focus behavior of the dialog element.
  * If an auto focus element is found, focus it.
  * If no auto focus element is found, focus the first focusable element in the drawer.
@@ -121,32 +104,14 @@ const handleAutoFocus = (drawerElement: HTMLDivElement) => {
   const firstFocusableElement = queryFirstFocusableElement(drawerElement);
 
   if (firstFocusableElement) {
-    // Find and focus the first focusable element in the drawer
     firstFocusableElement?.focus();
   }
 };
 
 /**
- * Focuses the body element by temporarily setting the tabindex to -1.
- * @returns void
- */
-const focusBody = () => {
-  const originalTabIndex = document.body.getAttribute('tabindex');
-  document.body.setAttribute('tabindex', '-1');
-  document.body.focus();
-
-  // Restore original tabindex
-  if (originalTabIndex === null) {
-    document.body.removeAttribute('tabindex');
-  } else {
-    document.body.setAttribute('tabindex', originalTabIndex);
-  }
-};
-
-/**
- * Restores the previously focused element when closing an embedded drawer.
+ * Restores the previously focused element when closing an embedded drawer. This mimic the native focus behavior of the dialog element.
  *
- * If the active focus is not in the drawer, this means the user has navigated away from the drawer and we should not restore focus.
+ * However, if the active focus is not in the drawer, this means the user has navigated away from the drawer and we should not restore focus.
  * E.g., the user has clicked on a toolbar item which toggles the drawer closed and the focus should remain on the toolbar item.
  *
  * @param drawerElement - The drawer element.
@@ -169,22 +134,21 @@ const restoreEmbeddedPreviousFocus = (
       document.activeElement.blur();
     }
 
-    // Check if the previously focused element is still in the DOM
     if (document.contains(previouslyFocusedRef.current)) {
       // If the drawer is initially opened, the previously focused element is the element with the autoFocus attribute within the drawer. If this happens, we need to focus the body.
       if (
         previouslyFocusedRef.current.hasAttribute('autofocus') &&
         drawerElement.contains(previouslyFocusedRef.current)
       ) {
-        focusBody();
+        focusBodyElement();
       } else {
         previouslyFocusedRef.current.focus();
       }
     } else {
       // If the previously focused element is no longer in the DOM, focus the body, which mimics the behavior of the native HTML Dialog element
-      focusBody();
+      focusBodyElement();
     }
-    previouslyFocusedRef.current = null; // Clear the ref
+    previouslyFocusedRef.current = null;
   }
 };
 
@@ -215,7 +179,6 @@ export const setEmbeddedDrawerFocus = (
 
     handleAutoFocus(drawerElement);
   } else if (!open && hasHandledFocusRef.current) {
-    // If the drawer is closed and we have handled focus(hasHandledFocusRef.current is true), we need to reset the hasHandledFocusRef to false so that the next time the drawer is opened, we can handle focus again.
     hasHandledFocusRef.current = false;
     restoreEmbeddedPreviousFocus(drawerElement, previouslyFocusedRef);
   }

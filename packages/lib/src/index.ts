@@ -20,6 +20,7 @@ export {
 } from './childQueries';
 export { createSyntheticEvent } from './createSyntheticEvent';
 export { deepMapValues } from './deepMapValues';
+export { focusExplicitElement } from './focusExplicitElement';
 export { formatCssSize } from './formatCssSize';
 export { getClosestFocusableElement } from './getClosestFocusableElement';
 export { getMobileMediaQuery } from './getMobileMediaQuery';
