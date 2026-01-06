@@ -1,5 +1,5 @@
-import React, { RefObject, useState } from 'react';
-import { getByTestId, render, waitFor } from '@testing-library/react';
+import React, { useState } from 'react';
+import { render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
