@@ -16,7 +16,7 @@ export const getAxisOptions = (
   theme: Theme,
   props: AxisProps,
 ): CartesianAxisOption => {
-  const { label, type } = props;
+  const { label, splitNumber, type } = props;
 
   return {
     type,
@@ -27,6 +27,7 @@ export const getAxisOptions = (
       : {
           min: props.min,
           max: props.max,
+          ...(splitNumber !== undefined ? { splitNumber } : {}),
         }),
     axisLine: {
       show: true,
