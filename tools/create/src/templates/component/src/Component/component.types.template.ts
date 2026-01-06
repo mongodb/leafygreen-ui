@@ -5,4 +5,4 @@ export const types = ({
 }: Pick<TemplateParameters, 'packageNamePascal'>) =>
   `import { LgIdProps } from '@leafygreen-ui/lib';
 
-  export interface ${packageNamePascal}Props extends LgIdProps {}`;
+export interface ${packageNamePascal}Props extends LgIdProps {}`;
