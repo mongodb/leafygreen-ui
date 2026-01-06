@@ -1,14 +1,15 @@
 import React, { useCallback, useContext, useMemo } from 'react';
 
+import { Badge } from '@leafygreen-ui/badge';
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
-import { Badge } from '@leafygreen-ui/badge';
 
 import { ComboboxContext } from '../ComboboxContext';
 import { ComboboxSize } from '../types';
 import { wrapJSX } from '../utils';
+import { isBadgeComponent } from '../utils/wrapJSX';
 
 import {
   getDescriptionClassName,
@@ -22,7 +23,6 @@ import {
   InternalComboboxOptionProps,
 } from './ComboboxOption.types';
 import { getGlyphs } from './getGlyphs';
-import { isBadgeComponent } from '../utils/wrapJSX';
 
 /**
  * Internal ComboboxOption Component for use within Combobox only.

@@ -1,5 +1,6 @@
 import React, { ReactChild, ReactElement, ReactNode } from 'react';
 import escapeRegExp from 'lodash/escapeRegExp';
+
 import { BadgeProps } from '@leafygreen-ui/badge';
 import { isComponentType } from '@leafygreen-ui/lib';
 
