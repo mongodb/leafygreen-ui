@@ -11,8 +11,8 @@ import { ComboboxSize } from '../types';
 import { wrapJSX } from '../utils';
 
 import {
-  badgeDescriptionClassName,
-  displayNameStyle,
+  getDescriptionClassName,
+  getDisplayNameStyle,
   largeStyles,
   multiselectIconLargePosition,
   multiselectIconPosition,
@@ -130,13 +130,13 @@ export const InternalComboboxOption = React.forwardRef<
           leftGlyph={leftGlyph}
           rightGlyph={rightGlyph}
           description={description}
-          descriptionClassName={cx({
-            [badgeDescriptionClassName]: shouldRenderBadge,
+          descriptionClassName={getDescriptionClassName({
+            shouldRenderBadge,
           })}
         >
           <span
             id={optionTextId}
-            className={displayNameStyle({
+            className={getDisplayNameStyle({
               isSelected,
               hasBadge: shouldRenderBadge,
             })}

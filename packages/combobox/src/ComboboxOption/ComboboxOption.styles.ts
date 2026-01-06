@@ -50,7 +50,7 @@ export const disallowPointer = css`
   pointer-events: none;
 `;
 
-export const displayNameStyle = ({
+export const getDisplayNameStyle = ({
   isSelected,
   hasBadge,
 }: {
@@ -67,9 +67,16 @@ export const displayNameStyle = ({
   `}
 `;
 
-export const badgeDescriptionClassName = css`
-  margin-top: ${spacing[100]}px;
-`;
+export const getDescriptionClassName = ({
+  shouldRenderBadge,
+}: {
+  shouldRenderBadge: boolean;
+}) =>
+  shouldRenderBadge
+    ? css`
+        margin-top: ${spacing[100]}px;
+      `
+    : undefined;
 
 export const iconThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
