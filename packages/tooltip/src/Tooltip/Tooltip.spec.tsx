@@ -1,7 +1,6 @@
 import React, { createRef, ReactElement } from 'react';
 import {
   act,
-  fireEvent,
   render,
   screen,
   waitFor,
@@ -98,7 +97,9 @@ describe('packages/tooltip', () => {
       expect(results).toHaveNoViolations();
 
       let newResults = null as any;
-      act(() => void fireEvent.click(screen.getByText(buttonText)));
+      await act(async () => {
+        await userEvent.click(screen.getByText(buttonText));
+      });
       await act(async () => {
         newResults = await axe(container);
       });
@@ -122,7 +123,7 @@ describe('packages/tooltip', () => {
         triggerEvent: 'click',
       });
 
-      fireEvent.click(button);
+      await userEvent.click(button);
       expect(onClick).toHaveBeenCalledTimes(1);
 
       const tooltip = getByTestId(tooltipTestId);
@@ -134,7 +135,7 @@ describe('packages/tooltip', () => {
       expect(tooltip).toBeVisible();
 
       // checking for visibility, because opacity changes before tooltip transitions out of the DOM
-      fireEvent.click(button);
+      await userEvent.click(button);
       await waitForElementToBeRemoved(tooltip);
     });
 
@@ -143,29 +144,18 @@ describe('packages/tooltip', () => {
         triggerEvent: 'hover',
       });
 
-      fireEvent.mouseEnter(button);
+      await userEvent.hover(button);
 
       await waitFor(() => getByTestId(tooltipTestId));
 
       expect(getByTestId(tooltipTestId)).toBeInTheDocument();
 
-      fireEvent.mouseLeave(button);
+      await userEvent.unhover(button);
 
       await waitForElementToBeRemoved(getByTestId(tooltipTestId));
 
       expect(queryByTestId(tooltipTestId)).not.toBeInTheDocument();
     });
-
-    const fireEventMap = {
-      hover: {
-        on: fireEvent.mouseEnter,
-        off: fireEvent.mouseLeave,
-      },
-      click: {
-        on: fireEvent.click,
-        off: fireEvent.click,
-      },
-    };
 
     async function testTriggerEventWhenDisabled(
       triggerEvent: 'hover' | 'click',
@@ -178,7 +168,11 @@ describe('packages/tooltip', () => {
 
         // Wait for 200ms to ensure enough time in case the element erroneously appears
         await act(async () => {
-          fireEventMap[triggerEvent].on(button);
+          if (triggerEvent === 'hover') {
+            await userEvent.hover(button);
+          } else {
+            await userEvent.click(button);
+          }
           await waitForTimeout(200);
         });
 
@@ -186,7 +180,11 @@ describe('packages/tooltip', () => {
 
         // The following test is largely here to ensure we don't somehow end up in a strange state where the element becomes visible once the mouse leaves.
         await act(async () => {
-          fireEventMap[triggerEvent].off(button);
+          if (triggerEvent === 'hover') {
+            await userEvent.unhover(button);
+          } else {
+            await userEvent.click(button);
+          }
           await waitForTimeout(200);
         });
 
@@ -205,7 +203,7 @@ describe('packages/tooltip', () => {
         enabled: true,
       });
 
-      fireEvent.click(button);
+      await userEvent.click(button);
 
       const tooltip = await waitFor(() => {
         const tooltip = getByTestId(tooltipTestId);
@@ -239,11 +237,11 @@ describe('packages/tooltip', () => {
         triggerEvent: 'click',
       });
 
-      fireEvent.click(button);
+      await userEvent.click(button);
       const tooltip = getByTestId(tooltipTestId);
       expect(tooltip).toBeInTheDocument();
 
-      fireEvent.click(backdrop);
+      await userEvent.click(backdrop);
       await waitForElementToBeRemoved(tooltip);
     });
 
@@ -252,17 +250,14 @@ describe('packages/tooltip', () => {
         triggerEvent: 'click',
       });
 
-      fireEvent.click(button);
+      await userEvent.click(button);
       const tooltip = getByTestId(tooltipTestId);
       await act(async () => {
         waitForTimeout(transitionDuration.slowest);
       });
       await waitFor(() => expect(tooltip).toBeVisible());
 
-      fireEvent.keyDown(button, {
-        key: 'Escape',
-        keyCode: 27,
-      });
+      await userEvent.type(button, '{esc}');
       await waitForElementToBeRemoved(tooltip);
     });
 
@@ -272,14 +267,14 @@ describe('packages/tooltip', () => {
         shouldClose: () => true,
       });
 
-      fireEvent.click(button);
+      await userEvent.click(button);
       const tooltip = getByTestId(tooltipTestId);
       await act(async () => {
         waitForTimeout(transitionDuration.slowest);
       });
       await waitFor(() => expect(tooltip).toBeVisible());
 
-      fireEvent.click(backdrop);
+      await userEvent.click(backdrop);
       await waitForElementToBeRemoved(tooltip);
     });
 
@@ -289,14 +284,14 @@ describe('packages/tooltip', () => {
         shouldClose: () => false,
       });
 
-      fireEvent.click(button);
+      await userEvent.click(button);
       const tooltip = getByTestId(tooltipTestId);
       await act(async () => {
         waitForTimeout(transitionDuration.slowest);
       });
       await waitFor(() => expect(tooltip).toBeVisible());
 
-      fireEvent.click(backdrop);
+      await userEvent.click(backdrop);
       expect(tooltip).toBeVisible();
     });
   });
@@ -313,13 +308,13 @@ describe('packages/tooltip', () => {
       await waitFor(() => expect(getByTestId(tooltipTestId)).toBeVisible());
     });
 
-    test('onClick fires when trigger is clicked', () => {
+    test('onClick fires when trigger is clicked', async () => {
       const { button } = renderTooltip({
         open: true,
         setOpen,
       });
 
-      fireEvent.click(button);
+      await userEvent.click(button);
       expect(onClick).toHaveBeenCalled();
     });
 
@@ -332,7 +327,7 @@ describe('packages/tooltip', () => {
             renderMode,
           });
 
-          fireEvent.click(button);
+          await userEvent.click(button);
 
           const tooltip = getByTestId(tooltipTestId);
           await waitFor(() => expect(tooltip).toBeVisible());
@@ -342,7 +337,7 @@ describe('packages/tooltip', () => {
           let clickTarget: HTMLElement = tooltip;
 
           while (![document.body, button].includes(clickTarget)) {
-            fireEvent.click(clickTarget);
+            await userEvent.click(clickTarget);
 
             expect(tooltip).toBeVisible();
             expect(onClick).not.toHaveBeenCalled();
@@ -381,54 +376,55 @@ describe('packages/tooltip', () => {
       });
 
       describe('triggerEvent is `click`', () => {
-        test('click event triggers opening and closing of tooltip', () => {
+        test('click event triggers opening and closing of tooltip', async () => {
           const { button, getByTestId } = renderTrigger({
             triggerEvent: 'click',
           });
-          userEvent.click(button);
+          await userEvent.click(button);
           const tooltip = getByTestId(tooltipTestId);
           expect(tooltip).toBeInTheDocument();
-          userEvent.click(button);
-          waitForElementToBeRemoved(tooltip);
+          await userEvent.click(button);
+          await waitForElementToBeRemoved(tooltip);
         });
 
-        test('clicking the backdrop closes the tooltip', () => {
+        test('clicking the backdrop closes the tooltip', async () => {
           const { button, getByTestId } = renderTrigger({
             triggerEvent: 'click',
           });
-          userEvent.click(button);
+          await userEvent.click(button);
           const tooltip = getByTestId(tooltipTestId);
           const backdrop = getByTestId('backdrop');
-          userEvent.click(backdrop);
-          waitForElementToBeRemoved(tooltip);
+          await userEvent.click(backdrop);
+          await waitForElementToBeRemoved(tooltip);
         });
       });
 
       describe('triggerEvent is `hover`', () => {
-        test('hover event triggers opening and closing of tooltip', () => {
+        test('hover event triggers opening and closing of tooltip', async () => {
           const { button, getByTestId } = renderTrigger({
             triggerEvent: 'hover',
           });
-          userEvent.hover(button);
-          waitFor(() => {
+          await userEvent.hover(button);
+          await waitFor(() => {
             const tooltip = getByTestId(tooltipTestId);
             expect(tooltip).toBeInTheDocument();
-            userEvent.unhover(button);
-            waitForElementToBeRemoved(tooltip);
           });
+          await userEvent.unhover(button);
+          await waitForElementToBeRemoved(getByTestId(tooltipTestId));
         });
 
-        test('clicking the backdrop does not close the tooltip', () => {
+        test('clicking the backdrop does not close the tooltip', async () => {
           const { button, getByTestId } = renderTrigger({
             triggerEvent: 'hover',
           });
-          userEvent.hover(button);
-          waitFor(() => {
+          await userEvent.hover(button);
+          await waitFor(() => {
             const tooltip = getByTestId(tooltipTestId);
-            const backdrop = getByTestId('backdrop');
-            userEvent.click(backdrop);
             expect(tooltip).toBeInTheDocument();
           });
+          const backdrop = getByTestId('backdrop');
+          await userEvent.click(backdrop);
+          expect(getByTestId(tooltipTestId)).toBeInTheDocument();
         });
       });
     });
@@ -469,11 +465,11 @@ describe('packages/tooltip', () => {
         triggerEvent: 'click',
       });
 
-      fireEvent.click(button);
+      await userEvent.click(button);
       const tooltip = getByTestId(tooltipTestId);
       expect(tooltip).toBeInTheDocument();
 
-      fireEvent.click(button);
+      await userEvent.click(button);
       await waitForElementToBeRemoved(tooltip);
     });
 
@@ -637,7 +633,7 @@ describe('packages/tooltip', () => {
   });
 
   describe('when an interactive element is rendered inside of the Tooltip', () => {
-    test('click events fire from inside of the tooltip', () => {
+    test('click events fire from inside of the tooltip', async () => {
       const clickHandler = jest.fn();
 
       render(
@@ -649,10 +645,10 @@ describe('packages/tooltip', () => {
         </Tooltip>,
       );
 
-      fireEvent.click(screen.getByText(buttonText));
+      await userEvent.click(screen.getByText(buttonText));
 
       const tooltipButton = screen.getByText('Button inside of Tooltip');
-      fireEvent.click(tooltipButton);
+      await userEvent.click(tooltipButton);
 
       expect(clickHandler).toHaveBeenCalledTimes(1);
     });
@@ -676,33 +672,34 @@ describe('packages/tooltip', () => {
       return { ...result, trigger };
     };
 
-    test('onClick events should fire', () => {
+    test('onClick events should fire', async () => {
       const clickHandler = jest.fn();
       const { trigger } = renderTooltipWithTrigger(
         'click',
         <button onClick={clickHandler}>{buttonText}</button>,
       );
-      fireEvent.click(trigger);
+      await userEvent.click(trigger);
       expect(clickHandler).toHaveBeenCalled();
     });
 
-    test('onFocus events should fire', () => {
+    test('onFocus events should fire', async () => {
       const focusHandler = jest.fn();
       const { trigger } = renderTooltipWithTrigger(
         'hover',
         <button onFocus={focusHandler}>{buttonText}</button>,
       );
-      fireEvent.focus(trigger);
+      await userEvent.click(trigger);
       expect(focusHandler).toHaveBeenCalled();
     });
 
-    test('onBlur events should fire', () => {
+    test('onBlur events should fire', async () => {
       const blurHandler = jest.fn();
       const { trigger } = renderTooltipWithTrigger(
         'hover',
         <button onBlur={blurHandler}>{buttonText}</button>,
       );
-      fireEvent.blur(trigger);
+      await userEvent.click(trigger);
+      await userEvent.tab();
       expect(blurHandler).toHaveBeenCalled();
     });
 
@@ -712,9 +709,7 @@ describe('packages/tooltip', () => {
         'hover',
         <button onMouseEnter={mouseEnterHandler}>{buttonText}</button>,
       );
-      act(() => {
-        fireEvent.mouseEnter(trigger);
-      });
+      await userEvent.hover(trigger);
       await waitFor(() => {
         expect(mouseEnterHandler).toHaveBeenCalled();
       });
@@ -726,9 +721,8 @@ describe('packages/tooltip', () => {
         'hover',
         <button onMouseLeave={mouseLeaveHandler}>{buttonText}</button>,
       );
-      act(() => {
-        fireEvent.mouseLeave(trigger);
-      });
+      await userEvent.hover(trigger);
+      await userEvent.unhover(trigger);
       await waitFor(() => {
         expect(mouseLeaveHandler).toHaveBeenCalled();
       });
@@ -741,17 +735,14 @@ describe('packages/tooltip', () => {
         onClose,
       });
 
-      fireEvent.click(button);
+      await userEvent.click(button);
       const tooltip = getByTestId(tooltipTestId);
       await act(async () => {
         waitForTimeout(transitionDuration.slowest);
       });
       await waitFor(() => expect(tooltip).toBeVisible());
 
-      fireEvent.keyDown(button, {
-        key: 'Escape',
-        keyCode: 27,
-      });
+      await userEvent.type(button, '{esc}');
       expect(onClose).toHaveBeenCalledTimes(1);
       await waitForElementToBeRemoved(tooltip);
     });
