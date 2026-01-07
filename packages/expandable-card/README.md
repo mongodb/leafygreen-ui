@@ -114,7 +114,7 @@ test('multiple expandable cards', () => {
       <ExpandableCard data-lgid="lg-expandable_card-1" title="Card 1 Title" description="Im leafy" flagText="optional" darkMode={false} >
         <p>We are all leafy</p>
       </ExpandableCard>
-      <ExpandableCard data-lgid="lg-expandable_card-2" title="Card 2 Title" description="Im not leafy" flagText="boptional" darkMode={false} >
+      <ExpandableCard data-lgid="lg-expandable_card-2" title="Card 2 Title" description="Im not leafy" flagText="optional" darkMode={false} >
         <p>We are all not leafy</p>
       </ExpandableCard>
     </>
