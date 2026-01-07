@@ -22,6 +22,7 @@ export const DrawerLayout = forwardRef<HTMLDivElement, DrawerLayoutProps>(
       onClose,
       size = Size.Default,
       drawer,
+      initialFocus,
       ...rest
     }: DrawerLayoutProps,
     forwardedRef,
@@ -36,6 +37,7 @@ export const DrawerLayout = forwardRef<HTMLDivElement, DrawerLayoutProps>(
         onClose={onClose}
         hasToolbar={hasToolbar}
         size={size}
+        initialFocus={initialFocus}
       >
         {toolbarData ? (
           <DrawerToolbarLayout
