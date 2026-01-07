@@ -33,15 +33,15 @@ export interface GetTestUtilsReturnType<
   /**
    * @returns the title element of the expandable card.
    */
-  getTitle: () => HTMLHeadingElement | null;
+  getTitle: () => HTMLHeadingElement;
 
   /**
    * @returns the description element of the expandable card.
    */
-  getDescription: () => HTMLDivElement | null;
+  getDescription: () => HTMLDivElement;
 
   /**
    * @returns the flag text element of the expandable card.
    */
-  getFlagText: () => HTMLSpanElement | null;
+  getFlagText: () => HTMLSpanElement;
 }

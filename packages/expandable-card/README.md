@@ -141,13 +141,13 @@ const {
 } = getTestUtils();
 ```
 
-| Util                  | Description                                                                                               | Returns                        |
-| --------------------- | --------------------------------------------------------------------------------------------------------- | ------------------------------ |
-| `findExpandableCard`  | Returns a promise that resolves to the component's root element.                                          | `Promise<HTMLDivElement>`      |
-| `getExpandableCard`   | Returns the component's root element. Will throw if no elements match or if more than one match is found. | `HTMLDivElement`               |
-| `queryExpandableCard` | Returns the component's root element or `null` if not found.                                              | `HTMLDivElement` \| `null`     |
-| `getToggle`           | Returns the component's toggle button element.                                                            | `HTMLButtonElement`            |
-| `isExpanded`          | Returns a boolean indicating whether the card is expanded.                                                | `boolean`                      |
-| `getTitle`            | Returns the component's title element.                                                                    | `HTMLHeadingElement` \| `null` |
-| `getDescription`      | Returns the component's description element.                                                              | `HTMLDivElement` \| `null`     |
-| `getFlagText`         | Returns the component's flag text element.                                                                | `HTMLSpanElement` \| `null`    |
+| Util                  | Description                                                                                               | Returns                    |
+| --------------------- | --------------------------------------------------------------------------------------------------------- | -------------------------- |
+| `findExpandableCard`  | Returns a promise that resolves to the component's root element.                                          | `Promise<HTMLDivElement>`  |
+| `getExpandableCard`   | Returns the component's root element. Will throw if no elements match or if more than one match is found. | `HTMLDivElement`           |
+| `queryExpandableCard` | Returns the component's root element or `null` if not found.                                              | `HTMLDivElement` \| `null` |
+| `getToggle`           | Returns the component's toggle button element.                                                            | `HTMLButtonElement`        |
+| `isExpanded`          | Returns a boolean indicating whether the card is expanded.                                                | `boolean`                  |
+| `getTitle`            | Returns the component's title element.                                                                    | `HTMLHeadingElement`       |
+| `getDescription`      | Returns the component's description element.                                                              | `HTMLDivElement`           |
+| `getFlagText`         | Returns the component's flag text element.                                                                | `HTMLSpanElement`          |
