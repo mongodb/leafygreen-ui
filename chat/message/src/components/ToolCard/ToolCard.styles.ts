@@ -18,6 +18,7 @@ export const getBaseContainerStyles = ({
 }) => css`
   overflow: hidden;
   min-width: ${TOOL_CARD_MIN_WIDTH}px;
+  width: 100%;
   border: 1px solid
     ${color[theme].border[isErrorState ? Variant.OnError : Variant.Secondary][
       InteractionState.Default
