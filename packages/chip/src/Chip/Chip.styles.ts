@@ -272,7 +272,8 @@ export const wrapperBaseStyles = (
   transition: background-color ${transitionDuration.faster}ms ease-in-out;
 `;
 
-const getWrapperWhiteStyles = (theme: Theme) => css`
+const getWrapperBorderStyles = (theme: Theme) => css`
+  box-sizing: border-box;
   border: 1px solid
     ${color[theme].border[ColorVariant.Secondary][InteractionState.Default]};
 `;
@@ -301,7 +302,7 @@ export const getWrapperStyles = (
   isDisabled = false,
 ) =>
   cx(wrapperBaseStyles(baseFontSize, variant, theme), {
-    [getWrapperWhiteStyles(theme)]: variant === Variant.White,
+    [getWrapperBorderStyles(theme)]: variant === Variant.White,
     [wrapperDisabledStyles(theme)]: isDisabled,
   });
 
