@@ -17,11 +17,13 @@ import {
 
 import { getActionStyles } from './Action.styles';
 import { ActionsProps } from './Actions.types';
-import { Button } from '../Button';
+import { Button } from './Button';
+import { Justify, Tooltip } from '@leafygreen-ui/tooltip';
 
 export const Actions = CompoundSubComponent(
-  ({ children, className }: ActionsProps) => {
-    const { lgIds, variant, onToggleCollapsed } = useCollectionToolbarContext();
+  ({ children, className, ...rest }: ActionsProps) => {
+    const { lgIds, variant, onToggleCollapsed, isCollapsed } =
+      useCollectionToolbarContext();
 
     const showToggleButton = variant === Variant.Collapsible;
 
@@ -42,12 +44,23 @@ export const Actions = CompoundSubComponent(
       <div
         data-testid={lgIds.actions}
         className={getActionStyles({ className, variant })}
+        {...rest}
       >
         {PrimaryButtons}
         {showToggleButton && (
-          <IconButton onClick={onToggleCollapsed} aria-label="Toggle collapse">
-            <Icon glyph="ChevronDown" />
-          </IconButton>
+          <Tooltip
+            justify={Justify.Middle}
+            trigger={
+              <IconButton
+                onClick={onToggleCollapsed}
+                aria-label="Toggle collapse"
+              >
+                <Icon glyph="ChevronDown" />
+              </IconButton>
+            }
+          >
+            {isCollapsed ? 'Show filters' : 'Hide filters'}
+          </Tooltip>
         )}
       </div>
     );

@@ -36,10 +36,6 @@ const meta: StoryMetaType<typeof CollectionToolbar> = {
   },
   args: {
     children: 'Collection Toolbar',
-    size: {
-      control: 'select',
-      options: Object.values(Size),
-    },
   },
 };
 
@@ -50,10 +46,10 @@ export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
     <CollectionToolbar.Title>Collection Title</CollectionToolbar.Title>
     <CollectionToolbar.Actions>
       <CollectionToolbar.Actions.Button variant={ButtonVariant.Default}>
-        Action Button
+        Action
       </CollectionToolbar.Actions.Button>
       <CollectionToolbar.Actions.Button variant={ButtonVariant.Primary}>
-        Action Button
+        Action
       </CollectionToolbar.Actions.Button>
     </CollectionToolbar.Actions>
   </CollectionToolbar>

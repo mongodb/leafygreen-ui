@@ -5,6 +5,7 @@ import { Variant } from '../../shared.types';
 export const baseStyles = css`
   display: flex;
   flex-direction: row;
+  align-items: center;
   gap: ${spacing[100]}px;
 `;
 
