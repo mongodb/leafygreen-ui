@@ -67,6 +67,7 @@ export interface OptionObject
     RequiredComboboxOptionProps {
   isDisabled: boolean;
   hasGlyph?: boolean;
+  badge?: ReactNode;
 }
 
 export interface InternalComboboxOptionProps

@@ -1,9 +1,10 @@
 /* eslint-disable jest/no-standalone-expect */
 /* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["expect", "expectSelection"] }] */
-import { createRef } from 'react';
+import React, { createRef } from 'react';
 import {
   act,
   queryByText,
+  getByText,
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
@@ -12,6 +13,7 @@ import { axe } from 'jest-axe';
 import flatten from 'lodash/flatten';
 import isUndefined from 'lodash/isUndefined';
 
+import { Badge } from '@leafygreen-ui/badge';
 import { RenderMode } from '@leafygreen-ui/popover';
 import { eventContainingTargetValue } from '@leafygreen-ui/testing-lib';
 
@@ -214,6 +216,84 @@ describe('packages/combobox', () => {
         expect(optionElements?.[0]).toHaveTextContent(
           defaultOptions[0].description as string,
         );
+      });
+
+      describe('Badge rendering', () => {
+        test('option renders with a badge when provided', () => {
+          const options: Array<OptionObject> = [
+            {
+              value: 'apple',
+              displayName: 'Apple',
+              isDisabled: false,
+              badge: <Badge>New</Badge>,
+            },
+          ];
+
+          const { openMenu } = renderCombobox(select, { options });
+          const { optionElements } = openMenu();
+          const [optionEl] = Array.from(optionElements);
+          expect(optionEl).toHaveTextContent('New');
+        });
+
+        test('option renders badge with custom variant', () => {
+          const options: Array<OptionObject> = [
+            {
+              value: 'banana',
+              displayName: 'Banana',
+              isDisabled: false,
+              badge: <Badge variant="green">Featured</Badge>,
+            },
+          ];
+
+          const { openMenu } = renderCombobox(select, { options });
+          const { menuContainerEl } = openMenu();
+          const badgeEl = getByText(menuContainerEl, 'Featured');
+          expect(badgeEl).toBeInTheDocument();
+        });
+
+        test('option renders displayName alongside badge', () => {
+          const options: Array<OptionObject> = [
+            {
+              value: 'carrot',
+              displayName: 'Carrot',
+              isDisabled: false,
+              badge: <Badge>Popular</Badge>,
+            },
+          ];
+
+          const { openMenu } = renderCombobox(select, { options });
+          const { optionElements } = openMenu();
+          const [optionEl] = Array.from(optionElements!);
+          expect(optionEl).toHaveTextContent('Carrot');
+          expect(optionEl).toHaveTextContent('Popular');
+        });
+
+        test('multiple options can have badges', () => {
+          const options: Array<OptionObject> = [
+            {
+              value: 'apple',
+              displayName: 'Apple',
+              isDisabled: false,
+              badge: <Badge>New</Badge>,
+            },
+            {
+              value: 'banana',
+              displayName: 'Banana',
+              isDisabled: false,
+              badge: <Badge variant="blue">Sale</Badge>,
+            },
+            {
+              value: 'carrot',
+              displayName: 'Carrot',
+              isDisabled: false,
+            },
+          ];
+
+          const { openMenu } = renderCombobox(select, { options });
+          const { menuContainerEl } = openMenu();
+          expect(getByText(menuContainerEl, 'New')).toBeInTheDocument();
+          expect(getByText(menuContainerEl, 'Sale')).toBeInTheDocument();
+        });
       });
 
       test('option fires onClick callback', () => {

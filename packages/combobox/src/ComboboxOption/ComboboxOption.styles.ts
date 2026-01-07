@@ -1,4 +1,4 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { leftGlyphClassName } from '@leafygreen-ui/input-option';
 import {
   descriptionClassName,
@@ -50,6 +50,12 @@ export const disallowPointer = css`
   pointer-events: none;
 `;
 
+export const badgeDescriptionStyles = css`
+  .${descriptionClassName} {
+    margin-top: ${spacing[100]}px;
+  }
+`;
+
 export const getDisplayNameStyle = ({
   isSelected,
   hasBadge,
@@ -66,17 +72,6 @@ export const getDisplayNameStyle = ({
     gap: ${spacing[200]}px;
   `}
 `;
-
-export const getDescriptionClassName = ({
-  shouldRenderBadge,
-}: {
-  shouldRenderBadge: boolean;
-}) =>
-  shouldRenderBadge
-    ? css`
-        margin-top: ${spacing[100]}px;
-      `
-    : undefined;
 
 export const iconThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
@@ -137,3 +132,25 @@ export const multiselectIconLargePosition = css`
     top: 3px;
   }
 `;
+
+export const getInputOptionStyles = ({
+  size,
+  isMultiselectWithoutIcons,
+  shouldRenderBadge,
+  className,
+}: {
+  size: ComboboxSize;
+  isMultiselectWithoutIcons: boolean;
+  shouldRenderBadge: boolean;
+  className?: string;
+}) =>
+  cx(
+    {
+      [largeStyles]: size === ComboboxSize.Large,
+      [multiselectIconPosition]: isMultiselectWithoutIcons,
+      [multiselectIconLargePosition]:
+        isMultiselectWithoutIcons && size === ComboboxSize.Large,
+      [badgeDescriptionStyles]: shouldRenderBadge,
+    },
+    className,
+  );

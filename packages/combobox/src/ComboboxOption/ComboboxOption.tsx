@@ -1,6 +1,5 @@
 import React, { useCallback, useContext, useMemo } from 'react';
 
-import { Badge } from '@leafygreen-ui/badge';
 import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
@@ -12,8 +11,8 @@ import { wrapJSX } from '../utils';
 import { isBadgeComponent } from '../utils/wrapJSX';
 
 import {
-  getDescriptionClassName,
   getDisplayNameStyle,
+  getInputOptionStyles,
   largeStyles,
   multiselectIconLargePosition,
   multiselectIconPosition,
@@ -114,15 +113,12 @@ export const InternalComboboxOption = React.forwardRef<
         disabled={disabled}
         aria-label={displayName}
         darkMode={darkMode}
-        className={cx(
-          {
-            [largeStyles]: size === ComboboxSize.Large,
-            [multiselectIconPosition]: multiSelectWithoutIcons,
-            [multiselectIconLargePosition]:
-              multiSelectWithoutIcons && size === ComboboxSize.Large,
-          },
+        className={getInputOptionStyles({
+          size,
+          isMultiselectWithoutIcons: multiSelectWithoutIcons,
+          shouldRenderBadge,
           className,
-        )}
+        })}
         onClick={handleOptionClick}
         onKeyDown={handleOptionClick}
       >
@@ -130,9 +126,6 @@ export const InternalComboboxOption = React.forwardRef<
           leftGlyph={leftGlyph}
           rightGlyph={rightGlyph}
           description={description}
-          descriptionClassName={getDescriptionClassName({
-            shouldRenderBadge,
-          })}
         >
           <span
             id={optionTextId}

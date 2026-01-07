@@ -104,6 +104,7 @@ export const getComboboxJSX = (props?: renderComboboxProps) => {
       const isDisabled = isTypeofString ? false : option.isDisabled;
       const description = isTypeofString ? undefined : option.description;
       const onClick = isTypeofString ? undefined : option.onClick;
+      const badge = isTypeofString ? undefined : option.badge;
 
       return (
         <ComboboxOption
@@ -114,6 +115,8 @@ export const getComboboxJSX = (props?: renderComboboxProps) => {
           data-testid={value}
           description={description}
           onClick={onClick}
+          // @ts-expect-error badge prop is passed through to InternalComboboxOption via rest spread
+          badge={badge}
         />
       );
     }

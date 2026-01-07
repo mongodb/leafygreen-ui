@@ -1,7 +1,6 @@
-import React, { ReactChild, ReactElement, ReactNode } from 'react';
+import React, { ReactChild, ReactNode } from 'react';
 import escapeRegExp from 'lodash/escapeRegExp';
 
-import { BadgeProps } from '@leafygreen-ui/badge';
 import { isComponentType } from '@leafygreen-ui/lib';
 
 /**
@@ -64,7 +63,5 @@ export const wrapJSX = (
  * @param component
  * @returns `boolean`
  */
-export const isBadgeComponent = (
-  component?: ReactNode,
-): component is ReactElement<BadgeProps> =>
+export const isBadgeComponent = (component?: ReactNode): boolean =>
   !!component && isComponentType(component, 'Badge');
