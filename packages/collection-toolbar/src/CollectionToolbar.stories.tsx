@@ -51,6 +51,10 @@ export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
       <CollectionToolbar.Actions.Button variant={ButtonVariant.Primary}>
         Action
       </CollectionToolbar.Actions.Button>
+      <CollectionToolbar.Actions.Pagination
+        onBackArrowClick={() => {}}
+        onForwardArrowClick={() => {}}
+      />
     </CollectionToolbar.Actions>
   </CollectionToolbar>
 );
