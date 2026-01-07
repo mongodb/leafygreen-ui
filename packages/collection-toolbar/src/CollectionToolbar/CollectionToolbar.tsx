@@ -33,12 +33,16 @@ export const CollectionToolbar = CompoundComponent(
       fwdRef,
     ) => {
       const lgIds = getLgIds(dataLgId);
+
       const title = findChild(
         children,
         CollectionToolbarSubComponentProperty.Title,
       );
 
-      // const
+      const actions = findChild(
+        children,
+        CollectionToolbarSubComponentProperty.Actions,
+      );
 
       const showTitle = title && variant === Variant.Collapsible;
 
@@ -46,6 +50,7 @@ export const CollectionToolbar = CompoundComponent(
         <CollectionToolbarProvider
           darkMode={darkMode}
           size={size}
+          variant={variant}
           lgIds={lgIds}
         >
           <div
@@ -55,6 +60,7 @@ export const CollectionToolbar = CompoundComponent(
             {...rest}
           >
             {showTitle && title}
+            {actions}
           </div>
         </CollectionToolbarProvider>
       );

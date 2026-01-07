@@ -31,6 +31,12 @@
       "path": "../tokens"
     },
     {
+      "path": "../pagination"
+    },
+    {
+      "path": "../tooltip"
+    },
+    {
       "path": "../typography"
     },
     {

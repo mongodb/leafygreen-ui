@@ -1,3 +1,8 @@
 export { Title, type TitleProps } from './Title';
-export { Actions, type ActionsProps } from './Actions';
-export { Button, type ButtonProps, ButtonVariant } from './Button';
+export {
+  Actions,
+  type ActionsProps,
+  Button,
+  type ButtonProps,
+  ButtonVariant,
+} from './Actions';
