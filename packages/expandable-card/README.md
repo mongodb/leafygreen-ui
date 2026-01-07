@@ -73,8 +73,8 @@ const utils = getTestUtils(lgId?: `lg-${string}`); // lgId refers to the custom 
 
 ```tsx
 import { render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { ExpandableCard, getTestUtils } from '@leafygreen-ui/expandable-card';
+import { ExpandableCard } from '@leafygreen-ui/expandable-card';
+import { getTestUtils } from '@leafygreen-ui/expandable-card/testing';
 
 test('expandable card', () => {
   render(
