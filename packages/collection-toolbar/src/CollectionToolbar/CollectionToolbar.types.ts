@@ -1,23 +1,23 @@
-import React from 'react';
+import { ComponentPropsWithRef } from 'react';
 
-import { Size as ImportedSize } from '@leafygreen-ui/tokens';
+import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 
-export const Variant = {
-  Compact: 'compact',
-  Default: 'default',
-  Collapsible: 'collapsible',
-} as const;
-export type Variant = (typeof Variant)[keyof typeof Variant];
+import { Size, Variant } from '../shared.types';
 
-export const Size = {
-  Default: ImportedSize.Default,
-  Small: ImportedSize.Small,
-} as const;
-export type Size = (typeof Size)[keyof typeof Size];
-
-export interface CollectionToolbarProps {
-  size?: typeof ImportedSize.Default | typeof ImportedSize.Small;
+export interface CollectionToolbarProps
+  extends ComponentPropsWithRef<'div'>,
+    DarkModeProps,
+    LgIdProps {
+  /**
+   * The size of the CollectionToolbar and it's sub-components.
+   *
+   * @default `'default'`
+   */
+  size?: typeof Size.Default | typeof Size.Small;
+  /**
+   * The variant of the CollectionToolbar. Determines the layout of the CollectionToolbar.
+   *
+   * @default `'default'`
+   */
   variant?: Variant;
-  className?: string;
-  children?: React.ReactNode;
 }

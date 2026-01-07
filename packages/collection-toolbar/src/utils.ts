@@ -5,6 +5,7 @@ export const DEFAULT_LGID_ROOT = 'lg-collection_toolbar';
 export const getLgIds = (root: LgIdString = DEFAULT_LGID_ROOT) => {
   const ids = {
     root,
+    title: `${root}-title`,
   } as const;
   return ids;
 };

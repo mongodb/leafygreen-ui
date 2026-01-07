@@ -1425,6 +1425,9 @@ importers:
 
   packages/collection-toolbar:
     dependencies:
+      '@leafygreen-ui/compound-component':
+        specifier: workspace:^
+        version: link:../compound-component
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion
@@ -1437,6 +1440,9 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens
+      '@leafygreen-ui/typography':
+        specifier: workspace:^
+        version: link:../typography
       '@lg-tools/test-harnesses':
         specifier: workspace:^
         version: link:../../tools/test-harnesses

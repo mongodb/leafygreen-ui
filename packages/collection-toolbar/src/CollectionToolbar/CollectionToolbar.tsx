@@ -1,23 +1,65 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
-import { getCollectionToolbarStyles } from './CollectionToolbar.styles';
 import {
-  CollectionToolbarProps,
+  CompoundComponent,
+  findChild,
+} from '@leafygreen-ui/compound-component';
+
+import { Title } from '../components';
+import { CollectionToolbarProvider } from '../Context/CollectionToolbarProvider';
+import {
+  CollectionToolbarSubComponentProperty,
   Size,
   Variant,
-} from './CollectionToolbar.types';
+} from '../shared.types';
+import { getLgIds } from '../utils';
 
-export function CollectionToolbar({
-  size = Size.Default,
-  variant = Variant.Default,
-  className,
-  children,
-}: CollectionToolbarProps) {
-  return (
-    <div className={getCollectionToolbarStyles({ size, variant, className })}>
-      {children}
-    </div>
-  );
-}
+import { getCollectionToolbarStyles } from './CollectionToolbar.styles';
+import { CollectionToolbarProps } from './CollectionToolbar.types';
 
-CollectionToolbar.displayName = 'CollectionToolbar';
+export const CollectionToolbar = CompoundComponent(
+  // eslint-disable-next-line react/display-name
+  forwardRef<HTMLDivElement, CollectionToolbarProps>(
+    (
+      {
+        size = Size.Default,
+        variant = Variant.Default,
+        className,
+        children,
+        'data-lgid': dataLgId,
+        darkMode,
+        ...rest
+      },
+      fwdRef,
+    ) => {
+      const lgIds = getLgIds(dataLgId);
+      const title = findChild(
+        children,
+        CollectionToolbarSubComponentProperty.Title,
+      );
+
+      const showTitle = title && variant === Variant.Collapsible;
+
+      return (
+        <CollectionToolbarProvider
+          darkMode={darkMode}
+          size={size}
+          lgIds={lgIds}
+        >
+          <div
+            data-lgid={lgIds.root}
+            className={getCollectionToolbarStyles({ size, variant, className })}
+            ref={fwdRef}
+            {...rest}
+          >
+            {showTitle && title}
+          </div>
+        </CollectionToolbarProvider>
+      );
+    },
+  ),
+  {
+    displayName: 'CollectionToolbar',
+    Title,
+  },
+);

@@ -16,6 +16,12 @@ const meta: StoryMetaType<typeof CollectionToolbar> = {
         variant: Object.values(Variant),
       },
     },
+    docs: {
+      description: {
+        component:
+          'CollectionToolbar is a component that displays a toolbar for a collection.',
+      },
+    },
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
@@ -30,11 +36,17 @@ const meta: StoryMetaType<typeof CollectionToolbar> = {
   },
   args: {
     children: 'Collection Toolbar',
+    size: {
+      control: 'select',
+      options: Object.values(Size),
+    },
   },
 };
 
 export default meta;
 
 export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
-  <CollectionToolbar {...props} />
+  <CollectionToolbar {...props}>
+    <CollectionToolbar.Title>Collection Title</CollectionToolbar.Title>
+  </CollectionToolbar>
 );
