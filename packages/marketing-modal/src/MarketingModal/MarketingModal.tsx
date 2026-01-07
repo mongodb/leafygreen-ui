@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo, useRef } from 'react';
 
 import { Button } from '@leafygreen-ui/button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
@@ -41,17 +41,29 @@ const MarketingModal = ({
   blobPosition = BlobPosition.TopLeft,
   showBlob = false,
   disclaimer,
+  initialFocus: initialFocusProp,
   ...modalProps
 }: MarketingModalProps) => {
   const { theme, darkMode } = useDarkMode(darkModeProp);
+
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  const initialFocus = useMemo(() => {
+    if (initialFocusProp) {
+      return initialFocusProp;
+    }
+
+    return buttonRef;
+  }, [initialFocusProp]);
 
   return (
     <Modal
       {...modalProps}
       className={baseModalStyle}
-      setOpen={onClose}
-      darkMode={darkMode}
       closeIconColor={closeIconColor}
+      darkMode={darkMode}
+      initialFocus={initialFocus}
+      setOpen={onClose}
     >
       <Graphic
         theme={theme}
@@ -71,6 +83,7 @@ const MarketingModal = ({
           {...buttonProps}
           variant="baseGreen"
           className={getButtonStyles(buttonProps?.className)}
+          ref={buttonRef}
         >
           {buttonProps?.children}
         </Button>
