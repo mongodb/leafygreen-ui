@@ -26,6 +26,17 @@ export interface GetTestUtilsReturnType<
   getToggle: () => HTMLDivElement;
 
   /**
+   * @returns the toggle element using the `data-lgid` data attribute or `null` if no elements match.
+   * Will throw if more than one match is found.
+   */
+  queryToggle: () => HTMLDivElement | null;
+
+  /**
+   * @returns the toggle element using the `data-lgid` data attribute.
+   */
+  findToggle: () => Promise<HTMLDivElement>;
+
+  /**
    * @returns whether the expandable card is currently expanded.
    */
   isExpanded: () => boolean;
@@ -36,12 +47,45 @@ export interface GetTestUtilsReturnType<
   getTitle: () => HTMLHeadingElement;
 
   /**
+   * @returns the title element using the `data-lgid` data attribute or `null` if no elements match.
+   * Will throw if more than one match is found.
+   */
+  queryTitle: () => HTMLHeadingElement | null;
+
+  /**
+   * @returns the title element using the `data-lgid` data attribute.
+   */
+  findTitle: () => Promise<HTMLHeadingElement>;
+
+  /**
    * @returns the description element of the expandable card.
    */
   getDescription: () => HTMLDivElement;
 
   /**
+   * @returns the description element using the `data-lgid` data attribute or `null` if no elements match.
+   * Will throw if more than one match is found.
+   */
+  queryDescription: () => HTMLDivElement | null;
+
+  /**
+   * @returns the description element using the `data-lgid` data attribute.
+   */
+  findDescription: () => Promise<HTMLDivElement>;
+
+  /**
    * @returns the flag text element of the expandable card.
    */
   getFlagText: () => HTMLSpanElement;
+
+  /**
+   * @returns the flag text element using the `data-lgid` data attribute or `null` if no elements match.
+   * Will throw if more than one match is found.
+   */
+  queryFlagText: () => HTMLSpanElement | null;
+
+  /**
+   * @returns the flag text element using the `data-lgid` data attribute.
+   */
+  findFlagText: () => Promise<HTMLSpanElement>;
 }

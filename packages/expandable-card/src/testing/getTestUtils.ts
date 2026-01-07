@@ -16,6 +16,8 @@ export const getTestUtils = <T extends HTMLDivElement = HTMLDivElement>(
   const queryExpandableCard = () => queryByLgId!<T>(lgIds.root);
 
   const getToggle = () => getByLgId!<HTMLDivElement>(lgIds.toggle);
+  const findToggle = () => findByLgId!<HTMLDivElement>(lgIds.toggle);
+  const queryToggle = () => queryByLgId!<HTMLDivElement>(lgIds.toggle);
 
   const isExpanded = () => {
     const toggle = getToggle();
@@ -23,17 +25,34 @@ export const getTestUtils = <T extends HTMLDivElement = HTMLDivElement>(
   };
 
   const getTitle = () => getByLgId!<HTMLHeadingElement>(lgIds.title);
+  const queryTitle = () => queryByLgId!<HTMLHeadingElement>(lgIds.title);
+  const findTitle = () => findByLgId!<HTMLHeadingElement>(lgIds.title);
+
   const getDescription = () => getByLgId!<HTMLDivElement>(lgIds.description);
+  const queryDescription = () =>
+    queryByLgId!<HTMLDivElement>(lgIds.description);
+  const findDescription = () => findByLgId!<HTMLDivElement>(lgIds.description);
+
   const getFlagText = () => getByLgId!<HTMLSpanElement>(lgIds.flagText);
+  const queryFlagText = () => queryByLgId!<HTMLSpanElement>(lgIds.flagText);
+  const findFlagText = () => findByLgId!<HTMLSpanElement>(lgIds.flagText);
 
   return {
     findExpandableCard,
     getExpandableCard,
     getToggle,
+    findToggle,
+    queryToggle,
     isExpanded,
     queryExpandableCard,
     getTitle,
+    findTitle,
+    queryTitle,
     getDescription,
+    findDescription,
+    queryDescription,
     getFlagText,
+    findFlagText,
+    queryFlagText,
   };
 };

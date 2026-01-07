@@ -134,20 +134,36 @@ const {
   getExpandableCard,
   queryExpandableCard,
   getToggle,
+  findToggle,
+  queryToggle,
   isExpanded,
   getTitle,
+  findTitle,
+  queryTitle,
   getDescription,
+  findDescription,
+  queryDescription,
   getFlagText,
+  findFlagText,
+  queryFlagText,
 } = getTestUtils();
 ```
 
-| Util                  | Description                                                                                               | Returns                    |
-| --------------------- | --------------------------------------------------------------------------------------------------------- | -------------------------- |
-| `findExpandableCard`  | Returns a promise that resolves to the component's root element.                                          | `Promise<HTMLDivElement>`  |
-| `getExpandableCard`   | Returns the component's root element. Will throw if no elements match or if more than one match is found. | `HTMLDivElement`           |
-| `queryExpandableCard` | Returns the component's root element or `null` if not found.                                              | `HTMLDivElement` \| `null` |
-| `getToggle`           | Returns the component's toggle button element.                                                            | `HTMLButtonElement`        |
-| `isExpanded`          | Returns a boolean indicating whether the card is expanded.                                                | `boolean`                  |
-| `getTitle`            | Returns the component's title element.                                                                    | `HTMLHeadingElement`       |
-| `getDescription`      | Returns the component's description element.                                                              | `HTMLDivElement`           |
-| `getFlagText`         | Returns the component's flag text element.                                                                | `HTMLSpanElement`          |
+| Util                  | Description                                                                                                        | Returns                        |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------------ |
+| `findExpandableCard`  | Returns a promise that resolves to the component's root element.                                                   | `Promise<HTMLDivElement>`      |
+| `getExpandableCard`   | Returns the component's root element. Will throw if no elements match or if more than one match is found.          | `HTMLDivElement`               |
+| `queryExpandableCard` | Returns the component's root element or `null` if not found.                                                       | `HTMLDivElement` \| `null`     |
+| `getToggle`           | Returns the component's toggle button element. Will throw if no elements match or if more than one match is found. | `HTMLDivElement`               |
+| `findToggle`          | Returns a promise that resolves to the component's toggle button element.                                          | `Promise<HTMLDivElement>`      |
+| `queryToggle`         | Returns the component's toggle button element or `null` if not found.                                              | `HTMLDivElement` \| `null`     |
+| `isExpanded`          | Returns a boolean indicating whether the card is expanded.                                                         | `boolean`                      |
+| `getTitle`            | Returns the component's title element. Will throw if no elements match or if more than one match is found.         | `HTMLHeadingElement`           |
+| `findTitle`           | Returns a promise that resolves to the component's title element.                                                  | `Promise<HTMLHeadingElement>`  |
+| `queryTitle`          | Returns the component's title element or `null` if not found.                                                      | `HTMLHeadingElement` \| `null` |
+| `getDescription`      | Returns the component's description element. Will throw if no elements match or if more than one match is found.   | `HTMLDivElement`               |
+| `findDescription`     | Returns a promise that resolves to the component's description element.                                            | `Promise<HTMLDivElement>`      |
+| `queryDescription`    | Returns the component's description element or `null` if not found.                                                | `HTMLDivElement` \| `null`     |
+| `getFlagText`         | Returns the component's flag text element. Will throw if no elements match or if more than one match is found.     | `HTMLSpanElement`              |
+| `findFlagText`        | Returns a promise that resolves to the component's flag text element.                                              | `Promise<HTMLSpanElement>`     |
+| `queryFlagText`       | Returns the component's flag text element or `null` if not found.                                                  | `HTMLSpanElement` \| `null`    |
