@@ -3,8 +3,8 @@
 import React, { createRef } from 'react';
 import {
   act,
-  queryByText,
   getByText,
+  queryByText,
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';

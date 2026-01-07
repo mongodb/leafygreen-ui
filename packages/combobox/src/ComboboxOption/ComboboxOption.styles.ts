@@ -50,27 +50,29 @@ export const disallowPointer = css`
   pointer-events: none;
 `;
 
-export const badgeDescriptionStyles = css`
-  .${descriptionClassName} {
-    margin-top: ${spacing[100]}px;
+const inputOptionBaseStyles = css`
+  .${titleClassName} {
+    font-weight: ${fontWeights.regular};
   }
 `;
 
-export const getDisplayNameStyle = ({
-  isSelected,
-  hasBadge,
-}: {
-  isSelected: boolean;
-  hasBadge: boolean;
-}) => css`
-  font-weight: ${isSelected ? fontWeights.semiBold : fontWeights.regular};
-  ${hasBadge &&
-  css`
+const selectedInputOptionStyles = css`
+  .${titleClassName} {
+    font-weight: ${fontWeights.semiBold};
+  }
+`;
+
+const badgeStyles = css`
+  .${titleClassName} {
+    color: red;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     gap: ${spacing[200]}px;
-  `}
+  }
+  .${descriptionClassName} {
+    margin-top: ${spacing[100]}px;
+  }
 `;
 
 export const iconThemeStyles: Record<Theme, string> = {
@@ -137,20 +139,24 @@ export const getInputOptionStyles = ({
   size,
   isMultiselectWithoutIcons,
   shouldRenderBadge,
+  isSelected,
   className,
 }: {
   size: ComboboxSize;
   isMultiselectWithoutIcons: boolean;
+  isSelected: boolean;
   shouldRenderBadge: boolean;
   className?: string;
 }) =>
   cx(
+    inputOptionBaseStyles,
     {
+      [selectedInputOptionStyles]: isSelected,
       [largeStyles]: size === ComboboxSize.Large,
       [multiselectIconPosition]: isMultiselectWithoutIcons,
       [multiselectIconLargePosition]:
         isMultiselectWithoutIcons && size === ComboboxSize.Large,
-      [badgeDescriptionStyles]: shouldRenderBadge,
+      [badgeStyles]: shouldRenderBadge,
     },
     className,
   );
