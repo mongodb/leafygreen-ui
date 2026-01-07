@@ -1,10 +1,28 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import { render, screen } from '@testing-library/react';
 
 import { CollectionToolbarSubComponentProperty } from '../../shared.types';
 import { getTestUtils } from '../../testing/getTestUtils';
 
 import Title from './Title';
+
+// Mock H3 to properly forward refs for testing while preserving polymorphic behavior
+jest.mock('@leafygreen-ui/typography', () => {
+  const React = require('react');
+  return {
+    // eslint-disable-next-line react/display-name
+    H3: React.forwardRef(
+      (
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        { as, ...props }: { as?: React.ElementType } & Record<string, any>,
+        ref: React.Ref<HTMLElement>,
+      ) => {
+        const Component = as || 'h3';
+        return React.createElement(Component, { ...props, ref });
+      },
+    ),
+  };
+});
 
 describe('packages/collection-toolbar/CollectionToolbar/components/Title', () => {
   test('renders children correctly', () => {
@@ -38,5 +56,32 @@ describe('packages/collection-toolbar/CollectionToolbar/components/Title', () =>
 
   test('has the correct static property for compound component identification', () => {
     expect(Title[CollectionToolbarSubComponentProperty.Title]).toBe(true);
+  });
+
+  test('applies data-lgid attribute from context', () => {
+    render(<Title>Test Title</Title>);
+    const titleElement = screen.getByText('Test Title');
+    expect(titleElement).toHaveAttribute(
+      'data-lgid',
+      'lg-collection_toolbar-title',
+    );
+  });
+
+  test('spreads additional HTML attributes to the element', () => {
+    render(
+      <Title data-testid="custom-title" aria-label="Custom label">
+        Test Title
+      </Title>,
+    );
+    const titleElement = screen.getByText('Test Title');
+    expect(titleElement).toHaveAttribute('data-testid', 'custom-title');
+    expect(titleElement).toHaveAttribute('aria-label', 'Custom label');
+  });
+
+  test('forwards ref to the rendered element', () => {
+    const ref = createRef<HTMLHeadingElement>();
+    render(<Title ref={ref}>Test Title</Title>);
+    expect(ref.current).not.toBeNull();
+    expect(ref.current).toBe(screen.getByText('Test Title'));
   });
 });

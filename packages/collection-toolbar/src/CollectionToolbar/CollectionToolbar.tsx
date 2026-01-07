@@ -20,15 +20,18 @@ import { CollectionToolbarProps } from './CollectionToolbar.types';
 export const CollectionToolbar = CompoundComponent(
   // eslint-disable-next-line react/display-name
   forwardRef<HTMLDivElement, CollectionToolbarProps>(
-    ({
-      size = Size.Default,
-      variant = Variant.Default,
-      className,
-      children,
-      'data-lgid': dataLgId,
-      darkMode,
-      ...rest
-    }) => {
+    (
+      {
+        size = Size.Default,
+        variant = Variant.Default,
+        className,
+        children,
+        'data-lgid': dataLgId,
+        darkMode,
+        ...rest
+      },
+      fwdRef,
+    ) => {
       const lgIds = getLgIds(dataLgId);
       const title = findChild(
         children,
@@ -46,6 +49,7 @@ export const CollectionToolbar = CompoundComponent(
           <div
             data-lgid={lgIds.root}
             className={getCollectionToolbarStyles({ size, variant, className })}
+            ref={fwdRef}
             {...rest}
           >
             {showTitle && title}

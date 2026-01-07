@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 import { H3 } from '@leafygreen-ui/typography';
@@ -13,14 +13,22 @@ import { TitleProps } from './Title.types';
  * It will only render if the CollectionToolbar variant is set to Collapsible.
  */
 const Title = CompoundSubComponent(
-  ({ className, children, ...rest }: TitleProps) => {
-    const { lgIds } = useCollectionToolbarContext();
-    return (
-      <H3 data-lgid={lgIds.title} className={className} {...rest}>
-        {children}
-      </H3>
-    );
-  },
+  // eslint-disable-next-line react/display-name
+  forwardRef<HTMLHeadingElement, TitleProps>(
+    ({ className, children, ...rest }, fwdRef) => {
+      const { lgIds } = useCollectionToolbarContext();
+      return (
+        <H3
+          data-lgid={lgIds.title}
+          className={className}
+          {...rest}
+          ref={fwdRef}
+        >
+          {children}
+        </H3>
+      );
+    },
+  ),
   {
     displayName: 'Title',
     key: CollectionToolbarSubComponentProperty.Title,
