@@ -21,6 +21,7 @@ const meta: StoryMetaType<typeof Chip> = {
         'Red',
         'Purple',
         'Yellow',
+        'White',
         'Truncate',
       ],
       combineArgs: {
@@ -123,6 +124,15 @@ Yellow.parameters = {
   generate: {
     args: {
       variant: Variant.Yellow,
+    },
+  },
+};
+
+export const White: StoryType<typeof Chip> = () => <></>;
+White.parameters = {
+  generate: {
+    args: {
+      variant: Variant.White,
     },
   },
 };

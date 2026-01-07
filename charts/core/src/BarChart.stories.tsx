@@ -208,3 +208,69 @@ export const BarWithCategoryAxisLabel: StoryObj<{
     );
   },
 };
+
+export const BarWithMinimumHeight: StoryObj<{
+  barMinHeight: number;
+}> = {
+  args: {
+    barMinHeight: 1,
+  },
+  argTypes: {
+    barMinHeight: {
+      control: { type: 'number', min: 0, max: 10, step: 1 },
+      description: 'Minimum height of bars in pixels',
+    },
+  },
+  render: ({ barMinHeight }) => {
+    // Create data with extreme value differences to demonstrate the feature
+    const extremeValueData = [
+      {
+        name: 'Large Values',
+        data: [
+          [new Date('2024-01-01').getTime(), 1000000000],
+          [new Date('2024-01-02').getTime(), 950000000],
+          [new Date('2024-01-03').getTime(), 1100000000],
+          [new Date('2024-01-04').getTime(), 1050000000],
+        ] as Array<[number, number]>,
+      },
+      {
+        name: 'Small Values',
+        data: [
+          [new Date('2024-01-01').getTime(), 100],
+          [new Date('2024-01-02').getTime(), 50],
+          [new Date('2024-01-03').getTime(), 200],
+          [new Date('2024-01-04').getTime(), 0],
+        ] as Array<[number, number]>,
+      },
+      {
+        name: 'Medium Values',
+        data: [
+          [new Date('2024-01-01').getTime(), 500000],
+          [new Date('2024-01-02').getTime(), 450000],
+          [new Date('2024-01-03').getTime(), 550000],
+          [new Date('2024-01-04').getTime(), 10],
+        ] as Array<[number, number]>,
+      },
+    ];
+
+    return (
+      <Chart>
+        <XAxis
+          type="time"
+          formatter={value => {
+            const date = new Date(value);
+            return date.toLocaleDateString('en-US', {
+              month: 'short',
+              day: 'numeric',
+            });
+          }}
+        />
+        <YAxis type="value" />
+        <ChartTooltip />
+        {extremeValueData.map(({ name, data }) => (
+          <Bar name={name} data={data} key={name} barMinHeight={barMinHeight} />
+        ))}
+      </Chart>
+    );
+  },
+};
