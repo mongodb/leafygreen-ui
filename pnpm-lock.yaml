@@ -1425,9 +1425,6 @@ importers:
 
   packages/combobox:
     dependencies:
-      '@leafygreen-ui/badge':
-        specifier: workspace:^
-        version: link:../badge
       '@leafygreen-ui/checkbox':
         specifier: workspace:^
         version: link:../checkbox
@@ -1480,6 +1477,9 @@ importers:
         specifier: ^4.2.2
         version: 4.3.1
     devDependencies:
+      '@leafygreen-ui/badge':
+        specifier: workspace:^
+        version: link:../badge
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../button
