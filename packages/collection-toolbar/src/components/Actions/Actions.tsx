@@ -2,6 +2,7 @@ import React from 'react';
 
 import {
   CompoundSubComponent,
+  findChild,
   findChildren,
 } from '@leafygreen-ui/compound-component';
 import { Icon } from '@leafygreen-ui/icon';
@@ -17,6 +18,7 @@ import {
 
 import { getActionStyles } from './Action.styles';
 import { ActionsProps } from './Actions.types';
+import { Pagination } from './Pagination';
 import { Button } from './Button';
 import { Justify, Tooltip } from '@leafygreen-ui/tooltip';
 
@@ -31,6 +33,13 @@ export const Actions = CompoundSubComponent(
       children,
       CollectionToolbarActionsSubComponentProperty.Button,
     );
+
+    const pagination = findChild(
+      children,
+      CollectionToolbarActionsSubComponentProperty.Pagination,
+    );
+
+    const showPagination = pagination && variant === Variant.Default;
 
     if (Buttons.length > 2) {
       consoleOnce.error(
@@ -47,6 +56,7 @@ export const Actions = CompoundSubComponent(
         {...rest}
       >
         {PrimaryButtons}
+        {showPagination && pagination}
         {showToggleButton && (
           <Tooltip
             justify={Justify.Middle}
@@ -69,5 +79,6 @@ export const Actions = CompoundSubComponent(
     displayName: 'Actions',
     key: CollectionToolbarSubComponentProperty.Actions,
     Button,
+    Pagination,
   },
 );
