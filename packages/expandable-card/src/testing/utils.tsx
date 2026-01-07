@@ -20,6 +20,9 @@ export const getLgIds = (root: `lg-${string}` = DEFAULT_LGID_ROOT) => {
   return {
     root,
     toggle: `${root}-toggle`,
+    title: `${root}-title`,
+    description: `${root}-description`,
+    flagText: `${root}-flag-text`,
   } as const;
 };
 

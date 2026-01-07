@@ -22,11 +22,20 @@ export const getTestUtils = <T extends HTMLDivElement = HTMLDivElement>(
     return toggle.getAttribute('aria-expanded') === 'true';
   };
 
+  const getTitle = () => queryByLgId!<HTMLDivElement>(lgIds.title);
+
+  const getDescription = () => queryByLgId!<HTMLDivElement>(lgIds.description);
+
+  const getFlagText = () => queryByLgId!<HTMLDivElement>(lgIds.flagText);
+
   return {
     findExpandableCard,
     getExpandableCard,
     getToggle,
     isExpanded,
     queryExpandableCard,
+    getTitle,
+    getDescription,
+    getFlagText,
   };
 };

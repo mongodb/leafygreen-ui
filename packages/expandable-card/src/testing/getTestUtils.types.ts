@@ -29,4 +29,19 @@ export interface GetTestUtilsReturnType<
    * @returns whether the expandable card is currently expanded.
    */
   isExpanded: () => boolean;
+
+  /**
+   * @returns the title element of the expandable card.
+   */
+  getTitle: () => HTMLHeadingElement | null;
+
+  /**
+   * @returns the description element of the expandable card.
+   */
+  getDescription: () => HTMLDivElement | null;
+
+  /**
+   * @returns the flag text element of the expandable card.
+   */
+  getFlagText: () => HTMLSpanElement | null;
 }
