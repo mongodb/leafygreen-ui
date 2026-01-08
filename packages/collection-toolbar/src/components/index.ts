@@ -5,4 +5,10 @@ export {
   Button,
   type ButtonProps,
   ButtonVariant,
+  Pagination,
+  type PaginationProps,
+  Menu,
+  type MenuProps,
+  MenuItem,
+  type MenuItemProps,
 } from './Actions';

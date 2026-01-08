@@ -47,6 +47,8 @@ export type CollectionToolbarSubComponentProperty =
 export const CollectionToolbarActionsSubComponentProperty = {
   Button: 'isCollectionToolbarActionsButton',
   Pagination: 'isCollectionToolbarActionsPagination',
+  Menu: 'isCollectionToolbarActionsMenu',
+  MenuItem: 'isCollectionToolbarActionsMenuItem',
 } as const;
 export type CollectionToolbarActionsSubComponentProperty =
   (typeof CollectionToolbarActionsSubComponentProperty)[keyof typeof CollectionToolbarActionsSubComponentProperty];

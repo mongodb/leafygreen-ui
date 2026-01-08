@@ -54,7 +54,20 @@ export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
       <CollectionToolbar.Actions.Pagination
         onBackArrowClick={() => {}}
         onForwardArrowClick={() => {}}
+        itemsPerPage={10}
+        numTotalItems={100}
       />
+      <CollectionToolbar.Actions.Menu>
+        <CollectionToolbar.Actions.Menu.MenuItem>
+          Menu Item
+        </CollectionToolbar.Actions.Menu.MenuItem>
+        <CollectionToolbar.Actions.Menu.MenuItem>
+          Menu Item
+        </CollectionToolbar.Actions.Menu.MenuItem>
+        <CollectionToolbar.Actions.Menu.MenuItem>
+          Menu Item
+        </CollectionToolbar.Actions.Menu.MenuItem>
+      </CollectionToolbar.Actions.Menu>
     </CollectionToolbar.Actions>
   </CollectionToolbar>
 );

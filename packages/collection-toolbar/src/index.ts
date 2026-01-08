@@ -3,9 +3,12 @@ export {
   type CollectionToolbarProps,
 } from './CollectionToolbar';
 export {
-  type TitleProps as CollectionToolbarTitleProps,
-  type ActionsProps as CollectionToolbarActionsProps,
-  type ButtonProps as CollectionToolbarActionsButtonProps,
+  type TitleProps,
+  type ActionsProps,
+  type ButtonProps,
+  type PaginationProps,
+  type MenuProps,
+  type MenuItemProps,
   ButtonVariant,
 } from './components';
 export { Size, Variant } from './shared.types';
