@@ -13,7 +13,7 @@ import { Justify, Tooltip, TooltipVariant } from '@leafygreen-ui/tooltip';
 import {
   buttonContainerStyles,
   getContainerStyles,
-  getIconButtonStyles,
+  getHiddenStyles,
 } from './MessageRating.styles';
 import {
   type MessageRatingProps,
@@ -93,10 +93,7 @@ export const MessageRating = forwardRef(
                   onClick={handleLikeClick}
                   active={isLiked}
                   ref={likeButtonRef}
-                  className={getIconButtonStyles({
-                    isActive: isLiked,
-                    isHidden: hideThumbsUp,
-                  })}
+                  className={getHiddenStyles(hideThumbsUp)}
                   aria-checked={isLiked}
                   role="radio"
                 >
@@ -118,10 +115,7 @@ export const MessageRating = forwardRef(
                   onClick={handleDislikeClick}
                   active={isDisliked}
                   ref={dislikeButtonRef}
-                  className={getIconButtonStyles({
-                    isActive: isDisliked,
-                    isHidden: hideThumbsDown,
-                  })}
+                  className={getHiddenStyles(hideThumbsDown)}
                   aria-checked={isDisliked}
                   role="radio"
                 >
