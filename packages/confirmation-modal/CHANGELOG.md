@@ -1,5 +1,11 @@
 # @leafygreen-ui/confirmation-modal
 
+## 10.3.1
+
+### Patch Changes
+
+- c5d0348: Fixes button spacing to align with Figma designs
+
 ## 10.3.0
 
 ### Minor Changes

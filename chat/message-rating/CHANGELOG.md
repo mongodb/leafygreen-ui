@@ -1,5 +1,11 @@
 # @lg-chat/message-rating
 
+## 7.1.1
+
+### Patch Changes
+
+- a94c874: [LG-5856](https://jira.mongodb.org/browse/LG-5856): update selected state styles for thumbs up and thumbs down buttons
+
 ## 7.1.0
 
 ### Minor Changes
