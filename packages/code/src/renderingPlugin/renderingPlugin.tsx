@@ -70,7 +70,7 @@ function getHighlightedRowStyle(darkMode: boolean) {
   let backgroundColor: string, backgroundImage: string, borderColor: string;
 
   if (darkMode) {
-    backgroundColor = transparentize(0.3, palette.yellow.dark3);
+    backgroundColor = transparentize(0.7, palette.yellow.dark3);
     backgroundImage = 'none';
     borderColor = palette.gray.dark3;
   } else {
