@@ -1,209 +1,148 @@
-# Developing
+# Developer Guide
 
-## Can I Contribute?
+This guide covers advanced development workflows, testing strategies, and maintainer-specific processes for LeafyGreen UI. For getting started with contributions, see the [Contributing Guide](./CONTRIBUTING.md).
 
-We appreciate contributions of all kinds -- whether that is a bug fix, or a new component.
+## Table of Contents
 
-Before making a PR with a brand new component, hook or feature, it may be helpful to consider whether it solves the following:
+- [Testing in External Applications](#testing-in-external-applications)
+  - [Linking Packages](#linking-packages)
+  - [Using a Local Registry (Verdaccio)](#using-a-local-registry-verdaccio)
+- [Publishing](#publishing)
+  - [Publishing a New Package](#publishing-a-new-package)
+  - [Publishing Pre-releases](#publishing-pre-releases)
+- [Storybook Integration](#storybook-integration)
+- [mongodb.design Integration](#mongodbdesign-integration)
 
-- Can the feature be used across multiple MongoDB Products?
-- Is it abstracting logic that many developers or components could utilize?
-- Have you considered how to make this as generalizable as possible?
+---
 
-## Roadmap
+## Testing in External Applications
 
-If you're interested in contributing, and want to know what projects we have on deck, check out our roadmap [here](https://wiki.corp.mongodb.com/display/DESIGN/Design+Systems).
+When developing components, you may need to test changes in an external application before publishing. There are two approaches: linking packages directly, or using a local registry.
 
-## Our Stack
+### Linking Packages
 
-### TypeScript
+We provide a `link` script to symlink in-development components to your application:
 
-LeafyGreen uses TypeScript, to help make consumption of this library as intuitive and error-free as possible. If you're new to TypeScript, these resources may be able to help you get started:
-
-1. [TypeScript Handbook](https://www.typescriptlang.org/docs/handbook/basic-types.html)
-2. [TypeScript Cheatsheet](https://github.com/typescript-cheatsheets/react-typescript-cheatsheet)
-
-### Emotion
-
-For styling, we use the CSS-in-JS library, Emotion. To get started with Emotion check out their documentation [here](https://emotion.sh/docs/introduction).
-
-We've created a wrapper around the Emotion library, which can be brought into new components as such:
-
-`import { css, cx } from @leafygreen-ui/emotion`
-
-When using the library, you must use our Emotion instance, because of constraits over how styles are injected into the page.
-
-### React Design Patterns
-
-As far as design patterns leveraged by our components we tend to favor:
-
-- Functional components over class-based components
-- Creating abstractable hooks where possible, that can be used across multiple components
-- Native Array methods to bringing in other libraries, such as Lodash
-- Using default exports over named exports
-
-## Code Style
-
-For a full style guide, see [STYLEGUIDE.md](./STYLEGUIDE.md).
-
-### Accessibility
-
-Approaching components in an accessible manner is something we take seriously on this team. That being said, we have some technologies in place to enforce that new components, or updates to existing components, are being developed with these standards in mind.
-
-1. `eslint-jsx-a11y`
-
-This is a static AST checker for accessibility rules on JSX elements.
-
-2.  `@storybook/addon-a11y`
-
-We have an accessibility addon in Storybook which checks for `a11y` violations in components. While developing, please be sure that your component does not fail any accessibility checks here.
-
-To note: The addon is not able to detect information on the DOM that is portaled. Therefore, if working with a portaled component, please be sure to test the component’s accessibility without portaling the content.
-
-### Documentation
-
-When you run the scaffold script, a `README` file will appear, which is a template for how we document our components. Beyond just `README` documentation, we use `@ts-docs` to self-document each component. Please follow this pattern when creating new components or adding props to existing components.
-
-## Testing
-
-### Locally
-
-We use @testing-library/react for writing tests locally. This library helps mock out user interactions with components. You can run all tests by running `pnpm test` or turn on watch mode with `pnpm test --watch`.
-
-### Linking
-
-We provide a `link` script to help you test in-development components within environments outside of Storybook such as in your application. To do this, run:
-
-```
+```bash
 pnpm run link --to=[path-to-application]
 ```
 
-The script does the following in order:
+The script:
 
-- It scans the destination application for any installed `leafygreen-ui` components in its `node_modules` folder.
-  **NOTE:** If the package is new and unpublished/not installed, you will need to create a directory for the new component within the destination application inside `node_modules` before running this command.
-- If any `leafygreen-ui` components are found then:
-  - The script runs `pnpm link` in the corresponding leafygreen-ui package directory to publish a link to the package in the pnpm global registry.
-  - The script then runs `pnpm link <package-name>` in the destination application directory to install the package from the published link in the pnpm global registry.
+1. Scans the destination application for installed `leafygreen-ui` packages
+2. Runs `pnpm link` in each corresponding LeafyGreen package directory
+3. Links the packages in your destination application
 
-After the script completes, you can make changes directly to the component in your local `leafygreen-ui` repository. Once you do this, make sure to rebuild the component and the changes will be visible on your running application.
+After linking, changes to LeafyGreen components will be reflected in your application after rebuilding.
 
-If you encounter issues while linking, try the following any of the following flags:
+> **Note**: For new/unpublished packages, create the package directory in your application's `node_modules` before running the link command.
 
-- When linking multiple packages with `--scope` or multiple `--packages` options, link processes run in parallel by default. If you experience failures, add the `--no-parallel` flag to run the linking tasks sequentially, which can help avoid race conditions.
+#### Troubleshooting Linking
 
-- If you are using a Node version manager such as `asdf` or `nvm`, add the `--launch-env="$(env)"` flag. This ensures the link script spawns commands using your current shell’s environment, preventing environment pollutions that may happen through the tooling of the version manager.
+| Issue                                  | Solution                                                            |
+| -------------------------------------- | ------------------------------------------------------------------- |
+| Multiple packages failing              | Add `--no-parallel` flag to run linking sequentially                |
+| Node version manager issues (asdf/nvm) | Add `--launch-env="$(env)"` flag                                    |
+| React version conflicts                | Add a webpack alias to resolve React from your app's `node_modules` |
 
-- In your destination application project, make sure your module resolver picks up `'react'` from your own `node_modules` (not from LeafyGreen’s). If using webpack, you can enforce this by adding an alias in your webpack configuration:
+**Webpack alias for React conflicts:**
 
-  ```js
-  resolve: {
-    alias: {
-      react: path.dirname(require.resolve('react/package.json'))
-    },
+```js
+resolve: {
+  alias: {
+    react: path.dirname(require.resolve('react/package.json'))
   },
-  ```
+},
+```
 
-Note: There are some known issues in linking packages with `pnpm link`, if you encounter issues, try using a local registry instead. `Verdaccio` for example is a more reliable and recommended approach for testing in an external project.
+> **Recommendation**: If you encounter persistent linking issues, use Verdaccio (below) instead—it's more reliable for testing in external projects.
 
-### Using a local registry (Verdaccio)
+### Using a Local Registry (Verdaccio)
 
-Publishing test versions to a local registry can be helpful when you need to make changes and test
-in an external app (or other library). To do this, you can install and
-use [Verdaccio](https://verdaccio.org/)
+[Verdaccio](https://verdaccio.org/) provides a local npm registry for testing packages without publishing to npm.
 
-#### 1. Install `verdaccio`
+#### Setup
+
+1. **Install Verdaccio globally**
+
+   ```bash
+   pnpm install --global verdaccio
+   ```
+
+2. **Start the Verdaccio server**
+
+   ```bash
+   verdaccio
+   ```
+
+   The server runs at `http://localhost:4873/` by default.
+
+3. **Configure npm to use your local registry**
+
+   ```bash
+   npm config set @leafygreen-ui:registry http://localhost:4873
+   ```
+
+   Verify the configuration:
+
+   ```bash
+   cat ~/.npmrc
+   # Should contain: @leafygreen-ui:registry=http://localhost:4873
+   ```
+
+#### Publishing to Verdaccio
+
+1. **Build and publish**
+
+   ```bash
+   pnpm build
+   cd packages/<package-name>
+   pnpm publish
+   ```
+
+2. **Verify the registry** (optional dry-run)
+
+   ```bash
+   pnpm publish --dry-run
+   # Should show: Publishing to http://localhost:4873
+   ```
+
+3. **If prompted to log in**
+
+   ```bash
+   npm adduser --registry http://localhost:4873
+   ```
+
+#### Installing in Your Application
 
 ```bash
-pnpm install --global verdaccio
-```
-
-#### 2. Start `verdaccio`, and make note on the localhost port (should be `http://localhost:4873/` by default)
-
-```bash
-verdaccio
-```
-
-#### 3. In another terminal, set the npm registry for this library:
-
-```bash
-npm config set @leafygreen-ui:registry http://localhost:4873
-```
-
-This will update your `~/.npmrc` file. Double check this by running:
-
-```bash
-cat ~/.npmrc
-```
-
-You should expect to see the following line in that file. (if not you can add it manually)
-
-```yml
-@leafygreen-ui:registry=http://localhost:4873
-```
-
-#### 4. Publish a version of a package to your local registry
-
-Ensure all packages are built, then navigate to some package and manually publish:
-
-```bash
-pnpm build;
-cd packages/<package-name>;
-pnpm publish;
-```
-
-To ensure you are pointing to the correct registry, you can add the `--dry-run` flag to the `pnpm publish` command. This command should echo:
-
-```
-npm notice Publishing to http://localhost:4873
-```
-
-If you do not see the line above, make sure you are using the correct node version.
-
-If you do see the line above but you also get the warning:
-
-```
-npm WARN This command requires you to be logged in to http://localhost:4873 (dry-run)
-```
-
-run the following command to [genereate a token in your npmrc file](https://verdaccio.org/docs/authentication/):
-
-```
-npm adduser --registry http://localhost:4873
-```
-
-#### 5. Install in an external project
-
-With your local version published, open up some external app. If the app uses a local `.npmrc` or `.yarnrc`, follow the instructions in the [Verdaccio Docs](https://verdaccio.org/docs/setup-npm) to ensure the project references your local registry. Otherwise, the project should first look to the registry defined in your global `~/.npmrc` for the given scope.
-
-Next, install the newly published version of your package in the external project.
-
-```bash
+cd /path/to/your-app
 pnpm install @leafygreen-ui/<package-name>
 ```
 
-#### 6. Publishing additional versions
+#### Publishing Additional Versions
 
-To publish additional versions, manually update the version number in `packages/<package-name>/package.json`, and re-run step 4. Then, either manually update the external project's `package.json`, or re-run `pnpm install @leafygreen-ui/<package-name>`.
+1. Update the version in `packages/<package-name>/package.json`
+2. Re-run `pnpm publish`
+3. Update the version in your external project
 
-#### 7. Publishing to NPM
+#### Cleanup
 
-If you want to stop publishing to and/or reading from your local Verdaccio server, remove the reference to the server URL in `~/.npmrc` (and the external project's local `.npmrc`/`.yarnrc`)
+When finished, remove the local registry reference from `~/.npmrc`:
 
-## Creating a new component
+```bash
+npm config delete @leafygreen-ui:registry
+```
 
-- Run `pnpm create-package <package-name>` to create a new component directory with default configurations
-- Add the new component to `build.tsconfig.json`
-- If you are using any `leafygreen-ui` dependencies in your new component, add the dependency to the component directory's `tsconfig.json`.
-- Run `pnpm run init` to link all packages before starting development
+---
 
-## Publishing a new package
+## Publishing
 
-This repository uses [npm trusted publishing with OIDC](https://docs.npmjs.com/trusted-publishers) for secure automated releases. However, new packages require a manual first publish before automation can take over.
+### Publishing a New Package
 
-### Initial Publish (Required for New Packages)
+This repository uses [npm trusted publishing with OIDC](https://docs.npmjs.com/trusted-publishers) for secure automated releases. However, **new packages require a manual first publish**.
 
-When you create a new package, you must manually publish the first version:
+#### Initial Publish Steps
 
 1. **Build the package**
 
@@ -220,41 +159,124 @@ When you create a new package, you must manually publish the first version:
 
 3. **Configure trusted publisher** on [npmjs.com](https://www.npmjs.com):
    - Navigate to your package → Settings → Trusted Publishers
-   - Add a trusted publisher:
+   - Add a trusted publisher with:
      - **Repository**: `mongodb/leafygreen-ui`
      - **Workflow**: `release.yml`
 
-### Subsequent Releases
+#### Subsequent Releases
 
-After the initial publish and trusted publisher configuration, all future releases are handled automatically:
+After initial setup, releases are automated:
 
 1. Add a changeset: `pnpm changeset`
 2. Merge your PR to `main`
-3. The "Version Packages" PR will be created automatically
-4. Merge the "Version Packages" PR to publish to npm
+3. The "Version Packages" PR is created automatically
+4. Merge the "Version Packages" PR to publish
 
-For more details on changesets and versioning, see the [README](./README.md#committing).
+### Publishing Pre-releases
 
-## Marking a Storybook story to be imported in mongodb.design
+Pre-releases allow testing alpha/beta/next versions before a full release.
 
-The mongodb.design website will automatically import the `*.story.tsx` file from its installed package directory to render its live example. By default, the first exported story from the `*.story.tsx` file will be rendered. To specify a different story to be rendered, define the following in the Storybook file's Meta object:
+Read the [changesets pre-release guide](https://github.com/changesets/changesets/blob/main/docs/prereleases.md) for full details.
 
-```
+#### Pre-release Workflow
+
+1. **Create a pre-release branch** from your feature branch
+
+   ```bash
+   git checkout -b pre-release
+   ```
+
+2. **Enter pre-release mode**
+
+   ```bash
+   pnpm changeset pre enter beta  # or: alpha, next, rc
+   ```
+
+3. **Update package versions**
+
+   ```bash
+   pnpm changeset version
+   ```
+
+   Packages with changesets become `X.Y.Z-beta.0`
+
+4. **Commit the version updates**
+
+   ```bash
+   git commit -am "chore: prerelease version packages"
+   ```
+
+5. **Build and publish**
+
+   ```bash
+   pnpm build <...components>
+   pnpm changeset publish
+   ```
+
+#### Updating Pre-releases
+
+Continue development on your original feature branch. To publish updates:
+
+1. Pull changes from the feature branch into `pre-release`
+2. Run steps 3-5 above
+
+When your feature branch merges to `main`, delete the `pre-release` branch.
+
+---
+
+## Storybook Integration
+
+### Specifying the Default Story for mongodb.design
+
+The mongodb.design website imports `*.story.tsx` files to render live examples. By default, the first exported story is rendered.
+
+To specify a different story:
+
+```typescript
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 
 const meta: StoryMetaType<typeof Component> = {
-  title: 'Components/name',
+  title: 'Components/ComponentName',
   component: Component,
   parameters: {
-    default: 'StoryName',
-  }
-}
+    default: 'StoryName', // Specify which story to render
+  },
+};
 
-export default meta
+export default meta;
 ```
 
-The `StoryMetaType` utility type from `@lg-tools/storybook-utils` will enforce parameters required for use with Chromatic and on `mongodb.design`
+The `StoryMetaType` utility enforces required parameters for Chromatic and mongodb.design integration.
 
-## Preventing an interface from being imported in mongodb.design's Code Docs
+---
 
-The mongodb.design website's code docs page will automatically import all exported interfaces. Interfaces and components marked with `@internal` and `@example` in TSDocs will be removed by default. To force an interface to be removed, add a `@noDocgen` flag to the TSDocs.
+## mongodb.design Integration
+
+### Excluding Interfaces from Code Docs
+
+The mongodb.design code docs automatically import all exported interfaces. Some are excluded by default:
+
+- Interfaces marked with `@internal` in TSDoc
+- Interfaces marked with `@example` in TSDoc
+
+To force exclusion of an interface, add the `@noDocgen` flag:
+
+```typescript
+/**
+ * Internal helper type - not for public use
+ * @noDocgen
+ */
+export interface InternalHelperProps {
+  // ...
+}
+```
+
+---
+
+## Additional Resources
+
+| Resource                                | Description                        |
+| --------------------------------------- | ---------------------------------- |
+| [Contributing Guide](./CONTRIBUTING.md) | Getting started with contributions |
+| [Style Guide](./STYLEGUIDE.md)          | Code style conventions             |
+| [README](./README.md)                   | Project overview and package list  |
