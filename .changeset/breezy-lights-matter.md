@@ -2,4 +2,4 @@
 '@leafygreen-ui/code': patch
 ---
 
-Update highlight color in dark mode
+Update highlight color in dark mode to be more visible
