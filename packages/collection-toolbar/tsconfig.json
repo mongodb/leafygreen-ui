@@ -28,6 +28,9 @@
       "path": "../lib"
     },
     {
+      "path": "../menu"
+    },
+    {
       "path": "../tokens"
     },
     {

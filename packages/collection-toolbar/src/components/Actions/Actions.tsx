@@ -21,6 +21,7 @@ import { ActionsProps } from './Actions.types';
 import { Pagination } from './Pagination';
 import { Button } from './Button';
 import { Justify, Tooltip } from '@leafygreen-ui/tooltip';
+import { Menu } from './Menu';
 
 export const Actions = CompoundSubComponent(
   ({ children, className, ...rest }: ActionsProps) => {
@@ -39,7 +40,13 @@ export const Actions = CompoundSubComponent(
       CollectionToolbarActionsSubComponentProperty.Pagination,
     );
 
+    const menu = findChild(
+      children,
+      CollectionToolbarActionsSubComponentProperty.Menu,
+    );
+
     const showPagination = pagination && variant === Variant.Default;
+    const showMenu = menu && variant !== Variant.Collapsible;
 
     if (Buttons.length > 2) {
       consoleOnce.error(
@@ -52,11 +59,13 @@ export const Actions = CompoundSubComponent(
     return (
       <div
         data-testid={lgIds.actions}
+        data-lgid={lgIds.actions}
         className={getActionStyles({ className, variant })}
         {...rest}
       >
         {PrimaryButtons}
         {showPagination && pagination}
+        {showMenu && menu}
         {showToggleButton && (
           <Tooltip
             justify={Justify.Middle}
@@ -80,5 +89,6 @@ export const Actions = CompoundSubComponent(
     key: CollectionToolbarSubComponentProperty.Actions,
     Button,
     Pagination,
+    Menu,
   },
 );
