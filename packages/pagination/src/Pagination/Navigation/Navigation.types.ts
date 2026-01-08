@@ -1,3 +1,4 @@
+import { LgIdProps } from '@leafygreen-ui/lib';
 import { PaginationProps } from '../Pagination.types';
 
 export type NavigationProps = Pick<
@@ -11,4 +12,5 @@ export type NavigationProps = Pick<
   | 'onBackArrowClick'
   | 'onForwardArrowClick'
   | 'className'
->;
+> &
+  LgIdProps;
