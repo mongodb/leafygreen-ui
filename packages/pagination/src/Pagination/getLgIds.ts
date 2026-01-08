@@ -6,7 +6,6 @@ export const getLgIds = (root: LgIdString = DEFAULT_LGID_ROOT) => {
   const ids = {
     root,
     pageSize: `${root}-page_size`,
-    pageRangeView: `${root}-page_range_view`,
     navigation: `${root}-navigation`,
     summary: `${root}-summary`,
   } as const;
