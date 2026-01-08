@@ -25,6 +25,7 @@ export function IconSkeleton({
       {...rest}
       aria-hidden
       data-lgid={lgIds.root}
+      data-testid={lgIds.root}
       className={cx(
         getIconSkeletonBaseStyles(renderedSize, theme, enableAnimations),
         className,

@@ -7,13 +7,13 @@ import LeafyGreenProvider, {
 import { Size } from '@leafygreen-ui/tokens';
 
 import { Skeleton } from '../Skeleton';
+import { getLgIds } from '../utils/getLgIds';
 
 import {
   getSkeletonListItemStyles,
   skeletonListWrapperStyles,
 } from './ListSkeleton.styles';
 import { ListSkeletonProps } from './ListSkeleton.types';
-import { getLgIds } from '../utils/getLgIds';
 
 export function ListSkeleton({
   darkMode: darkModeProp,

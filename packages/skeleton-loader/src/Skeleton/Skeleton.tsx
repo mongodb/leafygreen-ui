@@ -3,6 +3,8 @@ import React from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
+import { getLgIds } from '../utils/getLgIds';
+
 import {
   getSkeletonBaseStyles,
   sizeStyles,
@@ -10,7 +12,6 @@ import {
 } from './Skeleton.styles';
 import { Size } from './Skeleton.types';
 import { SkeletonProps } from '.';
-import { getLgIds } from '../utils/getLgIds';
 
 export function Skeleton({
   enableAnimations = true,

@@ -5,8 +5,8 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 
-import { Skeleton } from '..';
 import { getLgIds } from '../utils/getLgIds';
+import { Skeleton } from '..';
 
 import { baseStyles, fullWidthStyles } from './FormSkeleton.styles';
 import { FormSkeletonProps } from '.';
@@ -27,6 +27,7 @@ export function FormSkeleton({
         {...rest}
         aria-busy
         data-lgid={lgIds.root}
+        data-testid={lgIds.root}
       >
         <Skeleton
           className={fullWidthStyles}

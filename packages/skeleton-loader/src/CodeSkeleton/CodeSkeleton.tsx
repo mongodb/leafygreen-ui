@@ -5,8 +5,8 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 
-import { Size, Skeleton } from '..';
 import { getLgIds } from '../utils/getLgIds';
+import { Size, Skeleton } from '..';
 
 import { lineStyles, rootStyles } from './CodeSkeleton.styles';
 import { CodeSkeletonProps } from '.';
@@ -27,6 +27,7 @@ export function CodeSkeleton({
         className={cx(rootStyles, className)}
         aria-busy
         data-lgid={lgIds.root}
+        data-testid={lgIds.root}
       >
         <Skeleton
           enableAnimations={enableAnimations}

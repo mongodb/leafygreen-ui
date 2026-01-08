@@ -5,6 +5,7 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 
+import { getLgIds } from '../utils/getLgIds';
 import { Size, Skeleton } from '..';
 
 import {
@@ -14,7 +15,6 @@ import {
   rootStyles,
 } from './ParagraphSkeleton.styles';
 import { ParagraphSkeletonProps } from '.';
-import { getLgIds } from '../utils/getLgIds';
 
 export function ParagraphSkeleton({
   darkMode: darkModeProp,
