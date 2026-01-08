@@ -6,11 +6,11 @@ import {
   DEFAULT_CURRENT_PAGE,
   DEFAULT_ITEMS_PER_PAGE_OPTIONS,
 } from '../constants';
+import { getLgIds } from '../getLgIds';
 import { getSectionStyles } from '../Pagination.styles';
 import { getCurrentRangeString, getRangeMaxString } from '../utils';
 
 import { SummaryProps } from './Summary.types';
-import { getLgIds } from '../getLgIds';
 
 /**
  * Summary is a component that displays the current range of items.

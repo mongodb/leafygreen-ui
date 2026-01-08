@@ -12,11 +12,11 @@ import {
 import { Body } from '@leafygreen-ui/typography';
 
 import { DEFAULT_ITEMS_PER_PAGE_OPTIONS } from '../constants';
+import { getLgIds } from '../getLgIds';
 import { getSectionStyles } from '../Pagination.styles';
 import { areItemsPerPageValid } from '../utils';
 
 import { PageSizeProps } from './PageSize.types';
-import { getLgIds } from '../getLgIds';
 
 /**
  * PageSize is a component that displays the number of items per page.

@@ -4,8 +4,8 @@ import { fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
-import { Pagination, type PaginationProps } from '.';
 import { DEFAULT_LGID_ROOT, getLgIds } from './getLgIds';
+import { Pagination, type PaginationProps } from '.';
 
 function renderPagination(props: PaginationProps) {
   return render(<Pagination {...props} data-testid="pagination-test" />);

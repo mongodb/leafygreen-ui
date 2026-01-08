@@ -8,12 +8,12 @@ import {
   DEFAULT_CURRENT_PAGE,
   DEFAULT_ITEMS_PER_PAGE_OPTIONS,
 } from './constants';
+import { getLgIds } from './getLgIds';
 import Navigation from './Navigation';
 import PageSize from './PageSize';
 import { baseStyles } from './Pagination.styles';
 import { PaginationProps } from './Pagination.types';
 import Summary from './Summary';
-import { getLgIds } from './getLgIds';
 
 /**
  * Pagination enables the segmentation of extensive content into smaller portions distributed across various pages. Implement a Pagination component when dealing with an abundance of results to prevent overwhelming users with excessive information on a single page.
