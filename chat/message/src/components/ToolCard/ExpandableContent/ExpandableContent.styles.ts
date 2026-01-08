@@ -16,6 +16,7 @@ const baseContentWrapperStyles = css`
 
   pre {
     max-height: ${LG_MARKDOWN_CODE_MAX_HEIGHT}px;
+    overflow-y: auto;
   }
 `;
 
