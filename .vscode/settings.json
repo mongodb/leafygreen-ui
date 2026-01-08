@@ -42,24 +42,5 @@
     {
       "file": "node_modules/@lg-tools/prompt-kit/src/prompts/pullRequestDescriptionGeneration.md"
     }
-  ],
-  "workbench.colorCustomizations": {
-    "activityBar.activeBackground": "#009b6e",
-    "activityBar.background": "#009b6e",
-    "activityBar.foreground": "#e7e7e7",
-    "activityBar.inactiveForeground": "#e7e7e799",
-    "activityBarBadge.background": "#8800bf",
-    "activityBarBadge.foreground": "#e7e7e7",
-    "commandCenter.border": "#e7e7e799",
-    "sash.hoverBorder": "#009b6e",
-    "statusBar.background": "#00684a",
-    "statusBar.foreground": "#e7e7e7",
-    "statusBarItem.hoverBackground": "#009b6e",
-    "statusBarItem.remoteBackground": "#00684a",
-    "statusBarItem.remoteForeground": "#e7e7e7",
-    "titleBar.activeBackground": "#00684a",
-    "titleBar.activeForeground": "#e7e7e7",
-    "titleBar.inactiveBackground": "#00684a99",
-    "titleBar.inactiveForeground": "#e7e7e799"
-  }
+  ]
 }
