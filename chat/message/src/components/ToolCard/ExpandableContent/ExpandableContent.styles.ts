@@ -1,6 +1,7 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
+const LG_MARKDOWN_CODE_MAX_HEIGHT = 220;
 const TRANSITION_DURATION = transitionDuration.slower;
 
 const baseContentWrapperStyles = css`
@@ -12,6 +13,10 @@ const baseContentWrapperStyles = css`
   grid-template-rows: 0fr;
   opacity: 0;
   visibility: hidden;
+
+  pre {
+    max-height: ${LG_MARKDOWN_CODE_MAX_HEIGHT}px;
+  }
 `;
 
 const expandedContentWrapperStyles = css`
