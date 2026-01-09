@@ -27,19 +27,29 @@ export function FormSkeleton({
         {...rest}
         aria-busy
         data-lgid={lgIds.root}
-        data-testid={lgIds.root}
       >
         <Skeleton
           className={fullWidthStyles}
           enableAnimations={enableAnimations}
+          data-lgid={`${lgIds.form}-line-1`}
         />
-        <Skeleton enableAnimations={enableAnimations} />
-        <Skeleton enableAnimations={enableAnimations} />
+        <Skeleton
+          enableAnimations={enableAnimations}
+          data-lgid={`${lgIds.form}-line-2`}
+        />
+        <Skeleton
+          enableAnimations={enableAnimations}
+          data-lgid={`${lgIds.form}-line-3`}
+        />
         <Skeleton
           className={fullWidthStyles}
           enableAnimations={enableAnimations}
+          data-lgid={`${lgIds.form}-line-4`}
         />
-        <Skeleton enableAnimations={enableAnimations} />
+        <Skeleton
+          enableAnimations={enableAnimations}
+          data-lgid={`${lgIds.form}-line-5`}
+        />
       </div>
     </LeafyGreenProvider>
   );

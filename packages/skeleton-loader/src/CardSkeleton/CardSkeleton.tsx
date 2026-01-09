@@ -32,6 +32,7 @@ export function CardSkeleton({
         withHeader
         enableAnimations={enableAnimations}
         darkMode={darkMode}
+        data-lgid={lgIds.paragraph}
       />
     </Card>
   );

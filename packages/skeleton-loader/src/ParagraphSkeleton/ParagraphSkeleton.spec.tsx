@@ -3,8 +3,15 @@ import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 import { ParagraphSkeleton } from './ParagraphSkeleton';
+import { getTestUtils } from '../testing/getTestUtils';
 
 describe('packages/skeleton-loader/ParagraphSkeleton', () => {
+  test('renders', () => {
+    render(<ParagraphSkeleton />);
+    const { getSkeletonLoader } = getTestUtils();
+    expect(getSkeletonLoader()).toBeInTheDocument();
+  });
+
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
       const { container } = render(<ParagraphSkeleton />);

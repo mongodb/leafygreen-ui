@@ -29,15 +29,16 @@ export function ParagraphSkeleton({
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <div
+        data-lgid={lgIds.root}
         {...rest}
         className={cx(rootStyles, className)}
         aria-busy
-        data-lgid={lgIds.root}
       >
         {withHeader && (
           <Skeleton
             enableAnimations={enableAnimations}
             className={headerStyles}
+            data-lgid={lgIds.paragraphHeader}
             data-testid="lg-paragraph-skeleton-header"
           />
         )}
@@ -45,16 +46,19 @@ export function ParagraphSkeleton({
           enableAnimations={enableAnimations}
           size={Size.Small}
           className={lineStyles}
+          data-lgid={`${lgIds.paragraph}-line-1`}
         />
         <Skeleton
           enableAnimations={enableAnimations}
           size={Size.Small}
           className={lineStyles}
+          data-lgid={`${lgIds.paragraph}-line-2`}
         />
         <Skeleton
           enableAnimations={enableAnimations}
           size={Size.Small}
           className={lastLineStyles}
+          data-lgid={`${lgIds.paragraph}-line-3`}
         />
       </div>
     </LeafyGreenProvider>

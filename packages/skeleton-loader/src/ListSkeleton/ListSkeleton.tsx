@@ -30,7 +30,7 @@ export function ListSkeleton({
       <ul
         className={skeletonListWrapperStyles}
         data-lgid={lgIds.root}
-        data-testid="lg-skeleton-list"
+        data-testid={lgIds.root}
         aria-busy
         {...rest}
       >
@@ -39,9 +39,12 @@ export function ListSkeleton({
             // Update the key when `count` changes so the item animation stays in sync
             key={`${i}/${count}`}
             className={getSkeletonListItemStyles(i, bulletsOnly)}
-            data-testid="lg-skeleton-list_item"
           >
-            <Skeleton enableAnimations={enableAnimations} size={Size.Small} />
+            <Skeleton
+              enableAnimations={enableAnimations}
+              size={Size.Small}
+              data-lgid={`${lgIds.listItem}-${i}`}
+            />
           </li>
         ))}
       </ul>
