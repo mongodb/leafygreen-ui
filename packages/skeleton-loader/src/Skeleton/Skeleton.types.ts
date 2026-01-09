@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { DarkModeProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 
-export interface SharedSkeletonProps {
+export interface SharedSkeletonProps extends LgIdProps {
   /**
    * Defines whether the loading "shimmer" animation renders
    *

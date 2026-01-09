@@ -7,6 +7,7 @@ import LeafyGreenProvider, {
 import { Size } from '@leafygreen-ui/tokens';
 
 import { Skeleton } from '../Skeleton';
+import { getLgIds } from '../utils/getLgIds';
 
 import {
   getSkeletonListItemStyles,
@@ -19,15 +20,16 @@ export function ListSkeleton({
   enableAnimations,
   count = 5,
   bulletsOnly,
+  'data-lgid': dataLgId,
   ...rest
 }: ListSkeletonProps) {
   const { darkMode } = useDarkMode(darkModeProp);
-
+  const lgIds = getLgIds(dataLgId);
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <ul
         className={skeletonListWrapperStyles}
-        data-testid="lg-skeleton-list"
+        data-lgid={lgIds.root}
         aria-busy
         {...rest}
       >
@@ -36,9 +38,12 @@ export function ListSkeleton({
             // Update the key when `count` changes so the item animation stays in sync
             key={`${i}/${count}`}
             className={getSkeletonListItemStyles(i, bulletsOnly)}
-            data-testid="lg-skeleton-list_item"
           >
-            <Skeleton enableAnimations={enableAnimations} size={Size.Small} />
+            <Skeleton
+              enableAnimations={enableAnimations}
+              size={Size.Small}
+              data-lgid={`${lgIds.listItem}-${i}`}
+            />
           </li>
         ))}
       </ul>

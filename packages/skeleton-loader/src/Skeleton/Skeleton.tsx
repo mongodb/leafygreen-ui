@@ -3,6 +3,8 @@ import React from 'react';
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
+import { getLgIds } from '../utils/getLgIds';
+
 import {
   getSkeletonBaseStyles,
   sizeStyles,
@@ -16,9 +18,12 @@ export function Skeleton({
   size = Size.Default,
   darkMode,
   className,
+  'data-lgid': dataLgId,
   ...rest
 }: SkeletonProps) {
   const { theme } = useDarkMode(darkMode);
+  const lgIds = getLgIds(dataLgId);
+
   return (
     <div
       className={cx(
@@ -28,6 +33,7 @@ export function Skeleton({
         className,
       )}
       aria-hidden
+      data-lgid={lgIds.root}
       {...rest}
     />
   );
