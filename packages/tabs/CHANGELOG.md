@@ -1,5 +1,11 @@
 # @leafygreen-ui/tabs
 
+## 17.0.10
+
+### Patch Changes
+
+- 7f3ab85: Fixed invalid css in TabTitle which was previously nesting pseudo classes.
+
 ## 17.0.9
 
 ### Patch Changes

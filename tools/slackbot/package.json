@@ -3,6 +3,10 @@
   "version": "0.2.19",
   "description": "Slackbot for LeafyGreen",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
   "bin": {
     "lg-slackbot": "./bin/slackbot.js"
   },

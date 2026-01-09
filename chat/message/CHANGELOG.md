@@ -1,5 +1,16 @@
 # @lg-chat/message
 
+## 10.2.1
+
+### Patch Changes
+
+- dca5ddb: [LG-5853](https://jira.mongodb.org/browse/LG-5853): use `"white"` variant for `Chip` instances
+- a94c874: [LG-5856](https://jira.mongodb.org/browse/LG-5856): update selected state styles for thumbs up and thumbs down buttons
+- Updated dependencies [a94c874]
+- Updated dependencies [dca5ddb]
+  - @lg-chat/message-rating@7.1.1
+  - @leafygreen-ui/chip@4.1.0
+
 ## 10.2.0
 
 ### Minor Changes
