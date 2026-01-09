@@ -18,7 +18,7 @@ Thank you for your interest in contributing to LeafyGreen UI! We appreciate cont
 
 ## Can I Contribute?
 
-Before making a PR with a brand new component, hook, or feature, consider the following:
+Of course! Before making a PR with a brand new component, hook, or feature, just consider the following:
 
 - **Cross-product utility**: Can the feature be used across multiple MongoDB products?
 - **Abstraction potential**: Is it abstracting logic that many developers or components could utilize?
