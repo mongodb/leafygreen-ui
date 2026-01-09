@@ -326,7 +326,7 @@ git push origin <your-branch-name>
 - Use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) format for your PR title (e.g., `feat(button): add loading state`, `fix(modal): resolve focus trap issue`)
 - Provide a clear description of your changes
 - Reference any relevant context
-- Request review from `@mongodb/leafygreen-ui-maintainers`
+- Review should automatically be requested from `@mongodb/leafygreen-ui-maintainers`
 - Ensure all CI checks pass (linting, tests, Chromatic visual regression)
 
 The team will review your PR and may request changes.
