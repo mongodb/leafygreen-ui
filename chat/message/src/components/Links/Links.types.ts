@@ -3,7 +3,7 @@ import { type RichLinkProps } from '@lg-chat/rich-links';
 
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
-export interface MessageLinksProps
+export interface LinksProps
   extends DarkModeProps,
     Omit<React.ComponentPropsWithRef<'div'>, 'children'> {
   /**

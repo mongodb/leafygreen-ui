@@ -362,7 +362,7 @@ This is a markdown content example showing tool execution results.`}
 
 ### Message.Actions
 
-The `MessageActions` component provides a comprehensive set of actions for chat messages.
+The `Message.Actions` component provides a comprehensive set of actions for chat messages.
 
 #### Rendering Behavior
 
@@ -402,7 +402,7 @@ Form state is reset when the feedback form is closed or when a new rating is sel
 
 ### Message.Links
 
-The `MessageLinks` component provides an expandable/collapsible section for displaying related links.
+The `Message.Links` component provides an expandable/collapsible section for displaying related links.
 
 #### Rendering Behavior
 
@@ -426,11 +426,11 @@ The component manages its own internal state for:
 
 ### Message.Promotion
 
-The `MessagePromotion` component displays promotional content with an award icon and "Learn More" link.
+The `Message.Promotion` component displays promotional content with an award icon and "Learn More" link.
 
 ### Message.VerifiedBanner
 
-The `VerifiedBanner` component displays verification information for messages.
+The `Message.VerifiedBanner` component displays verification information for messages.
 
 #### Rendering Behavior
 

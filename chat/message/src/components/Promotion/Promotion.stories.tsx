@@ -2,11 +2,11 @@ import React from 'react';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import { MessagePromotion, MessagePromotionProps } from '.';
+import { Promotion, PromotionProps } from '.';
 
-const meta: StoryMetaType<typeof MessagePromotion> = {
+const meta: StoryMetaType<typeof Promotion> = {
   title: 'Composition/Chat/Message/Promotion',
-  component: MessagePromotion,
+  component: Promotion,
   parameters: {
     default: 'WithPromotionTextAndUrl',
     generate: {
@@ -27,8 +27,8 @@ const meta: StoryMetaType<typeof MessagePromotion> = {
 
 export default meta;
 
-const Template: StoryFn<MessagePromotionProps> = props =>
-  React.createElement(MessagePromotion, props);
+const Template: StoryFn<PromotionProps> = props =>
+  React.createElement(Promotion, props);
 
 export const LiveExample = {
   render: Template,

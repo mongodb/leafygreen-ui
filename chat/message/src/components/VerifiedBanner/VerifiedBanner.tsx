@@ -3,15 +3,15 @@ import React, { forwardRef, useMemo } from 'react';
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 import { Disclaimer, Link } from '@leafygreen-ui/typography';
 
-import { MessageSubcomponentProperty } from '../shared.types';
+import { MessageSubcomponentProperty } from '../../shared.types';
 
-import { MessageBanner } from './MessageBanner';
-import { textStyles } from './MessageVerifiedBanner.styles';
-import { MessageVerifiedBannerProps } from './MessageVerifiedBanner.types';
+import { Banner } from './Banner';
+import { textStyles } from './VerifiedBanner.styles';
+import { VerifiedBannerProps } from './VerifiedBanner.types';
 
-export const MessageVerifiedBanner = CompoundSubComponent(
+export const VerifiedBanner = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
-  forwardRef<HTMLDivElement, MessageVerifiedBannerProps>(
+  forwardRef<HTMLDivElement, VerifiedBannerProps>(
     ({ verifier, verifiedAt, learnMoreUrl, ...rest }, fwdRef) => {
       const text = useMemo(() => {
         const textParts = [`Verified`];
@@ -33,7 +33,7 @@ export const MessageVerifiedBanner = CompoundSubComponent(
       }, [verifier, verifiedAt]);
 
       return (
-        <MessageBanner ref={fwdRef} variant="success" {...rest}>
+        <Banner ref={fwdRef} variant="success" {...rest}>
           <Disclaimer className={textStyles}>
             {text}
             {learnMoreUrl && (
@@ -43,12 +43,12 @@ export const MessageVerifiedBanner = CompoundSubComponent(
               </>
             )}
           </Disclaimer>
-        </MessageBanner>
+        </Banner>
       );
     },
   ),
   {
-    displayName: 'MessageVerifiedBanner',
+    displayName: 'VerifiedBanner',
     key: MessageSubcomponentProperty.VerifiedBanner,
   },
 );

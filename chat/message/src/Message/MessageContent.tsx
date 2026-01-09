@@ -3,7 +3,7 @@ import { LGMarkdown } from '@lg-chat/lg-markdown';
 
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
-import { MessageContentProps, MessageSourceType } from './MessageContent.types';
+import { type MessageContentProps, MessageSourceType } from './Message.types';
 
 export function MessageContent({
   children,

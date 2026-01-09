@@ -21,21 +21,21 @@ import LeafyGreenProvider, {
 import { spacing as spacingToken } from '@leafygreen-ui/tokens';
 import { Justify, Tooltip, TooltipVariant } from '@leafygreen-ui/tooltip';
 
-import { useMessageContext } from '../MessageContext';
-import { MessageSubcomponentProperty } from '../shared.types';
+import { useMessageContext } from '../../MessageContext';
+import { MessageSubcomponentProperty } from '../../shared.types';
 
-import { FEEDBACK_TEXTAREA_TEST_ID } from './MessageActions.constants';
+import { FEEDBACK_TEXTAREA_TEST_ID } from './Actions.constants';
 import {
   actionBarStyles,
   getContainerStyles,
   getDividerStyles,
   primaryActionsContainerStyles,
-} from './MessageActions.styles';
-import { MessageActionsProps } from './MessageActions.types';
+} from './Actions.styles';
+import { ActionsProps } from './Actions.types';
 
-export const MessageActions = CompoundSubComponent(
+export const Actions = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
-  forwardRef<HTMLDivElement, MessageActionsProps>(
+  forwardRef<HTMLDivElement, ActionsProps>(
     (
       {
         children: _children,
@@ -259,7 +259,7 @@ export const MessageActions = CompoundSubComponent(
     },
   ),
   {
-    displayName: 'MessageActions',
+    displayName: 'Actions',
     key: MessageSubcomponentProperty.Actions,
   },
 );

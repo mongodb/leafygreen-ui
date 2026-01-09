@@ -30,7 +30,7 @@ export const multilineStyles = css`
   border-radius: ${spacing[300]}px;
 `;
 
-export const getMessageBannerStyles = ({
+export const getBannerStyles = ({
   className,
   isMultiline,
 }: {

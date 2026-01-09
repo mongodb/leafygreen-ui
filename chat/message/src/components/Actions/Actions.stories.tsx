@@ -9,10 +9,10 @@ import { expect, userEvent, within } from '@storybook/test';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-import { Message } from '../Message';
+import { Message } from '../../Message';
 
-import { FEEDBACK_TEXTAREA_TEST_ID } from './MessageActions.constants';
-import { MessageActions, MessageActionsProps } from '.';
+import { FEEDBACK_TEXTAREA_TEST_ID } from './Actions.constants';
+import { Actions, ActionsProps } from '.';
 
 // eslint-disable-next-line no-console
 const testOnClickCopy = () => console.log('Copy clicked');
@@ -26,9 +26,9 @@ const testOnSubmitFeedback = () => console.log('Feedback submitted');
 const SAMPLE_MESSAGE_BODY =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
 
-const meta: StoryMetaType<typeof MessageActions> = {
+const meta: StoryMetaType<typeof Actions> = {
   title: 'Composition/Chat/Message/Actions',
-  component: MessageActions,
+  component: Actions,
   args: {
     onClickCopy: testOnClickCopy,
     onClickRetry: testOnClickRetry,
@@ -70,9 +70,7 @@ const meta: StoryMetaType<typeof MessageActions> = {
 };
 export default meta;
 
-const Template: StoryFn<MessageActionsProps> = props => (
-  <MessageActions {...props} />
-);
+const Template: StoryFn<ActionsProps> = props => <Actions {...props} />;
 
 /** Helper function to hover over a button and verify tooltip appears */
 const hoverAndVerifyTooltip = async (
@@ -156,7 +154,7 @@ const verifyErrorMessage = (
   expect(error).toBeInTheDocument();
 };
 
-export const LiveExample: StoryObj<MessageActionsProps> = {
+export const LiveExample: StoryObj<ActionsProps> = {
   render: Template,
   parameters: {
     chromatic: {
@@ -165,7 +163,7 @@ export const LiveExample: StoryObj<MessageActionsProps> = {
   },
 };
 
-export const LightModeWithCopyHover: StoryObj<MessageActionsProps> = {
+export const LightModeWithCopyHover: StoryObj<ActionsProps> = {
   render: Template,
   args: {
     onClickCopy: testOnClickCopy,
@@ -184,7 +182,7 @@ export const LightModeWithCopyHover: StoryObj<MessageActionsProps> = {
   },
 };
 
-export const DarkModeWithCopyHover: StoryObj<MessageActionsProps> = {
+export const DarkModeWithCopyHover: StoryObj<ActionsProps> = {
   render: Template,
   args: {
     darkMode: true,
@@ -204,7 +202,7 @@ export const DarkModeWithCopyHover: StoryObj<MessageActionsProps> = {
   },
 };
 
-export const LightModeWithRetryHover: StoryObj<MessageActionsProps> = {
+export const LightModeWithRetryHover: StoryObj<ActionsProps> = {
   render: Template,
   args: {
     onClickRetry: testOnClickRetry,
@@ -223,7 +221,7 @@ export const LightModeWithRetryHover: StoryObj<MessageActionsProps> = {
   },
 };
 
-export const DarkModeWithRetryHover: StoryObj<MessageActionsProps> = {
+export const DarkModeWithRetryHover: StoryObj<ActionsProps> = {
   render: Template,
   args: {
     darkMode: true,
@@ -243,7 +241,7 @@ export const DarkModeWithRetryHover: StoryObj<MessageActionsProps> = {
   },
 };
 
-export const LightModeWithRatingHover: StoryObj<MessageActionsProps> = {
+export const LightModeWithRatingHover: StoryObj<ActionsProps> = {
   render: Template,
   args: {
     onRatingChange: testOnRatingChange,
@@ -263,7 +261,7 @@ export const LightModeWithRatingHover: StoryObj<MessageActionsProps> = {
   },
 };
 
-export const DarkModeWithRatingHover: StoryObj<MessageActionsProps> = {
+export const DarkModeWithRatingHover: StoryObj<ActionsProps> = {
   render: Template,
   args: {
     darkMode: true,
@@ -284,7 +282,7 @@ export const DarkModeWithRatingHover: StoryObj<MessageActionsProps> = {
   },
 };
 
-export const LightModeWithRatingSelect: StoryObj<MessageActionsProps> = {
+export const LightModeWithRatingSelect: StoryObj<ActionsProps> = {
   render: Template,
   args: {
     onRatingChange: testOnRatingChange,
@@ -307,7 +305,7 @@ export const LightModeWithRatingSelect: StoryObj<MessageActionsProps> = {
   },
 };
 
-export const DarkModeWithRatingSelect: StoryObj<MessageActionsProps> = {
+export const DarkModeWithRatingSelect: StoryObj<ActionsProps> = {
   render: Template,
   args: {
     darkMode: true,
@@ -331,62 +329,60 @@ export const DarkModeWithRatingSelect: StoryObj<MessageActionsProps> = {
   },
 };
 
-export const LightModeWithRatingSelectAndFeedback: StoryObj<MessageActionsProps> =
-  {
-    render: Template,
-    args: {
-      onRatingChange: testOnRatingChange,
-      onSubmitFeedback: testOnSubmitFeedback,
+export const LightModeWithRatingSelectAndFeedback: StoryObj<ActionsProps> = {
+  render: Template,
+  args: {
+    onRatingChange: testOnRatingChange,
+    onSubmitFeedback: testOnSubmitFeedback,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    await clickAndUnhover(canvas, {
+      buttonRole: 'radio',
+      buttonName: 'Like this message',
+    });
+
+    await typeFeedback(canvas, 'Lorem ipsum');
+
+    const { submitButton } = getFeedbackFormElements(canvas);
+    expect(submitButton).toBeInTheDocument();
+  },
+  parameters: {
+    chromatic: {
+      delay: 300,
     },
-    play: async ({ canvasElement }) => {
-      const canvas = within(canvasElement);
+  },
+};
 
-      await clickAndUnhover(canvas, {
-        buttonRole: 'radio',
-        buttonName: 'Like this message',
-      });
+export const DarkModeWithRatingSelectAndFeedback: StoryObj<ActionsProps> = {
+  render: Template,
+  args: {
+    darkMode: true,
+    onRatingChange: testOnRatingChange,
+    onSubmitFeedback: testOnSubmitFeedback,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
 
-      await typeFeedback(canvas, 'Lorem ipsum');
+    await clickAndUnhover(canvas, {
+      buttonRole: 'radio',
+      buttonName: 'Like this message',
+    });
 
-      const { submitButton } = getFeedbackFormElements(canvas);
-      expect(submitButton).toBeInTheDocument();
+    await typeFeedback(canvas, 'Lorem ipsum');
+
+    const { submitButton } = getFeedbackFormElements(canvas);
+    expect(submitButton).toBeInTheDocument();
+  },
+  parameters: {
+    chromatic: {
+      delay: 300,
     },
-    parameters: {
-      chromatic: {
-        delay: 300,
-      },
-    },
-  };
+  },
+};
 
-export const DarkModeWithRatingSelectAndFeedback: StoryObj<MessageActionsProps> =
-  {
-    render: Template,
-    args: {
-      darkMode: true,
-      onRatingChange: testOnRatingChange,
-      onSubmitFeedback: testOnSubmitFeedback,
-    },
-    play: async ({ canvasElement }) => {
-      const canvas = within(canvasElement);
-
-      await clickAndUnhover(canvas, {
-        buttonRole: 'radio',
-        buttonName: 'Like this message',
-      });
-
-      await typeFeedback(canvas, 'Lorem ipsum');
-
-      const { submitButton } = getFeedbackFormElements(canvas);
-      expect(submitButton).toBeInTheDocument();
-    },
-    parameters: {
-      chromatic: {
-        delay: 300,
-      },
-    },
-  };
-
-export const LightModeWithRatingSelectAndFeedbackAndSubmitSuccess: StoryObj<MessageActionsProps> =
+export const LightModeWithRatingSelectAndFeedbackAndSubmitSuccess: StoryObj<ActionsProps> =
   {
     render: Template,
     args: {
@@ -416,7 +412,7 @@ export const LightModeWithRatingSelectAndFeedbackAndSubmitSuccess: StoryObj<Mess
     },
   };
 
-export const DarkModeWithRatingSelectAndFeedbackAndSubmitSuccess: StoryObj<MessageActionsProps> =
+export const DarkModeWithRatingSelectAndFeedbackAndSubmitSuccess: StoryObj<ActionsProps> =
   {
     render: Template,
     args: {
@@ -447,7 +443,7 @@ export const DarkModeWithRatingSelectAndFeedbackAndSubmitSuccess: StoryObj<Messa
     },
   };
 
-export const LightModeWithRatingSelectAndFeedbackAndSubmitSuccessAndFade: StoryObj<MessageActionsProps> =
+export const LightModeWithRatingSelectAndFeedbackAndSubmitSuccessAndFade: StoryObj<ActionsProps> =
   {
     render: Template,
     args: {
@@ -477,7 +473,7 @@ export const LightModeWithRatingSelectAndFeedbackAndSubmitSuccessAndFade: StoryO
     },
   };
 
-export const DarkModeWithRatingSelectAndFeedbackAndSubmitSuccessAndFade: StoryObj<MessageActionsProps> =
+export const DarkModeWithRatingSelectAndFeedbackAndSubmitSuccessAndFade: StoryObj<ActionsProps> =
   {
     render: Template,
     args: {
@@ -508,7 +504,7 @@ export const DarkModeWithRatingSelectAndFeedbackAndSubmitSuccessAndFade: StoryOb
     },
   };
 
-export const LightModeWithRatingSelectAndFeedbackSubmitError: StoryObj<MessageActionsProps> =
+export const LightModeWithRatingSelectAndFeedbackSubmitError: StoryObj<ActionsProps> =
   {
     render: Template,
     args: {
@@ -544,7 +540,7 @@ export const LightModeWithRatingSelectAndFeedbackSubmitError: StoryObj<MessageAc
     },
   };
 
-export const DarkModeWithRatingSelectAndFeedbackSubmitError: StoryObj<MessageActionsProps> =
+export const DarkModeWithRatingSelectAndFeedbackSubmitError: StoryObj<ActionsProps> =
   {
     render: Template,
     args: {
@@ -581,6 +577,6 @@ export const DarkModeWithRatingSelectAndFeedbackSubmitError: StoryObj<MessageAct
     },
   };
 
-export const Generated: StoryObj<MessageActionsProps> = {
+export const Generated: StoryObj<ActionsProps> = {
   render: Template,
 };

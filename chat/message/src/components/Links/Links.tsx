@@ -10,7 +10,7 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
-import { MessageSubcomponentProperty } from '../shared.types';
+import { MessageSubcomponentProperty } from '../../shared.types';
 
 import {
   containerStyles,
@@ -18,12 +18,12 @@ import {
   getLinksWrapperStyles,
   headerStyles,
   linksInnerWrapperStyles,
-} from './MessageLinks.styles';
-import { type MessageLinksProps } from './MessageLinks.types';
+} from './Links.styles';
+import { type LinksProps } from './Links.types';
 
-export const MessageLinks = CompoundSubComponent(
+export const Links = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
-  forwardRef<HTMLDivElement, MessageLinksProps>(
+  forwardRef<HTMLDivElement, LinksProps>(
     (
       {
         darkMode: darkModeProp,
@@ -84,7 +84,7 @@ export const MessageLinks = CompoundSubComponent(
     },
   ),
   {
-    displayName: 'MessageLinks',
+    displayName: 'Links',
     key: MessageSubcomponentProperty.Links,
   },
 );

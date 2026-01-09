@@ -1,24 +1,21 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import { MessageBanner } from './MessageBanner';
-import { MessageBannerProps } from './MessageBanner.types';
+import { Banner } from './Banner';
+import { BannerProps } from './Banner.types';
 
-function renderMessageBanner({
-  children,
-  ...restProps
-}: Partial<MessageBannerProps> = {}) {
+function renderBanner({ children, ...restProps }: Partial<BannerProps> = {}) {
   if (!children) {
-    throw new Error('MessageBanner requires a child element');
+    throw new Error('Banner requires a child element');
   }
 
-  const props: MessageBannerProps = {
+  const props: BannerProps = {
     children,
     ...restProps,
   };
 
   const { container } = render(
-    <MessageBanner data-testid="message-banner" {...props} />,
+    <Banner data-testid="message-banner" {...props} />,
   );
   const messageBanner = screen.getByTestId('message-banner');
   return { messageBanner, container };
@@ -27,41 +24,41 @@ function renderMessageBanner({
 describe('packages/message-banner', () => {
   describe('variants', () => {
     test('default (info)', () => {
-      renderMessageBanner({
+      renderBanner({
         variant: 'info',
-        children: 'This is a test default MessageBanner',
+        children: 'This is a test default Banner',
       });
       const circleIcon = screen.getByLabelText('Info With Circle Icon');
       expect(circleIcon).toBeInTheDocument();
     });
     test('info', () => {
-      renderMessageBanner({
+      renderBanner({
         variant: 'info',
-        children: 'This is a test info MessageBanner',
+        children: 'This is a test info Banner',
       });
       const circleIcon = screen.getByLabelText('Info With Circle Icon');
       expect(circleIcon).toBeInTheDocument();
     });
     test('warning', () => {
-      renderMessageBanner({
+      renderBanner({
         variant: 'warning',
-        children: 'This is a test warning MessageBanner',
+        children: 'This is a test warning Banner',
       });
       const warningIcon = screen.getByLabelText('Important With Circle Icon');
       expect(warningIcon).toBeInTheDocument();
     });
     test('danger', () => {
-      renderMessageBanner({
+      renderBanner({
         variant: 'danger',
-        children: 'This is a test danger MessageBanner',
+        children: 'This is a test danger Banner',
       });
       const dangerIcon = screen.getByLabelText('Warning Icon');
       expect(dangerIcon).toBeInTheDocument();
     });
     test('success', () => {
-      renderMessageBanner({
+      renderBanner({
         variant: 'success',
-        children: 'This is a test success MessageBanner',
+        children: 'This is a test success Banner',
       });
       const successIcon = screen.getByLabelText('Checkmark With Circle Icon');
       expect(successIcon).toBeInTheDocument();

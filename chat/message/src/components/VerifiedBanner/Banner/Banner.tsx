@@ -1,13 +1,13 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 
-import { Banner } from '@leafygreen-ui/banner';
+import { Banner as LGBanner } from '@leafygreen-ui/banner';
 import { useMergeRefs } from '@leafygreen-ui/hooks';
 import { useBaseFontSize } from '@leafygreen-ui/leafygreen-provider';
 
-import { getMessageBannerStyles } from './MessageBanner.styles';
-import { MessageBannerProps } from './MessageBanner.types';
+import { getBannerStyles } from './Banner.styles';
+import { BannerProps } from './Banner.types';
 
-export const MessageBanner = forwardRef<HTMLDivElement, MessageBannerProps>(
+export const Banner = forwardRef<HTMLDivElement, BannerProps>(
   (
     {
       className,
@@ -29,9 +29,9 @@ export const MessageBanner = forwardRef<HTMLDivElement, MessageBannerProps>(
       }
     }, [children, baseFontSize]);
     return (
-      <Banner
+      <LGBanner
         ref={ref}
-        className={getMessageBannerStyles({
+        className={getBannerStyles({
           className,
           isMultiline,
         })}
@@ -39,9 +39,9 @@ export const MessageBanner = forwardRef<HTMLDivElement, MessageBannerProps>(
         {...divProps}
       >
         {children}
-      </Banner>
+      </LGBanner>
     );
   },
 );
 
-MessageBanner.displayName = 'MessageBanner';
+Banner.displayName = 'Banner';
