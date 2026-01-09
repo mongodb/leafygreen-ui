@@ -4,6 +4,7 @@ import { fireEvent, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
+import { DEFAULT_LGID_ROOT, getLgIds } from './getLgIds';
 import { Pagination, type PaginationProps } from '.';
 
 function renderPagination(props: PaginationProps) {
@@ -155,6 +156,63 @@ describe('packages/pagination', () => {
         expect(
           queryByTestId('leafygreen-ui-select-menubutton'),
         ).not.toBeInTheDocument();
+      });
+    });
+
+    describe('lgid props', () => {
+      const defaultLgIds = getLgIds();
+
+      test('renders default lgid values when data-lgid is not provided', () => {
+        const { getByTestId } = render(<Pagination {...defaultProps} />);
+
+        expect(getByTestId(defaultLgIds.root)).toBeInTheDocument();
+        expect(getByTestId(defaultLgIds.pageSize)).toBeInTheDocument();
+        expect(getByTestId(defaultLgIds.summary)).toBeInTheDocument();
+        expect(getByTestId(defaultLgIds.navigation)).toBeInTheDocument();
+      });
+
+      test('renders default data-lgid attributes when data-lgid is not provided', () => {
+        const { getByTestId } = render(<Pagination {...defaultProps} />);
+
+        expect(getByTestId(defaultLgIds.root)).toHaveAttribute(
+          'data-lgid',
+          DEFAULT_LGID_ROOT,
+        );
+        expect(getByTestId(defaultLgIds.pageSize)).toHaveAttribute(
+          'data-lgid',
+          `${DEFAULT_LGID_ROOT}-page_size`,
+        );
+        expect(getByTestId(defaultLgIds.summary)).toHaveAttribute(
+          'data-lgid',
+          `${DEFAULT_LGID_ROOT}-summary`,
+        );
+        expect(getByTestId(defaultLgIds.navigation)).toHaveAttribute(
+          'data-lgid',
+          `${DEFAULT_LGID_ROOT}-navigation`,
+        );
+      });
+
+      test('renders custom lgid values when data-lgid is provided', () => {
+        const customLgId = 'lg-my-pagination';
+        const customLgIds = getLgIds(customLgId);
+        const { getByTestId } = render(
+          <Pagination {...defaultProps} data-lgid={customLgId} />,
+        );
+
+        expect(getByTestId(customLgIds.root)).toBeInTheDocument();
+      });
+
+      test('renders custom data-lgid attributes when data-lgid is provided', () => {
+        const customLgId = 'lg-my-pagination';
+        const customLgIds = getLgIds(customLgId);
+        const { getByTestId } = render(
+          <Pagination {...defaultProps} data-lgid={customLgId} />,
+        );
+
+        expect(getByTestId(customLgIds.root)).toHaveAttribute(
+          'data-lgid',
+          customLgId,
+        );
       });
     });
   });
