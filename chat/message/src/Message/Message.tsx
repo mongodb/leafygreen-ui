@@ -19,7 +19,6 @@ import {
   ToolCard,
   VerifiedBanner,
 } from '../components';
-import { MessageContent } from '../MessageContent';
 import { MessageContext } from '../MessageContext';
 import { MessageSubcomponentProperty } from '../shared.types';
 
@@ -29,6 +28,7 @@ import {
   getMessageContainerStyles,
 } from './Message.styles';
 import { type MessageProps } from './Message.types';
+import { MessageContent } from './MessageContent';
 
 export const Message = CompoundComponent(
   // eslint-disable-next-line react/display-name

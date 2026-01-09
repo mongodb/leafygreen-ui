@@ -9,8 +9,7 @@ export {
   type ToolCardProps,
   ToolCardState,
 } from './components';
-export { Message, type MessageProps } from './Message';
-export { MessageSourceType } from './MessageContent';
+export { Message, type MessageProps, MessageSourceType } from './Message';
 export {
   MessageContext,
   useMessageContext,
