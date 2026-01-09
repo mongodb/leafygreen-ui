@@ -5,6 +5,10 @@
   "main": "./dist/umd/index.js",
   "module": "dist/esm/index.js",
   "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
   "scripts": {
     "build": "lg-build bundle",
     "tsc": "lg-build tsc"
