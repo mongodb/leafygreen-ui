@@ -1,5 +1,12 @@
 # @lg-chat/message
 
+## 10.2.2
+
+### Patch Changes
+
+- 8502a46: [internal] Refactor `Message` subcomponents
+- 201459f: [LG-5861](https://jira.mongodb.org/browse/LG-5861): adds max-height to code blocks in `ToolCard.ExpandableContent`
+
 ## 10.2.1
 
 ### Patch Changes
