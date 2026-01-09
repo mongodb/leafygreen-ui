@@ -27,6 +27,11 @@ interface SharedComboboxOptionProps {
   glyph?: ReactElement;
 
   /**
+   * The badge to display to the right of the option in the menu.
+   */
+  badge?: ReactNode;
+
+  /**
    * Defines whether the option is disabled.
    * Node: disabled options are still rendered in the menu, but not selectable.
    */
@@ -63,11 +68,10 @@ export type ComboboxOptionProps = Either<
 >;
 
 export interface OptionObject
-  extends Pick<SharedComboboxOptionProps, 'description' | 'onClick'>,
+  extends Pick<SharedComboboxOptionProps, 'description' | 'onClick' | 'badge'>,
     RequiredComboboxOptionProps {
   isDisabled: boolean;
   hasGlyph?: boolean;
-  badge?: ReactNode;
 }
 
 export interface InternalComboboxOptionProps
@@ -78,5 +82,4 @@ export interface InternalComboboxOptionProps
   isFocused: boolean;
   setSelected: () => void;
   index: number;
-  badge?: ReactNode;
 }
