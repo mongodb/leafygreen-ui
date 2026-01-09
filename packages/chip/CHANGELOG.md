@@ -1,5 +1,11 @@
 # @leafygreen-ui/chip
 
+## 4.1.0
+
+### Minor Changes
+
+- dca5ddb: [LG-5853](https://jira.mongodb.org/browse/LG-5853): add `"white"` variant
+
 ## 4.0.10
 
 ### Patch Changes
