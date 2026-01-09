@@ -4,7 +4,6 @@ Thank you for your interest in contributing to LeafyGreen UI! We appreciate cont
 
 ## Table of Contents
 
-- [Code of Conduct](#code-of-conduct)
 - [Can I Contribute?](#can-i-contribute)
 - [Prerequisites](#prerequisites)
 - [Getting Started](#getting-started)
@@ -12,12 +11,10 @@ Thank you for your interest in contributing to LeafyGreen UI! We appreciate cont
 - [Creating a New Component](#creating-a-new-component)
 - [Testing](#testing)
 - [Code Style](#code-style)
+- [Accessibility](#accessibility)
+- [Documentation](#documentation)
 - [Submitting Changes](#submitting-changes)
 - [Additional Resources](#additional-resources)
-
-## Code of Conduct
-
-This project follows the [Contributor Covenant Code of Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct/). By participating, you are expected to uphold this code. Please report unacceptable behavior to the project maintainers.
 
 ## Can I Contribute?
 
@@ -224,7 +221,7 @@ For detailed coding conventions, see our [Style Guide](./STYLEGUIDE.md), which c
 import { css, cx } from '@leafygreen-ui/emotion';
 ```
 
-### Accessibility
+## Accessibility
 
 Accessibility is a priority for LeafyGreen. We enforce standards through:
 
@@ -233,7 +230,11 @@ Accessibility is a priority for LeafyGreen. We enforce standards through:
 
 > **Note**: The Storybook addon cannot detect issues in portaled content. When working with portaled components, manually verify accessibility.
 
-### Documentation
+## Documentation
+
+When contributing new components or updating existing ones, ensure documentation is updated accordingly.
+
+### Component README & TSDoc
 
 Each component includes a `README.md` generated from the scaffold script. We also use TSDoc comments to document props and APIs:
 
@@ -243,6 +244,45 @@ Each component includes a `README.md` generated from the scaffold script. We als
  * @param variant - The visual style of the button
  * @param size - The size of the button
  */
+```
+
+### Storybook & mongodb.design
+
+The [mongodb.design](https://mongodb.design) website imports your `*.story.tsx` files to render live examples. By default, the first exported story is shown.
+
+To specify a different default story:
+
+```typescript
+import { StoryMetaType } from '@lg-tools/storybook-utils';
+
+const meta: StoryMetaType<typeof Component> = {
+  title: 'Components/ComponentName',
+  component: Component,
+  parameters: {
+    default: 'StoryName', // Specify which story to render
+  },
+};
+
+export default meta;
+```
+
+The `StoryMetaType` utility enforces required parameters for Chromatic and mongodb.design integration.
+
+### Excluding Interfaces from Code Docs
+
+The mongodb.design code docs automatically import all exported interfaces. To exclude an interface, use TSDoc flags:
+
+- `@internal` - For internal-only types
+- `@noDocgen` - To force exclusion from docs
+
+```typescript
+/**
+ * Internal helper type - not for public use
+ * @noDocgen
+ */
+export interface InternalHelperProps {
+  // ...
+}
 ```
 
 ## Submitting Changes
@@ -289,7 +329,12 @@ git push origin <your-branch-name>
 - Request review from `@mongodb/leafygreen-ui-maintainers`
 - Ensure all CI checks pass (linting, tests, Chromatic visual regression)
 
-The team will review your PR and may request changes. Once approved, a maintainer will merge it.
+The team will review your PR and may request changes.
+
+### 6. Squash and Merge
+
+- Once you've received approval from all maintainers who have commented, you can squash and merge your branch.
+- If you do not have permission to merge, a maintainer will merge it for you.
 
 ## Additional Resources
 
@@ -311,4 +356,6 @@ We favor:
 
 ---
 
-Thank you for contributing to LeafyGreen UI! Your efforts help improve the developer experience across MongoDB products.
+<br />
+
+**Thank you for contributing to LeafyGreen UI! Your efforts help improve the developer experience across MongoDB products.**

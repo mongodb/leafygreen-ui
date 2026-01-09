@@ -10,8 +10,6 @@ This guide covers advanced development workflows, testing strategies, and mainta
 - [Publishing](#publishing)
   - [Publishing a New Package](#publishing-a-new-package)
   - [Publishing Pre-releases](#publishing-pre-releases)
-- [Storybook Integration](#storybook-integration)
-- [mongodb.design Integration](#mongodbdesign-integration)
 
 ---
 
@@ -77,34 +75,16 @@ resolve: {
 
    The server runs at `http://localhost:4873/` by default.
 
-3. **Configure npm to use your local registry**
-
-   ```bash
-   npm config set @leafygreen-ui:registry http://localhost:4873
-   ```
-
-   Verify the configuration:
-
-   ```bash
-   cat ~/.npmrc
-   # Should contain: @leafygreen-ui:registry=http://localhost:4873
-   ```
-
 #### Publishing to Verdaccio
 
-1. **Build and publish**
+1. **Manually update version in `packages/<package-name>/package.json`.**
+
+2. **Build and publish to Vardaccio registry**
 
    ```bash
    pnpm build
    cd packages/<package-name>
-   pnpm publish
-   ```
-
-2. **Verify the registry** (optional dry-run)
-
-   ```bash
-   pnpm publish --dry-run
-   # Should show: Publishing to http://localhost:4873
+   pnpm publish --registry http://localhost:4873
    ```
 
 3. **If prompted to log in**
@@ -115,24 +95,14 @@ resolve: {
 
 #### Installing in Your Application
 
-```bash
-cd /path/to/your-app
-pnpm install @leafygreen-ui/<package-name>
-```
+1. **Update dependency version in package, `/path/to/your-app/package.json`**
 
-#### Publishing Additional Versions
+2. **Install from registry**
 
-1. Update the version in `packages/<package-name>/package.json`
-2. Re-run `pnpm publish`
-3. Update the version in your external project
-
-#### Cleanup
-
-When finished, remove the local registry reference from `~/.npmrc`:
-
-```bash
-npm config delete @leafygreen-ui:registry
-```
+   ```bash
+   cd /path/to/your-app
+   pnpm install @leafygreen-ui/<package-name> --registry http://localhost:4873
+   ```
 
 ---
 
@@ -221,55 +191,6 @@ Continue development on your original feature branch. To publish updates:
 2. Run steps 3-5 above
 
 When your feature branch merges to `main`, delete the `pre-release` branch.
-
----
-
-## Storybook Integration
-
-### Specifying the Default Story for mongodb.design
-
-The mongodb.design website imports `*.story.tsx` files to render live examples. By default, the first exported story is rendered.
-
-To specify a different story:
-
-```typescript
-import { StoryMetaType } from '@lg-tools/storybook-utils';
-
-const meta: StoryMetaType<typeof Component> = {
-  title: 'Components/ComponentName',
-  component: Component,
-  parameters: {
-    default: 'StoryName', // Specify which story to render
-  },
-};
-
-export default meta;
-```
-
-The `StoryMetaType` utility enforces required parameters for Chromatic and mongodb.design integration.
-
----
-
-## mongodb.design Integration
-
-### Excluding Interfaces from Code Docs
-
-The mongodb.design code docs automatically import all exported interfaces. Some are excluded by default:
-
-- Interfaces marked with `@internal` in TSDoc
-- Interfaces marked with `@example` in TSDoc
-
-To force exclusion of an interface, add the `@noDocgen` flag:
-
-```typescript
-/**
- * Internal helper type - not for public use
- * @noDocgen
- */
-export interface InternalHelperProps {
-  // ...
-}
-```
 
 ---
 
