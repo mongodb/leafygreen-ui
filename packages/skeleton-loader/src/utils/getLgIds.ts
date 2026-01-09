@@ -5,6 +5,7 @@ export const DEFAULT_LGID_ROOT = 'lg-skeleton_loader';
 export const getLgIds = (root: LgIdString = DEFAULT_LGID_ROOT) => {
   const ids = {
     root,
+    line: `${root}-line`,
     form: `${root}-form`,
     listItemWrapper: `${root}-list_item_wrapper`,
     listItem: `${root}-list_item`,

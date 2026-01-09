@@ -34,7 +34,6 @@ export function Skeleton({
       )}
       aria-hidden
       data-lgid={lgIds.root}
-      data-testid={lgIds.root}
       {...rest}
     />
   );

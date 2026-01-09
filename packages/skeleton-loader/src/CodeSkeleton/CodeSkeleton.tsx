@@ -23,26 +23,28 @@ export function CodeSkeleton({
   return (
     <LeafyGreenProvider darkMode={darkMode}>
       <div
+        data-lgid={lgIds.root}
         {...rest}
         className={cx(rootStyles, className)}
         aria-busy
-        data-lgid={lgIds.root}
-        data-testid={lgIds.root}
       >
         <Skeleton
           enableAnimations={enableAnimations}
           size={Size.Small}
           className={lineStyles}
+          data-lgid={`${lgIds.line}-1`}
         />
         <Skeleton
           enableAnimations={enableAnimations}
           size={Size.Small}
           className={lineStyles}
+          data-lgid={`${lgIds.line}-2`}
         />
         <Skeleton
           enableAnimations={enableAnimations}
           size={Size.Small}
           className={lineStyles}
+          data-lgid={`${lgIds.line}-3`}
         />
       </div>
     </LeafyGreenProvider>

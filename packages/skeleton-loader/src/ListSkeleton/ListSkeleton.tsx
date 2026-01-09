@@ -30,7 +30,6 @@ export function ListSkeleton({
       <ul
         className={skeletonListWrapperStyles}
         data-lgid={lgIds.root}
-        data-testid={lgIds.root}
         aria-busy
         {...rest}
       >

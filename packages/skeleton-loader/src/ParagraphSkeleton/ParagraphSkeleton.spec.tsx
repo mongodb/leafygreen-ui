@@ -2,8 +2,9 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import { ParagraphSkeleton } from './ParagraphSkeleton';
 import { getTestUtils } from '../testing/getTestUtils';
+
+import { ParagraphSkeleton } from './ParagraphSkeleton';
 
 describe('packages/skeleton-loader/ParagraphSkeleton', () => {
   test('renders', () => {

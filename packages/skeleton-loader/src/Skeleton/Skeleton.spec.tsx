@@ -2,8 +2,9 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import { Skeleton } from './Skeleton';
 import { getTestUtils } from '../testing/getTestUtils';
+
+import { Skeleton } from './Skeleton';
 
 describe('packages/skeleton-loader/Skeleton', () => {
   test('renders', () => {

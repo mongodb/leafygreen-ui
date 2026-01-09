@@ -21,12 +21,11 @@ export function CardSkeleton({
   const lgIds = getLgIds(dataLgId);
   return (
     <Card
+      data-lgid={lgIds.root}
       {...rest}
       darkMode={darkMode}
       className={cx(rootStyles, className)}
       aria-busy
-      data-lgid={lgIds.root}
-      data-testid={lgIds.root}
     >
       <ParagraphSkeleton
         withHeader

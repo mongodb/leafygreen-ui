@@ -22,10 +22,9 @@ export function IconSkeleton({
   const renderedSize = typeof size === 'number' ? size : sizeMap[size];
   return (
     <div
+      data-lgid={lgIds.root}
       {...rest}
       aria-hidden
-      data-lgid={lgIds.root}
-      data-testid={lgIds.root}
       className={cx(
         getIconSkeletonBaseStyles(renderedSize, theme, enableAnimations),
         className,
