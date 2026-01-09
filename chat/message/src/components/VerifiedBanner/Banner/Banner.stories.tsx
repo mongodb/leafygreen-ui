@@ -2,11 +2,11 @@ import React from 'react';
 import { StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import { MessageBanner } from './MessageBanner';
+import { Banner } from './Banner';
 
-const meta: StoryMetaType<typeof MessageBanner> = {
+const meta: StoryMetaType<typeof Banner> = {
   title: 'Composition/Chat/Message/Banner',
-  component: MessageBanner,
+  component: Banner,
   args: {
     children: 'This is a message banner',
   },
@@ -17,9 +17,7 @@ const meta: StoryMetaType<typeof MessageBanner> = {
 };
 export default meta;
 
-const Template: StoryFn<typeof MessageBanner> = props => (
-  <MessageBanner {...props} />
-);
+const Template: StoryFn<typeof Banner> = props => <Banner {...props} />;
 
 export const Basic = Template.bind({});
 

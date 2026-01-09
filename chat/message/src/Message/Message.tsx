@@ -12,10 +12,15 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
-import { Actions, Links, Promotion, ToolCard } from '../components';
+import {
+  Actions,
+  Links,
+  Promotion,
+  ToolCard,
+  VerifiedBanner,
+} from '../components';
 import { MessageContent } from '../MessageContent';
 import { MessageContext } from '../MessageContext';
-import { MessageVerifiedBanner } from '../MessageVerifiedBanner';
 import { MessageSubcomponentProperty } from '../shared.types';
 
 import {
@@ -117,7 +122,7 @@ export const Message = CompoundComponent(
     displayName: 'Message',
     Actions,
     Links,
-    VerifiedBanner: MessageVerifiedBanner,
+    VerifiedBanner,
     Promotion,
     ToolCard,
   },

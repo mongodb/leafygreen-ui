@@ -9,3 +9,4 @@ export {
   type ToolCardProps,
   State as ToolCardState,
 } from './ToolCard';
+export { VerifiedBanner, type VerifiedBannerProps } from './VerifiedBanner';
