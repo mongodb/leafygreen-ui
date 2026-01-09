@@ -115,7 +115,6 @@ export const getComboboxJSX = (props?: renderComboboxProps) => {
           data-testid={value}
           description={description}
           onClick={onClick}
-          // @ts-expect-error badge prop is passed through to InternalComboboxOption via rest spread
           badge={badge}
         />
       );
