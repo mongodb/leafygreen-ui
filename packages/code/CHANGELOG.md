@@ -1,5 +1,11 @@
 # @leafygreen-ui/code
 
+## 20.2.6
+
+### Patch Changes
+
+- 0b18230: Update highlight color in dark mode to be more visible
+
 ## 20.2.5
 
 ### Patch Changes
