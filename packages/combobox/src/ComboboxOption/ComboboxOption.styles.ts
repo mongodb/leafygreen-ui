@@ -1,4 +1,4 @@
-import { css } from '@leafygreen-ui/emotion';
+import { css, cx } from '@leafygreen-ui/emotion';
 import { leftGlyphClassName } from '@leafygreen-ui/input-option';
 import {
   descriptionClassName,
@@ -50,8 +50,29 @@ export const disallowPointer = css`
   pointer-events: none;
 `;
 
-export const displayNameStyle = (isSelected: boolean) => css`
-  font-weight: ${isSelected ? fontWeights.semiBold : fontWeights.regular};
+const inputOptionBaseStyles = css`
+  .${titleClassName} {
+    font-weight: ${fontWeights.regular};
+  }
+`;
+
+const selectedInputOptionStyles = css`
+  .${titleClassName} {
+    font-weight: ${fontWeights.semiBold};
+  }
+`;
+
+const badgeStyles = css`
+  .${titleClassName} {
+    color: red;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: ${spacing[200]}px;
+  }
+  .${descriptionClassName} {
+    margin-top: ${spacing[100]}px;
+  }
 `;
 
 export const iconThemeStyles: Record<Theme, string> = {
@@ -113,3 +134,29 @@ export const multiselectIconLargePosition = css`
     top: 3px;
   }
 `;
+
+export const getInputOptionStyles = ({
+  size,
+  isMultiselectWithoutIcons,
+  shouldRenderBadge,
+  isSelected,
+  className,
+}: {
+  size: ComboboxSize;
+  isMultiselectWithoutIcons: boolean;
+  isSelected: boolean;
+  shouldRenderBadge: boolean;
+  className?: string;
+}) =>
+  cx(
+    inputOptionBaseStyles,
+    {
+      [selectedInputOptionStyles]: isSelected,
+      [largeStyles]: size === ComboboxSize.Large,
+      [multiselectIconPosition]: isMultiselectWithoutIcons,
+      [multiselectIconLargePosition]:
+        isMultiselectWithoutIcons && size === ComboboxSize.Large,
+      [badgeStyles]: shouldRenderBadge,
+    },
+    className,
+  );

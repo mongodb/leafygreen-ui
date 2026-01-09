@@ -36,6 +36,7 @@
     "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"
   },
   "devDependencies": {
+    "@leafygreen-ui/badge": "workspace:^",
     "@leafygreen-ui/button": "workspace:^",
     "@lg-tools/build": "workspace:^"
   },

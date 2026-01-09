@@ -1,5 +1,7 @@
-import React, { ReactChild } from 'react';
+import React, { ReactChild, ReactNode } from 'react';
 import escapeRegExp from 'lodash/escapeRegExp';
+
+import { isComponentType } from '@leafygreen-ui/lib';
 
 /**
  *
@@ -55,3 +57,11 @@ export const wrapJSX = (
 
   return <>{str}</>;
 };
+
+/**
+ * Checks if the component is a Badge component
+ * @param component
+ * @returns `boolean`
+ */
+export const isBadgeComponent = (component?: ReactNode): boolean =>
+  !!component && isComponentType(component, 'Badge');

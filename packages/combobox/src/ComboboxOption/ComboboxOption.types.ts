@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ReactElement } from 'react';
+import { ComponentPropsWithoutRef, ReactElement, ReactNode } from 'react';
 
 import { Either } from '@leafygreen-ui/lib';
 
@@ -25,6 +25,11 @@ interface SharedComboboxOptionProps {
    * The icon to display to the left of the option in the menu.
    */
   glyph?: ReactElement;
+
+  /**
+   * The badge to display to the right of the option in the menu.
+   */
+  badge?: ReactNode;
 
   /**
    * Defines whether the option is disabled.
@@ -63,7 +68,7 @@ export type ComboboxOptionProps = Either<
 >;
 
 export interface OptionObject
-  extends Pick<SharedComboboxOptionProps, 'description' | 'onClick'>,
+  extends Pick<SharedComboboxOptionProps, 'description' | 'onClick' | 'badge'>,
     RequiredComboboxOptionProps {
   isDisabled: boolean;
   hasGlyph?: boolean;

@@ -1,20 +1,14 @@
 import React, { useCallback, useContext, useMemo } from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { ComboboxContext } from '../ComboboxContext';
-import { ComboboxSize } from '../types';
 import { wrapJSX } from '../utils';
+import { isBadgeComponent } from '../utils/wrapJSX';
 
-import {
-  displayNameStyle,
-  largeStyles,
-  multiselectIconLargePosition,
-  multiselectIconPosition,
-} from './ComboboxOption.styles';
+import { getInputOptionStyles } from './ComboboxOption.styles';
 import {
   ComboboxOptionProps,
   InternalComboboxOptionProps,
@@ -43,6 +37,7 @@ export const InternalComboboxOption = React.forwardRef<
       value,
       onClick,
       disabled = false,
+      badge,
       ...rest
     }: InternalComboboxOptionProps,
     forwardedRef,
@@ -99,6 +94,8 @@ export const InternalComboboxOption = React.forwardRef<
     // When multiselect and withoutIcons the Checkbox is aligned to the top instead of centered.
     const multiSelectWithoutIcons = multiselect && !withIcons;
 
+    const shouldRenderBadge = useMemo(() => isBadgeComponent(badge), [badge]);
+
     return (
       <InputOption
         {...rest}
@@ -108,15 +105,13 @@ export const InternalComboboxOption = React.forwardRef<
         disabled={disabled}
         aria-label={displayName}
         darkMode={darkMode}
-        className={cx(
-          {
-            [largeStyles]: size === ComboboxSize.Large,
-            [multiselectIconPosition]: multiSelectWithoutIcons,
-            [multiselectIconLargePosition]:
-              multiSelectWithoutIcons && size === ComboboxSize.Large,
-          },
+        className={getInputOptionStyles({
+          size,
+          isSelected,
+          isMultiselectWithoutIcons: multiSelectWithoutIcons,
+          shouldRenderBadge,
           className,
-        )}
+        })}
         onClick={handleOptionClick}
         onKeyDown={handleOptionClick}
       >
@@ -125,9 +120,10 @@ export const InternalComboboxOption = React.forwardRef<
           rightGlyph={rightGlyph}
           description={description}
         >
-          <span id={optionTextId} className={displayNameStyle(isSelected)}>
+          <span id={optionTextId}>
             {wrapJSX(displayName, inputValue, 'strong')}
           </span>
+          {shouldRenderBadge && badge}
         </InputOptionContent>
       </InputOption>
     );

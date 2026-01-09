@@ -18,6 +18,12 @@
   ],
   "references": [
     {
+      "path": "../badge"
+    },
+    {
+      "path": "../button"
+    },
+    {
       "path": "../checkbox"
     },
     {

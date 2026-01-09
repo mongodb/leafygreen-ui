@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
+import Badge from '@leafygreen-ui/badge';
 import { Icon } from '@leafygreen-ui/icon';
 
 import { ComboboxGroup, ComboboxOption } from '..';
@@ -165,6 +166,7 @@ describe('packages/combobox/utils', () => {
           displayName: 'Test',
           hasGlyph: false,
           isDisabled: false,
+          badge: undefined,
         },
       ]);
     });
@@ -181,12 +183,14 @@ describe('packages/combobox/utils', () => {
           displayName: 'Apple',
           hasGlyph: false,
           isDisabled: false,
+          badge: undefined,
         },
         {
           value: 'banana',
           displayName: 'Banana',
           hasGlyph: false,
           isDisabled: false,
+          badge: undefined,
         },
       ]);
     });
@@ -207,6 +211,24 @@ describe('packages/combobox/utils', () => {
           displayName: 'Test',
           hasGlyph: true,
           isDisabled: true,
+          badge: undefined,
+        },
+      ]);
+    });
+
+    test('returns badge when provided', () => {
+      const badgeElement = <Badge>New</Badge>;
+      const children = (
+        <ComboboxOption value="test" displayName="Test" badge={badgeElement} />
+      );
+      const flat = flattenChildren(children);
+      expect(flat).toEqual([
+        {
+          value: 'test',
+          displayName: 'Test',
+          hasGlyph: false,
+          isDisabled: false,
+          badge: badgeElement,
         },
       ]);
     });
@@ -227,24 +249,28 @@ describe('packages/combobox/utils', () => {
           displayName: 'Apple',
           hasGlyph: false,
           isDisabled: false,
+          badge: undefined,
         },
         {
           value: 'banana',
           displayName: 'Banana',
           hasGlyph: false,
           isDisabled: false,
+          badge: undefined,
         },
         {
           value: 'ghost',
           displayName: 'Ghost',
           hasGlyph: false,
           isDisabled: false,
+          badge: undefined,
         },
         {
           value: 'habanero',
           displayName: 'Habanero',
           hasGlyph: false,
           isDisabled: false,
+          badge: undefined,
         },
       ]);
     });

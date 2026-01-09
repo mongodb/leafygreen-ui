@@ -1,6 +1,7 @@
 import React from 'react';
 import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 
+import { Badge } from '@leafygreen-ui/badge';
 import { Icon } from '@leafygreen-ui/icon';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
@@ -14,7 +15,12 @@ const meta: StoryMetaType<typeof InternalComboboxOption> = {
   parameters: {
     default: null,
     generate: {
-      storyNames: ['WithIcons', 'WithoutIcons', 'WithoutIconsAndMultiStep'],
+      storyNames: [
+        'WithIcons',
+        'WithoutIcons',
+        'WithoutIconsAndMultiStep',
+        'WithIconsAndBadge',
+      ],
       combineArgs: {
         darkMode: [false, true],
         description: [undefined, 'This is a description'],
@@ -63,6 +69,20 @@ WithIcons.parameters = {
       /// @ts-expect-error - withIcons is not a component prop
       withIcons: true,
       glyph: <Icon glyph="Cloud" />,
+    },
+  },
+};
+
+export const WithIconsAndBadge: StoryType<
+  typeof InternalComboboxOption
+> = () => <></>;
+WithIconsAndBadge.parameters = {
+  generate: {
+    args: {
+      /// @ts-expect-error - withIcons is not a component prop
+      withIcons: true,
+      glyph: <Icon glyph="Cloud" />,
+      badge: <Badge variant="green">New</Badge>,
     },
   },
 };
