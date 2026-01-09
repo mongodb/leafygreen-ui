@@ -79,7 +79,7 @@ resolve: {
 
 1. **Manually update version in `packages/<package-name>/package.json`.**
 
-2. **Build and publish to Vardaccio registry**
+2. **Build and publish to Verdaccio registry**
 
    ```bash
    pnpm build

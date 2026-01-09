@@ -684,7 +684,7 @@ packages/<component-name>/
 ├── src/
 │   ├── index.ts                    # Package entry point
 │   ├── <ComponentName>/
-│   │   ├── components/             # Internal components only used but parent component
+│   │   ├── components/             # Internal components only used by parent component
 │   │   │   ├── <SubComponent>/     # Same structure as parent
 │   │   │   │   └── ...
 │   │   ├── index.ts                # Component entry point
