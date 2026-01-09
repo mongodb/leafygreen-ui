@@ -2,7 +2,6 @@
 
 ## Table of Contents
 
-- **[Contribution Guide](#contribution-guide)**
 - **[TypeScript](#typescript)**
 - **[JavaScript](#javascript)**
   - [Functions](#functions)
@@ -13,34 +12,20 @@
 - **[React](#react)**
   - [React/JSX Basics](#reactjsx-basics)
   - [Forwarding refs](#forwarding-refs)
+  - [Polymorphic Components](#polymorphic-components)
+  - [Compound Components](#compound-components)
+  - [Context Pattern](#context-pattern)
 - **[LeafyGreen API](#leafygreen)**
   - [Consuming darkMode from `LeafyGreenProvider`](#consuming-darkmode-from-leafygreenprovider)
   - [Passing darkMode to children](#passing-darkMode-to-children)
-  - [File Structure](https://github.com/mongodb/leafygreen-ui/blob/main/stories/Folder-Structure.stories.mdx)
+  - [File Structure](#file-structure)
   - [API Patterns](#api-patterns)
     - [Input errors](#input-errors)
   - [getLgIds](#getlgids)
-- [References](#references)
-
-# Contribution Guide
-
-To propose updates to this style guide, please make the relevant changes in a branch and submit a PR. We review these PRs synchronously in our weekly Team Code Review and collectively gavel on new standards there.
-
-### Format Contributions
-
-### Prefer [Rule]
-
-#### Why
-
-_Description_
-
-#### Prefer
-
-_Example_
-
-#### Avoid
-
-_Example_
+  - [getTestUtils](#gettestutils)
+  - [displayName](#displayname)
+  - [Deprecation Pattern](#deprecation-pattern)
+- **[Making Amendments](#making-amendments)**
 
 ---
 
@@ -491,6 +476,8 @@ const triggerProps = {...}
 return <>{React.cloneElement(trigger, triggerProps)}</>;
 ```
 
+---
+
 ### Prefer using spread operator to avoid mutation of arrays and objects
 
 #### Why
@@ -532,7 +519,7 @@ function changeValues(object) {
 
 #### Why
 
-Ref forwarding allows us to provide direct access to the underlying parent element. For more information on ref forwarding, check out the React [docs](https://reactjs.org/docs/forwarding-refs.html).
+Ref forwarding allows us to provide direct access to the underlying parent element. For more information on ref forwarding, check out the React [docs](https://react.dev/reference/react/forwardRef).
 
 #### Prefer
 
@@ -556,6 +543,65 @@ const Button = props => <button>{props.children}</button>;
 // Does not accept a ref
 <Button>Click me!</Button>;
 ```
+
+---
+
+## Compound Components
+
+#### Why
+
+Compound components allow parent components to communicate with their children implicitly, providing a clean API for complex multi-part components.
+
+LeafyGreen provides factory functions via `@leafygreen-ui/compound-component`.
+
+#### Usage
+
+```typescript
+import {
+  CompoundComponent,
+  CompoundSubComponent,
+  findChild,
+} from '@leafygreen-ui/compound-component';
+
+// Define sub-components with unique keys
+const Header = CompoundSubComponent(
+  ({ children }) => <header>{children}</header>,
+  { displayName: 'Header', key: 'isHeader' },
+);
+
+const Body = CompoundSubComponent(({ children }) => <main>{children}</main>, {
+  displayName: 'Body',
+  key: 'isBody',
+});
+
+// Create the compound component
+const Card = CompoundComponent(
+  ({ children }) => {
+    const header = findChild(children, 'isHeader');
+    const body = findChild(children, 'isBody');
+
+    return (
+      <div className="card">
+        {header && <div className="card-header">{header}</div>}
+        <div className="card-body">{body}</div>
+      </div>
+    );
+  },
+  {
+    displayName: 'Card',
+    Header,
+    Body,
+  },
+);
+
+// Usage
+<Card>
+  <Card.Header>Title</Card.Header>
+  <Card.Body>Content</Card.Body>
+</Card>;
+```
+
+For more details, see the [compound-component package README](https://github.com/mongodb/leafygreen-ui/blob/main/packages/compound-component/README.md).
 
 ---
 
@@ -625,6 +671,37 @@ return (
     <Button darkMode={darkMode}>This is another button</Button>
   </>
 );
+```
+
+---
+
+## Package File Structure
+
+Each package should follow a consistent folder structure to maintain organization and scalability.
+
+```
+packages/<component-name>/
+├── src/
+│   ├── index.ts                    # Package entry point
+│   ├── <ComponentName>/
+│   │   ├── components/             # Internal components only used but parent component
+│   │   │   ├── <SubComponent>/     # Same structure as parent
+│   │   │   │   └── ...
+│   │   ├── index.ts                # Component entry point
+│   │   ├── <ComponentName>.tsx     # Main component
+│   │   ├── <ComponentName>.types.ts
+│   │   ├── <ComponentName>.styles.ts
+│   │   ├── <ComponentName>.spec.tsx
+│   │   └── <ComponentName>.stories.tsx
+│   └── testing/                    # Exported as @package/component/testing
+│       ├── index.ts
+│       ├── getLgIds.ts
+│       ├── getTestUtils.ts
+│       └── getTestUtils.types.ts
+├── package.json
+├── README.md
+├── CHANGELOG.md
+└── tsconfig.json
 ```
 
 ---
@@ -714,9 +791,133 @@ export const Component = forwardRef<
 );
 ```
 
-## References
+---
 
-- [Airbnb Javascript Style Guide](https://github.com/airbnb/javascript)
-- [DHH On Writing Software Well](https://www.youtube.com/watch?v=H5i1gdwe1Ls)
-- [Google Javascript Style Guide](https://google.github.io/styleguide/jsguide.html)
-- [Atlas Growth Style Guide](https://github.com/10gen/atlas-growth-style-guide/blob/main/README.md#Functions)
+## getTestUtils
+
+The `getTestUtils` utility complements `getLgIds` by providing standardized test utilities for each component. This pattern ensures consistent testing across all LeafyGreen components.
+
+#### Why
+
+- Provides a consistent API for testing components
+- Encapsulates common test operations (find, get, query)
+- Makes tests more readable and maintainable
+- Leverages the `data-lgid` attributes set by `getLgIds`
+
+#### Usage
+
+Each component with `getLgIds` should also have a corresponding `getTestUtils`:
+
+```typescript
+// getTestUtils.ts
+import { findByLgId, getByLgId, queryByLgId } from '@lg-tools/test-harnesses';
+import { LgIdString } from '@leafygreen-ui/lib';
+import { DEFAULT_LGID_ROOT, getLgIds } from './getLgIds';
+import { GetTestUtilsReturnType } from './getTestUtils.types';
+
+export const getTestUtils = <T extends HTMLElement = HTMLElement>(
+  lgId: LgIdString = DEFAULT_LGID_ROOT,
+): GetTestUtilsReturnType<T> => {
+  const lgIds = getLgIds(lgId);
+
+  /** Returns a promise that resolves to the element */
+  const findComponent = () => findByLgId!<T>(lgIds.root);
+
+  /** Returns the element or throws if not found */
+  const getComponent = () => getByLgId!<T>(lgIds.root);
+
+  /** Returns the element or null if not found */
+  const queryComponent = () => queryByLgId!<T>(lgIds.root);
+
+  /** Returns whether the component is disabled */
+  const isDisabled = () => {
+    const component = getComponent();
+    return component.getAttribute('aria-disabled') === 'true';
+  };
+
+  return {
+    findComponent,
+    getComponent,
+    queryComponent,
+    isDisabled,
+  };
+};
+```
+
+#### In Tests
+
+```typescript
+import { getTestUtils } from '../testing';
+
+describe('Component', () => {
+  test('renders correctly', () => {
+    render(<Component data-lgid="lg-test-component" />);
+    const { getComponent, isDisabled } = getTestUtils('lg-test-component');
+
+    expect(getComponent()).toBeVisible();
+    expect(isDisabled()).toBe(false);
+  });
+});
+```
+
+---
+
+## displayName
+
+#### Why
+
+Setting `displayName` on components improves debugging in React DevTools and provides clearer error messages.
+
+#### Usage
+
+Always set `displayName` on exported components and providers:
+
+---
+
+## Deprecation Pattern
+
+#### Why
+
+When deprecating exports, provide clear migration paths and keep deprecated code functional.
+
+#### Usage
+
+Use the `@deprecated` JSDoc tag with a migration message:
+
+```typescript
+export {
+  /** @deprecated Use the utility exported from `@leafygreen-ui/compound-component` */
+  filterChildren,
+  /** @deprecated Use the utility exported from `@leafygreen-ui/compound-component` */
+  findChild,
+} from './childQueries';
+```
+
+#### Guidelines
+
+- Always include the migration path in the deprecation message
+- Keep deprecated exports functional
+- Document deprecations in the CHANGELOG
+- Consider adding console warnings for runtime deprecation notices
+
+---
+
+# Making Amendments
+
+To propose amendments to this style guide, please make the relevant changes in a branch and submit a PR.
+
+### Format Contributions
+
+### Prefer [Rule]
+
+#### Why
+
+_Description_
+
+#### Prefer
+
+_Example_
+
+#### Avoid
+
+_Example_
