@@ -2,11 +2,11 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { CollectionToolbarProvider } from '../../../Context/CollectionToolbarProvider';
 import {
   CollectionToolbarActionsSubComponentProperty,
   Size,
 } from '../../../shared.types';
-import { CollectionToolbarProvider } from '../../../Context/CollectionToolbarProvider';
 import { getLgIds } from '../../../utils';
 
 import { Button, ButtonVariant } from '.';

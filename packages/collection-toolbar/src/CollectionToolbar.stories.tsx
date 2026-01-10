@@ -2,7 +2,7 @@ import React from 'react';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import { CollectionToolbar, Size, Variant, ButtonVariant } from '.';
+import { ButtonVariant, CollectionToolbar, Size, Variant } from '.';
 
 const meta: StoryMetaType<typeof CollectionToolbar> = {
   title: 'Components/CollectionToolbar',

@@ -1,12 +1,15 @@
-import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 import React from 'react';
-import { CollectionToolbarActionsSubComponentProperty } from '../../../shared.types';
-import { Menu as LGMenu } from '@leafygreen-ui/menu';
-import { MenuItem } from './MenuItem';
-import { MenuProps } from './Menu.types';
-import { IconButton } from '@leafygreen-ui/icon-button';
+
+import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 import { Icon } from '@leafygreen-ui/icon';
+import { IconButton } from '@leafygreen-ui/icon-button';
+import { Menu as LGMenu } from '@leafygreen-ui/menu';
+
 import { useCollectionToolbarContext } from '../../../Context/CollectionToolbarProvider';
+import { CollectionToolbarActionsSubComponentProperty } from '../../../shared.types';
+
+import { MenuProps } from './Menu.types';
+import { MenuItem } from './MenuItem';
 
 const Menu = CompoundSubComponent(
   ({ children, ...props }: MenuProps) => {

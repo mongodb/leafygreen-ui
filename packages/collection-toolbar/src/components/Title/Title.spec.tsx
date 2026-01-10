@@ -13,7 +13,6 @@ jest.mock('@leafygreen-ui/typography', () => {
     // eslint-disable-next-line react/display-name
     H3: React.forwardRef(
       (
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         { as, ...props }: { as?: React.ElementType } & Record<string, any>,
         ref: React.Ref<HTMLElement>,
       ) => {

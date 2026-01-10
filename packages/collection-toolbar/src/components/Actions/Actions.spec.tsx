@@ -2,33 +2,46 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { consoleOnce } from '@leafygreen-ui/lib';
+
+import { CollectionToolbarProvider } from '../../Context/CollectionToolbarProvider';
 import {
   CollectionToolbarActionsSubComponentProperty,
+  Size,
   Variant,
 } from '../../shared.types';
-import { CollectionToolbarProvider } from '../../Context/CollectionToolbarProvider';
 import { getLgIds } from '../../utils';
 
 import { Actions } from './Actions';
+
+jest.mock('@leafygreen-ui/lib', () => ({
+  ...jest.requireActual('@leafygreen-ui/lib'),
+  consoleOnce: {
+    error: jest.fn(),
+    warn: jest.fn(),
+    log: jest.fn(),
+  },
+}));
 
 const lgIds = getLgIds();
 
 const renderActions = ({
   children,
-  variant = Variant.Default,
   isCollapsed = false,
-  onToggleCollapsed = jest.fn(),
+  variant = Variant.Default,
+  size = Size.Default,
   ...props
 }: {
   children?: React.ReactNode;
   variant?: Variant;
+  size?: Size;
   isCollapsed?: boolean;
-  onToggleCollapsed?: jest.Mock;
 } & React.ComponentProps<typeof Actions> = {}) => {
   return render(
     <CollectionToolbarProvider
       lgIds={lgIds}
       variant={variant}
+      size={size}
       isCollapsed={isCollapsed}
     >
       <Actions {...props}>{children}</Actions>
@@ -58,11 +71,7 @@ describe('packages/collection-toolbar/components/Actions', () => {
       expect(screen.getByText('Button 2')).toBeInTheDocument();
     });
 
-    test('limits rendered buttons to maximum of 2', () => {
-      const consoleSpy = jest
-        .spyOn(console, 'error')
-        .mockImplementation(() => {});
-
+    test('limits rendered buttons to maximum of 2 and logs console error', () => {
       renderActions({
         children: (
           <>
@@ -77,29 +86,9 @@ describe('packages/collection-toolbar/components/Actions', () => {
       expect(screen.getByText('Button 2')).toBeInTheDocument();
       expect(screen.queryByText('Button 3')).not.toBeInTheDocument();
 
-      consoleSpy.mockRestore();
-    });
-
-    test('logs console error when more than 2 Button children are provided', () => {
-      const consoleSpy = jest
-        .spyOn(console, 'error')
-        .mockImplementation(() => {});
-
-      renderActions({
-        children: (
-          <>
-            <Actions.Button>Button 1</Actions.Button>
-            <Actions.Button>Button 2</Actions.Button>
-            <Actions.Button>Button 3</Actions.Button>
-          </>
-        ),
-      });
-
-      expect(consoleSpy).toHaveBeenCalledWith(
+      expect(consoleOnce.error).toHaveBeenCalledWith(
         'CollectionToolbarActions can only have up to 2 buttons',
       );
-
-      consoleSpy.mockRestore();
     });
   });
 
@@ -205,7 +194,7 @@ describe('packages/collection-toolbar/components/Actions', () => {
       renderActions({ variant: Variant.Collapsible, isCollapsed: false });
       const toggleButton = screen.getByLabelText('Toggle collapse');
 
-      await userEvent.hover(toggleButton);
+      userEvent.hover(toggleButton);
 
       await waitFor(() => {
         expect(screen.getByText('Hide filters')).toBeInTheDocument();
@@ -216,7 +205,26 @@ describe('packages/collection-toolbar/components/Actions', () => {
       renderActions({ variant: Variant.Collapsible, isCollapsed: true });
       const toggleButton = screen.getByLabelText('Toggle collapse');
 
-      await userEvent.hover(toggleButton);
+      userEvent.hover(toggleButton);
+
+      await waitFor(() => {
+        expect(screen.getByText('Show filters')).toBeInTheDocument();
+      });
+    });
+
+    test('clicking toggle button toggles the collapsed state', async () => {
+      renderActions({
+        variant: Variant.Collapsible,
+        isCollapsed: false,
+      });
+      const toggleButton = screen.getByLabelText('Toggle collapse');
+
+      userEvent.hover(toggleButton);
+      await waitFor(() => {
+        expect(screen.getByText('Hide filters')).toBeInTheDocument();
+      });
+
+      userEvent.click(toggleButton);
 
       await waitFor(() => {
         expect(screen.getByText('Show filters')).toBeInTheDocument();

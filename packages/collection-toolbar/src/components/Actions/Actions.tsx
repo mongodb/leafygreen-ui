@@ -8,6 +8,7 @@ import {
 import { Icon } from '@leafygreen-ui/icon';
 import { IconButton } from '@leafygreen-ui/icon-button';
 import { consoleOnce } from '@leafygreen-ui/lib';
+import { Justify, Tooltip } from '@leafygreen-ui/tooltip';
 
 import { useCollectionToolbarContext } from '../../Context/CollectionToolbarProvider';
 import {
@@ -18,10 +19,9 @@ import {
 
 import { getActionStyles } from './Action.styles';
 import { ActionsProps } from './Actions.types';
-import { Pagination } from './Pagination';
 import { Button } from './Button';
-import { Justify, Tooltip } from '@leafygreen-ui/tooltip';
 import { Menu } from './Menu';
+import { Pagination } from './Pagination';
 
 export const Actions = CompoundSubComponent(
   ({ children, className, ...rest }: ActionsProps) => {

@@ -65,8 +65,9 @@ export const CollectionToolbarProvider = ({
   size,
   variant,
   lgIds,
+  isCollapsed: isCollapsedProp = false,
 }: PropsWithChildren<CollectionToolbarContextProps>) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(isCollapsedProp);
 
   const onToggleCollapsed = useCallback(() => {
     setIsCollapsed(curr => !curr);

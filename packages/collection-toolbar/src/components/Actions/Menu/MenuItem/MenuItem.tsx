@@ -1,9 +1,11 @@
 import React from 'react';
+
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
-import { MenuItem as LGMenuItem, MenuItemProps } from '@leafygreen-ui/menu';
-import { CollectionToolbarActionsSubComponentProperty } from '../../../../shared.types';
-import { useCollectionToolbarContext } from '../../../../Context/CollectionToolbarProvider';
 import { useIdAllocator } from '@leafygreen-ui/hooks';
+import { MenuItem as LGMenuItem, MenuItemProps } from '@leafygreen-ui/menu';
+
+import { useCollectionToolbarContext } from '../../../../Context/CollectionToolbarProvider';
+import { CollectionToolbarActionsSubComponentProperty } from '../../../../shared.types';
 
 const MenuItem = CompoundSubComponent(
   ({ children, ...props }: MenuItemProps) => {
