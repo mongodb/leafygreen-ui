@@ -10,10 +10,16 @@
   "exclude": ["**/*.spec.*", "**/*.stories.*"],
   "references": [
     {
+      "path": "../button"
+    },
+    {
       "path": "../compound-component"
     },
     {
       "path": "../emotion"
+    },
+    {
+      "path": "../icon-button"
     },
     {
       "path": "../leafygreen-provider"
@@ -22,7 +28,16 @@
       "path": "../lib"
     },
     {
+      "path": "../menu"
+    },
+    {
       "path": "../tokens"
+    },
+    {
+      "path": "../pagination"
+    },
+    {
+      "path": "../tooltip"
     },
     {
       "path": "../typography"

@@ -2,5 +2,13 @@ export {
   CollectionToolbar,
   type CollectionToolbarProps,
 } from './CollectionToolbar';
-export { type TitleProps as CollectionToolbarTitleProps } from './components';
+export {
+  type ActionsProps,
+  type ButtonProps,
+  ButtonVariant,
+  type MenuItemProps,
+  type MenuProps,
+  type PaginationProps,
+  type TitleProps,
+} from './components';
 export { Size, Variant } from './shared.types';
