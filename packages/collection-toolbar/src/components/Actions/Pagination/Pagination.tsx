@@ -1,10 +1,13 @@
+import React from 'react';
+
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 import { PaginationNavigation } from '@leafygreen-ui/pagination';
-import React from 'react';
-import { CollectionToolbarActionsSubComponentProperty } from '../../../shared.types';
-import { PaginationProps } from './Pagination.types';
-import { getPaginationStyles } from './Pagination.styles';
+
 import { useCollectionToolbarContext } from '../../../Context/CollectionToolbarProvider';
+import { CollectionToolbarActionsSubComponentProperty } from '../../../shared.types';
+
+import { getPaginationStyles } from './Pagination.styles';
+import { PaginationProps } from './Pagination.types';
 
 const Pagination = CompoundSubComponent(
   ({ className, ...props }: PaginationProps) => {

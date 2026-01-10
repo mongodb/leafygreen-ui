@@ -1,7 +1,7 @@
 import { css, cx } from '@leafygreen-ui/emotion';
+import { spacing } from '@leafygreen-ui/tokens';
 
 import { Size, Variant } from '../shared.types';
-import { spacing } from '@leafygreen-ui/tokens';
 
 export const baseStyles = css`
   display: flex;

@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { CollectionToolbarActionsSubComponentProperty } from '../../../shared.types';
+import { getTestUtils } from '../../../testing/getTestUtils';
 
 import Pagination from './Pagination';
 import { PaginationProps } from './Pagination.types';
@@ -36,10 +37,9 @@ describe('packages/collection-toolbar/components/Actions/Pagination', () => {
   describe('props', () => {
     test('applies className prop with styles', () => {
       renderPagination({ className: 'custom-class' });
+      const { getPagination } = getTestUtils();
 
-      expect(screen('lg-collection_toolbar-pagination')).toHaveClass(
-        'custom-class',
-      );
+      expect(getPagination()).toHaveClass('custom-class');
     });
 
     test('forwards currentPage prop', () => {
