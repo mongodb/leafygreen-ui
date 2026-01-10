@@ -13,19 +13,19 @@ import { NumberInput, NumberInputProps } from '.';
 
 const unitOptions = [
   {
-    displayName: 'Hours',
+    displayName: 'Hour(s)',
     value: 'hours',
   },
   {
-    displayName: 'Days',
+    displayName: 'Day(s)',
     value: 'days',
   },
   {
-    displayName: 'Months',
+    displayName: 'Month(s)',
     value: 'months',
   },
   {
-    displayName: 'Astronomical units',
+    displayName: 'Astronomical unit(s)',
     value: 'au',
   },
 ];
@@ -140,7 +140,7 @@ const Template: StoryFn<StoryNumberInputProps> = (
       {...rest}
       ref={inputRef}
       value={value}
-      unit={unitOptions.length ? unit : unitProp}
+      unit={unitOptions.length ? unit : ((unitProp ?? 'one') as string)}
       unitOptions={unitOptions}
       onSelectChange={handleSelectChange}
       onChange={handleChange}

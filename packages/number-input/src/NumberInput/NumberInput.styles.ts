@@ -1,6 +1,6 @@
 import { css } from '@leafygreen-ui/emotion';
 import { Theme } from '@leafygreen-ui/lib';
-import { color, spacing } from '@leafygreen-ui/tokens';
+import { color, fontWeights, spacing } from '@leafygreen-ui/tokens';
 
 import { Size } from './NumberInput.types';
 
@@ -37,6 +37,7 @@ export const wrapperGapStyles = css`
 
 export const unitBaseStyles = css`
   align-self: center;
+  font-weight: ${fontWeights.semiBold};
 `;
 
 export const getUnitThemeStyles = (theme: Theme) => css`
