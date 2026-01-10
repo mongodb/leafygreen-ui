@@ -11,7 +11,7 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import { Body, Subtitle } from '@leafygreen-ui/typography';
 
-import { DEFAULT_LGID_ROOT, getLgIds } from '../testing';
+import { getLgIds } from '../testing';
 
 import {
   cardStyle,
@@ -43,7 +43,7 @@ const ExpandableCard = ({
   id: idProp,
   flagText,
   contentClassName,
-  'data-lgid': dataLgId = DEFAULT_LGID_ROOT,
+  'data-lgid': dataLgId,
   ...rest
 }: ExpandableCardProps) => {
   const { darkMode, theme } = useDarkMode(darkModeProp);
@@ -123,11 +123,30 @@ const ExpandableCard = ({
           tabIndex={-1}
         >
           <span>
-            <Subtitle className={summaryHeader}>{title}</Subtitle>
-            {flagText && <span className={flagTextStyle}>{flagText}</span>}
+            <Subtitle
+              data-testid={lgIds.title}
+              data-lgid={lgIds.title}
+              className={summaryHeader}
+            >
+              {title}
+            </Subtitle>
+            {flagText && (
+              <span
+                data-testid={lgIds.flagText}
+                data-lgid={lgIds.flagText}
+                className={flagTextStyle}
+              >
+                {flagText}
+              </span>
+            )}
           </span>
           {description && (
-            <Body as="div" className={summaryTextThemeStyle[theme]}>
+            <Body
+              as="div"
+              data-testid={lgIds.description}
+              data-lgid={lgIds.description}
+              className={summaryTextThemeStyle[theme]}
+            >
               {description}
             </Body>
           )}
