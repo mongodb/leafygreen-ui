@@ -3,19 +3,19 @@ import { palette } from '@leafygreen-ui/palette';
 import { Mode } from './mode';
 
 /**
- * Apply the `focusRing` token as the `box-shadow` value for any elemnent when focused
+ * Apply the `focusRing` token as the `box-shadow` value for any element when focused
  */
 const focusRing = {
   [Mode.Light]: {
     /**
      * Use the default focus ring for any clickable element
      */
-    default: `0 0 0 2px ${palette.white}, 0 0 0 4px ${palette.blue.light1}`,
+    default: `0 0 0 2px ${palette.white}, 0 0 0 4px ${palette.blue.base}`,
 
     /**
      * Use the `input` focus ring for elements that have a cursor
      */
-    input: `0 0 0 3px ${palette.blue.light1}`,
+    input: `0 0 0 3px ${palette.blue.base}`,
   },
   [Mode.Dark]: {
     /**
