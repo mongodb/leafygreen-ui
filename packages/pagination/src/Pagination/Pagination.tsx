@@ -8,11 +8,12 @@ import {
   DEFAULT_CURRENT_PAGE,
   DEFAULT_ITEMS_PER_PAGE_OPTIONS,
 } from './constants';
+import { getLgIds } from './getLgIds';
 import Navigation from './Navigation';
 import PageSize from './PageSize';
 import { baseStyles } from './Pagination.styles';
 import { PaginationProps } from './Pagination.types';
-import PaginationRangeView from './Summary';
+import Summary from './Summary';
 
 /**
  * Pagination enables the segmentation of extensive content into smaller portions distributed across various pages. Implement a Pagination component when dealing with an abundance of results to prevent overwhelming users with excessive information on a single page.
@@ -31,20 +32,27 @@ function Pagination<T extends number>({
   onForwardArrowClick,
   shouldDisableForwardArrow,
   darkMode: darkModeProp,
+  'data-lgid': dataLgId,
   ...rest
 }: PaginationProps<T>) {
   const { darkMode } = useDarkMode(darkModeProp);
+  const lgIds = getLgIds(dataLgId);
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>
-      <div className={cx(baseStyles, className)} {...rest}>
+      <div
+        className={cx(baseStyles, className)}
+        data-testid={lgIds.root}
+        data-lgid={lgIds.root}
+        {...rest}
+      >
         <PageSize
           id={idProp}
           itemsPerPage={itemsPerPage}
           itemsPerPageOptions={itemsPerPageOptions}
           onItemsPerPageOptionChange={onItemsPerPageOptionChange}
         />
-        <PaginationRangeView
+        <Summary
           itemsPerPage={itemsPerPage}
           currentPage={currentPage}
           numTotalItems={numTotalItems}

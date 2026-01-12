@@ -12,6 +12,7 @@ import {
 import { Body } from '@leafygreen-ui/typography';
 
 import { DEFAULT_ITEMS_PER_PAGE_OPTIONS } from '../constants';
+import { getLgIds } from '../getLgIds';
 import { getSectionStyles } from '../Pagination.styles';
 import { areItemsPerPageValid } from '../utils';
 
@@ -21,12 +22,14 @@ import { PageSizeProps } from './PageSize.types';
  * PageSize is a component that displays the number of items per page.
  */
 function PageSize<T extends number>({
+  'data-lgid': dataLgId,
   id: idProp,
   itemsPerPage = DEFAULT_ITEMS_PER_PAGE_OPTIONS[0] as T,
   itemsPerPageOptions = DEFAULT_ITEMS_PER_PAGE_OPTIONS as Array<T>,
   onItemsPerPageOptionChange,
   className,
 }: PageSizeProps<T>) {
+  const lgIds = getLgIds(dataLgId);
   const itemsPerPageLabelId = useIdAllocator({
     prefix: 'lg-pagination-items-per-page-label',
     id: idProp,
@@ -47,7 +50,11 @@ function PageSize<T extends number>({
     return <div className={getSectionStyles({ className })} />;
 
   return (
-    <div className={getSectionStyles({ className })}>
+    <div
+      className={getSectionStyles({ className })}
+      data-testid={lgIds.pageSize}
+      data-lgid={lgIds.pageSize}
+    >
       <Body as="label" id={itemsPerPageLabelId} htmlFor={itemsPerPageSelectId}>
         Items per page:
       </Body>
