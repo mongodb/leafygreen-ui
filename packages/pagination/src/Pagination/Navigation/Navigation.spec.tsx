@@ -6,6 +6,8 @@ import { axe } from 'jest-axe';
 
 import { consoleOnce } from '@leafygreen-ui/lib';
 
+import { DEFAULT_LGID_ROOT, getLgIds } from '../getLgIds';
+
 import PaginationCurrentPageControls from './Navigation';
 
 const onBackArrowClick = jest.fn();
@@ -450,6 +452,78 @@ describe('PaginationCurrentPageControls', () => {
       );
 
       expect(consoleOnceSpy).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('lgid props', () => {
+    const defaultLgIds = getLgIds();
+
+    test('renders default lgid values when data-lgid is not provided', () => {
+      const { getByTestId } = render(
+        <PaginationCurrentPageControls
+          currentPage={1}
+          numTotalItems={100}
+          itemsPerPage={10}
+          onBackArrowClick={onBackArrowClick}
+          onForwardArrowClick={onForwardArrowClick}
+        />,
+      );
+
+      expect(getByTestId(defaultLgIds.navigation)).toBeInTheDocument();
+    });
+
+    test('renders default data-lgid attribute when data-lgid is not provided', () => {
+      const { getByTestId } = render(
+        <PaginationCurrentPageControls
+          currentPage={1}
+          numTotalItems={100}
+          itemsPerPage={10}
+          onBackArrowClick={onBackArrowClick}
+          onForwardArrowClick={onForwardArrowClick}
+        />,
+      );
+
+      expect(getByTestId(defaultLgIds.navigation)).toHaveAttribute(
+        'data-lgid',
+        `${DEFAULT_LGID_ROOT}-navigation`,
+      );
+    });
+
+    test('renders custom lgid value when data-lgid is provided', () => {
+      const customLgId = 'lg-my-pagination';
+      const customLgIds = getLgIds(customLgId);
+      const { getByTestId } = render(
+        <PaginationCurrentPageControls
+          currentPage={1}
+          numTotalItems={100}
+          itemsPerPage={10}
+          onBackArrowClick={onBackArrowClick}
+          onForwardArrowClick={onForwardArrowClick}
+          data-lgid={customLgId}
+        />,
+      );
+
+      expect(getByTestId(customLgIds.navigation)).toBeInTheDocument();
+    });
+
+    test('renders custom data-lgid attribute when data-lgid is provided', () => {
+      const customLgId = 'lg-my-pagination';
+      const customLgIds = getLgIds(customLgId);
+      const { getByTestId } = render(
+        <PaginationCurrentPageControls
+          currentPage={1}
+          numTotalItems={100}
+          itemsPerPage={10}
+          onBackArrowClick={onBackArrowClick}
+          onForwardArrowClick={onForwardArrowClick}
+          data-lgid={customLgId}
+        />,
+      );
+
+      expect(getByTestId(customLgIds.navigation)).toHaveAttribute(
+        'data-lgid',
+        `${customLgId}-navigation`,
+      );
     });
   });
 });

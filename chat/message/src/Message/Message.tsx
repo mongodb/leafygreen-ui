@@ -12,13 +12,14 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
-import { ToolCard } from '../components';
-import { MessageActions } from '../MessageActions';
-import { MessageContent } from '../MessageContent';
+import {
+  Actions,
+  Links,
+  Promotion,
+  ToolCard,
+  VerifiedBanner,
+} from '../components';
 import { MessageContext } from '../MessageContext';
-import { MessageLinks } from '../MessageLinks';
-import { MessagePromotion } from '../MessagePromotion';
-import { MessageVerifiedBanner } from '../MessageVerifiedBanner';
 import { MessageSubcomponentProperty } from '../shared.types';
 
 import {
@@ -27,6 +28,7 @@ import {
   getMessageContainerStyles,
 } from './Message.styles';
 import { type MessageProps } from './Message.types';
+import { MessageContent } from './MessageContent';
 
 export const Message = CompoundComponent(
   // eslint-disable-next-line react/display-name
@@ -118,10 +120,10 @@ export const Message = CompoundComponent(
   ),
   {
     displayName: 'Message',
-    Actions: MessageActions,
-    Links: MessageLinks,
-    VerifiedBanner: MessageVerifiedBanner,
-    Promotion: MessagePromotion,
+    Actions,
+    Links,
+    VerifiedBanner,
+    Promotion,
     ToolCard,
   },
 );
