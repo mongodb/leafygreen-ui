@@ -19,7 +19,13 @@
       "path": "../emotion"
     },
     {
+      "path": "../icon"
+    },
+    {
       "path": "../icon-button"
+    },
+    {
+      "path": "../hooks"
     },
     {
       "path": "../leafygreen-provider"
