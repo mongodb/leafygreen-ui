@@ -23,7 +23,7 @@ export const getDisplayNameForValue = (
   options: Array<OptionObject>,
 ): string => {
   return value
-    ? getOptionObjectFromValue(value, options)?.displayName ?? value
+    ? getOptionObjectFromValue(value, options)?.displayName?.toString() ?? value
     : '';
 };
 

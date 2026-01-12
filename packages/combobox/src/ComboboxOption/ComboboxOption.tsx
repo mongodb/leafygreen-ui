@@ -6,7 +6,6 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { ComboboxContext } from '../ComboboxContext';
 import { wrapJSX } from '../utils';
-import { isBadgeComponent } from '../utils/wrapJSX';
 
 import { getInputOptionStyles } from './ComboboxOption.styles';
 import {
@@ -37,7 +36,6 @@ export const InternalComboboxOption = React.forwardRef<
       value,
       onClick,
       disabled = false,
-      badge,
       ...rest
     }: InternalComboboxOptionProps,
     forwardedRef,
@@ -94,8 +92,6 @@ export const InternalComboboxOption = React.forwardRef<
     // When multiselect and withoutIcons the Checkbox is aligned to the top instead of centered.
     const multiSelectWithoutIcons = multiselect && !withIcons;
 
-    const shouldRenderBadge = useMemo(() => isBadgeComponent(badge), [badge]);
-
     return (
       <InputOption
         {...rest}
@@ -103,13 +99,12 @@ export const InternalComboboxOption = React.forwardRef<
         ref={optionRef}
         highlighted={isFocused}
         disabled={disabled}
-        aria-label={displayName}
+        aria-label={typeof displayName === 'string' ? displayName : undefined}
         darkMode={darkMode}
         className={getInputOptionStyles({
           size,
           isSelected,
           isMultiselectWithoutIcons: multiSelectWithoutIcons,
-          shouldRenderBadge,
           className,
         })}
         onClick={handleOptionClick}
@@ -120,10 +115,13 @@ export const InternalComboboxOption = React.forwardRef<
           rightGlyph={rightGlyph}
           description={description}
         >
-          <span id={optionTextId}>
-            {wrapJSX(displayName, inputValue, 'strong')}
-          </span>
-          {shouldRenderBadge && badge}
+          {typeof displayName === 'string' ? (
+            <span id={optionTextId}>
+              {wrapJSX(displayName, inputValue, 'strong')}
+            </span>
+          ) : (
+            displayName
+          )}
         </InputOptionContent>
       </InputOption>
     );

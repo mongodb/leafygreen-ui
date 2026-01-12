@@ -27,7 +27,7 @@ export const flattenChildren = (
     ): Array<OptionObject> | undefined => {
       if (isComponentType(child, 'ComboboxOption')) {
         const { value, displayName } = getNameAndValue(child.props);
-        const { glyph, disabled, badge } = child.props;
+        const { glyph, disabled } = child.props;
 
         return [
           ...acc,
@@ -36,7 +36,6 @@ export const flattenChildren = (
             displayName,
             isDisabled: !!disabled,
             hasGlyph: !!glyph,
-            badge,
           },
         ];
       } else if (isComponentType(child, 'ComboboxGroup')) {

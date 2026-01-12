@@ -324,9 +324,9 @@ export function Combobox<M extends boolean>({
           ? getDisplayNameForValue(value, allOptions)
           : option.displayName;
 
-      const isValueInDisplayName = displayName
-        .toLowerCase()
-        .includes(inputValue.toLowerCase());
+      const isValueInDisplayName =
+        typeof displayName === 'string' &&
+        displayName.toLowerCase().includes(inputValue.toLowerCase());
 
       return isValueInDisplayName;
     },

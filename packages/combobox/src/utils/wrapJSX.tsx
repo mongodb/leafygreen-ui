@@ -57,11 +57,3 @@ export const wrapJSX = (
 
   return <>{str}</>;
 };
-
-/**
- * Checks if the component is a Badge component
- * @param component
- * @returns `boolean`
- */
-export const isBadgeComponent = (component?: ReactNode): boolean =>
-  !!component && isComponentType(component, 'Badge');

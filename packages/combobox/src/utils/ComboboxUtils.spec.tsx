@@ -1,12 +1,12 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import Badge from '@leafygreen-ui/badge';
 import { Icon } from '@leafygreen-ui/icon';
 
 import { ComboboxGroup, ComboboxOption } from '..';
 
 import { flattenChildren, getNameAndValue, wrapJSX } from '.';
+import { Badge } from '@leafygreen-ui/badge';
 
 describe('packages/combobox/utils', () => {
   describe('wrapJSX', () => {
@@ -216,10 +216,17 @@ describe('packages/combobox/utils', () => {
       ]);
     });
 
-    test('returns badge when provided', () => {
-      const badgeElement = <Badge>New</Badge>;
+    test('flatters options with node displayName', () => {
       const children = (
-        <ComboboxOption value="test" displayName="Test" badge={badgeElement} />
+        <ComboboxOption
+          value="test"
+          displayName={
+            <div>
+              <span>Test</span>
+              <Badge>New</Badge>
+            </div>
+          }
+        />
       );
       const flat = flattenChildren(children);
       expect(flat).toEqual([
@@ -228,7 +235,13 @@ describe('packages/combobox/utils', () => {
           displayName: 'Test',
           hasGlyph: false,
           isDisabled: false,
-          badge: badgeElement,
+        },
+        {
+          value: 'test',
+          displayName: 'New',
+          hasGlyph: false,
+          isDisabled: false,
+          badge: <Badge>New</Badge>,
         },
       ]);
     });

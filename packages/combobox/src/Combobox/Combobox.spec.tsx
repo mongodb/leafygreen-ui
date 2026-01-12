@@ -218,84 +218,6 @@ describe('packages/combobox', () => {
         );
       });
 
-      describe('Badge rendering', () => {
-        test('option renders with a badge when provided', () => {
-          const options: Array<OptionObject> = [
-            {
-              value: 'apple',
-              displayName: 'Apple',
-              isDisabled: false,
-              badge: <Badge>New</Badge>,
-            },
-          ];
-
-          const { openMenu } = renderCombobox(select, { options });
-          const { optionElements } = openMenu();
-          const [optionEl] = Array.from(optionElements);
-          expect(optionEl).toHaveTextContent('New');
-        });
-
-        test('option renders badge with custom variant', () => {
-          const options: Array<OptionObject> = [
-            {
-              value: 'banana',
-              displayName: 'Banana',
-              isDisabled: false,
-              badge: <Badge variant="green">Featured</Badge>,
-            },
-          ];
-
-          const { openMenu } = renderCombobox(select, { options });
-          const { menuContainerEl } = openMenu();
-          const badgeEl = getByText(menuContainerEl, 'Featured');
-          expect(badgeEl).toBeInTheDocument();
-        });
-
-        test('option renders displayName alongside badge', () => {
-          const options: Array<OptionObject> = [
-            {
-              value: 'carrot',
-              displayName: 'Carrot',
-              isDisabled: false,
-              badge: <Badge>Popular</Badge>,
-            },
-          ];
-
-          const { openMenu } = renderCombobox(select, { options });
-          const { optionElements } = openMenu();
-          const [optionEl] = Array.from(optionElements!);
-          expect(optionEl).toHaveTextContent('Carrot');
-          expect(optionEl).toHaveTextContent('Popular');
-        });
-
-        test('multiple options can have badges', () => {
-          const options: Array<OptionObject> = [
-            {
-              value: 'apple',
-              displayName: 'Apple',
-              isDisabled: false,
-              badge: <Badge>New</Badge>,
-            },
-            {
-              value: 'banana',
-              displayName: 'Banana',
-              isDisabled: false,
-              badge: <Badge variant="blue">Sale</Badge>,
-            },
-            {
-              value: 'carrot',
-              displayName: 'Carrot',
-              isDisabled: false,
-            },
-          ];
-
-          const { openMenu } = renderCombobox(select, { options });
-          const { menuContainerEl } = openMenu();
-          expect(getByText(menuContainerEl, 'New')).toBeInTheDocument();
-          expect(getByText(menuContainerEl, 'Sale')).toBeInTheDocument();
-        });
-      });
-
       test('option fires onClick callback', () => {
         const onClick = jest.fn();
 
@@ -342,7 +264,9 @@ describe('packages/combobox', () => {
         const { optionElements } = openMenu();
         // Note on `foo!` operator https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#non-null-assertion-operator
         Array.from(optionElements!).forEach((optionEl, index) => {
-          expect(optionEl).toHaveTextContent(defaultOptions[index].displayName);
+          expect(optionEl).toHaveTextContent(
+            defaultOptions[index].displayName as string,
+          );
         });
       });
 
@@ -447,7 +371,9 @@ describe('packages/combobox', () => {
             groupedOptions.map(({ children }: NestedObject) => children),
           ).forEach((option: OptionObject | string) => {
             const displayName =
-              typeof option === 'string' ? option : option.displayName;
+              typeof option === 'string'
+                ? option
+                : (option.displayName as string);
             const optionEl = queryByText(menuContainerEl!, displayName);
             expect(optionEl).toBeInTheDocument();
           });

@@ -19,17 +19,12 @@ interface SharedComboboxOptionProps {
    * The display value of the option. Used as the rendered string within the menu and chips.
    * When undefined, this is set to `value`
    */
-  displayName?: string;
+  displayName?: ReactNode;
 
   /**
    * The icon to display to the left of the option in the menu.
    */
   glyph?: ReactElement;
-
-  /**
-   * The badge to display to the right of the option in the menu.
-   */
-  badge?: ReactNode;
 
   /**
    * Defines whether the option is disabled.
@@ -68,7 +63,7 @@ export type ComboboxOptionProps = Either<
 >;
 
 export interface OptionObject
-  extends Pick<SharedComboboxOptionProps, 'description' | 'onClick' | 'badge'>,
+  extends Pick<SharedComboboxOptionProps, 'description' | 'onClick'>,
     RequiredComboboxOptionProps {
   isDisabled: boolean;
   hasGlyph?: boolean;

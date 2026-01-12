@@ -62,19 +62,6 @@ const selectedInputOptionStyles = css`
   }
 `;
 
-const badgeStyles = css`
-  .${titleClassName} {
-    color: red;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: ${spacing[200]}px;
-  }
-  .${descriptionClassName} {
-    margin-top: ${spacing[100]}px;
-  }
-`;
-
 export const iconThemeStyles: Record<Theme, string> = {
   [Theme.Light]: css`
     color: ${palette.gray.dark1};
@@ -138,14 +125,12 @@ export const multiselectIconLargePosition = css`
 export const getInputOptionStyles = ({
   size,
   isMultiselectWithoutIcons,
-  shouldRenderBadge,
   isSelected,
   className,
 }: {
   size: ComboboxSize;
   isMultiselectWithoutIcons: boolean;
   isSelected: boolean;
-  shouldRenderBadge: boolean;
   className?: string;
 }) =>
   cx(
@@ -156,7 +141,6 @@ export const getInputOptionStyles = ({
       [multiselectIconPosition]: isMultiselectWithoutIcons,
       [multiselectIconLargePosition]:
         isMultiselectWithoutIcons && size === ComboboxSize.Large,
-      [badgeStyles]: shouldRenderBadge,
     },
     className,
   );

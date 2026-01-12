@@ -18,8 +18,10 @@ export const getNameAndValue = ({
   value: string;
   displayName: string;
 } => {
+  const displayNameProps =
+    typeof nameProp === 'string' ? nameProp : nameProp?.toString();
   return {
-    value: valProp ?? kebabCase(nameProp),
-    displayName: nameProp ?? valProp ?? '', // TODO consider adding a prop to customize displayName => startCase(valProp),
+    value: valProp ?? kebabCase(displayNameProps),
+    displayName: displayNameProps ?? valProp ?? '', // TODO consider adding a prop to customize displayName => startCase(valProp),
   };
 };

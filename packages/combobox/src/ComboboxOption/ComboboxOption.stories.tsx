@@ -8,6 +8,8 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { ComboboxContext, defaultContext } from '../ComboboxContext';
 
 import { InternalComboboxOption } from './ComboboxOption';
+import { css } from '@leafygreen-ui/emotion';
+import { spacing } from '@leafygreen-ui/tokens';
 
 const meta: StoryMetaType<typeof InternalComboboxOption> = {
   title: 'Components/Inputs/Combobox/ComboboxOption',
@@ -19,7 +21,7 @@ const meta: StoryMetaType<typeof InternalComboboxOption> = {
         'WithIcons',
         'WithoutIcons',
         'WithoutIconsAndMultiStep',
-        'WithIconsAndBadge',
+        'WithIconsAndCustomDisplayName',
       ],
       combineArgs: {
         darkMode: [false, true],
@@ -73,16 +75,29 @@ WithIcons.parameters = {
   },
 };
 
-export const WithIconsAndBadge: StoryType<
+export const WithIconsAndCustomDisplayName: StoryType<
   typeof InternalComboboxOption
 > = () => <></>;
-WithIconsAndBadge.parameters = {
+WithIconsAndCustomDisplayName.parameters = {
   generate: {
     args: {
+      displayName: (
+        <div
+          className={css`
+            display: flex;
+            align-items: center;
+            gap: ${spacing[100]}px;
+            align-items: center;
+            margin-bottom: ${spacing[100]}px;
+          `}
+        >
+          <span>Option</span>
+          <Badge variant="green">New</Badge>
+        </div>
+      ),
       /// @ts-expect-error - withIcons is not a component prop
       withIcons: true,
       glyph: <Icon glyph="Cloud" />,
-      badge: <Badge variant="green">New</Badge>,
     },
   },
 };
