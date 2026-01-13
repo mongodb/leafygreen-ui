@@ -8,10 +8,7 @@ import { useChartContext } from '../ChartContext';
 import { CHART_TOOLTIP_CLASSNAME, DEFAULT_TOOLTIP_OPTIONS } from '../constants';
 
 import { getRootStylesText } from './ChartTooltip.styles';
-import {
-  CallbackSeriesDataPoint,
-  ChartTooltipProps,
-} from './ChartTooltip.types';
+import { CallbackSeriesDataPoint, ChartTooltipProps, } from './ChartTooltip.types';
 import { CustomTooltip } from './CustomTooltip';
 
 export function ChartTooltip({
@@ -38,7 +35,7 @@ export function ChartTooltip({
   /**
    * Refs to track previous pinned state.
    * Used to prevent unnecessary effect runs when tooltip stays pinned,
-   * which would cause ECharts to recreate the tooltip DOM (emptying it).
+   * which would cause ECharts to recreate the tooltip DOM.
    */
   const prevPinnedRef = useRef(false);
   const wasPinnedRef = useRef(false);
@@ -116,7 +113,7 @@ export function ChartTooltip({
     /**
      * Skip effect when tooltip stays pinned (both previous and current are true).
      * This prevents ECharts from recreating the tooltip DOM element during
-     * parent re-renders, which would empty the pinned tooltip content.
+     * parent re-renders, which would make the tooltip disappear.
      */
     const staysPinned = prevPinnedRef.current && tooltipPinned;
     prevPinnedRef.current = tooltipPinned;
