@@ -112,6 +112,10 @@ const meta: StoryMetaType<typeof Select> = {
     darkMode: false,
     children: childrenArray,
     renderMode: RenderMode.TopLayer,
+    state: State.None,
+    size: Size.Default,
+    errorMessage: 'This is an error message',
+    successMessage: 'This is a success message',
   },
   argTypes: {
     placeholder: { control: 'text' },
@@ -119,6 +123,7 @@ const meta: StoryMetaType<typeof Select> = {
     label: { control: 'text' },
     description: { control: 'text' },
     defaultValue: { control: 'text' },
+    successMessage: { control: 'text' },
     errorMessage: { control: 'text' },
     allowDeselect: { control: 'boolean' },
     open: {
@@ -132,6 +137,14 @@ const meta: StoryMetaType<typeof Select> = {
         'Callback function called when the open state should change. Required when open prop is provided.',
     },
     darkMode: storybookArgTypes.darkMode,
+    size: {
+      control: 'select',
+      options: Object.values(Size),
+    },
+    state: {
+      control: 'select',
+      options: Object.values(State),
+    },
   },
 };
 export default meta;
