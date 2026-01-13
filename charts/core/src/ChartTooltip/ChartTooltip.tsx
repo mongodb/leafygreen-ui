@@ -125,7 +125,7 @@ export function ChartTooltip({
       return;
     }
 
-    // Track that we ran the effect while pinned (for cleanup logic)
+    /** Track that we ran the effect while pinned (for cleanup logic) */
     wasPinnedRef.current = tooltipPinned;
 
     updateOptions({
