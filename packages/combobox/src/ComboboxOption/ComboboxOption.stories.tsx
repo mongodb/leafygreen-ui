@@ -2,14 +2,14 @@ import React from 'react';
 import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 
 import { Badge } from '@leafygreen-ui/badge';
+import { css } from '@leafygreen-ui/emotion';
 import { Icon } from '@leafygreen-ui/icon';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import { spacing } from '@leafygreen-ui/tokens';
 
 import { ComboboxContext, defaultContext } from '../ComboboxContext';
 
 import { InternalComboboxOption } from './ComboboxOption';
-import { css } from '@leafygreen-ui/emotion';
-import { spacing } from '@leafygreen-ui/tokens';
 
 const meta: StoryMetaType<typeof InternalComboboxOption> = {
   title: 'Components/Inputs/Combobox/ComboboxOption',
