@@ -6,7 +6,7 @@ import { useIdAllocator } from '@leafygreen-ui/hooks';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { Description, Label, Overline } from '@leafygreen-ui/typography';
+import { Body, Description, Label } from '@leafygreen-ui/typography';
 
 import { Input } from '../Input';
 import { UnitSelect } from '../UnitSelect';
@@ -123,13 +123,13 @@ export const NumberInput = React.forwardRef<HTMLInputElement, NumberInputProps>(
               {...rest}
             />
             {renderUnitOnly && (
-              <Overline
+              <Body
                 className={cx(unitBaseStyles, getUnitThemeStyles(theme), {
                   [getUnitDisabledStyles(theme)]: disabled,
                 })}
               >
                 {unit}
-              </Overline>
+              </Body>
             )}
             {renderSelectOnly && (
               <UnitSelect
