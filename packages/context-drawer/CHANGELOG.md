@@ -1,5 +1,11 @@
 # @leafygreen-ui/context-drawer
 
+## 0.2.9
+
+### Patch Changes
+
+- 9e5416f: Updated the ContextDrawer tab height to be 24px (previously 20px) to be more accessible, and updated the tabs text and icon color for an improved contrast ratio.
+
 ## 0.2.8
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @leafygreen-ui/pagination
 
+## 4.3.0
+
+### Minor Changes
+
+- fc46cce: Added LgIds to Pagination components and its children components: PageSize, Summary, and Navigation
+
 ## 4.2.0
 
 ### Minor Changes

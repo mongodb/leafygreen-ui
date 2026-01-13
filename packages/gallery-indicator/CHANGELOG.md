@@ -1,5 +1,11 @@
 # @leafygreen-ui/gallery-indicator
 
+## 3.1.3
+
+### Patch Changes
+
+- 251eb7a: Update inactive color to have 3:1 color contrast ratio
+
 ## 3.1.2
 
 ### Patch Changes
