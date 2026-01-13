@@ -10,6 +10,7 @@ This guide covers advanced development workflows, testing strategies, and mainta
 - [Publishing](#publishing)
   - [Publishing a New Package](#publishing-a-new-package)
   - [Publishing Pre-releases](#publishing-pre-releases)
+- [Deprecation and Archiving](#deprecation-and-archiving)
 
 ---
 
@@ -90,7 +91,7 @@ resolve: {
 3. **If prompted to log in**
 
    ```bash
-   npm adduser --registry http://localhost:4873
+   pnpm npm adduser --registry http://localhost:4873
    ```
 
 #### Installing in Your Application
@@ -124,7 +125,7 @@ This repository uses [npm trusted publishing with OIDC](https://docs.npmjs.com/t
 
    ```bash
    cd <directory>/<package-name>
-   npm publish --access public
+   pnpm publish --access public
    ```
 
 3. **Configure trusted publisher** on [npmjs.com](https://www.npmjs.com):
@@ -191,6 +192,18 @@ Continue development on your original feature branch. To publish updates:
 2. Run steps 3-5 above
 
 When your feature branch merges to `main`, delete the `pre-release` branch.
+
+---
+
+## Deprecation and Archiving
+
+When deprecating or removing a package/component:
+
+- **Deprecate on npm**: run `pnpm deprecate @leafygreen-ui/<pkg> "<reason/migration>"` so consumers see the notice during install.
+- **Add migration guidance**: include the replacement package/component and version floor in the message (e.g., "Use @leafygreen-ui/foo >=1.2.0").
+- **Archive removed code**: move fully removed packages into `deprecated-packages/<pkg>/` to keep history and examples accessible without shipping them. Leave a README describing why it was archived and the recommended replacement.
+- **Document in changelog**: note deprecations and removals in the package CHANGELOG and release notes.
+- **Runtime affordances**: keep deprecated exports functional when possible and consider console warnings for high-signal cases until removal.
 
 ---
 

@@ -39,7 +39,7 @@ Before contributing, ensure you have these tools installed:
    echo 'export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"' >> ~/.zshrc
    ```
 
-2. **Node.js & pnpm** - Install via asdf
+2. **Node.js & pnpm** - Install via asdf (see min versions in [package.json](package.json))
 
    ```bash
    asdf install pnpm
@@ -103,13 +103,16 @@ pnpm build --filter="@leafygreen-ui/button"
 pnpm test
 
 # Run tests in watch mode
-pnpm test --watch
+pnpm run test --watch
 
 # Run tests for a specific package directory
-pnpm test packages/button
+pnpm run test packages/button
 
 # Run a specific test file
-pnpm test ./packages/button/src/Button/Button.spec.tsx
+pnpm run test ./packages/button/src/Button/Button.spec.tsx
+
+# Run multiple test files at once
+pnpm run test packages/modal/src/Modal/Modal.spec.tsx packages/modal/src/Footer/Footer.spec.tsx
 ```
 
 ### Linting and Formatting
@@ -136,7 +139,7 @@ pnpm build:tsc
    pnpm create-package <package-name>
    ```
 
-   This creates a new directory with all the boilerplate you need. Follow the naming convention: use `kebab-case` for package names (e.g., `my-new-component`).
+   This creates a new directory with all the boilerplate you need. Follow the naming convention: use `kebab-case` for package names (e.g., `my-new-component`). See the [create-package options](https://github.com/mongodb/leafygreen-ui/tree/main/tools/create#options) for additional flags you can use.
 
 2. **Link packages**
 
@@ -248,7 +251,7 @@ Each component includes a `README.md` generated from the scaffold script. We als
 
 ### Storybook & mongodb.design
 
-The [mongodb.design](https://mongodb.design) website imports your `*.story.tsx` files to render live examples. By default, the first exported story is shown.
+The [mongodb.design](https://mongodb.design) website imports your `*.stories.tsx` files to render live examples. By default, the first exported story is shown.
 
 To specify a different default story:
 
@@ -351,8 +354,7 @@ We favor:
 
 - Functional components over class-based components
 - Abstractable hooks that can be reused across components
-- Native Array methods over libraries like Lodash
-- Default exports over named exports
+- Named exports over default exports
 
 ---
 

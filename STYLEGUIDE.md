@@ -682,18 +682,20 @@ Each package should follow a consistent folder structure to maintain organizatio
 ```
 packages/<component-name>/
 ├── src/
-│   ├── index.ts                    # Package entry point
+│   ├── index.ts                        # Package entry point
 │   ├── <ComponentName>/
-│   │   ├── components/             # Internal components only used by parent component
-│   │   │   ├── <SubComponent>/     # Same structure as parent
-│   │   │   │   └── ...
-│   │   ├── index.ts                # Component entry point
-│   │   ├── <ComponentName>.tsx     # Main component
+│   │   ├── components/                 # Components only used by parent component
+│   │   │   ├── <SubComponent>/         # e.g. <ComponentName.Modal/>
+│   │   │   │   └── ...                 # Same structure as component
+│   │   │   │   ├── <SubSubComponent>/  # e.g. <ComponentName.Modal.Header/>
+│   │   │   │   │   └── ...             # Same structure as component
+│   │   ├── index.ts                    # Component entry point
+│   │   ├── <ComponentName>.tsx         # Main component
 │   │   ├── <ComponentName>.types.ts
 │   │   ├── <ComponentName>.styles.ts
 │   │   ├── <ComponentName>.spec.tsx
 │   │   └── <ComponentName>.stories.tsx
-│   └── testing/                    # Exported as @package/component/testing
+│   └── testing/                        # Exported as @package/component/testing
 │       ├── index.ts
 │       ├── getLgIds.ts
 │       ├── getTestUtils.ts
@@ -860,6 +862,51 @@ describe('Component', () => {
 });
 ```
 
+#### Targeting multiple elements
+
+`findBy*`/`getBy*`/`queryBy*` helpers expect a single match and will throw if multiple elements are present. When a component renders a list (rows, chips, pills, etc.), expose list helpers that work off the root element and return arrays or indexed accessors.
+
+```typescript
+// getTestUtils.ts
+import { getByLgId, queryBySelector } from '@lg-tools/test-harnesses';
+import { DEFAULT_LGID_ROOT, getLgIds } from './getLgIds';
+
+export const getTestUtils = (lgId = DEFAULT_LGID_ROOT) => {
+  const lgIds = getLgIds(lgId);
+  const element = getByLgId!<HTMLDivElement>(lgIds.root);
+
+  const getAllItems = () => {
+    const items = element.querySelectorAll<HTMLDivElement>(
+      `[data-lgid=${lgIds.item}]`,
+    );
+    if (!items.length) throw new Error('Unable to find any items.');
+    return Array.from(items);
+  };
+
+  const getItemByIndex = (index: number) => {
+    const items = getAllItems();
+    const item = items[index];
+    if (!item) return null;
+
+    const getCheckbox = () =>
+      queryBySelector<HTMLInputElement>(
+        item,
+        `[data-lgid=${lgIds.checkbox}] input`,
+      );
+
+    return {
+      getElement: () => item,
+      getCheckbox: () => getCheckbox(),
+    };
+  };
+
+  return {
+    getAllItems,
+    getItemByIndex,
+  };
+};
+```
+
 ---
 
 ## displayName
@@ -881,6 +928,8 @@ Always set `displayName` on exported components and providers:
 When deprecating exports, provide clear migration paths and keep deprecated code functional.
 
 #### Usage
+
+For the end-to-end process (npm deprecation notice, archiving removed packages), see the [Developer Guide](./DEVELOPER.md#deprecation-and-archiving).
 
 Use the `@deprecated` JSDoc tag with a migration message:
 
