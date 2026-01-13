@@ -78,10 +78,21 @@ const renderToolCardChildren = () => (
     <ToolCard.ExpandableContent>
       {`#### ARGUMENTS
 
-\`\`\`javascript
+\`\`\`json
 {
-  foo: 'bar',
-  baz: 'qux',
+  "database": "sample_mflix",
+  "collection": "embedded_movies",
+  "pipeline": [
+    {
+      "$search": {
+        "index": "movie_search_index",
+        "text": {
+          "query": "science fiction",
+          "path": "plot"
+        }
+      }
+    }
+  ]
 }
 \`\`\``}
     </ToolCard.ExpandableContent>

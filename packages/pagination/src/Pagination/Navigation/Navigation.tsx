@@ -18,6 +18,7 @@ import {
   DEFAULT_CURRENT_PAGE,
   DEFAULT_ITEMS_PER_PAGE_OPTIONS,
 } from '../constants';
+import { getLgIds } from '../getLgIds';
 import { getSectionStyles } from '../Pagination.styles';
 import { getTotalNumPages, isCurrentPageValid } from '../utils';
 
@@ -28,6 +29,7 @@ import { NavigationProps } from './Navigation.types';
  * It also displays the previous and next page buttons.
  */
 function Navigation<T extends number>({
+  'data-lgid': dataLgId,
   onCurrentPageOptionChange,
   currentPage = DEFAULT_CURRENT_PAGE,
   numTotalItems,
@@ -38,6 +40,7 @@ function Navigation<T extends number>({
   onForwardArrowClick,
   className,
 }: NavigationProps) {
+  const lgIds = getLgIds(dataLgId);
   const shouldDisableBackButton =
     shouldDisableBackArrow !== undefined
       ? shouldDisableBackArrow
@@ -53,7 +56,11 @@ function Navigation<T extends number>({
   }
 
   return (
-    <div className={getSectionStyles({ className })}>
+    <div
+      className={getSectionStyles({ className })}
+      data-testid={lgIds.navigation}
+      data-lgid={lgIds.navigation}
+    >
       {onCurrentPageOptionChange !== undefined && numTotalItems ? (
         <>
           <Select

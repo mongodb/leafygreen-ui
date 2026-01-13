@@ -6,6 +6,8 @@ import { axe } from 'jest-axe';
 
 import { consoleOnce } from '@leafygreen-ui/lib';
 
+import { DEFAULT_LGID_ROOT, getLgIds } from '../getLgIds';
+
 import PaginationItemsPerPage from '.';
 
 let offsetParentSpy: jest.SpyInstance;
@@ -214,6 +216,70 @@ describe('PaginationItemsPerPage', () => {
       expect(label).toHaveAttribute(
         'id',
         expect.stringContaining('custom-pagination'),
+      );
+    });
+  });
+
+  describe('lgid props', () => {
+    const defaultLgIds = getLgIds();
+
+    test('renders default lgid values when data-lgid is not provided', () => {
+      const { getByTestId } = render(
+        <PaginationItemsPerPage
+          itemsPerPageOptions={[10, 25, 50]}
+          itemsPerPage={10}
+          onItemsPerPageOptionChange={jest.fn()}
+        />,
+      );
+
+      expect(getByTestId(defaultLgIds.pageSize)).toBeInTheDocument();
+    });
+
+    test('renders default data-lgid attribute when data-lgid is not provided', () => {
+      const { getByTestId } = render(
+        <PaginationItemsPerPage
+          itemsPerPageOptions={[10, 25, 50]}
+          itemsPerPage={10}
+          onItemsPerPageOptionChange={jest.fn()}
+        />,
+      );
+
+      expect(getByTestId(defaultLgIds.pageSize)).toHaveAttribute(
+        'data-lgid',
+        `${DEFAULT_LGID_ROOT}-page_size`,
+      );
+    });
+
+    test('renders custom lgid value when data-lgid is provided', () => {
+      const customLgId = 'lg-my-pagination';
+      const customLgIds = getLgIds(customLgId);
+      const { getByTestId } = render(
+        <PaginationItemsPerPage
+          itemsPerPageOptions={[10, 25, 50]}
+          itemsPerPage={10}
+          onItemsPerPageOptionChange={jest.fn()}
+          data-lgid={customLgId}
+        />,
+      );
+
+      expect(getByTestId(customLgIds.pageSize)).toBeInTheDocument();
+    });
+
+    test('renders custom data-lgid attribute when data-lgid is provided', () => {
+      const customLgId = 'lg-my-pagination';
+      const customLgIds = getLgIds(customLgId);
+      const { getByTestId } = render(
+        <PaginationItemsPerPage
+          itemsPerPageOptions={[10, 25, 50]}
+          itemsPerPage={10}
+          onItemsPerPageOptionChange={jest.fn()}
+          data-lgid={customLgId}
+        />,
+      );
+
+      expect(getByTestId(customLgIds.pageSize)).toHaveAttribute(
+        'data-lgid',
+        `${customLgId}-page_size`,
       );
     });
   });
