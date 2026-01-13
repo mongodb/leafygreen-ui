@@ -5,11 +5,24 @@ import {
   ReactNode,
 } from 'react';
 
+import { Align } from '@leafygreen-ui/inline-definition';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
 
 export { BaseFontSize };
 
+/**
+ * Determines the alignment of the tooltip relative to the chip.
+ */
+export const TooltipAlign = {
+  Top: Align.Top,
+  Bottom: Align.Bottom,
+} as const;
+export type TooltipAlign = (typeof TooltipAlign)[keyof typeof TooltipAlign];
+
+/**
+ * Defines where the ellipses will appear in a Chip when the label length exceeds the `chipCharacterLimit`.
+ */
 export const TruncationLocation = {
   Start: 'start',
   Middle: 'middle',
@@ -19,6 +32,9 @@ export const TruncationLocation = {
 export type TruncationLocation =
   (typeof TruncationLocation)[keyof typeof TruncationLocation];
 
+/**
+ * The color of the chip
+ */
 export const Variant = {
   Gray: 'gray',
   Blue: 'blue',
@@ -103,4 +119,10 @@ export interface ChipProps
    * @returns ReactNode to display in the tooltip
    */
   formatTooltip?: (label: ReactNode) => ReactNode;
+
+  /**
+   * Determines the alignment of the tooltip relative to the chip.
+   * @default 'bottom'
+   */
+  tooltipAlign?: TooltipAlign;
 }

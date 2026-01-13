@@ -15,7 +15,12 @@ import {
   getWrapperStyles,
   inlineDefinitionStyles,
 } from './Chip.styles';
-import { ChipProps, TruncationLocation, Variant } from './Chip.types';
+import {
+  ChipProps,
+  TooltipAlign,
+  TruncationLocation,
+  Variant,
+} from './Chip.types';
 
 /**
  * Chips are used to display discrete pieces of information such as results for a filter, or tagging for a group of items.
@@ -36,6 +41,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       glyph,
       enableAlwaysShowTooltip = false,
       formatTooltip,
+      tooltipAlign = TooltipAlign.Bottom,
       ...rest
     }: ChipProps,
     forwardedRef,
@@ -93,7 +99,7 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
             <InlineDefinition
               darkMode={darkMode}
               definition={tooltipContent}
-              align="bottom"
+              align={tooltipAlign}
               className={chipInlineDefinitionClassName}
               tooltipClassName={inlineDefinitionStyles}
             >
