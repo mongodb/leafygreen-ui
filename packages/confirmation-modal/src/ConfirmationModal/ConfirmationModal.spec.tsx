@@ -152,6 +152,38 @@ describe('packages/confirmation-modal', () => {
         expect(cancelButton).not.toHaveFocus();
       });
     });
+
+    test('focuses cancel button when confirm button is disabled via confirmButtonProps', async () => {
+      renderModal({
+        open: true,
+        variant: Variant.Default,
+        confirmButtonProps: {
+          disabled: true,
+        },
+      });
+      const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+      const confirmButton = screen.getByRole('button', { name: 'Confirm' });
+
+      await waitFor(() => {
+        expect(cancelButton).toHaveFocus();
+        expect(confirmButton).not.toHaveFocus();
+      });
+    });
+
+    test('focuses cancel button when confirm button is disabled via submitDisabled', async () => {
+      renderModal({
+        open: true,
+        variant: Variant.Default,
+        submitDisabled: true,
+      });
+      const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+      const confirmButton = screen.getByRole('button', { name: 'Confirm' });
+
+      await waitFor(() => {
+        expect(cancelButton).toHaveFocus();
+        expect(confirmButton).not.toHaveFocus();
+      });
+    });
   });
 
   describe('button text', () => {

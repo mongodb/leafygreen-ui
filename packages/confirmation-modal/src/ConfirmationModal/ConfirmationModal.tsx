@@ -68,6 +68,10 @@ export const ConfirmationModal = forwardRef<
 
     const lgIds = getLgIds(dataLgId);
 
+    // TODO: remove - submitDisabled is deprecated
+    const isConfirmDisabled =
+      submitDisabled ?? confirmButtonProps?.disabled ?? false;
+
     const initialFocus = useMemo(() => {
       if (initialFocusProp) {
         return initialFocusProp;
@@ -77,12 +81,12 @@ export const ConfirmationModal = forwardRef<
         return textInputRef;
       }
 
-      if (variant === Variant.Danger) {
+      if (variant === Variant.Danger || isConfirmDisabled) {
         return internalCancelButtonRef;
       }
 
       return internalConfirmButtonRef;
-    }, [initialFocusProp, requiredInputText, variant]);
+    }, [initialFocusProp, isConfirmDisabled, requiredInputText, variant]);
 
     const textEntryConfirmation = useMemo(() => {
       setConfirmEnabled(!requiredInputText);
@@ -127,10 +131,6 @@ export const ConfirmationModal = forwardRef<
       _onCancel?.();
       resetConfirmButton();
     };
-
-    // TODO: remove - submitDisabled is deprecated
-    const isConfirmDisabled =
-      submitDisabled ?? confirmButtonProps?.disabled ?? false;
 
     return (
       <Modal
