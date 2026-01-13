@@ -11,7 +11,9 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { State, ToolCard, ToolCardProps } from './index';
 
-const chips = [{ label: 'MongoDB', glyph: <DatabaseIcon /> }];
+const chips = [
+  { label: 'docdb-elastic.amazonaws.com:27017', glyph: <DatabaseIcon /> },
+];
 const titles = {
   [State.Canceled]: 'Canceled list-databases',
   [State.Error]: 'Failed running list-databases',
