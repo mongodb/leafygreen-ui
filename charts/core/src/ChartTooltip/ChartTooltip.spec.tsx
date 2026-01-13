@@ -78,7 +78,7 @@ describe('@lg-charts/core/ChartTooltip', () => {
       expect(mockChart.updateOptions).toHaveBeenCalledTimes(1);
 
       // Clear mock to track subsequent calls
-      mockChart.updateOptions.mockClear();
+      (mockChart.updateOptions as jest.Mock).mockClear();
 
       // Re-render with tooltip still pinned (simulating parent re-render)
       rerender(<ChartTooltip />);
@@ -98,7 +98,7 @@ describe('@lg-charts/core/ChartTooltip', () => {
       });
 
       expect(mockChart.updateOptions).toHaveBeenCalledTimes(1);
-      mockChart.updateOptions.mockClear();
+      (mockChart.updateOptions as jest.Mock).mockClear();
 
       // Update to pinned state
       mockChart.tooltipPinned = true;
@@ -119,7 +119,7 @@ describe('@lg-charts/core/ChartTooltip', () => {
       });
 
       expect(mockChart.updateOptions).toHaveBeenCalledTimes(1);
-      mockChart.updateOptions.mockClear();
+      (mockChart.updateOptions as jest.Mock).mockClear();
 
       // Update to unpinned state
       mockChart.tooltipPinned = false;
