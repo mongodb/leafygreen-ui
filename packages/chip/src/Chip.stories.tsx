@@ -145,17 +145,19 @@ export const White: StoryObj<typeof Chip> = {
 export const Truncate: StoryObj<typeof Chip> = {
   render: Template,
   parameters: {
-    args: {
-      variant: Variant.Blue,
-      label: 'meow meow meow miaou miao miau',
-    },
-    combineArgs: {
-      chipTruncationLocation: [
-        TruncationLocation.End,
-        TruncationLocation.Middle,
-        TruncationLocation.None,
-        TruncationLocation.Start,
-      ],
+    generate: {
+      args: {
+        variant: Variant.Blue,
+        label: 'meow meow meow miaou miao miau',
+      },
+      combineArgs: {
+        chipTruncationLocation: [
+          TruncationLocation.End,
+          TruncationLocation.Middle,
+          TruncationLocation.None,
+          TruncationLocation.Start,
+        ],
+      },
     },
   },
 };
