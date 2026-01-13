@@ -8,7 +8,10 @@ import { useChartContext } from '../ChartContext';
 import { CHART_TOOLTIP_CLASSNAME, DEFAULT_TOOLTIP_OPTIONS } from '../constants';
 
 import { getRootStylesText } from './ChartTooltip.styles';
-import { CallbackSeriesDataPoint, ChartTooltipProps, } from './ChartTooltip.types';
+import {
+  CallbackSeriesDataPoint,
+  ChartTooltipProps,
+} from './ChartTooltip.types';
 import { CustomTooltip } from './CustomTooltip';
 
 export function ChartTooltip({
