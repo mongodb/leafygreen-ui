@@ -2,4 +2,4 @@
 '@leafygreen-ui/combobox': minor
 ---
 
-Added Badge support for ComboBoxOption and organized internal styles.
+`ComboboxOption` now accepts a `ReactNode` for the `displayName` prop, enabling custom content like badges. Also refactored internal styles for better organization.

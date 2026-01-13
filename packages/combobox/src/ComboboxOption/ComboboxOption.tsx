@@ -99,7 +99,7 @@ export const InternalComboboxOption = React.forwardRef<
         ref={optionRef}
         highlighted={isFocused}
         disabled={disabled}
-        aria-label={typeof displayName === 'string' ? displayName : undefined}
+        aria-label={typeof displayName === 'string' ? displayName : value}
         darkMode={darkMode}
         className={getInputOptionStyles({
           size,
