@@ -2,6 +2,7 @@ import React, { forwardRef } from 'react';
 
 import {
   Chip,
+  TooltipAlign,
   TruncationLocation,
   Variant as ChipVariant,
 } from '@leafygreen-ui/chip';
@@ -66,6 +67,7 @@ export const Header = forwardRef<HTMLDivElement, HeaderProps>(
                 chipCharacterLimit={CHIP_CHARACTER_LIMIT}
                 chipTruncationLocation={TruncationLocation.Middle}
                 enableAlwaysShowTooltip={true}
+                tooltipAlign={TooltipAlign.Top}
                 variant={ChipVariant.White}
                 {...props}
               />
