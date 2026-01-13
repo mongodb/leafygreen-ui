@@ -201,7 +201,7 @@ When deprecating or removing a package/component:
 
 - **Deprecate on npm**: run `pnpm deprecate @leafygreen-ui/<pkg> "<reason/migration>"` so consumers see the notice during install.
 - **Add migration guidance**: include the replacement package/component and version floor in the message (e.g., "Use @leafygreen-ui/foo >=1.2.0").
-- **Archive removed code**: move fully removed packages into `deprecated-packages/<pkg>/` to keep history and examples accessible without shipping them. Leave a README describing why it was archived and the recommended replacement.
+- **Archive removed code**: move fully removed packages into `deprecated-packages/<pkg>/` to keep history and examples accessible without shipping them. Leave a README describing why it was archived and the recommended replacement. Set `"private": true` in the archived package's `package.json` so it is not considered for dependency upgrades.
 - **Document in changelog**: note deprecations and removals in the package CHANGELOG and release notes.
 - **Runtime affordances**: keep deprecated exports functional when possible and consider console warnings for high-signal cases until removal.
 
