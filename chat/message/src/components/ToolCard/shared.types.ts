@@ -39,7 +39,10 @@ export type ToolCardSubcomponentProperty =
 /**
  * Metadata chip with glyph and label
  */
-export type ToolCardChipProps = Pick<ChipProps, 'glyph' | 'label'>;
+export type ToolCardChipProps = Pick<
+  ChipProps,
+  'formatTooltip' | 'glyph' | 'label'
+>;
 
 export interface SharedToolCardProps extends ToolCardStateProps {
   /**
