@@ -1201,6 +1201,9 @@ importers:
         specifier: workspace:^
         version: link:../tokens
     devDependencies:
+      '@leafygreen-ui/typography':
+        specifier: workspace:^
+        version: link:../typography
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build

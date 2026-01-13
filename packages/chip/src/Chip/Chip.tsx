@@ -34,6 +34,8 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       className,
       dismissButtonAriaLabel,
       glyph,
+      enableAlwaysShowTooltip = false,
+      formatTooltip,
       ...rest
     }: ChipProps,
     forwardedRef,
@@ -51,15 +53,23 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       !!label &&
       (label as string).length > (chipCharacterLimit as number);
 
-    const truncatedName = useMemo(
-      () =>
-        getTruncatedName(
+    const triggerText = useMemo(() => {
+      if (isTruncated) {
+        return getTruncatedName(
           chipCharacterLimit as number,
           chipTruncationLocation,
           label as string,
-        ),
-      [chipCharacterLimit, chipTruncationLocation, label],
-    );
+        );
+      }
+
+      return label;
+    }, [chipCharacterLimit, chipTruncationLocation, isTruncated, label]);
+
+    const shouldShowTooltip = enableAlwaysShowTooltip || isTruncated;
+
+    const tooltipContent = useMemo(() => {
+      return formatTooltip ? formatTooltip(label) : label;
+    }, [formatTooltip, label]);
 
     return (
       <span
@@ -79,15 +89,15 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
           )}
         >
           {glyph ?? glyph}
-          {isTruncated ? (
+          {shouldShowTooltip ? (
             <InlineDefinition
               darkMode={darkMode}
-              definition={label}
+              definition={tooltipContent}
               align="bottom"
               className={chipInlineDefinitionClassName}
               tooltipClassName={inlineDefinitionStyles}
             >
-              {truncatedName}
+              {triggerText}
             </InlineDefinition>
           ) : (
             label

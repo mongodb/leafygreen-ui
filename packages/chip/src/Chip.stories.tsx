@@ -1,9 +1,12 @@
 import React from 'react';
-import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
+import { StoryMetaType } from '@lg-tools/storybook-utils';
+import { StoryFn, StoryObj } from '@storybook/react';
+import { expect, userEvent, within } from '@storybook/test';
 
 import { glyphs, Icon } from '@leafygreen-ui/icon';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
+import { Body } from '@leafygreen-ui/typography';
 
 import { TruncationLocation, Variant } from './Chip/Chip.types';
 import { Chip } from '.';
@@ -74,72 +77,74 @@ const meta: StoryMetaType<typeof Chip> = {
 };
 export default meta;
 
-export const Gray: StoryType<typeof Chip> = () => <></>;
-Gray.parameters = {
-  generate: {
-    args: {
-      variant: Variant.Gray,
+const Template: StoryFn<typeof Chip> = ({ glyph, ...rest }) => (
+  <Chip // @ts-expect-error - glyph type error
+    glyph={glyph ? <Icon glyph={glyph} /> : undefined}
+    {...rest}
+  />
+);
+
+export const LiveExample: StoryObj<typeof Chip> = {
+  render: Template,
+  parameters: {
+    chromatic: {
+      disableSnapshot: true,
     },
   },
 };
 
-export const Green: StoryType<typeof Chip> = () => <></>;
-Green.parameters = {
-  generate: {
-    args: {
-      variant: Variant.Green,
-    },
+export const Gray: StoryObj<typeof Chip> = {
+  render: Template,
+  args: {
+    variant: Variant.Gray,
   },
 };
 
-export const Red: StoryType<typeof Chip> = () => <></>;
-Red.parameters = {
-  generate: {
-    args: {
-      variant: Variant.Red,
-    },
+export const Green: StoryObj<typeof Chip> = {
+  render: Template,
+  args: {
+    variant: Variant.Green,
   },
 };
 
-export const Blue: StoryType<typeof Chip> = () => <></>;
-Blue.parameters = {
-  generate: {
-    args: {
-      variant: Variant.Blue,
-    },
+export const Red: StoryObj<typeof Chip> = {
+  render: Template,
+  args: {
+    variant: Variant.Red,
   },
 };
 
-export const Purple: StoryType<typeof Chip> = () => <></>;
-Purple.parameters = {
-  generate: {
-    args: {
-      variant: Variant.Purple,
-    },
+export const Blue: StoryObj<typeof Chip> = {
+  render: Template,
+  args: {
+    variant: Variant.Blue,
   },
 };
 
-export const Yellow: StoryType<typeof Chip> = () => <></>;
-Yellow.parameters = {
-  generate: {
-    args: {
-      variant: Variant.Yellow,
-    },
+export const Purple: StoryObj<typeof Chip> = {
+  render: Template,
+  args: {
+    variant: Variant.Purple,
   },
 };
 
-export const White: StoryType<typeof Chip> = () => <></>;
-White.parameters = {
-  generate: {
-    args: {
-      variant: Variant.White,
-    },
+export const Yellow: StoryObj<typeof Chip> = {
+  render: Template,
+  args: {
+    variant: Variant.Yellow,
   },
 };
 
-export const Truncate: StoryType<typeof Chip> = () => <></>;
-Truncate.parameters = {
-  generate: {
+export const White: StoryObj<typeof Chip> = {
+  render: Template,
+  args: {
+    variant: Variant.White,
+  },
+};
+
+export const Truncate: StoryObj<typeof Chip> = {
+  render: Template,
+  parameters: {
     args: {
       variant: Variant.Blue,
       label: 'meow meow meow miaou miao miau',
@@ -155,9 +160,35 @@ Truncate.parameters = {
   },
 };
 
-export const LiveExample: StoryType<typeof Chip> = ({ glyph, ...rest }) => (
-  <Chip // @ts-expect-error - glyph type error
-    glyph={glyph ? <Icon glyph={glyph} /> : undefined}
-    {...rest}
-  />
-);
+const formatTooltip = (label: React.ReactNode) => {
+  if (typeof label === 'string') {
+    return <Body>{`Label: ${label}`}</Body>;
+  }
+
+  return label;
+};
+export const FormattedTooltip: StoryObj<typeof Chip> = {
+  render: Template,
+  args: {
+    variant: Variant.Blue,
+    label: 'Lorem ipsum',
+    chipTruncationLocation: TruncationLocation.None,
+    enableAlwaysShowTooltip: true,
+    formatTooltip,
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const chip = canvas.getByText('Lorem ipsum');
+    await userEvent.hover(chip);
+
+    const tooltip = await canvas.findByRole('tooltip', {
+      name: 'Label: Lorem ipsum',
+    });
+    expect(tooltip).toBeInTheDocument();
+  },
+  parameters: {
+    chromatic: {
+      delay: 550,
+    },
+  },
+};

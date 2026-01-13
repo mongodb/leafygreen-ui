@@ -1,4 +1,9 @@
-import React from 'react';
+import {
+  ComponentPropsWithRef,
+  MouseEventHandler,
+  ReactElement,
+  ReactNode,
+} from 'react';
 
 import { DarkModeProps } from '@leafygreen-ui/lib';
 import { BaseFontSize } from '@leafygreen-ui/tokens';
@@ -25,11 +30,13 @@ export const Variant = {
 } as const;
 export type Variant = (typeof Variant)[keyof typeof Variant];
 
-export interface ChipProps extends React.ComponentProps<'span'>, DarkModeProps {
+export interface ChipProps
+  extends ComponentPropsWithRef<'span'>,
+    DarkModeProps {
   /**
    * Label rendered in the chip
    */
-  label: React.ReactNode;
+  label: ReactNode;
 
   /**
    * Defines where the ellipses will appear in a Chip when the label length exceeds the `chipCharacterLimit`.
@@ -67,7 +74,7 @@ export interface ChipProps extends React.ComponentProps<'span'>, DarkModeProps {
    * Callback when dismiss button is clicked.
    * If set, a dismiss button will render.
    */
-  onDismiss?: React.MouseEventHandler<HTMLButtonElement>;
+  onDismiss?: MouseEventHandler<HTMLButtonElement>;
 
   /**
    * aria-label for the dismiss button.
@@ -79,5 +86,21 @@ export interface ChipProps extends React.ComponentProps<'span'>, DarkModeProps {
    * To use a custom icon, see {@link Icon} {@link https://github.com/mongodb/leafygreen-ui/blob/main/packages/icon/README.md#usage-registering-custom-icon-sets | createIconComponent} docs
    * @type Leafygreen <Icon /> Component
    */
-  glyph?: React.ReactElement;
+  glyph?: ReactElement;
+
+  /**
+   * When true, tooltip will always appear on hover regardless of truncation.
+   * When false or undefined, tooltip only appears when label is truncated.
+   * @default false
+   */
+  enableAlwaysShowTooltip?: boolean;
+
+  /**
+   * Optional function that formats the tooltip content.
+   * When provided, the formatted content will be used instead of the raw label
+   * in the tooltip. Works with both truncated and always-visible tooltips.
+   * @param label - The current label value
+   * @returns ReactNode to display in the tooltip
+   */
+  formatTooltip?: (label: ReactNode) => ReactNode;
 }
