@@ -1,7 +1,6 @@
 import React from 'react';
-import { act } from '@testing-library/react';
 
-import { isReact17, renderHook } from '@leafygreen-ui/testing-lib';
+import { act, isReact17, renderHook } from '@leafygreen-ui/testing-lib';
 
 import { Size, Variant } from '../shared.types';
 import { getLgIds } from '../utils';
@@ -211,6 +210,14 @@ describe('packages/collection-toolbar/Context/CollectionToolbarProvider', () => 
       });
 
       test('syncs internal state when controlled prop changes', () => {
+        /**
+         * In React 17, `@testing-library/react-hooks` does not support
+         * passing a new wrapper to `rerender`. This test is skipped in React 17.
+         */
+        if (isReact17()) {
+          return;
+        }
+
         const lgIds = getLgIds();
         const { result, rerender } = renderHook(
           () => useCollectionToolbarContext(),
@@ -232,6 +239,8 @@ describe('packages/collection-toolbar/Context/CollectionToolbarProvider', () => 
             </CollectionToolbarProvider>
           ),
         });
+
+        expect(result.current.isCollapsed).toBe(true);
       });
     });
 
