@@ -165,9 +165,16 @@ describe('packages/collection-toolbar/components/Actions', () => {
   });
 
   describe('Toggle button (Collapsible variant)', () => {
-    test('renders toggle IconButton when variant is "collapsible"', () => {
-      renderActions({ variant: Variant.Collapsible });
+    test('renders toggle IconButton when variant is "collapsible" and showToggleButton is true', () => {
+      renderActions({ variant: Variant.Collapsible, showToggleButton: true });
       expect(screen.getByLabelText('Toggle collapse')).toBeInTheDocument();
+    });
+
+    test('does not render toggle IconButton when variant is "collapsible" and showToggleButton is false', () => {
+      renderActions({ variant: Variant.Collapsible, showToggleButton: false });
+      expect(
+        screen.queryByLabelText('Toggle collapse'),
+      ).not.toBeInTheDocument();
     });
 
     test('does not render toggle IconButton when variant is "default"', () => {
@@ -175,6 +182,39 @@ describe('packages/collection-toolbar/components/Actions', () => {
       expect(
         screen.queryByLabelText('Toggle collapse'),
       ).not.toBeInTheDocument();
+    });
+
+    test('does not render toggle IconButton when showToggleButton is false', () => {
+      renderActions({ variant: Variant.Collapsible, showToggleButton: false });
+      expect(
+        screen.queryByLabelText('Toggle collapse'),
+      ).not.toBeInTheDocument();
+    });
+
+    test('toggle IconButton has aria-label "Toggle collapse"', () => {
+      renderActions({ variant: Variant.Collapsible, showToggleButton: true });
+      const toggleButton = screen.getByLabelText('Toggle collapse');
+      expect(toggleButton).toHaveAttribute('aria-label', 'Toggle collapse');
+    });
+
+    test('toggle IconButton has aria-expanded "false" when isCollapsed is true', () => {
+      renderActions({
+        variant: Variant.Collapsible,
+        showToggleButton: true,
+        isCollapsed: true,
+      });
+      const toggleButton = screen.getByLabelText('Toggle collapse');
+      expect(toggleButton).toHaveAttribute('aria-expanded', 'false');
+    });
+
+    test('toggle IconButton has aria-expanded "true" when isCollapsed is false', () => {
+      renderActions({
+        variant: Variant.Collapsible,
+        showToggleButton: true,
+        isCollapsed: false,
+      });
+      const toggleButton = screen.getByLabelText('Toggle collapse');
+      expect(toggleButton).toHaveAttribute('aria-expanded', 'true');
     });
 
     test('does not render toggle IconButton when variant is "compact"', () => {
@@ -185,13 +225,17 @@ describe('packages/collection-toolbar/components/Actions', () => {
     });
 
     test('toggle button has aria-label "Toggle collapse"', () => {
-      renderActions({ variant: Variant.Collapsible });
+      renderActions({ variant: Variant.Collapsible, showToggleButton: true });
       const toggleButton = screen.getByLabelText('Toggle collapse');
       expect(toggleButton).toHaveAttribute('aria-label', 'Toggle collapse');
     });
 
     test('tooltip shows "Hide filters" when isCollapsed is false', async () => {
-      renderActions({ variant: Variant.Collapsible, isCollapsed: false });
+      renderActions({
+        variant: Variant.Collapsible,
+        showToggleButton: true,
+        isCollapsed: false,
+      });
       const toggleButton = screen.getByLabelText('Toggle collapse');
 
       userEvent.hover(toggleButton);
@@ -202,7 +246,11 @@ describe('packages/collection-toolbar/components/Actions', () => {
     });
 
     test('tooltip shows "Show filters" when isCollapsed is true', async () => {
-      renderActions({ variant: Variant.Collapsible, isCollapsed: true });
+      renderActions({
+        variant: Variant.Collapsible,
+        showToggleButton: true,
+        isCollapsed: true,
+      });
       const toggleButton = screen.getByLabelText('Toggle collapse');
 
       userEvent.hover(toggleButton);
@@ -215,6 +263,7 @@ describe('packages/collection-toolbar/components/Actions', () => {
     test('clicking toggle button toggles the collapsed state', async () => {
       renderActions({
         variant: Variant.Collapsible,
+        showToggleButton: true,
         isCollapsed: false,
       });
       const toggleButton = screen.getByLabelText('Toggle collapse');

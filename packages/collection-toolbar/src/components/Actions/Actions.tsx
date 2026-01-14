@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 import {
   CompoundSubComponent,
@@ -24,66 +24,83 @@ import { Menu } from './Menu';
 import { Pagination } from './Pagination';
 
 export const Actions = CompoundSubComponent(
-  ({ children, className, ...rest }: ActionsProps) => {
-    const { lgIds, variant, onToggleCollapsed, isCollapsed } =
-      useCollectionToolbarContext();
+  // eslint-disable-next-line react/display-name
+  forwardRef<HTMLDivElement, ActionsProps>(
+    (
+      {
+        ariaControls,
+        children,
+        className,
+        showToggleButton: showToggleButtonProp = false,
+        ...rest
+      },
+      fwdRef,
+    ) => {
+      const { lgIds, variant, onToggleCollapsed, isCollapsed } =
+        useCollectionToolbarContext();
 
-    const showToggleButton = variant === Variant.Collapsible;
+      const showToggleButton =
+        showToggleButtonProp && variant === Variant.Collapsible;
 
-    const Buttons = findChildren(
-      children,
-      CollectionToolbarActionsSubComponentProperty.Button,
-    );
-
-    const pagination = findChild(
-      children,
-      CollectionToolbarActionsSubComponentProperty.Pagination,
-    );
-
-    const menu = findChild(
-      children,
-      CollectionToolbarActionsSubComponentProperty.Menu,
-    );
-
-    const showPagination = pagination && variant === Variant.Default;
-    const showMenu = menu && variant !== Variant.Collapsible;
-
-    if (Buttons.length > 2) {
-      consoleOnce.error(
-        'CollectionToolbarActions can only have up to 2 buttons',
+      const Buttons = findChildren(
+        children,
+        CollectionToolbarActionsSubComponentProperty.Button,
       );
-    }
 
-    const PrimaryButtons = Buttons.slice(0, 2);
+      const pagination = findChild(
+        children,
+        CollectionToolbarActionsSubComponentProperty.Pagination,
+      );
 
-    return (
-      <div
-        data-testid={lgIds.actions}
-        data-lgid={lgIds.actions}
-        className={getActionStyles({ className, variant })}
-        {...rest}
-      >
-        {PrimaryButtons}
-        {showPagination && pagination}
-        {showMenu && menu}
-        {showToggleButton && (
-          <Tooltip
-            justify={Justify.Middle}
-            trigger={
-              <IconButton
-                onClick={onToggleCollapsed}
-                aria-label="Toggle collapse"
-              >
-                <Icon glyph="ChevronDown" />
-              </IconButton>
-            }
-          >
-            {isCollapsed ? 'Show filters' : 'Hide filters'}
-          </Tooltip>
-        )}
-      </div>
-    );
-  },
+      const menu = findChild(
+        children,
+        CollectionToolbarActionsSubComponentProperty.Menu,
+      );
+
+      const showPagination = pagination && variant === Variant.Default;
+      const showMenu = menu && variant !== Variant.Collapsible;
+
+      if (Buttons.length > 2) {
+        consoleOnce.error(
+          'CollectionToolbarActions can only have up to 2 buttons',
+        );
+      }
+
+      const PrimaryButtons = Buttons.slice(0, 2);
+
+      return (
+        <div
+          data-testid={lgIds.actions}
+          data-lgid={lgIds.actions}
+          className={getActionStyles({ className })}
+          ref={fwdRef}
+          {...rest}
+        >
+          {PrimaryButtons}
+          {showPagination && pagination}
+          {showMenu && menu}
+          {showToggleButton && (
+            <Tooltip
+              justify={Justify.Middle}
+              trigger={
+                // TODO: Add animations in LG-5845
+                <IconButton
+                  onClick={onToggleCollapsed}
+                  aria-label="Toggle collapse"
+                  aria-expanded={!isCollapsed}
+                  aria-controls={ariaControls}
+                >
+                  <Icon glyph="ChevronDown" />
+                </IconButton>
+              }
+            >
+              {isCollapsed ? 'Show filters' : 'Hide filters'}
+            </Tooltip>
+          )}
+        </div>
+      );
+    },
+  ),
   {
     displayName: 'Actions',
     key: CollectionToolbarSubComponentProperty.Actions,

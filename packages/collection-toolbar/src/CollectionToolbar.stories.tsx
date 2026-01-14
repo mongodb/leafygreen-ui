@@ -34,9 +34,6 @@ const meta: StoryMetaType<typeof CollectionToolbar> = {
       options: Object.values(Variant),
     },
   },
-  args: {
-    children: 'Collection Toolbar',
-  },
 };
 
 export default meta;
@@ -44,7 +41,7 @@ export default meta;
 export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
   <CollectionToolbar {...props}>
     <CollectionToolbar.Title>Collection Title</CollectionToolbar.Title>
-    <CollectionToolbar.Actions>
+    <CollectionToolbar.Actions showToggleButton>
       <CollectionToolbar.Actions.Button variant={ButtonVariant.Default}>
         Action
       </CollectionToolbar.Actions.Button>
@@ -77,3 +74,31 @@ export const Title: StoryFn<typeof CollectionToolbar> = props => (
     <CollectionToolbar.Title>Collection Title</CollectionToolbar.Title>
   </CollectionToolbar>
 );
+
+export const Actions: StoryFn<typeof CollectionToolbar.Actions> = ({
+  showToggleButton,
+  ...props
+}) => {
+  return (
+    <CollectionToolbar {...props}>
+      <CollectionToolbar.Title>Collection Title</CollectionToolbar.Title>
+      <CollectionToolbar.Actions showToggleButton={showToggleButton}>
+        <CollectionToolbar.Actions.Button variant={ButtonVariant.Default}>
+          Action
+        </CollectionToolbar.Actions.Button>
+        <CollectionToolbar.Actions.Button variant={ButtonVariant.Primary}>
+          Action
+        </CollectionToolbar.Actions.Button>
+      </CollectionToolbar.Actions>
+    </CollectionToolbar>
+  );
+};
+
+Actions.argTypes = {
+  showToggleButton: {
+    description:
+      'Shows the toggle button. Only shows if the variant is collapsible.',
+    control: 'boolean',
+    defaultValue: false,
+  },
+};

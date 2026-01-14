@@ -1,8 +1,6 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing } from '@leafygreen-ui/tokens';
 
-import { Variant } from '../../shared.types';
-
 export const baseStyles = css`
   display: flex;
   flex-direction: row;
@@ -10,9 +8,5 @@ export const baseStyles = css`
   gap: ${spacing[100]}px;
 `;
 
-export const getActionStyles = ({
-  className,
-}: {
-  className?: string;
-  variant?: Variant;
-}) => cx(baseStyles, className);
+export const getActionStyles = ({ className }: { className?: string }) =>
+  cx(baseStyles, className);

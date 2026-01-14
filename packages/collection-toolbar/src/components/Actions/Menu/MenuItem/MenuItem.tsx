@@ -7,7 +7,7 @@ import { MenuItem as LGMenuItem, MenuItemProps } from '@leafygreen-ui/menu';
 import { useCollectionToolbarContext } from '../../../../Context/CollectionToolbarProvider';
 import { CollectionToolbarActionsSubComponentProperty } from '../../../../shared.types';
 
-const MenuItem = CompoundSubComponent(
+export const MenuItem = CompoundSubComponent(
   ({ children, ...props }: MenuItemProps) => {
     const { lgIds } = useCollectionToolbarContext();
     const menuItemId = useIdAllocator({
@@ -30,5 +30,3 @@ const MenuItem = CompoundSubComponent(
     key: CollectionToolbarActionsSubComponentProperty.MenuItem,
   },
 );
-
-export default MenuItem;

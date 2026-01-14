@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
-import { Button as BaseButton } from '@leafygreen-ui/button';
+import { Button as LGButton } from '@leafygreen-ui/button';
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 
 import { useCollectionToolbarContext } from '../../../Context/CollectionToolbarProvider';
@@ -9,10 +9,11 @@ import { CollectionToolbarActionsSubComponentProperty } from '../../../shared.ty
 import { ButtonProps } from './Button.types';
 
 export const Button = CompoundSubComponent(
-  ({ ...props }: ButtonProps) => {
+  // eslint-disable-next-line react/display-name
+  forwardRef<HTMLButtonElement, ButtonProps>(({ ...props }, fwdRef) => {
     const { size } = useCollectionToolbarContext();
-    return <BaseButton size={size} {...props} />;
-  },
+    return <LGButton size={size} ref={fwdRef} {...props} />;
+  }),
   {
     displayName: 'Button',
     key: CollectionToolbarActionsSubComponentProperty.Button,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 import { Icon } from '@leafygreen-ui/icon';
@@ -11,14 +11,16 @@ import { CollectionToolbarActionsSubComponentProperty } from '../../../shared.ty
 import { MenuProps } from './Menu.types';
 import { MenuItem } from './MenuItem';
 
-const Menu = CompoundSubComponent(
-  ({ children, ...props }: MenuProps) => {
+export const Menu = CompoundSubComponent(
+  // eslint-disable-next-line react/display-name
+  forwardRef<HTMLDivElement, MenuProps>(({ children, ...props }, fwdRef) => {
     const { lgIds } = useCollectionToolbarContext();
 
     return (
       <LGMenu
         data-lgid={lgIds.menu}
         data-testid={lgIds.menu}
+        ref={fwdRef}
         {...props}
         trigger={
           <IconButton aria-label="More options">
@@ -29,12 +31,10 @@ const Menu = CompoundSubComponent(
         {children}
       </LGMenu>
     );
-  },
+  }),
   {
     displayName: 'Menu',
     key: CollectionToolbarActionsSubComponentProperty.Menu,
     MenuItem,
   },
 );
-
-export default Menu;
