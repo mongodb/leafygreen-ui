@@ -1,7 +1,5 @@
-import React, { ReactChild, ReactNode } from 'react';
+import React, { ReactChild } from 'react';
 import escapeRegExp from 'lodash/escapeRegExp';
-
-import { isComponentType } from '@leafygreen-ui/lib';
 
 /**
  *
