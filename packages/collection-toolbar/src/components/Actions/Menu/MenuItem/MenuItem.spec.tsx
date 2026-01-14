@@ -2,13 +2,20 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { CollectionToolbarProvider } from '../../../../Context/CollectionToolbarProvider';
 import { CollectionToolbarActionsSubComponentProperty } from '../../../../shared.types';
+import { getLgIds } from '../../../../utils';
 
-import MenuItem from './MenuItem';
+import { MenuItem } from './MenuItem';
 import { MenuItemProps } from './MenuItem.types';
 
 const renderMenuItem = (props: MenuItemProps = {}) => {
-  return render(<MenuItem {...props} />);
+  const lgIds = getLgIds();
+  return render(
+    <CollectionToolbarProvider lgIds={lgIds}>
+      <MenuItem {...props} />
+    </CollectionToolbarProvider>,
+  );
 };
 
 describe('packages/collection-toolbar/components/Actions/Menu/MenuItem', () => {

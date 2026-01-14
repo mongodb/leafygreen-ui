@@ -2,9 +2,11 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { CollectionToolbarProvider } from '../../../Context/CollectionToolbarProvider';
 import { CollectionToolbarActionsSubComponentProperty } from '../../../shared.types';
+import { getLgIds } from '../../../utils';
 
-import Menu from './Menu';
+import { Menu } from './Menu';
 
 const renderMenu = ({
   children = <Menu.MenuItem>Test Item</Menu.MenuItem>,
@@ -12,7 +14,12 @@ const renderMenu = ({
 }: Partial<React.ComponentProps<typeof Menu>> & {
   children?: React.ReactNode;
 } = {}) => {
-  return render(<Menu {...props}>{children}</Menu>);
+  const lgIds = getLgIds();
+  return render(
+    <CollectionToolbarProvider lgIds={lgIds}>
+      <Menu {...props}>{children}</Menu>
+    </CollectionToolbarProvider>,
+  );
 };
 
 describe('packages/collection-toolbar/components/Actions/Menu', () => {

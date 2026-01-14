@@ -2,10 +2,12 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
+import { CollectionToolbarProvider } from '../../../Context/CollectionToolbarProvider';
 import { CollectionToolbarActionsSubComponentProperty } from '../../../shared.types';
 import { getTestUtils } from '../../../testing/getTestUtils';
+import { getLgIds } from '../../../utils';
 
-import Pagination from './Pagination';
+import { Pagination } from './Pagination';
 import { PaginationProps } from './Pagination.types';
 
 const defaultProps = {
@@ -17,7 +19,12 @@ const defaultProps = {
 };
 
 const renderPagination = (props?: Partial<PaginationProps>) => {
-  return render(<Pagination {...defaultProps} {...props} />);
+  const lgIds = getLgIds();
+  return render(
+    <CollectionToolbarProvider lgIds={lgIds}>
+      <Pagination {...defaultProps} {...props} />
+    </CollectionToolbarProvider>,
+  );
 };
 
 describe('packages/collection-toolbar/components/Actions/Pagination', () => {
