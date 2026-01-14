@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { OptionObject } from '../ComboboxOption';
 /**
  *
@@ -21,9 +23,9 @@ export const getOptionObjectFromValue = (
 export const getDisplayNameForValue = (
   value: string | null,
   options: Array<OptionObject>,
-): string => {
+): ReactNode => {
   return value
-    ? getOptionObjectFromValue(value, options)?.displayName?.toString() ?? value
+    ? getOptionObjectFromValue(value, options)?.displayName ?? value
     : '';
 };
 

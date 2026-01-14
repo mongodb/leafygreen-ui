@@ -745,7 +745,7 @@ export function Combobox<M extends boolean>({
         return (
           <ComboboxChip
             key={value}
-            displayName={displayName}
+            displayName={getNodeTextContent(displayName)}
             isFocused={isFocused}
             onRemove={onRemove}
             onFocus={onFocus}
@@ -798,7 +798,7 @@ export function Combobox<M extends boolean>({
             selection as SelectValueType<false>,
             allOptions,
           ) ?? prevSelection;
-        updateInputValue(displayName);
+        updateInputValue(getNodeTextContent(displayName));
       }
     }
   }, [
@@ -826,7 +826,7 @@ export function Combobox<M extends boolean>({
             selection as SelectValueType<false>,
             allOptions,
           ) ?? '';
-        updateInputValue(displayName);
+        updateInputValue(getNodeTextContent(displayName));
         closeMenu();
       }
     } else {
