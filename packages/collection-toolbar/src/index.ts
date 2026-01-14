@@ -9,6 +9,7 @@ export {
   type MenuItemProps,
   type MenuProps,
   type PaginationProps,
+  type SearchInputProps,
   type TitleProps,
 } from './components';
 export { Size, Variant } from './shared.types';

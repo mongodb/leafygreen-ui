@@ -5,7 +5,7 @@ import {
   findChild,
 } from '@leafygreen-ui/compound-component';
 
-import { Actions, Title } from '../components';
+import { Actions, SearchInput, Title } from '../components';
 import { CollectionToolbarProvider } from '../Context/CollectionToolbarProvider';
 import {
   CollectionToolbarSubComponentProperty,
@@ -39,6 +39,11 @@ export const CollectionToolbar = CompoundComponent(
         CollectionToolbarSubComponentProperty.Title,
       );
 
+      const searchInput = findChild(
+        children,
+        CollectionToolbarSubComponentProperty.SearchInput,
+      );
+
       const actions = findChild(
         children,
         CollectionToolbarSubComponentProperty.Actions,
@@ -60,6 +65,7 @@ export const CollectionToolbar = CompoundComponent(
             {...rest}
           >
             {showTitle && title}
+            {searchInput}
             {actions}
           </div>
         </CollectionToolbarProvider>
@@ -70,5 +76,6 @@ export const CollectionToolbar = CompoundComponent(
     displayName: 'CollectionToolbar',
     Title,
     Actions,
+    SearchInput,
   },
 );

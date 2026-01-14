@@ -37,6 +37,7 @@
     "@leafygreen-ui/icon-button": "workspace:^",
     "@leafygreen-ui/menu": "workspace:^",
     "@leafygreen-ui/pagination": "workspace:^",
+    "@leafygreen-ui/search-input": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/tooltip": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",

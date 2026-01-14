@@ -43,6 +43,9 @@
       "path": "../pagination"
     },
     {
+      "path": "../search-input"
+    },
+    {
       "path": "../tooltip"
     },
     {
