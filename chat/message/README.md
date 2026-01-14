@@ -324,16 +324,16 @@ This is a markdown content example showing tool execution results.`}
 
 ### Message.ToolCard
 
-| Prop                             | Type                                                        | Description                                                                                                                          | Default |
-| -------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ------- |
-| `chips` _(optional)_             | `Array<{ label: string; glyph: ReactNode }>`                | Metadata chips (glyph and label) displayed in the header.                                                                            | `[]`    |
-| `darkMode` _(optional)_          | `boolean`                                                   | Determines if the component will render in dark mode                                                                                 | `false` |
-| `initialIsExpanded` _(optional)_ | `boolean`                                                   | Initial state of the expandable section. Ignored when `showExpandButton` is `false`.                                                 | `false` |
-| `onToggleExpanded` _(optional)_  | `(isOpen: boolean) => void`                                 | Callback fired when the expansion toggle is clicked. Receives the new open state as a parameter.                                     |         |
-| `showExpandButton` _(optional)_  | `boolean`                                                   | Whether the toggle button is visible.                                                                                                | `true`  |
-| `state`                          | `'idle' \| 'running' \| 'success' \| 'error' \| 'canceled'` | The current lifecycle state of the tool interaction. Can use string literals or import `ToolCardState` enum from `@lg-chat/message`. |         |
-| `title`                          | `ReactNode`                                                 | Primary label displayed in the Header.                                                                                               |         |
-| `...`                            | `HTMLElementProps<'div'>`                                   | Props spread on the container div element                                                                                            |         |
+| Prop                             | Type                                                                                              | Description                                                                                                                                                                                                              | Default |
+| -------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
+| `chips` _(optional)_             | `Array<{ label: ReactNode; glyph?: ReactNode; formatTooltip?: (label: ReactNode) => ReactNode }>` | Metadata chips displayed in the header. Each chip supports `label`, optional `glyph` icon, and optional `formatTooltip` function to customize tooltip content. Tooltips are always shown on hover for chips in ToolCard. | `[]`    |
+| `darkMode` _(optional)_          | `boolean`                                                                                         | Determines if the component will render in dark mode                                                                                                                                                                     | `false` |
+| `initialIsExpanded` _(optional)_ | `boolean`                                                                                         | Initial state of the expandable section. Ignored when `showExpandButton` is `false`.                                                                                                                                     | `false` |
+| `onToggleExpanded` _(optional)_  | `(isOpen: boolean) => void`                                                                       | Callback fired when the expansion toggle is clicked. Receives the new open state as a parameter.                                                                                                                         |         |
+| `showExpandButton` _(optional)_  | `boolean`                                                                                         | Whether the toggle button is visible.                                                                                                                                                                                    | `true`  |
+| `state`                          | `'idle' \| 'running' \| 'success' \| 'error' \| 'canceled'`                                       | The current lifecycle state of the tool interaction. Can use string literals or import `ToolCardState` enum from `@lg-chat/message`.                                                                                     |         |
+| `title`                          | `ReactNode`                                                                                       | Primary label displayed in the Header.                                                                                                                                                                                   |         |
+| `...`                            | `HTMLElementProps<'div'>`                                                                         | Props spread on the container div element                                                                                                                                                                                |         |
 
 #### Message.ToolCard.Actions
 
@@ -362,7 +362,7 @@ This is a markdown content example showing tool execution results.`}
 
 ### Message.Actions
 
-The `MessageActions` component provides a comprehensive set of actions for chat messages.
+The `Message.Actions` component provides a comprehensive set of actions for chat messages.
 
 #### Rendering Behavior
 
@@ -402,7 +402,7 @@ Form state is reset when the feedback form is closed or when a new rating is sel
 
 ### Message.Links
 
-The `MessageLinks` component provides an expandable/collapsible section for displaying related links.
+The `Message.Links` component provides an expandable/collapsible section for displaying related links.
 
 #### Rendering Behavior
 
@@ -426,11 +426,11 @@ The component manages its own internal state for:
 
 ### Message.Promotion
 
-The `MessagePromotion` component displays promotional content with an award icon and "Learn More" link.
+The `Message.Promotion` component displays promotional content with an award icon and "Learn More" link.
 
 ### Message.VerifiedBanner
 
-The `VerifiedBanner` component displays verification information for messages.
+The `Message.VerifiedBanner` component displays verification information for messages.
 
 #### Rendering Behavior
 
