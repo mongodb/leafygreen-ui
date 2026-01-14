@@ -37,6 +37,7 @@ export const InternalComboboxOption = React.forwardRef<
       value,
       onClick,
       disabled = false,
+      'aria-label': ariaLabel,
       ...rest
     }: InternalComboboxOptionProps,
     forwardedRef,
@@ -100,7 +101,7 @@ export const InternalComboboxOption = React.forwardRef<
         ref={optionRef}
         highlighted={isFocused}
         disabled={disabled}
-        aria-label={getNodeTextContent(displayName) ?? value}
+        aria-label={ariaLabel || getNodeTextContent(displayName) || value}
         darkMode={darkMode}
         className={getInputOptionStyles({
           size,

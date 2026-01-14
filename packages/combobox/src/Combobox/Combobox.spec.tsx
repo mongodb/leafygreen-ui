@@ -4,6 +4,7 @@ import React, { createRef } from 'react';
 import {
   act,
   queryByText,
+  render,
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
@@ -26,6 +27,7 @@ import {
   Select,
   testif,
 } from '../utils/ComboboxTestUtils';
+import { Combobox, ComboboxOption } from '..';
 
 /**
  * Tests
@@ -278,7 +280,7 @@ describe('packages/combobox', () => {
         expect(optionEl).toHaveTextContent('abc-def');
       });
 
-      test('Option has correct aria-label when displayName is a React node', () => {
+      test('Option aria-label falls back to displayName text content', () => {
         const options: Array<OptionObject> = [
           {
             value: 'react-node-option',
@@ -294,6 +296,31 @@ describe('packages/combobox', () => {
         const { optionElements } = openMenu();
         const [optionEl] = Array.from(optionElements!);
         expect(optionEl).toHaveAttribute('aria-label', 'Bold and italic text');
+      });
+
+      test('Option aria-label falls back to value when displayName is not provided', () => {
+        const options = [{ value: 'fallback-value' }];
+        /// @ts-expect-error `options` will not match the expected type
+        const { openMenu } = renderCombobox(select, { options });
+        const { optionElements } = openMenu();
+        const [optionEl] = Array.from(optionElements!);
+        expect(optionEl).toHaveAttribute('aria-label', 'fallback-value');
+      });
+
+      test('Option uses explicit aria-label prop when provided', () => {
+        const { getByRole, queryByRole } = render(
+          <Combobox label="Test" multiselect={select === 'multiple'}>
+            <ComboboxOption
+              value="test-value"
+              displayName="Display Name"
+              aria-label="Custom aria label"
+            />
+          </Combobox>,
+        );
+        userEvent.click(getByRole('combobox'));
+        const listbox = queryByRole('listbox');
+        const optionEl = listbox?.getElementsByTagName('li')[0];
+        expect(optionEl).toHaveAttribute('aria-label', 'Custom aria label');
       });
 
       test('Options with long names are rendered with the full text', () => {
