@@ -24,6 +24,9 @@
       "path": "../emotion"
     },
     {
+      "path": "../hooks"
+    },
+    {
       "path": "../icon"
     },
     {

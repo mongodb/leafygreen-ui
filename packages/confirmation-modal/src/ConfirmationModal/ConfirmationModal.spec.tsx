@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { act, render, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
 import { getLgIds as getLgModalIds } from '@leafygreen-ui/modal';
 
 import { getLgIds } from '..';
-import { ConfirmationModal } from '..';
+import { ConfirmationModal, Variant } from '..';
 
 const lgIds = getLgIds();
 
@@ -84,6 +84,106 @@ describe('packages/confirmation-modal', () => {
     expect(getByText('Content text')).toBeVisible();
     expect(getByText('Confirm')).toBeVisible();
     expect(getByText('Cancel')).toBeVisible();
+  });
+
+  describe('initial focus', () => {
+    test(`focuses confirm button when variant is ${Variant.Default}`, async () => {
+      renderModal({
+        open: true,
+        variant: Variant.Default,
+      });
+      const confirmButton = screen.getByRole('button', { name: 'Confirm' });
+
+      await waitFor(() => {
+        expect(confirmButton).toHaveFocus();
+      });
+    });
+
+    test(`focuses cancel button when variant is ${Variant.Danger}`, async () => {
+      renderModal({
+        open: true,
+        variant: Variant.Danger,
+      });
+      const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+
+      await waitFor(() => {
+        expect(cancelButton).toHaveFocus();
+      });
+    });
+
+    test('focuses text input when requiredInputText is provided', async () => {
+      renderModal({
+        open: true,
+        requiredInputText: 'Confirm',
+      });
+      const textInput = screen.getByLabelText(
+        'Type "Confirm" to confirm your action',
+        { selector: 'input' },
+      );
+
+      await waitFor(() => {
+        expect(textInput).toHaveFocus();
+      });
+    });
+
+    test('uses custom initialFocus prop when provided', async () => {
+      const customFocusRef = React.createRef<HTMLButtonElement>();
+
+      renderModal({
+        open: true,
+        initialFocus: customFocusRef,
+        children: (
+          <>
+            Content text
+            <button ref={customFocusRef}>Custom action</button>
+          </>
+        ),
+      });
+
+      const customButton = screen.getByRole('button', {
+        name: 'Custom action',
+      });
+      const confirmButton = screen.getByRole('button', { name: 'Confirm' });
+      const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+
+      await waitFor(() => {
+        expect(customButton).toHaveFocus();
+        expect(confirmButton).not.toHaveFocus();
+        expect(cancelButton).not.toHaveFocus();
+      });
+    });
+
+    test('focuses cancel button when confirm button is disabled via confirmButtonProps', async () => {
+      renderModal({
+        open: true,
+        variant: Variant.Default,
+        confirmButtonProps: {
+          disabled: true,
+        },
+      });
+      const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+      const confirmButton = screen.getByRole('button', { name: 'Confirm' });
+
+      await waitFor(() => {
+        expect(cancelButton).toHaveFocus();
+        expect(confirmButton).not.toHaveFocus();
+      });
+    });
+
+    test('focuses cancel button when confirm button is disabled via submitDisabled', async () => {
+      renderModal({
+        open: true,
+        variant: Variant.Default,
+        submitDisabled: true,
+      });
+      const cancelButton = screen.getByRole('button', { name: 'Cancel' });
+      const confirmButton = screen.getByRole('button', { name: 'Confirm' });
+
+      await waitFor(() => {
+        expect(cancelButton).toHaveFocus();
+        expect(confirmButton).not.toHaveFocus();
+      });
+    });
   });
 
   describe('button text', () => {
