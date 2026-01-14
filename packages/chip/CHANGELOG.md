@@ -1,5 +1,16 @@
 # @leafygreen-ui/chip
 
+## 4.2.0
+
+### Minor Changes
+
+- 323395e: [LG-5857](https://jira.mongodb.org/browse/LG-5857): add `enableAlwaysShowTooltip`, `formatTooltip`, and `tooltipAlign` props to `Chip`
+
+### Patch Changes
+
+- Updated dependencies [323395e]
+  - @leafygreen-ui/inline-definition@9.2.0
+
 ## 4.1.0
 
 ### Minor Changes
