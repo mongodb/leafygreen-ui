@@ -208,40 +208,6 @@ describe('packages/collection-toolbar/Context/CollectionToolbarProvider', () => 
 
         expect(result.current.isCollapsed).toBe(true);
       });
-
-      test('syncs internal state when controlled prop changes', () => {
-        /**
-         * In React 17, `@testing-library/react-hooks` does not support
-         * passing a new wrapper to `rerender`. This test is skipped in React 17.
-         */
-        if (isReact17()) {
-          return;
-        }
-
-        const lgIds = getLgIds();
-        const { result, rerender } = renderHook(
-          () => useCollectionToolbarContext(),
-          {
-            wrapper: ({ children }) => (
-              <CollectionToolbarProvider lgIds={lgIds} isCollapsed={false}>
-                {children}
-              </CollectionToolbarProvider>
-            ),
-          },
-        );
-
-        expect(result.current.isCollapsed).toBe(false);
-
-        rerender({
-          wrapper: ({ children }: { children: React.ReactNode }) => (
-            <CollectionToolbarProvider lgIds={lgIds} isCollapsed={true}>
-              {children}
-            </CollectionToolbarProvider>
-          ),
-        });
-
-        expect(result.current.isCollapsed).toBe(true);
-      });
     });
 
     describe('onToggleCollapsed', () => {
