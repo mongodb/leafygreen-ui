@@ -13,7 +13,7 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
 import { Size, Variant } from '../shared.types';
-import { getLgIds, type GetLgIdsReturnType } from '../utils';
+import { type GetLgIdsReturnType } from '../utils';
 
 export interface CollectionToolbarContextProps extends DarkModeProps {
   /**
@@ -43,13 +43,7 @@ export interface CollectionToolbarContextProps extends DarkModeProps {
 }
 
 export const CollectionToolbarContext =
-  createContext<CollectionToolbarContextProps>({
-    size: Size.Default,
-    variant: Variant.Default,
-    lgIds: getLgIds(),
-    isCollapsed: false,
-    onToggleCollapsed: () => {},
-  });
+  createContext<CollectionToolbarContextProps | null>(null);
 
 export const useCollectionToolbarContext = () => {
   const context = useContext(CollectionToolbarContext);
