@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { ChipProps } from '@leafygreen-ui/chip';
 
 /**
- * State enum for tool interaction lifecycle states
+ * State enum for interaction lifecycle states
  */
 export const State = {
   Canceled: 'canceled',
@@ -14,42 +14,42 @@ export const State = {
 } as const;
 export type State = (typeof State)[keyof typeof State];
 
-export interface ToolCardStateProps {
+export interface ActionCardStateProps {
   /**
-   * The current lifecycle state of the tool interaction.
+   * The current lifecycle state of the interaction.
    */
   state: State;
 }
 
 /**
- * Static property names used to identify ToolCard compound components.
+ * Static property names used to identify ActionCard compound components.
  * These are implementation details for the compound component pattern and should not be exported.
  */
-export const ToolCardSubcomponentProperty = {
-  Actions: 'isLGToolCardActions',
-  ExpandableContent: 'isLGToolCardExpandableContent',
+export const ActionCardSubcomponentProperty = {
+  Actions: 'isLGActionCardActions',
+  ExpandableContent: 'isLGActionCardExpandableContent',
 } as const;
 
 /**
- * Type representing the possible static property names for ToolCard subcomponents.
+ * Type representing the possible static property names for ActionCard subcomponents.
  */
-export type ToolCardSubcomponentProperty =
-  (typeof ToolCardSubcomponentProperty)[keyof typeof ToolCardSubcomponentProperty];
+export type ActionCardSubcomponentProperty =
+  (typeof ActionCardSubcomponentProperty)[keyof typeof ActionCardSubcomponentProperty];
 
 /**
  * Metadata chip with glyph and label
  */
-export type ToolCardChipProps = Pick<
+export type ActionCardChipProps = Pick<
   ChipProps,
   'formatTooltip' | 'glyph' | 'label'
 >;
 
-export interface SharedToolCardProps extends ToolCardStateProps {
+export interface SharedActionCardProps extends ActionCardStateProps {
   /**
    * Metadata chips (glyph and label) displayed in the Header.
    * @default []
    */
-  chips?: Array<ToolCardChipProps>;
+  chips?: Array<ActionCardChipProps>;
 
   /**
    * Whether the toggle button is visible.

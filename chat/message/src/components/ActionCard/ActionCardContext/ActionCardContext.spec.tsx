@@ -2,10 +2,10 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { ToolCardProvider, useToolCardContext } from './ToolCardContext';
+import { ActionCardProvider, useActionCardContext } from './ActionCardContext';
 
 const TestComponent: React.FC = () => {
-  const { isExpanded, toggleExpand } = useToolCardContext();
+  const { isExpanded, toggleExpand } = useActionCardContext();
   return (
     <div>
       <div data-testid="is-expanded">{String(isExpanded)}</div>
@@ -16,7 +16,7 @@ const TestComponent: React.FC = () => {
   );
 };
 
-describe('ToolCardContext', () => {
+describe('ActionCardContext', () => {
   test('provides context values to children', () => {
     const mockToggleExpand = jest.fn();
     const contextValue = {
@@ -25,9 +25,9 @@ describe('ToolCardContext', () => {
     };
 
     render(
-      <ToolCardProvider value={contextValue}>
+      <ActionCardProvider value={contextValue}>
         <TestComponent />
-      </ToolCardProvider>,
+      </ActionCardProvider>,
     );
 
     expect(screen.getByTestId('is-expanded')).toHaveTextContent('true');
@@ -41,9 +41,9 @@ describe('ToolCardContext', () => {
     };
 
     render(
-      <ToolCardProvider value={contextValue}>
+      <ActionCardProvider value={contextValue}>
         <TestComponent />
-      </ToolCardProvider>,
+      </ActionCardProvider>,
     );
 
     const toggleButton = screen.getByTestId('toggle-button');
@@ -60,7 +60,7 @@ describe('ToolCardContext', () => {
     expect(() => {
       render(<TestComponent />);
     }).toThrow(
-      'useToolCardContext must be used within a ToolCardContextProvider',
+      'useActionCardContext must be used within a ActionCardContextProvider',
     );
 
     console.error = originalError;

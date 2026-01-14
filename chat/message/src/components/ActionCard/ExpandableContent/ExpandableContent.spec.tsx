@@ -9,9 +9,9 @@ jest.mock('@lg-chat/lg-markdown', () => ({
   LGMarkdown: jest.fn(({ children }) => <div>{children}</div>),
 }));
 
-const mockUseToolCardContext = jest.fn();
-jest.mock('../ToolCardContext', () => ({
-  useToolCardContext: () => mockUseToolCardContext(),
+const mockUseActionCardContext = jest.fn();
+jest.mock('../ActionCardContext', () => ({
+  useActionCardContext: () => mockUseActionCardContext(),
 }));
 
 const renderExpandableContent = (
@@ -29,10 +29,10 @@ const baseMockContext = {
   toggleExpand: jest.fn(),
 };
 
-describe('chat/message/ToolCard/ExpandableContent', () => {
+describe('chat/message/ActionCard/ExpandableContent', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUseToolCardContext.mockReturnValue({
+    mockUseActionCardContext.mockReturnValue({
       ...baseMockContext,
       isExpanded: false,
     });
@@ -66,7 +66,7 @@ describe('chat/message/ToolCard/ExpandableContent', () => {
   });
 
   test('renders content when expanded', () => {
-    mockUseToolCardContext.mockReturnValue({
+    mockUseActionCardContext.mockReturnValue({
       ...baseMockContext,
       isExpanded: true,
     });
@@ -80,7 +80,7 @@ describe('chat/message/ToolCard/ExpandableContent', () => {
   });
 
   test('hides content when collapsed', () => {
-    mockUseToolCardContext.mockReturnValue({
+    mockUseActionCardContext.mockReturnValue({
       ...baseMockContext,
       isExpanded: false,
     });

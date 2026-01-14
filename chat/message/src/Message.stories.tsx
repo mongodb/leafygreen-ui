@@ -9,7 +9,7 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { Message, MessageProps, MessageSourceType } from '..';
 
-import { ToolCardState } from './components';
+import { ActionCardState } from './components';
 
 const MARKDOWN_TEXT = `
 # Heading 1
@@ -154,22 +154,22 @@ const getPromotionChild = () => (
   />
 );
 
-const getToolCardChild = () => (
-  <Message.ToolCard
+const getActionCardChild = () => (
+  <Message.ActionCard
     chips={[
       { label: 'docdb-elastic.amazonaws.com:27017', glyph: <DatabaseIcon /> },
     ]}
-    state={ToolCardState.Idle}
+    state={ActionCardState.Idle}
     title="Run list-databases?"
   >
-    <Message.ToolCard.ExpandableContent>
+    <Message.ActionCard.ExpandableContent>
       {`#### ARGUMENTS
 
 \`\`\`javascript
 {}
 \`\`\``}
-    </Message.ToolCard.ExpandableContent>
-    <Message.ToolCard.Actions
+    </Message.ActionCard.ExpandableContent>
+    <Message.ActionCard.Actions
       onClickCancel={() => {
         // eslint-disable-next-line no-console
         console.log('Cancel clicked');
@@ -179,7 +179,7 @@ const getToolCardChild = () => (
         console.log('Run clicked');
       }}
     />
-  </Message.ToolCard>
+  </Message.ActionCard>
 );
 
 const meta: StoryMetaType<typeof Message> = {
@@ -335,10 +335,10 @@ export const WithPromotion: StoryObj<MessageProps> = {
   },
 };
 
-export const WithToolCard: StoryObj<MessageProps> = {
+export const WithActionCard: StoryObj<MessageProps> = {
   render: Template,
   args: {
-    children: getToolCardChild(),
+    children: getActionCardChild(),
     isSender: false,
     messageBody: ASSISTANT_TEXT,
   },
@@ -352,7 +352,7 @@ export const WithAllSubComponents: StoryObj<MessageProps> = {
         {getActionsChild()}
         {getLinksChild()}
         {getPromotionChild()}
-        {getToolCardChild()}
+        {getActionCardChild()}
         {getVerifiedBannerChild()}
       </>
     ),

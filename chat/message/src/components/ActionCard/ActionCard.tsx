@@ -17,20 +17,20 @@ import LeafyGreenProvider, {
 
 import { MessageSubcomponentProperty } from '../../shared.types';
 
-import { Actions } from './Actions';
-import { ExpandableContent } from './ExpandableContent';
-import { Header } from './Header';
-import { State, ToolCardSubcomponentProperty } from './shared.types';
 import {
   getContainerStyles,
   getContentContainerStyles,
-} from './ToolCard.styles';
-import { ToolCardProps } from './ToolCard.types';
-import { ToolCardProvider } from './ToolCardContext';
+} from './ActionCard.styles';
+import { ActionCardProps } from './ActionCard.types';
+import { ActionCardProvider } from './ActionCardContext';
+import { Actions } from './Actions';
+import { ExpandableContent } from './ExpandableContent';
+import { Header } from './Header';
+import { ActionCardSubcomponentProperty, State } from './shared.types';
 
-export const ToolCard = CompoundSubComponent(
+export const ActionCard = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
-  forwardRef<HTMLDivElement, ToolCardProps>(
+  forwardRef<HTMLDivElement, ActionCardProps>(
     (
       {
         children,
@@ -68,13 +68,16 @@ export const ToolCard = CompoundSubComponent(
 
       const remainingChildren = filterChildren(
         children,
-        Object.values(ToolCardSubcomponentProperty),
+        Object.values(ActionCardSubcomponentProperty),
       );
       const expandableContent = findChild(
         children,
-        ToolCardSubcomponentProperty.ExpandableContent,
+        ActionCardSubcomponentProperty.ExpandableContent,
       );
-      const actions = findChild(children, ToolCardSubcomponentProperty.Actions);
+      const actions = findChild(
+        children,
+        ActionCardSubcomponentProperty.Actions,
+      );
 
       const isErrorState = state === State.Error;
       const shouldRenderActions = !!actions && state === State.Idle;
@@ -85,7 +88,7 @@ export const ToolCard = CompoundSubComponent(
 
       return (
         <LeafyGreenProvider darkMode={darkMode}>
-          <ToolCardProvider value={contextValue}>
+          <ActionCardProvider value={contextValue}>
             <div
               className={getContainerStyles({ className, isErrorState, theme })}
               ref={fwdRef}
@@ -109,14 +112,14 @@ export const ToolCard = CompoundSubComponent(
                 {shouldRenderActions && actions}
               </div>
             </div>
-          </ToolCardProvider>
+          </ActionCardProvider>
         </LeafyGreenProvider>
       );
     },
   ),
   {
-    displayName: 'Message.ToolCard',
-    key: MessageSubcomponentProperty.ToolCard,
+    displayName: 'Message.ActionCard',
+    key: MessageSubcomponentProperty.ActionCard,
     Actions,
     ExpandableContent,
   },

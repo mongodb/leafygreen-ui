@@ -4,7 +4,7 @@ import { Button, Size, Variant } from '@leafygreen-ui/button';
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 import ReturnIcon from '@leafygreen-ui/icon/dist/Return';
 
-import { ToolCardSubcomponentProperty } from '../shared.types';
+import { ActionCardSubcomponentProperty } from '../shared.types';
 
 import { buttonStyles, getContainerStyles } from './Actions.styles';
 import { type ActionsProps } from './Actions.types';
@@ -37,7 +37,7 @@ export const Actions = CompoundSubComponent(
     },
   ),
   {
-    displayName: 'Message.ToolCard.Actions',
-    key: ToolCardSubcomponentProperty.Actions,
+    displayName: 'Message.ActionCard.Actions',
+    key: ActionCardSubcomponentProperty.Actions,
   },
 );

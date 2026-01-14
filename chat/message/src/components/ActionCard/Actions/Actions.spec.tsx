@@ -18,7 +18,7 @@ const renderActions = (props: Partial<ActionsProps> = {}) => {
   );
 };
 
-describe('chat/message/ToolCard/Actions', () => {
+describe('chat/message/ActionCard/Actions', () => {
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
       const { container } = renderActions();
