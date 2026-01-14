@@ -4,6 +4,7 @@ import React, {
   PropsWithChildren,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from 'react';
@@ -52,11 +53,13 @@ export const CollectionToolbarContext =
 
 export const useCollectionToolbarContext = () => {
   const context = useContext(CollectionToolbarContext);
+
   if (!context)
     throw new Error(
       'useCollectionToolbarContext must be used within a CollectionToolbarProvider',
     );
-  return useContext(CollectionToolbarContext);
+
+  return context;
 };
 
 export const CollectionToolbarProvider = ({
@@ -66,12 +69,23 @@ export const CollectionToolbarProvider = ({
   variant,
   lgIds,
   isCollapsed: isCollapsedProp = false,
+  onToggleCollapsed: onToggleCollapsedProp,
 }: PropsWithChildren<CollectionToolbarContextProps>) => {
   const [isCollapsed, setIsCollapsed] = useState(isCollapsedProp);
 
-  const onToggleCollapsed = useCallback(() => {
-    setIsCollapsed(curr => !curr);
-  }, []);
+  // Sync internal state when controlled prop changes
+  useEffect(() => {
+    setIsCollapsed(isCollapsedProp);
+  }, [isCollapsedProp]);
+
+  const handleToggleCollapsed: MouseEventHandler<HTMLButtonElement> =
+    useCallback(
+      event => {
+        setIsCollapsed(curr => !curr);
+        onToggleCollapsedProp?.(event);
+      },
+      [onToggleCollapsedProp],
+    );
 
   const collectionToolbarProviderData = useMemo(() => {
     return {
@@ -79,9 +93,10 @@ export const CollectionToolbarProvider = ({
       variant,
       lgIds,
       isCollapsed,
-      onToggleCollapsed,
+      onToggleCollapsed: handleToggleCollapsed,
+      darkMode,
     };
-  }, [size, variant, lgIds, isCollapsed, onToggleCollapsed]);
+  }, [size, variant, lgIds, isCollapsed, handleToggleCollapsed, darkMode]);
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>

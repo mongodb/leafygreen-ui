@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 import { PaginationNavigation } from '@leafygreen-ui/pagination';
@@ -9,22 +9,25 @@ import { CollectionToolbarActionsSubComponentProperty } from '../../../shared.ty
 import { getPaginationStyles } from './Pagination.styles';
 import { PaginationProps } from './Pagination.types';
 
-const Pagination = CompoundSubComponent(
-  ({ className, ...props }: PaginationProps) => {
-    const { lgIds } = useCollectionToolbarContext();
-    return (
-      <PaginationNavigation
-        data-testid={lgIds.pagination}
-        data-lgid={lgIds.pagination}
-        className={getPaginationStyles({ className })}
-        {...props}
-      />
-    );
-  },
+export const Pagination = CompoundSubComponent(
+  // eslint-disable-next-line react/display-name
+  forwardRef<HTMLDivElement, PaginationProps>(
+    ({ className, ...props }, fwdRef) => {
+      const { lgIds } = useCollectionToolbarContext();
+      return (
+        <div ref={fwdRef}>
+          <PaginationNavigation
+            data-testid={lgIds.pagination}
+            data-lgid={lgIds.pagination}
+            className={getPaginationStyles({ className })}
+            {...props}
+          />
+        </div>
+      );
+    },
+  ),
   {
     displayName: 'Pagination',
     key: CollectionToolbarActionsSubComponentProperty.Pagination,
   },
 );
-
-export default Pagination;
