@@ -3,7 +3,6 @@
 import React, { createRef } from 'react';
 import {
   act,
-  getByText,
   queryByText,
   waitFor,
   waitForElementToBeRemoved,
@@ -277,6 +276,24 @@ describe('packages/combobox', () => {
         const { optionElements } = openMenu();
         const [optionEl] = Array.from(optionElements!);
         expect(optionEl).toHaveTextContent('abc-def');
+      });
+
+      test('Option has correct aria-label when displayName is a React node', () => {
+        const options: Array<OptionObject> = [
+          {
+            value: 'react-node-option',
+            displayName: (
+              <span>
+                <strong>Bold</strong> and <em>italic</em> text
+              </span>
+            ),
+            isDisabled: false,
+          },
+        ];
+        const { openMenu } = renderCombobox(select, { options });
+        const { optionElements } = openMenu();
+        const [optionEl] = Array.from(optionElements!);
+        expect(optionEl).toHaveAttribute('aria-label', 'Bold and italic text');
       });
 
       test('Options with long names are rendered with the full text', () => {

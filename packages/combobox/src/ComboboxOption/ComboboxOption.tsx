@@ -3,6 +3,7 @@ import React, { useCallback, useContext, useMemo } from 'react';
 import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { getNodeTextContent } from '@leafygreen-ui/lib';
 
 import { ComboboxContext } from '../ComboboxContext';
 import { wrapJSX } from '../utils';
@@ -99,7 +100,7 @@ export const InternalComboboxOption = React.forwardRef<
         ref={optionRef}
         highlighted={isFocused}
         disabled={disabled}
-        aria-label={typeof displayName === 'string' ? displayName : value}
+        aria-label={getNodeTextContent(displayName) ?? value}
         darkMode={darkMode}
         className={getInputOptionStyles({
           size,

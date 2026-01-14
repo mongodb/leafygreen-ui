@@ -87,7 +87,6 @@ WithIconsAndCustomDisplayName.parameters = {
             display: flex;
             align-items: center;
             gap: ${spacing[100]}px;
-            align-items: center;
             margin-bottom: ${spacing[100]}px;
           `}
         >

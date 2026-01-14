@@ -1,7 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 
-import { Badge } from '@leafygreen-ui/badge';
 import { Icon } from '@leafygreen-ui/icon';
 
 import { ComboboxGroup, ComboboxOption } from '..';
@@ -216,15 +215,15 @@ describe('packages/combobox/utils', () => {
       ]);
     });
 
-    test('flatters options with node displayName', () => {
+    test('flattens options with node displayName', () => {
       const children = [
         <ComboboxOption
           key="test"
           value="test"
           displayName={
             <div>
-              <span>Test</span>
-              <Badge>New</Badge>
+              <span>Testing</span>
+              <span>New</span>
             </div>
           }
         />,
@@ -240,7 +239,7 @@ describe('packages/combobox/utils', () => {
       expect(flat).toEqual([
         {
           value: 'test',
-          displayName: '[object Object]',
+          displayName: 'Testing New',
           hasGlyph: false,
           isDisabled: false,
         },

@@ -34,7 +34,12 @@ import LeafyGreenProvider, {
   PopoverPropsProvider,
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
+import {
+  consoleOnce,
+  getNodeTextContent,
+  isComponentType,
+  keyMap,
+} from '@leafygreen-ui/lib';
 import {
   DismissMode,
   getPopoverRenderModeProps,
@@ -324,9 +329,9 @@ export function Combobox<M extends boolean>({
           ? getDisplayNameForValue(value, allOptions)
           : option.displayName;
 
-      const isValueInDisplayName =
-        typeof displayName === 'string' &&
-        displayName.toLowerCase().includes(inputValue.toLowerCase());
+      const isValueInDisplayName = getNodeTextContent(displayName)
+        .toLowerCase()
+        .includes(inputValue.toLowerCase());
 
       return isValueInDisplayName;
     },
