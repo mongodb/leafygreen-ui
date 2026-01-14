@@ -1,5 +1,5 @@
 import {
-  ButtonProps as BaseButtonProps,
+  BaseButtonProps,
   Variant as BaseButtonVariant,
 } from '@leafygreen-ui/button';
 
