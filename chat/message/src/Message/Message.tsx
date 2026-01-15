@@ -120,10 +120,11 @@ export const Message = CompoundComponent(
   ),
   {
     displayName: 'Message',
+    /** @remarks `Message.ActionCard.Actions` is deprecated. Use `Message.ActionCard.Button` instead */
+    ActionCard,
     Actions,
     Links,
     VerifiedBanner,
     Promotion,
-    ActionCard,
   },
 );

@@ -1,5 +1,6 @@
 export {
   ActionCard,
+  /** @deprecated Use `ActionCardButtonProps` instead */
   type ActionCardActionsProps,
   type ActionCardChipProps,
   type ActionCardExpandableContentProps,
