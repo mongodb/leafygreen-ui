@@ -37,7 +37,7 @@ export const upperRowStyles = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: ${spacing[200]}px;
+  gap: ${spacing[100]}px;
 `;
 
 export const titleContainerStyles = css`
