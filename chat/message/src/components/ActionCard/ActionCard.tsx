@@ -25,7 +25,6 @@ import {
 } from './ActionCard.styles';
 import { ActionCardProps } from './ActionCard.types';
 import { ActionCardProvider } from './ActionCardContext';
-import { Actions } from './Actions';
 import { Button } from './Button';
 import { ExpandableContent } from './ExpandableContent';
 import { Header } from './Header';
@@ -77,10 +76,6 @@ export const ActionCard = CompoundSubComponent(
         children,
         ActionCardSubcomponentProperty.ExpandableContent,
       );
-      const deprecatedActions = findChild(
-        children,
-        ActionCardSubcomponentProperty.Actions,
-      );
       const buttons = findChildren(
         children,
         ActionCardSubcomponentProperty.Button,
@@ -88,8 +83,7 @@ export const ActionCard = CompoundSubComponent(
 
       const hasButtons = React.Children.count(buttons) > 0;
       const isErrorState = state === State.Error;
-      const shouldRenderActions =
-        (!!deprecatedActions || hasButtons) && state === State.Idle;
+      const shouldRenderActions = hasButtons && state === State.Idle;
       const shouldRenderBorderTop =
         Children.count(remainingChildren) > 0 ||
         (!!expandableContent && isExpanded) ||
@@ -118,12 +112,9 @@ export const ActionCard = CompoundSubComponent(
               >
                 {remainingChildren}
                 {expandableContent}
-                {shouldRenderActions &&
-                  (hasButtons ? (
-                    <div className={actionsContainerStyles}>{buttons}</div>
-                  ) : (
-                    deprecatedActions
-                  ))}
+                {shouldRenderActions && (
+                  <div className={actionsContainerStyles}>{buttons}</div>
+                )}
               </div>
             </div>
           </ActionCardProvider>
@@ -134,7 +125,6 @@ export const ActionCard = CompoundSubComponent(
   {
     displayName: 'Message.ActionCard',
     key: MessageSubcomponentProperty.ActionCard,
-    Actions,
     Button,
     ExpandableContent,
   },

@@ -183,8 +183,6 @@ console.log(result);
 };
 ```
 
-**Note:** `Message.ActionCard.Actions` is deprecated. Use `Message.ActionCard.Button` instead. You can add multiple `Button` components to create custom action buttons.
-
 ### Message.VerifiedBanner
 
 ```tsx
@@ -347,14 +345,6 @@ This is a markdown content example showing tool execution results.`}
 #### Message.ActionCard.Button
 
 `Message.ActionCard.Button` accepts all props from [`@leafygreen-ui/button`](../../packages/button/README.md#properties), except for the `size` prop which cannot be configured and is always set to `'small'`.
-
-#### Message.ActionCard.Actions _(deprecated)_
-
-| Prop            | Type                      | Description                                                 | Default |
-| --------------- | ------------------------- | ----------------------------------------------------------- | ------- |
-| `onClickCancel` | `MouseEventHandler`       | Callback function called when the Cancel button is clicked. |         |
-| `onClickRun`    | `MouseEventHandler`       | Callback function called when the Run button is clicked.    |         |
-| `...`           | `HTMLElementProps<'div'>` | Props spread on the container div element                   |         |
 
 #### Message.ActionCard.ExpandableContent
 

@@ -68,10 +68,7 @@ describe('chat/message/ActionCard', () => {
         children: (
           <>
             <ActionCard.ExpandableContent>Content</ActionCard.ExpandableContent>
-            <ActionCard.Actions
-              onClickCancel={() => {}}
-              onClickRun={() => {}}
-            />
+            <ActionCard.Button onClick={() => {}}>Action</ActionCard.Button>
           </>
         ),
       });
@@ -88,10 +85,7 @@ describe('chat/message/ActionCard', () => {
         children: (
           <>
             <ActionCard.ExpandableContent>Content</ActionCard.ExpandableContent>
-            <ActionCard.Actions
-              onClickCancel={() => {}}
-              onClickRun={() => {}}
-            />
+            <ActionCard.Button onClick={() => {}}>Action</ActionCard.Button>
           </>
         ),
       });
@@ -106,10 +100,7 @@ describe('chat/message/ActionCard', () => {
         children: (
           <>
             <ActionCard.ExpandableContent>Content</ActionCard.ExpandableContent>
-            <ActionCard.Actions
-              onClickCancel={() => {}}
-              onClickRun={() => {}}
-            />
+            <ActionCard.Button onClick={() => {}}>Action</ActionCard.Button>
           </>
         ),
       });
@@ -126,10 +117,7 @@ describe('chat/message/ActionCard', () => {
         children: (
           <>
             <ActionCard.ExpandableContent>Content</ActionCard.ExpandableContent>
-            <ActionCard.Actions
-              onClickCancel={() => {}}
-              onClickRun={() => {}}
-            />
+            <ActionCard.Button onClick={() => {}}>Action</ActionCard.Button>
           </>
         ),
       });
@@ -145,10 +133,7 @@ describe('chat/message/ActionCard', () => {
         children: (
           <>
             <ActionCard.ExpandableContent>Content</ActionCard.ExpandableContent>
-            <ActionCard.Actions
-              onClickCancel={() => {}}
-              onClickRun={() => {}}
-            />
+            <ActionCard.Button onClick={() => {}}>Action</ActionCard.Button>
           </>
         ),
       });
@@ -167,10 +152,7 @@ describe('chat/message/ActionCard', () => {
             <ActionCard.ExpandableContent>
               Expandable content
             </ActionCard.ExpandableContent>
-            <ActionCard.Actions
-              onClickCancel={() => {}}
-              onClickRun={() => {}}
-            />
+            <ActionCard.Button onClick={() => {}}>Action</ActionCard.Button>
           </>
         ),
         initialIsExpanded: true,
@@ -185,10 +167,7 @@ describe('chat/message/ActionCard', () => {
         children: (
           <>
             <ActionCard.ExpandableContent>Content</ActionCard.ExpandableContent>
-            <ActionCard.Actions
-              onClickCancel={() => {}}
-              onClickRun={() => {}}
-            />
+            <ActionCard.Button onClick={() => {}}>Action</ActionCard.Button>
           </>
         ),
       });
@@ -200,40 +179,6 @@ describe('chat/message/ActionCard', () => {
 
       expect(mockOnToggleExpanded).toHaveBeenCalledWith(true);
     });
-  });
-
-  describe('actions', () => {
-    test(`renders when state is ${State.Idle}`, () => {
-      renderActionCard({
-        state: State.Idle,
-        children: (
-          <ActionCard.Actions onClickCancel={() => {}} onClickRun={() => {}} />
-        ),
-      });
-
-      expect(
-        screen.getByRole('button', { name: 'Cancel' }),
-      ).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: 'Run' })).toBeInTheDocument();
-    });
-
-    test.each([State.Canceled, State.Error, State.Running, State.Success])(
-      'does not render when state is %s',
-      state => {
-        renderActionCard({
-          state,
-          children: (
-            <ActionCard.Actions
-              onClickCancel={() => {}}
-              onClickRun={() => {}}
-            />
-          ),
-        });
-
-        expect(screen.queryByRole('button', { name: 'Cancel' })).toBeNull();
-        expect(screen.queryByRole('button', { name: 'Run' })).toBeNull();
-      },
-    );
   });
 
   describe('button', () => {
@@ -291,31 +236,5 @@ describe('chat/message/ActionCard', () => {
         expect(screen.queryByRole('button', { name: 'Click Me' })).toBeNull();
       },
     );
-
-    test('prefers buttons over deprecated Actions when both are present', () => {
-      const mockOnClick = jest.fn();
-      renderActionCard({
-        state: State.Idle,
-        children: (
-          <>
-            <ActionCard.Actions
-              onClickCancel={() => {}}
-              onClickRun={() => {}}
-            />
-            <ActionCard.Button onClick={mockOnClick}>
-              New Button
-            </ActionCard.Button>
-          </>
-        ),
-      });
-
-      // Button should be rendered, Actions should not be rendered
-      expect(
-        screen.getByRole('button', { name: 'New Button' }),
-      ).toBeInTheDocument();
-      // Actions should not be rendered when buttons are present
-      expect(screen.queryByRole('button', { name: 'Cancel' })).toBeNull();
-      expect(screen.queryByRole('button', { name: 'Run' })).toBeNull();
-    });
   });
 });
