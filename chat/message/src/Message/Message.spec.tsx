@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
-import { ToolCardState } from '../components';
+import { ActionCardState } from '../components';
 
 import { Message } from './Message';
 import { MessageProps } from './Message.types';
@@ -47,16 +47,19 @@ describe('Message', () => {
           <Message.Links
             links={[{ children: 'Test Link', href: 'https://example.com' }]}
           />
-          <Message.ToolCard title="Tool Card Title" state={ToolCardState.Idle}>
-            <div>Tool Card Content</div>
-            <Message.ToolCard.ExpandableContent>
-              Tool Card Expandable Content
-            </Message.ToolCard.ExpandableContent>
-            <Message.ToolCard.Actions
+          <Message.ActionCard
+            title="Action Card Title"
+            state={ActionCardState.Idle}
+          >
+            <div>Action Card Content</div>
+            <Message.ActionCard.ExpandableContent>
+              Action Card Expandable Content
+            </Message.ActionCard.ExpandableContent>
+            <Message.ActionCard.Actions
               onClickCancel={() => {}}
               onClickRun={() => {}}
             />
-          </Message.ToolCard>
+          </Message.ActionCard>
           <div>Another regular child</div>
         </>
       ),
@@ -68,9 +71,9 @@ describe('Message', () => {
     expect(screen.getByText('Another regular child')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /copy/i })).toBeInTheDocument();
     expect(screen.getByText('Related Resources')).toBeInTheDocument();
-    expect(screen.getByText('Tool Card Content')).toBeInTheDocument();
+    expect(screen.getByText('Action Card Content')).toBeInTheDocument();
     expect(
-      screen.getByText('Tool Card Expandable Content'),
+      screen.getByText('Action Card Expandable Content'),
     ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /run/i })).toBeInTheDocument();
@@ -85,18 +88,22 @@ describe('Message', () => {
     const linksHeadings = screen.getAllByText('Related Resources');
     expect(linksHeadings).toHaveLength(1);
 
-    const toolCardContents = screen.getAllByText('Tool Card Content');
-    expect(toolCardContents).toHaveLength(1);
+    const actionCardContents = screen.getAllByText('Action Card Content');
+    expect(actionCardContents).toHaveLength(1);
 
-    const toolCardExpandableContents = screen.getAllByText(
-      'Tool Card Expandable Content',
+    const actionCardExpandableContents = screen.getAllByText(
+      'Action Card Expandable Content',
     );
-    expect(toolCardExpandableContents).toHaveLength(1);
+    expect(actionCardExpandableContents).toHaveLength(1);
 
-    const toolCardActions = screen.getAllByRole('button', { name: /cancel/i });
-    expect(toolCardActions).toHaveLength(1);
+    const actionCardActions = screen.getAllByRole('button', {
+      name: /cancel/i,
+    });
+    expect(actionCardActions).toHaveLength(1);
 
-    const toolCardRunActions = screen.getAllByRole('button', { name: /run/i });
-    expect(toolCardRunActions).toHaveLength(1);
+    const actionCardRunActions = screen.getAllByRole('button', {
+      name: /run/i,
+    });
+    expect(actionCardRunActions).toHaveLength(1);
   });
 });

@@ -35,7 +35,7 @@ return (
 
 ### Compound Components
 
-The `Message` component uses a compound component pattern, allowing you to compose different parts of a message using subcomponents like `Message.Actions`, `Message.Links`, `Message.Promotion`, `Message.ToolCard`, and `Message.VerifiedBanner`.
+The `Message` component uses a compound component pattern, allowing you to compose different parts of a message using subcomponents like `Message.Actions`, `Message.Links`, `Message.Promotion`, `Message.ActionCard`, and `Message.VerifiedBanner`.
 
 **Note:** The layout and order of compound components are enforced by the `Message` component itself. Even if you change the order of subcomponents in your JSX, they will be rendered in the correct, intended order within the message bubble. This ensures consistent UI and accessibility regardless of how you compose your message children.
 
@@ -137,14 +137,14 @@ const MessageWithPromotion = () => {
 };
 ```
 
-### Message.ToolCard
+### Message.ActionCard
 
 ```tsx
 import React from 'react';
-import { Message, ToolCardState } from '@lg-chat/message';
+import { Message, ActionCardState } from '@lg-chat/message';
 import DatabaseIcon from '@leafygreen-ui/icon/dist/Database';
 
-const MessageWithToolCard = () => {
+const MessageWithActionCard = () => {
   const handleCancel = () => console.log('Cancel clicked');
   const handleRun = () => console.log('Run clicked');
   const handleToggleExpanded = (isOpen: boolean) => {
@@ -153,15 +153,15 @@ const MessageWithToolCard = () => {
 
   return (
     <Message isSender={false} messageBody="Test message">
-      <Message.ToolCard
+      <Message.ActionCard
         chips={[{ label: 'MongoDB', glyph: <DatabaseIcon /> }]}
         initialIsExpanded={false}
         onToggleExpanded={handleToggleExpanded}
         showExpandButton={true}
-        state={ToolCardState.Idle}
+        state={ActionCardState.Idle}
         title="Run list-databases?"
       >
-        <Message.ToolCard.ExpandableContent>
+        <Message.ActionCard.ExpandableContent>
           {`# Tool Execution Result
 
 This is a markdown content example showing tool execution results.
@@ -170,12 +170,12 @@ This is a markdown content example showing tool execution results.
 const result = await tool.execute();
 console.log(result);
 \`\`\``}
-        </Message.ToolCard.ExpandableContent>
-        <Message.ToolCard.Actions
+        </Message.ActionCard.ExpandableContent>
+        <Message.ActionCard.Actions
           onClickCancel={handleCancel}
           onClickRun={handleRun}
         />
-      </Message.ToolCard>
+      </Message.ActionCard>
     </Message>
   );
 };
@@ -204,7 +204,7 @@ const MessageWithVerifiedBanner = () => {
 
 ```tsx
 import React from 'react';
-import { Message, ToolCardState } from '@lg-chat/message';
+import { Message, ActionCardState } from '@lg-chat/message';
 import { MessageRatingValue } from '@lg-chat/message-rating';
 
 const Example = () => {
@@ -241,22 +241,25 @@ const Example = () => {
   const handleLinkClick = () => console.log('Link clicked');
   const handlePromotionClick = () => console.log('Promotion clicked');
 
-  const handleToolCancel = () => console.log('Tool cancel clicked');
-  const handleToolRun = () => console.log('Tool run clicked');
+  const handleCancel = () => console.log('Cancel clicked');
+  const handleRun = () => console.log('Run clicked');
 
   return (
     <Message isSender={false} messageBody="Test message">
-      <Message.ToolCard title="Run list-databases?" state={ToolCardState.Idle}>
-        <Message.ToolCard.ExpandableContent>
+      <Message.ActionCard
+        title="Run list-databases?"
+        state={ActionCardState.Idle}
+      >
+        <Message.ActionCard.ExpandableContent>
           {`# Tool Execution Result
 
 This is a markdown content example showing tool execution results.`}
-        </Message.ToolCard.ExpandableContent>
-        <Message.ToolCard.Actions
-          onClickCancel={handleToolCancel}
-          onClickRun={handleToolRun}
+        </Message.ActionCard.ExpandableContent>
+        <Message.ActionCard.Actions
+          onClickCancel={handleCancel}
+          onClickRun={handleRun}
         />
-      </Message.ToolCard>
+      </Message.ActionCard>
       <Message.Promotion
         promotionText="Go learn more about this skill!"
         promotionUrl="https://learn.mongodb.com/skills"
@@ -322,20 +325,20 @@ This is a markdown content example showing tool execution results.`}
 | `onPromotionLinkClick` _(optional)_ | `() => void`              | Promotion onClick callback handler.      |         |
 | `...`                               | `HTMLElementProps<'div'>` | Props spread on the root element         |         |
 
-### Message.ToolCard
+### Message.ActionCard
 
-| Prop                             | Type                                                                                              | Description                                                                                                                                                                                                              | Default |
-| -------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
-| `chips` _(optional)_             | `Array<{ label: ReactNode; glyph?: ReactNode; formatTooltip?: (label: ReactNode) => ReactNode }>` | Metadata chips displayed in the header. Each chip supports `label`, optional `glyph` icon, and optional `formatTooltip` function to customize tooltip content. Tooltips are always shown on hover for chips in ToolCard. | `[]`    |
-| `darkMode` _(optional)_          | `boolean`                                                                                         | Determines if the component will render in dark mode                                                                                                                                                                     | `false` |
-| `initialIsExpanded` _(optional)_ | `boolean`                                                                                         | Initial state of the expandable section. Ignored when `showExpandButton` is `false`.                                                                                                                                     | `false` |
-| `onToggleExpanded` _(optional)_  | `(isOpen: boolean) => void`                                                                       | Callback fired when the expansion toggle is clicked. Receives the new open state as a parameter.                                                                                                                         |         |
-| `showExpandButton` _(optional)_  | `boolean`                                                                                         | Whether the toggle button is visible.                                                                                                                                                                                    | `true`  |
-| `state`                          | `'idle' \| 'running' \| 'success' \| 'error' \| 'canceled'`                                       | The current lifecycle state of the tool interaction. Can use string literals or import `ToolCardState` enum from `@lg-chat/message`.                                                                                     |         |
-| `title`                          | `ReactNode`                                                                                       | Primary label displayed in the Header.                                                                                                                                                                                   |         |
-| `...`                            | `HTMLElementProps<'div'>`                                                                         | Props spread on the container div element                                                                                                                                                                                |         |
+| Prop                             | Type                                                                                              | Description                                                                                                                                                                                                                | Default |
+| -------------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `chips` _(optional)_             | `Array<{ label: ReactNode; glyph?: ReactNode; formatTooltip?: (label: ReactNode) => ReactNode }>` | Metadata chips displayed in the header. Each chip supports `label`, optional `glyph` icon, and optional `formatTooltip` function to customize tooltip content. Tooltips are always shown on hover for chips in ActionCard. | `[]`    |
+| `darkMode` _(optional)_          | `boolean`                                                                                         | Determines if the component will render in dark mode                                                                                                                                                                       | `false` |
+| `initialIsExpanded` _(optional)_ | `boolean`                                                                                         | Initial state of the expandable section. Ignored when `showExpandButton` is `false`.                                                                                                                                       | `false` |
+| `onToggleExpanded` _(optional)_  | `(isOpen: boolean) => void`                                                                       | Callback fired when the expansion toggle is clicked. Receives the new open state as a parameter.                                                                                                                           |         |
+| `showExpandButton` _(optional)_  | `boolean`                                                                                         | Whether the toggle button is visible.                                                                                                                                                                                      | `true`  |
+| `state`                          | `'idle' \| 'running' \| 'success' \| 'error' \| 'canceled'`                                       | The current lifecycle state of the interaction. Can use string literals or import `ActionCardState` enum from `@lg-chat/message`.                                                                                          |         |
+| `title`                          | `ReactNode`                                                                                       | Primary label displayed in the Header.                                                                                                                                                                                     |         |
+| `...`                            | `HTMLElementProps<'div'>`                                                                         | Props spread on the container div element                                                                                                                                                                                  |         |
 
-#### Message.ToolCard.Actions
+#### Message.ActionCard.Actions
 
 | Prop            | Type                      | Description                                                 | Default |
 | --------------- | ------------------------- | ----------------------------------------------------------- | ------- |
@@ -343,7 +346,7 @@ This is a markdown content example showing tool execution results.`}
 | `onClickRun`    | `MouseEventHandler`       | Callback function called when the Run button is clicked.    |         |
 | `...`           | `HTMLElementProps<'div'>` | Props spread on the container div element                   |         |
 
-#### Message.ToolCard.ExpandableContent
+#### Message.ActionCard.ExpandableContent
 
 | Prop       | Type                      | Description                                                                  | Default |
 | ---------- | ------------------------- | ---------------------------------------------------------------------------- | ------- |

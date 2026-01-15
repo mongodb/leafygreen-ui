@@ -13,8 +13,8 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { FontWeight } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
+import { useActionCardContext } from '../ActionCardContext';
 import { State } from '../shared.types';
-import { useToolCardContext } from '../ToolCardContext';
 
 import {
   chipsContainerStyles,
@@ -33,7 +33,7 @@ export const Header = forwardRef<HTMLDivElement, HeaderProps>(
     ref,
   ) => {
     const { theme } = useDarkMode();
-    const { isExpanded, toggleExpand } = useToolCardContext();
+    const { isExpanded, toggleExpand } = useActionCardContext();
 
     const isErrorState = state === State.Error;
 

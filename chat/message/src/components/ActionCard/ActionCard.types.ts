@@ -2,12 +2,12 @@ import { ComponentPropsWithRef } from 'react';
 
 import { DarkModeProps } from '@leafygreen-ui/lib';
 
-import { SharedToolCardProps } from './shared.types';
+import { SharedActionCardProps } from './shared.types';
 
-export interface ToolCardProps
+export interface ActionCardProps
   extends Omit<ComponentPropsWithRef<'div'>, 'title'>,
     DarkModeProps,
-    SharedToolCardProps {
+    SharedActionCardProps {
   /**
    * Initial state of the expandable section.
    * @default false

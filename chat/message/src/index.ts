@@ -1,13 +1,13 @@
 export {
+  type ActionCardActionsProps,
+  type ActionCardChipProps,
+  type ActionCardExpandableContentProps,
+  type ActionCardProps,
+  ActionCardState,
   type ActionsProps as MessageActionsProps,
   type LinksProps as MessageLinksProps,
   type PromotionProps as MessagePromotionProps,
   type VerifiedBannerProps as MessageVerifiedBannerProps,
-  type ToolCardActionsProps,
-  type ToolCardChipProps,
-  type ToolCardExpandableContentProps,
-  type ToolCardProps,
-  ToolCardState,
 } from './components';
 export { Message, type MessageProps, MessageSourceType } from './Message';
 export {
