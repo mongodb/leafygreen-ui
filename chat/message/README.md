@@ -171,15 +171,19 @@ const result = await tool.execute();
 console.log(result);
 \`\`\``}
         </Message.ActionCard.ExpandableContent>
-        <Message.ActionCard.Actions
-          onClickCancel={handleCancel}
-          onClickRun={handleRun}
-        />
+        <Message.ActionCard.Button onClick={handleCancel}>
+          Cancel
+        </Message.ActionCard.Button>
+        <Message.ActionCard.Button onClick={handleRun} variant="primary">
+          Run
+        </Message.ActionCard.Button>
       </Message.ActionCard>
     </Message>
   );
 };
 ```
+
+**Note:** `Message.ActionCard.Actions` is deprecated. Use `Message.ActionCard.Button` instead. You can add multiple `Button` components to create custom action buttons.
 
 ### Message.VerifiedBanner
 
@@ -255,10 +259,12 @@ const Example = () => {
 
 This is a markdown content example showing tool execution results.`}
         </Message.ActionCard.ExpandableContent>
-        <Message.ActionCard.Actions
-          onClickCancel={handleCancel}
-          onClickRun={handleRun}
-        />
+        <Message.ActionCard.Button onClick={handleCancel}>
+          Cancel
+        </Message.ActionCard.Button>
+        <Message.ActionCard.Button onClick={handleRun} variant="primary">
+          Run
+        </Message.ActionCard.Button>
       </Message.ActionCard>
       <Message.Promotion
         promotionText="Go learn more about this skill!"
@@ -338,7 +344,11 @@ This is a markdown content example showing tool execution results.`}
 | `title`                          | `ReactNode`                                                                                       | Primary label displayed in the Header.                                                                                                                                                                                     |         |
 | `...`                            | `HTMLElementProps<'div'>`                                                                         | Props spread on the container div element                                                                                                                                                                                  |         |
 
-#### Message.ActionCard.Actions
+#### Message.ActionCard.Button
+
+`Message.ActionCard.Button` accepts all props from [`@leafygreen-ui/button`](../../packages/button/README.md#properties), except for the `size` prop which cannot be configured and is always set to `'small'`.
+
+#### Message.ActionCard.Actions _(deprecated)_
 
 | Prop            | Type                      | Description                                                 | Default |
 | --------------- | ------------------------- | ----------------------------------------------------------- | ------- |
@@ -430,6 +440,22 @@ The component manages its own internal state for:
 ### Message.Promotion
 
 The `Message.Promotion` component displays promotional content with an award icon and "Learn More" link.
+
+### Message.ActionCard
+
+The `Message.ActionCard` component displays actionable, stateful cards with expandable content and buttons.
+
+#### Rendering Behavior
+
+- Buttons only render when `state="idle"`
+- Multiple `Message.ActionCard.Button` components can be used to render buttons
+
+#### State Management
+
+The component manages its own internal state for:
+
+- Expansion state: Controls whether the expandable content section is expanded or collapsed
+- The expansion state can be configured via `initialIsExpanded` and `onToggleExpanded` props
 
 ### Message.VerifiedBanner
 
