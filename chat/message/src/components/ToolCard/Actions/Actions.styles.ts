@@ -13,9 +13,4 @@ export const getContainerStyles = (className?: string) =>
 
 export const buttonStyles = css`
   flex: 1;
-
-  // Override the justify-content property in ButtonContent
-  div:nth-child(2) {
-    justify-content: center;
-  }
 `;
