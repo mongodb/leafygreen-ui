@@ -169,16 +169,23 @@ const getActionCardChild = () => (
 {}
 \`\`\``}
     </Message.ActionCard.ExpandableContent>
-    <Message.ActionCard.Actions
-      onClickCancel={() => {
+    <Message.ActionCard.Button
+      onClick={() => {
         // eslint-disable-next-line no-console
         console.log('Cancel clicked');
       }}
-      onClickRun={() => {
+    >
+      Cancel
+    </Message.ActionCard.Button>
+    <Message.ActionCard.Button
+      onClick={() => {
         // eslint-disable-next-line no-console
         console.log('Run clicked');
       }}
-    />
+      variant="primary"
+    >
+      Run
+    </Message.ActionCard.Button>
   </Message.ActionCard>
 );
 

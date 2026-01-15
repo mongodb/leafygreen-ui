@@ -98,16 +98,23 @@ const renderActionCardChildren = () => (
 }
 \`\`\``}
     </ActionCard.ExpandableContent>
-    <ActionCard.Actions
-      onClickCancel={() => {
+    <ActionCard.Button
+      onClick={() => {
         // eslint-disable-next-line no-console
         console.log('Cancel clicked');
       }}
-      onClickRun={() => {
+    >
+      Cancel
+    </ActionCard.Button>
+    <ActionCard.Button
+      onClick={() => {
         // eslint-disable-next-line no-console
         console.log('Run clicked');
       }}
-    />
+      variant="primary"
+    >
+      Run
+    </ActionCard.Button>
   </>
 );
 

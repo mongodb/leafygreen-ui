@@ -235,4 +235,87 @@ describe('chat/message/ActionCard', () => {
       },
     );
   });
+
+  describe('button', () => {
+    test(`renders when state is ${State.Idle}`, () => {
+      const mockOnClick = jest.fn();
+      renderActionCard({
+        state: State.Idle,
+        children: (
+          <ActionCard.Button onClick={mockOnClick}>Click Me</ActionCard.Button>
+        ),
+      });
+
+      const button = screen.getByRole('button', { name: 'Click Me' });
+      expect(button).toBeInTheDocument();
+    });
+
+    test('renders multiple buttons', () => {
+      const mockOnClick1 = jest.fn();
+      const mockOnClick2 = jest.fn();
+      renderActionCard({
+        state: State.Idle,
+        children: (
+          <>
+            <ActionCard.Button onClick={mockOnClick1}>
+              First Button
+            </ActionCard.Button>
+            <ActionCard.Button onClick={mockOnClick2}>
+              Second Button
+            </ActionCard.Button>
+          </>
+        ),
+      });
+
+      expect(
+        screen.getByRole('button', { name: 'First Button' }),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByRole('button', { name: 'Second Button' }),
+      ).toBeInTheDocument();
+    });
+
+    test.each([State.Canceled, State.Error, State.Running, State.Success])(
+      'does not render when state is %s',
+      state => {
+        const mockOnClick = jest.fn();
+        renderActionCard({
+          state,
+          children: (
+            <ActionCard.Button onClick={mockOnClick}>
+              Click Me
+            </ActionCard.Button>
+          ),
+        });
+
+        expect(screen.queryByRole('button', { name: 'Click Me' })).toBeNull();
+      },
+    );
+
+    test('prefers buttons over deprecated Actions when both are present', () => {
+      const mockOnClick = jest.fn();
+      renderActionCard({
+        state: State.Idle,
+        children: (
+          <>
+            <ActionCard.Actions
+              onClickCancel={() => {}}
+              onClickRun={() => {}}
+            />
+            <ActionCard.Button onClick={mockOnClick}>
+              New Button
+            </ActionCard.Button>
+          </>
+        ),
+      });
+
+      // Button should be rendered, Actions should not be rendered
+      expect(
+        screen.getByRole('button', { name: 'New Button' }),
+      ).toBeInTheDocument();
+      // Actions should not be rendered when buttons are present
+      expect(screen.queryByRole('button', { name: 'Cancel' })).toBeNull();
+      expect(screen.queryByRole('button', { name: 'Run' })).toBeNull();
+    });
+  });
 });
