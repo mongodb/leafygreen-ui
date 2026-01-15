@@ -5,6 +5,7 @@ import { StoryFn, StoryObj } from '@storybook/react';
 import { userEvent, within } from '@storybook/test';
 
 import DatabaseIcon from '@leafygreen-ui/icon/dist/Database';
+import ReturnIcon from '@leafygreen-ui/icon/dist/Return';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { Message, MessageProps, MessageSourceType } from '..';
@@ -182,6 +183,7 @@ const getActionCardChild = () => (
         // eslint-disable-next-line no-console
         console.log('Run clicked');
       }}
+      rightGlyph={<ReturnIcon />}
       variant="primary"
     >
       Run
