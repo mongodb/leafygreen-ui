@@ -27,6 +27,7 @@ export interface ActionCardStateProps {
  */
 export const ActionCardSubcomponentProperty = {
   Actions: 'isLGActionCardActions',
+  Button: 'isLGActionCardButton',
   ExpandableContent: 'isLGActionCardExpandableContent',
 } as const;
 
