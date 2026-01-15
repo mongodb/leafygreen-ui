@@ -37,6 +37,7 @@ export const ActionCard = CompoundSubComponent(
         chips,
         className,
         darkMode: darkModeProp,
+        description,
         initialIsExpanded = false,
         onToggleExpanded,
         showExpandButton = true,
@@ -96,6 +97,7 @@ export const ActionCard = CompoundSubComponent(
             >
               <Header
                 chips={chips}
+                description={description}
                 showExpandButton={showExpandButton}
                 state={state}
                 title={title}

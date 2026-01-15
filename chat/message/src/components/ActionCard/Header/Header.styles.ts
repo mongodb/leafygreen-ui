@@ -37,6 +37,7 @@ export const upperRowStyles = css`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: ${spacing[200]}px;
 `;
 
 export const titleContainerStyles = css`
@@ -46,7 +47,7 @@ export const titleContainerStyles = css`
 `;
 
 export const chipsContainerStyles = css`
-  padding-top: ${spacing[300]}px;
+  padding-top: ${spacing[200]}px;
   display: flex;
   flex-wrap: wrap;
   gap: ${spacing[200]}px;

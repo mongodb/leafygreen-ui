@@ -50,6 +50,19 @@ describe('chat/message/ActionCard', () => {
     expect(screen.getByText('My Custom Title')).toBeInTheDocument();
   });
 
+  describe('description', () => {
+    test('renders description when provided', () => {
+      renderActionCard({ description: 'Test description text' });
+      expect(screen.getByText('Test description text')).toBeInTheDocument();
+    });
+
+    test('does not render description when not provided', () => {
+      renderActionCard();
+      const description = screen.queryByText('Test description text');
+      expect(description).toBeNull();
+    });
+  });
+
   test('renders chips', () => {
     const chips = [
       { label: 'MongoDB', glyph: <div>Icon</div> },

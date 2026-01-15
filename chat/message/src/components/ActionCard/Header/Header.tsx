@@ -29,7 +29,15 @@ const CHIP_CHARACTER_LIMIT = 25;
 
 export const Header = forwardRef<HTMLDivElement, HeaderProps>(
   (
-    { chips = [], className, showExpandButton = true, state, title, ...rest },
+    {
+      chips = [],
+      className,
+      description,
+      showExpandButton = true,
+      state,
+      title,
+      ...rest
+    },
     ref,
   ) => {
     const { theme } = useDarkMode();
@@ -59,6 +67,7 @@ export const Header = forwardRef<HTMLDivElement, HeaderProps>(
             </IconButton>
           )}
         </div>
+        {description && <Body>{description}</Body>}
         {chips.length > 0 && (
           <div className={chipsContainerStyles}>
             {chips.map((props, index) => (
