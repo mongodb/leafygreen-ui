@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { renderToString } from 'react-dom/server';
 
 import { cx } from '@leafygreen-ui/emotion';
@@ -34,6 +34,14 @@ export function ChartTooltip({
     },
   } = useChartContext();
   const { darkMode, theme } = useDarkMode();
+
+  /**
+   * Refs to track previous pinned state.
+   * Used to prevent unnecessary effect runs when tooltip stays pinned,
+   * which would cause ECharts to recreate the tooltip DOM.
+   */
+  const prevPinnedRef = useRef(false);
+  const wasPinnedRef = useRef(false);
 
   const formatTooltip = useCallback(
     (seriesData: Array<CallbackSeriesDataPoint>) => {
@@ -105,6 +113,21 @@ export function ChartTooltip({
   useEffect(() => {
     if (!ready) return;
 
+    /**
+     * Skip effect when tooltip stays pinned (both previous and current are true).
+     * This prevents ECharts from recreating the tooltip DOM element during
+     * parent re-renders, which would make the tooltip disappear.
+     */
+    const staysPinned = prevPinnedRef.current && tooltipPinned;
+    prevPinnedRef.current = tooltipPinned;
+
+    if (staysPinned) {
+      return;
+    }
+
+    /** Track that we ran the effect while pinned (for cleanup logic) */
+    wasPinnedRef.current = tooltipPinned;
+
     updateOptions({
       tooltip: {
         /* LOGIC PROPERTIES */
@@ -145,6 +168,13 @@ export function ChartTooltip({
     });
 
     return () => {
+      /**
+       * Skip cleanup when tooltip is pinned to prevent ECharts from
+       * resetting the tooltip DOM during re-renders.
+       */
+      if (wasPinnedRef.current) {
+        return;
+      }
       updateOptions({ ...DEFAULT_TOOLTIP_OPTIONS });
     };
   }, [
