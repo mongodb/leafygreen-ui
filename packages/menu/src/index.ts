@@ -19,6 +19,7 @@ export {
 } from './MenuContext';
 export { MenuGroup } from './MenuGroup';
 export {
+  type InternalMenuItemProps,
   MenuItem,
   menuItemClassName,
   type MenuItemProps,
