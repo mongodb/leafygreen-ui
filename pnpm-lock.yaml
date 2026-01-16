@@ -1458,6 +1458,9 @@ importers:
       '@leafygreen-ui/pagination':
         specifier: workspace:^
         version: link:../pagination
+      '@leafygreen-ui/search-input':
+        specifier: workspace:^
+        version: link:../search-input
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens

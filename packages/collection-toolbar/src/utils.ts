@@ -6,6 +6,7 @@ export const getLgIds = (root: LgIdString = DEFAULT_LGID_ROOT) => {
   const ids = {
     root,
     title: `${root}-title`,
+    searchInput: `${root}-search-input`,
     actions: `${root}-actions`,
     button: `${root}-button`,
     pagination: `${root}-pagination`,

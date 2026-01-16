@@ -42,5 +42,11 @@
     {
       "file": "node_modules/@lg-tools/prompt-kit/src/prompts/pullRequestDescriptionGeneration.md"
     }
-  ]
+  ],
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  }
 }

@@ -5,7 +5,7 @@ import {
   findChild,
 } from '@leafygreen-ui/compound-component';
 
-import { Actions, Title } from '../components';
+import { Actions, SearchInput, Title } from '../components';
 import { CollectionToolbarProvider } from '../Context/CollectionToolbarProvider';
 import {
   CollectionToolbarSubComponentProperty,
@@ -15,6 +15,7 @@ import {
 import { getLgIds } from '../utils';
 
 import { getCollectionToolbarStyles } from './CollectionToolbar.styles';
+import { collapsibleContentStyles } from './CollectionToolbar.styles';
 import { CollectionToolbarProps } from './CollectionToolbar.types';
 
 export const CollectionToolbar = CompoundComponent(
@@ -38,13 +39,20 @@ export const CollectionToolbar = CompoundComponent(
         children,
         CollectionToolbarSubComponentProperty.Title,
       );
+      const searchInput = findChild(
+        children,
+        CollectionToolbarSubComponentProperty.SearchInput,
+      );
 
       const actions = findChild(
         children,
         CollectionToolbarSubComponentProperty.Actions,
       );
 
-      const showTitle = title && variant === Variant.Collapsible;
+      const isCollapsible = variant === Variant.Collapsible;
+
+
+
 
       return (
         <CollectionToolbarProvider
@@ -59,8 +67,13 @@ export const CollectionToolbar = CompoundComponent(
             ref={fwdRef}
             {...rest}
           >
-            {showTitle && title}
+            {isCollapsible && title}
+            {!isCollapsible && searchInput}
             {actions}
+            {isCollapsible && (
+                <div className={collapsibleContentStyles}>
+                {searchInput}
+              </div>)}
           </div>
         </CollectionToolbarProvider>
       );
@@ -70,5 +83,6 @@ export const CollectionToolbar = CompoundComponent(
     displayName: 'CollectionToolbar',
     Title,
     Actions,
+    SearchInput,
   },
 );
