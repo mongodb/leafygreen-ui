@@ -41,6 +41,7 @@ export default meta;
 export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
   <CollectionToolbar {...props}>
     <CollectionToolbar.Title>Collection Title</CollectionToolbar.Title>
+    <CollectionToolbar.SearchInput placeholder='Search for a collection' />
     <CollectionToolbar.Actions showToggleButton>
       <CollectionToolbar.Actions.Button variant={ButtonVariant.Default}>
         Action
@@ -74,6 +75,19 @@ export const Title: StoryFn<typeof CollectionToolbar> = props => (
     <CollectionToolbar.Title>Collection Title</CollectionToolbar.Title>
   </CollectionToolbar>
 );
+
+export const SearchInput: StoryFn<typeof CollectionToolbar.SearchInput> = props => (
+  <CollectionToolbar darkMode={false} size={Size.Default} variant={Variant.Default}>
+    <CollectionToolbar.SearchInput placeholder='Search for a collection' {...props} />
+  </CollectionToolbar>
+);
+
+SearchInput.argTypes = {
+  placeholder: {
+    control: 'text',
+    defaultValue: 'Search for a collection',
+  },
+}
 
 export const Actions: StoryFn<typeof CollectionToolbar.Actions> = ({
   showToggleButton,

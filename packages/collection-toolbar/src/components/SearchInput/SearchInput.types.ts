@@ -1,3 +1,3 @@
 import { SearchInputProps as LGSearchInputProps } from '@leafygreen-ui/search-input';
 
-export type SearchInputProps = LGSearchInputProps;
+export type SearchInputProps = Omit<LGSearchInputProps, 'size'>;
