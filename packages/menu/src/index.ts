@@ -23,7 +23,7 @@ export {
   MenuItem,
   menuItemClassName,
   type MenuItemProps,
-  Variant,
+  type Variant,
 } from './MenuItem';
 export { MenuSeparator } from './MenuSeparator';
 export { menuColor, MenuInteractionState } from './styles';
