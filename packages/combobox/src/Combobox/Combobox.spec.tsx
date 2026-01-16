@@ -1,9 +1,10 @@
 /* eslint-disable jest/no-standalone-expect */
 /* eslint jest/expect-expect: ["error", { "assertFunctionNames": ["expect", "expectSelection"] }] */
-import { createRef } from 'react';
+import React, { createRef } from 'react';
 import {
   act,
   queryByText,
+  render,
   waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
@@ -12,6 +13,7 @@ import { axe } from 'jest-axe';
 import flatten from 'lodash/flatten';
 import isUndefined from 'lodash/isUndefined';
 
+import { Badge } from '@leafygreen-ui/badge';
 import { RenderMode } from '@leafygreen-ui/popover';
 import { eventContainingTargetValue } from '@leafygreen-ui/testing-lib';
 
@@ -25,6 +27,7 @@ import {
   Select,
   testif,
 } from '../utils/ComboboxTestUtils';
+import { Combobox, ComboboxOption } from '..';
 
 /**
  * Tests
@@ -262,7 +265,9 @@ describe('packages/combobox', () => {
         const { optionElements } = openMenu();
         // Note on `foo!` operator https://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#non-null-assertion-operator
         Array.from(optionElements!).forEach((optionEl, index) => {
-          expect(optionEl).toHaveTextContent(defaultOptions[index].displayName);
+          expect(optionEl).toHaveTextContent(
+            defaultOptions[index].displayName as string,
+          );
         });
       });
 
@@ -273,6 +278,49 @@ describe('packages/combobox', () => {
         const { optionElements } = openMenu();
         const [optionEl] = Array.from(optionElements!);
         expect(optionEl).toHaveTextContent('abc-def');
+      });
+
+      test('Option aria-label falls back to displayName text content', () => {
+        const options: Array<OptionObject> = [
+          {
+            value: 'react-node-option',
+            displayName: (
+              <span>
+                <strong>Bold</strong> and <em>italic</em> text
+              </span>
+            ),
+            isDisabled: false,
+          },
+        ];
+        const { openMenu } = renderCombobox(select, { options });
+        const { optionElements } = openMenu();
+        const [optionEl] = Array.from(optionElements!);
+        expect(optionEl).toHaveAttribute('aria-label', 'Bold and italic text');
+      });
+
+      test('Option aria-label falls back to value when displayName is not provided', () => {
+        const options = [{ value: 'fallback-value' }];
+        /// @ts-expect-error `options` will not match the expected type
+        const { openMenu } = renderCombobox(select, { options });
+        const { optionElements } = openMenu();
+        const [optionEl] = Array.from(optionElements!);
+        expect(optionEl).toHaveAttribute('aria-label', 'fallback-value');
+      });
+
+      test('Option uses explicit aria-label prop when provided', () => {
+        const { getByRole, queryByRole } = render(
+          <Combobox label="Test" multiselect={select === 'multiple'}>
+            <ComboboxOption
+              value="test-value"
+              displayName="Display Name"
+              aria-label="Custom aria label"
+            />
+          </Combobox>,
+        );
+        userEvent.click(getByRole('combobox'));
+        const listbox = queryByRole('listbox');
+        const optionEl = listbox?.getElementsByTagName('li')[0];
+        expect(optionEl).toHaveAttribute('aria-label', 'Custom aria label');
       });
 
       test('Options with long names are rendered with the full text', () => {
@@ -367,7 +415,9 @@ describe('packages/combobox', () => {
             groupedOptions.map(({ children }: NestedObject) => children),
           ).forEach((option: OptionObject | string) => {
             const displayName =
-              typeof option === 'string' ? option : option.displayName;
+              typeof option === 'string'
+                ? option
+                : (option.displayName as string);
             const optionEl = queryByText(menuContainerEl!, displayName);
             expect(optionEl).toBeInTheDocument();
           });

@@ -1,8 +1,11 @@
 import React from 'react';
 import { StoryMetaType, StoryType } from '@lg-tools/storybook-utils';
 
+import { Badge } from '@leafygreen-ui/badge';
+import { css } from '@leafygreen-ui/emotion';
 import { Icon } from '@leafygreen-ui/icon';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
+import { spacing } from '@leafygreen-ui/tokens';
 
 import { ComboboxContext, defaultContext } from '../ComboboxContext';
 
@@ -14,7 +17,12 @@ const meta: StoryMetaType<typeof InternalComboboxOption> = {
   parameters: {
     default: null,
     generate: {
-      storyNames: ['WithIcons', 'WithoutIcons', 'WithoutIconsAndMultiStep'],
+      storyNames: [
+        'WithIcons',
+        'WithoutIcons',
+        'WithoutIconsAndMultiStep',
+        'WithIconsAndCustomDisplayName',
+      ],
       combineArgs: {
         darkMode: [false, true],
         description: [undefined, 'This is a description'],
@@ -60,6 +68,32 @@ export const WithIcons: StoryType<typeof InternalComboboxOption> = () => <></>;
 WithIcons.parameters = {
   generate: {
     args: {
+      /// @ts-expect-error - withIcons is not a component prop
+      withIcons: true,
+      glyph: <Icon glyph="Cloud" />,
+    },
+  },
+};
+
+export const WithIconsAndCustomDisplayName: StoryType<
+  typeof InternalComboboxOption
+> = () => <></>;
+WithIconsAndCustomDisplayName.parameters = {
+  generate: {
+    args: {
+      displayName: (
+        <div
+          className={css`
+            display: flex;
+            align-items: center;
+            gap: ${spacing[100]}px;
+            margin-bottom: ${spacing[100]}px;
+          `}
+        >
+          <span>Option</span>
+          <Badge variant="green">New</Badge>
+        </div>
+      ),
       /// @ts-expect-error - withIcons is not a component prop
       withIcons: true,
       glyph: <Icon glyph="Cloud" />,
