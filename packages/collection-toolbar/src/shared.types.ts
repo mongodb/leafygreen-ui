@@ -39,3 +39,16 @@ export const CollectionToolbarSubComponentProperty = {
  */
 export type CollectionToolbarSubComponentProperty =
   (typeof CollectionToolbarSubComponentProperty)[keyof typeof CollectionToolbarSubComponentProperty];
+
+/**
+ * Static property names used to identify CollectionToolbarActions compound components.
+ * These are implementation details for the compound component pattern and should not be exported.
+ */
+export const CollectionToolbarActionsSubComponentProperty = {
+  Button: 'isCollectionToolbarActionsButton',
+  Pagination: 'isCollectionToolbarActionsPagination',
+  Menu: 'isCollectionToolbarActionsMenu',
+  MenuItem: 'isCollectionToolbarActionsMenuItem',
+} as const;
+export type CollectionToolbarActionsSubComponentProperty =
+  (typeof CollectionToolbarActionsSubComponentProperty)[keyof typeof CollectionToolbarActionsSubComponentProperty];

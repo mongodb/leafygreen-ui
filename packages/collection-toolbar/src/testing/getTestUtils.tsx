@@ -19,6 +19,11 @@ export const getTestUtils = <T extends HTMLElement = HTMLElement>(
   const findTitle = () => findByLgId!<T>(lgIds.title);
   const queryTitle = () => queryByLgId!<T>(lgIds.title);
 
+  const getPagination = () => getByLgId!<T>(`${lgIds.pagination}-navigation`);
+  const findPagination = () => findByLgId!<T>(`${lgIds.pagination}-navigation`);
+  const queryPagination = () =>
+    queryByLgId!<T>(`${lgIds.pagination}-navigation`);
+
   return {
     findCollectionToolbar,
     getCollectionToolbar,
@@ -26,5 +31,8 @@ export const getTestUtils = <T extends HTMLElement = HTMLElement>(
     getTitle,
     findTitle,
     queryTitle,
+    getPagination,
+    findPagination,
+    queryPagination,
   };
 };
