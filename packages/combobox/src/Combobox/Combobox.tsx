@@ -723,6 +723,7 @@ export function Combobox<M extends boolean>({
     if (isMultiselect(selection)) {
       return selection.filter(isValueValid).map((value, index) => {
         const displayName = getDisplayNameForValue(value, allOptions);
+        const displayNameContent = getNodeTextContent(displayName);
         const isFocused = focusedChip === value;
         const chipRef = getChipRef(value);
         const isLastChip = index >= selection.length - 1;
@@ -745,7 +746,7 @@ export function Combobox<M extends boolean>({
         return (
           <ComboboxChip
             key={value}
-            displayName={getNodeTextContent(displayName)}
+            displayName={displayNameContent}
             isFocused={isFocused}
             onRemove={onRemove}
             onFocus={onFocus}
