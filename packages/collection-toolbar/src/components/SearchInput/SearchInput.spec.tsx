@@ -36,21 +36,14 @@ const renderSearchInput = ({
   );
 };
 
-/** Helper to get the actual input element from the SearchInput component */
 const getSearchInputElement = (container: HTMLElement) => {
   return container.querySelector('input[type="search"]') as HTMLInputElement;
 };
 
-/** Helper to get the form element */
 const getFormElement = (container: HTMLElement) => {
   return container.querySelector('form') as HTMLFormElement;
 };
 
-/**
- * Note: Core SearchInput functionality (disabled, value, onChange, onSubmit,
- * keyboard interactions, etc.) is tested in @leafygreen-ui/search-input.
- * These tests focus on the CollectionToolbar wrapper-specific behavior.
- */
 describe('packages/collection-toolbar/components/SearchInput', () => {
   describe('rendering', () => {
     test('renders the search input', () => {

@@ -36,7 +36,6 @@ const collapsibleStyles = css`
 
 export const collapsibleContentStyles = css`
   flex: 100%;
-  background: lightblue;
 `;
 
 export const getCollectionToolbarStyles = ({
