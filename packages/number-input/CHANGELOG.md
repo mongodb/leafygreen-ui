@@ -1,5 +1,11 @@
 # @leafygreen-ui/number-input
 
+## 5.1.0
+
+### Minor Changes
+
+- 8ea6c11: Removes all caps value enforcement and updates font weights so that they're uniform across sizes
+
 ## 5.0.12
 
 ### Patch Changes

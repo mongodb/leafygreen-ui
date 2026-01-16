@@ -1,6 +1,11 @@
 import React, { forwardRef } from 'react';
 
-import { Chip, Variant as ChipVariant } from '@leafygreen-ui/chip';
+import {
+  Chip,
+  TooltipAlign,
+  TruncationLocation,
+  Variant as ChipVariant,
+} from '@leafygreen-ui/chip';
 import CollapseVerticalIcon from '@leafygreen-ui/icon/dist/CollapseVertical';
 import ExpandVerticalIcon from '@leafygreen-ui/icon/dist/ExpandVertical';
 import { IconButton } from '@leafygreen-ui/icon-button';
@@ -20,7 +25,7 @@ import {
 import { HeaderProps } from './Header.types';
 import { TitleIcon } from './TitleIcon';
 
-const CHIP_CHARACTER_LIMIT = 12;
+const CHIP_CHARACTER_LIMIT = 25;
 
 export const Header = forwardRef<HTMLDivElement, HeaderProps>(
   (
@@ -56,13 +61,15 @@ export const Header = forwardRef<HTMLDivElement, HeaderProps>(
         </div>
         {chips.length > 0 && (
           <div className={chipsContainerStyles}>
-            {chips.map(({ glyph, label }, index) => (
+            {chips.map((props, index) => (
               <Chip
                 key={index}
                 chipCharacterLimit={CHIP_CHARACTER_LIMIT}
-                glyph={glyph}
-                label={label}
+                chipTruncationLocation={TruncationLocation.Middle}
+                enableAlwaysShowTooltip={true}
+                tooltipAlign={TooltipAlign.Top}
                 variant={ChipVariant.White}
+                {...props}
               />
             ))}
           </div>

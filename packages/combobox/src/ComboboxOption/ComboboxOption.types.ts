@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ReactElement } from 'react';
+import { ComponentPropsWithoutRef, ReactElement, ReactNode } from 'react';
 
 import { Either } from '@leafygreen-ui/lib';
 
@@ -19,7 +19,7 @@ interface SharedComboboxOptionProps {
    * The display value of the option. Used as the rendered string within the menu and chips.
    * When undefined, this is set to `value`
    */
-  displayName?: string;
+  displayName?: ReactNode;
 
   /**
    * The icon to display to the left of the option in the menu.

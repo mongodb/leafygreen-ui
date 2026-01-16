@@ -34,7 +34,12 @@ import LeafyGreenProvider, {
   PopoverPropsProvider,
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
-import { consoleOnce, isComponentType, keyMap } from '@leafygreen-ui/lib';
+import {
+  consoleOnce,
+  getNodeTextContent,
+  isComponentType,
+  keyMap,
+} from '@leafygreen-ui/lib';
 import {
   DismissMode,
   getPopoverRenderModeProps,
@@ -324,7 +329,7 @@ export function Combobox<M extends boolean>({
           ? getDisplayNameForValue(value, allOptions)
           : option.displayName;
 
-      const isValueInDisplayName = displayName
+      const isValueInDisplayName = getNodeTextContent(displayName)
         .toLowerCase()
         .includes(inputValue.toLowerCase());
 
@@ -718,6 +723,7 @@ export function Combobox<M extends boolean>({
     if (isMultiselect(selection)) {
       return selection.filter(isValueValid).map((value, index) => {
         const displayName = getDisplayNameForValue(value, allOptions);
+        const displayNameContent = getNodeTextContent(displayName);
         const isFocused = focusedChip === value;
         const chipRef = getChipRef(value);
         const isLastChip = index >= selection.length - 1;
@@ -740,7 +746,7 @@ export function Combobox<M extends boolean>({
         return (
           <ComboboxChip
             key={value}
-            displayName={displayName}
+            displayName={displayNameContent}
             isFocused={isFocused}
             onRemove={onRemove}
             onFocus={onFocus}
@@ -793,7 +799,7 @@ export function Combobox<M extends boolean>({
             selection as SelectValueType<false>,
             allOptions,
           ) ?? prevSelection;
-        updateInputValue(displayName);
+        updateInputValue(getNodeTextContent(displayName));
       }
     }
   }, [
@@ -821,7 +827,7 @@ export function Combobox<M extends boolean>({
             selection as SelectValueType<false>,
             allOptions,
           ) ?? '';
-        updateInputValue(displayName);
+        updateInputValue(getNodeTextContent(displayName));
         closeMenu();
       }
     } else {

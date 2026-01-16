@@ -5,7 +5,12 @@ import { Icon } from '@leafygreen-ui/icon';
 
 import { ComboboxGroup, ComboboxOption } from '..';
 
-import { flattenChildren, getNameAndValue, wrapJSX } from '.';
+import {
+  flattenChildren,
+  getDisplayNameForValue,
+  getNameAndValue,
+  wrapJSX,
+} from '.';
 
 describe('packages/combobox/utils', () => {
   describe('wrapJSX', () => {
@@ -155,6 +160,66 @@ describe('packages/combobox/utils', () => {
     });
   });
 
+  describe('getDisplayNameForValue', () => {
+    const options = [
+      { value: 'apple', displayName: 'Apple', isDisabled: false },
+      { value: 'banana', displayName: 'Banana', isDisabled: false },
+      { value: 'carrot', displayName: 'Carrot', isDisabled: true },
+    ];
+
+    test('Returns the displayName when a matching option is found', () => {
+      const result = getDisplayNameForValue('apple', options);
+      expect(result).toBe('Apple');
+    });
+
+    test('Returns the value when no matching option is found', () => {
+      const result = getDisplayNameForValue('unknown', options);
+      expect(result).toBe('unknown');
+    });
+
+    test('Returns empty string when value is null', () => {
+      const result = getDisplayNameForValue(null, options);
+      expect(result).toBe('');
+    });
+
+    test('Returns empty string when value is empty string', () => {
+      const result = getDisplayNameForValue('', options);
+      expect(result).toBe('');
+    });
+
+    test('Returns displayName for disabled option', () => {
+      const result = getDisplayNameForValue('carrot', options);
+      expect(result).toBe('Carrot');
+    });
+
+    test('Returns empty string when options array is empty and value is null', () => {
+      const result = getDisplayNameForValue(null, []);
+      expect(result).toBe('');
+    });
+
+    test('Returns value when options array is empty but value is provided', () => {
+      const result = getDisplayNameForValue('test', []);
+      expect(result).toBe('test');
+    });
+
+    test('Returns React node displayName when option has node displayName', () => {
+      const nodeDisplayName = (
+        <span>
+          <strong>Bold</strong> text
+        </span>
+      );
+      const optionsWithNode = [
+        {
+          value: 'node-option',
+          displayName: nodeDisplayName,
+          isDisabled: false,
+        },
+      ];
+      const result = getDisplayNameForValue('node-option', optionsWithNode);
+      expect(result).toBe(nodeDisplayName);
+    });
+  });
+
   describe('flattenChildren', () => {
     test('returns a single option', () => {
       const children = <ComboboxOption value="test" displayName="Test" />;
@@ -165,6 +230,7 @@ describe('packages/combobox/utils', () => {
           displayName: 'Test',
           hasGlyph: false,
           isDisabled: false,
+          badge: undefined,
         },
       ]);
     });
@@ -181,12 +247,14 @@ describe('packages/combobox/utils', () => {
           displayName: 'Apple',
           hasGlyph: false,
           isDisabled: false,
+          badge: undefined,
         },
         {
           value: 'banana',
           displayName: 'Banana',
           hasGlyph: false,
           isDisabled: false,
+          badge: undefined,
         },
       ]);
     });
@@ -202,6 +270,44 @@ describe('packages/combobox/utils', () => {
       );
       const flat = flattenChildren(children);
       expect(flat).toEqual([
+        {
+          value: 'test',
+          displayName: 'Test',
+          hasGlyph: true,
+          isDisabled: true,
+          badge: undefined,
+        },
+      ]);
+    });
+
+    test('flattens options with node displayName', () => {
+      const children = [
+        <ComboboxOption
+          key="test"
+          value="test"
+          displayName={
+            <div>
+              <span>Testing</span>
+              <span>New</span>
+            </div>
+          }
+        />,
+        <ComboboxOption
+          key="test2"
+          value="test"
+          displayName="Test"
+          glyph={<Icon glyph="Beaker" />}
+          disabled
+        />,
+      ];
+      const flat = flattenChildren(children);
+      expect(flat).toEqual([
+        {
+          value: 'test',
+          displayName: 'Testing New',
+          hasGlyph: false,
+          isDisabled: false,
+        },
         {
           value: 'test',
           displayName: 'Test',

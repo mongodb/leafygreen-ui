@@ -38,10 +38,6 @@ export const rippleStyle = css`
   border-radius: 5px;
 `;
 
-export const darkModeRightGlyphStyles = css`
-  justify-content: space-between;
-`;
-
 export const buttonContentStyle = css`
   display: grid;
   grid-auto-flow: column;
