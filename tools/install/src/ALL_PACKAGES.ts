@@ -70,7 +70,6 @@ export const ALL_PACKAGES = [
   '@leafygreen-ui/stepper',
   '@leafygreen-ui/table',
   '@leafygreen-ui/tabs',
-  '@leafygreen-ui/test',
   '@leafygreen-ui/testing-lib',
   '@leafygreen-ui/text-area',
   '@leafygreen-ui/text-input',
