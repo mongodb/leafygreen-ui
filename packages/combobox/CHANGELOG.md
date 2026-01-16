@@ -1,5 +1,11 @@
 # @leafygreen-ui/combobox
 
+## 12.4.0
+
+### Minor Changes
+
+- aac0fd8: `ComboboxOption` now accepts a `ReactNode` for the `displayName` prop, enabling custom content like badges. Also refactored internal styles for better organization.
+
 ## 12.3.0
 
 ### Minor Changes

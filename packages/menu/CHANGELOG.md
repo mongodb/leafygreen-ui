@@ -1,5 +1,12 @@
 # @leafygreen-ui/menu
 
+## 33.2.0
+
+### Minor Changes
+
+- cc7b513: Exports InternalMenuItemProps from MenuItem component
+- 39e43fb: Exports InternalMenuItemProps from the Menu index file, making it fully exported from the package
+
 ## 33.1.0
 
 ### Minor Changes

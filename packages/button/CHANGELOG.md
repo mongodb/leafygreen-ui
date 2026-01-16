@@ -1,5 +1,11 @@
 # @leafygreen-ui/button
 
+## 25.2.0
+
+### Minor Changes
+
+- 1800b48: Fix `Button` content justification bug by removing `justify-content: space-between;` that was getting added for `Button` instances with `darkMode={true}` and defined `rightGlyph`.
+
 ## 25.1.3
 
 ### Patch Changes
