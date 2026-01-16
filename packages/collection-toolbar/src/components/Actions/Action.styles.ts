@@ -6,7 +6,7 @@ export const actionsClassName = createUniqueClassName('actions');
 
 export const baseStyles = css`
   display: flex;
-  flex-direction: row;  
+  flex-direction: row;
   align-items: center;
   gap: ${spacing[100]}px;
 `;

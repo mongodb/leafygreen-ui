@@ -14,16 +14,15 @@ export const baseStyles = css`
   padding: ${spacing[200]}px ${spacing[600]}px;
 
   .${actionsClassName} {
-  margin-left: 4.5rem;
+    margin-left: 4.5rem;
   }
 
   .${paginationClassName} {
-  width: max-content;
+    width: max-content;
   }
 `;
 
 const collapsibleStyles = css`
-
   flex-wrap: wrap;
 
   .${actionsClassName} {
@@ -47,6 +46,11 @@ export const getCollectionToolbarStyles = ({
   size?: Size;
   variant?: Variant;
   className?: string;
-}) => cx(baseStyles, {
-  [collapsibleStyles]: variant === Variant.Collapsible,
-}, className);
+}) =>
+  cx(
+    baseStyles,
+    {
+      [collapsibleStyles]: variant === Variant.Collapsible,
+    },
+    className,
+  );

@@ -8,7 +8,7 @@ const meta: StoryMetaType<typeof CollectionToolbar> = {
   title: 'Components/CollectionToolbar',
   component: CollectionToolbar,
   decorators: [
-    (StoryFn) => (
+    StoryFn => (
       <div style={{ margin: '-100px -100px 0', width: 'calc(100% + 200px)' }}>
         <StoryFn />
       </div>
@@ -48,7 +48,10 @@ export default meta;
 export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
   <CollectionToolbar {...props}>
     <CollectionToolbar.Title>Collection Title</CollectionToolbar.Title>
-    <CollectionToolbar.SearchInput placeholder='Search for a collection' aria-label="Search for a collection" />
+    <CollectionToolbar.SearchInput
+      placeholder="Search for a collection"
+      aria-label="Search for a collection"
+    />
     <CollectionToolbar.Actions showToggleButton>
       <CollectionToolbar.Actions.Button variant={ButtonVariant.Default}>
         Action
@@ -77,9 +80,17 @@ export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
   </CollectionToolbar>
 );
 
-export const SearchInput: StoryFn<typeof CollectionToolbar.SearchInput> = ({ placeholder, "aria-labelledby": ariaLabelledby = '', ...props }) => (
+export const SearchInput: StoryFn<typeof CollectionToolbar.SearchInput> = ({
+  placeholder,
+  'aria-labelledby': ariaLabelledby = '',
+  ...props
+}) => (
   <CollectionToolbar size={Size.Default} variant={Variant.Collapsible}>
-    <CollectionToolbar.SearchInput placeholder={placeholder} aria-labelledby={ariaLabelledby}  {...props} />
+    <CollectionToolbar.SearchInput
+      placeholder={placeholder}
+      aria-labelledby={ariaLabelledby}
+      {...props}
+    />
   </CollectionToolbar>
 );
 
@@ -88,12 +99,11 @@ SearchInput.argTypes = {
     control: 'text',
     defaultValue: 'Search for a collection',
   },
-  "aria-labelledby": {
+  'aria-labelledby': {
     control: 'text',
     defaultValue: 'search-input-label',
   },
 };
-
 
 export const Title: StoryFn<typeof CollectionToolbar> = props => (
   <CollectionToolbar {...props}>

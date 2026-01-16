@@ -51,9 +51,6 @@ export const CollectionToolbar = CompoundComponent(
 
       const isCollapsible = variant === Variant.Collapsible;
 
-
-
-
       return (
         <CollectionToolbarProvider
           darkMode={darkMode}
@@ -71,9 +68,8 @@ export const CollectionToolbar = CompoundComponent(
             {!isCollapsible && searchInput}
             {actions}
             {isCollapsible && (
-                <div className={collapsibleContentStyles}>
-                {searchInput}
-              </div>)}
+              <div className={collapsibleContentStyles}>{searchInput}</div>
+            )}
           </div>
         </CollectionToolbarProvider>
       );

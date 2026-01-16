@@ -99,9 +99,9 @@ describe('packages/collection-toolbar/components/SearchInput', () => {
 
   describe('compound component', () => {
     test('has the correct static property for compound component identification', () => {
-      expect(SearchInput[CollectionToolbarSubComponentProperty.SearchInput]).toBe(
-        true,
-      );
+      expect(
+        SearchInput[CollectionToolbarSubComponentProperty.SearchInput],
+      ).toBe(true);
     });
   });
 
