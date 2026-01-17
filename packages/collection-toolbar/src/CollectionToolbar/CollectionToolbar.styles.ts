@@ -3,6 +3,7 @@ import { spacing } from '@leafygreen-ui/tokens';
 
 import { actionsClassName } from '../components/Actions/Action.styles';
 import { paginationClassName } from '../components/Actions/Pagination/Pagination.styles';
+import { titleClassName } from '../components/Title/Title.styles';
 import { Size, Variant } from '../shared.types';
 
 export const baseStyles = css`
@@ -24,6 +25,10 @@ export const baseStyles = css`
 
 const collapsibleStyles = css`
   flex-wrap: wrap;
+  
+  .${titleClassName} {
+    flex: 1;
+  }
 
   .${actionsClassName} {
     margin-left: 4.5rem;
