@@ -25,7 +25,7 @@ export const baseStyles = css`
 
 const collapsibleStyles = css`
   flex-wrap: wrap;
-  
+
   .${titleClassName} {
     flex: 1;
   }
