@@ -3,7 +3,7 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { Size, Variant } from '../../shared.types';
 
 export const baseStyles = css`
-  width: 100%;
+  flex: 1;
 `;
 
 export const getSearchInputStyles = ({

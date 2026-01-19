@@ -52,6 +52,12 @@ export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
       placeholder="Search for a collection"
       aria-label="Search for a collection"
     />
+    <CollectionToolbar.Filters>
+      <CollectionToolbar.Filters.NumberInput label="Number Input" value={"10"} />
+      <CollectionToolbar.Filters.TextInput label="Text Input" value="Text Input" />
+      <CollectionToolbar.Filters.Combobox label="Combobox" value="Combobox" />
+      <CollectionToolbar.Filters.DatePicker label="Date Picker" value={new Date()} />
+    </CollectionToolbar.Filters>
     <CollectionToolbar.Actions showToggleButton>
       <CollectionToolbar.Actions.Button variant={ButtonVariant.Default}>
         Action
@@ -77,6 +83,7 @@ export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
         </CollectionToolbar.Actions.Menu.MenuItem>
       </CollectionToolbar.Actions.Menu>
     </CollectionToolbar.Actions>
+    <CollectionToolbar.Filters />
   </CollectionToolbar>
 );
 

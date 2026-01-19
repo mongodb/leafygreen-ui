@@ -3,12 +3,13 @@ import { spacing } from '@leafygreen-ui/tokens';
 
 import { actionsClassName } from '../components/Actions/Action.styles';
 import { paginationClassName } from '../components/Actions/Pagination/Pagination.styles';
+import { filtersClassName } from '../components/Filters/Filters.styles';
 import { titleClassName } from '../components/Title/Title.styles';
 import { Size, Variant } from '../shared.types';
 
 export const baseStyles = css`
   display: flex;
-  flex-direction: row;
+  flex-flow: row wrap;
   align-items: center;
   justify-content: space-between;
   gap: ${spacing[200]}px;
@@ -21,10 +22,14 @@ export const baseStyles = css`
   .${paginationClassName} {
     width: max-content;
   }
+
+  .${filtersClassName} {
+    flex: 100%;
+    background: lightblue;
+  }
 `;
 
 const collapsibleStyles = css`
-  flex-wrap: wrap;
 
   .${titleClassName} {
     flex: 1;
