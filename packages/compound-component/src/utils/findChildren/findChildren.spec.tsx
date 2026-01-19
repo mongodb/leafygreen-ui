@@ -95,20 +95,14 @@ describe('packages/compound-component/findChildren', () => {
     });
 
     it('should return empty array when no children match any property', () => {
-      const children = [
-        <Foo text="first" />,
-        <Bar text="second" />,
-      ];
+      const children = [<Foo text="first" />, <Bar text="second" />];
 
       const found = findChildren(children, ['isBaz', 'isQux']);
       expect(found).toEqual([]);
     });
 
     it('should work with single-item array', () => {
-      const children = [
-        <Foo text="first" />,
-        <Bar text="second" />,
-      ];
+      const children = [<Foo text="first" />, <Bar text="second" />];
 
       const found = findChildren(children, ['isFoo']);
       expect(found).toHaveLength(1);
@@ -116,10 +110,7 @@ describe('packages/compound-component/findChildren', () => {
     });
 
     it('should handle empty array', () => {
-      const children = [
-        <Foo text="first" />,
-        <Bar text="second" />,
-      ];
+      const children = [<Foo text="first" />, <Bar text="second" />];
 
       const found = findChildren(children, []);
       expect(found).toEqual([]);

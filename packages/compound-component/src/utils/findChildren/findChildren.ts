@@ -1,9 +1,6 @@
 import { Children, isValidElement, ReactElement, ReactNode } from 'react';
 
-import {
-  hasAnyStaticProperty,
-  hasStaticProperty,
-} from '../hasStaticProperty';
+import { hasAnyStaticProperty, hasStaticProperty } from '../hasStaticProperty';
 import { unwrapRootFragment } from '../unwrapRootFragment';
 
 /**
