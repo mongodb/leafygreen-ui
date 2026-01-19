@@ -67,6 +67,65 @@ describe('packages/compound-component/findChildren', () => {
     });
   });
 
+  describe('array of static properties', () => {
+    it('should find children matching any property in the array', () => {
+      const children = [
+        <Foo text="first" />,
+        <Bar text="second" />,
+        <Foo text="third" />,
+        <Baz text="fourth" />,
+      ];
+
+      const found = findChildren(children, ['isFoo', 'isBar']);
+      expect(found).toHaveLength(3);
+      expect(found[0].props.text).toBe('first');
+      expect(found[1].props.text).toBe('second');
+      expect(found[2].props.text).toBe('third');
+    });
+
+    it('should find all children when all properties are in array', () => {
+      const children = [
+        <Foo text="first" />,
+        <Bar text="second" />,
+        <Baz text="third" />,
+      ];
+
+      const found = findChildren(children, ['isFoo', 'isBar', 'isBaz']);
+      expect(found).toHaveLength(3);
+    });
+
+    it('should return empty array when no children match any property', () => {
+      const children = [
+        <Foo text="first" />,
+        <Bar text="second" />,
+      ];
+
+      const found = findChildren(children, ['isBaz', 'isQux']);
+      expect(found).toEqual([]);
+    });
+
+    it('should work with single-item array', () => {
+      const children = [
+        <Foo text="first" />,
+        <Bar text="second" />,
+      ];
+
+      const found = findChildren(children, ['isFoo']);
+      expect(found).toHaveLength(1);
+      expect(found[0].props.text).toBe('first');
+    });
+
+    it('should handle empty array', () => {
+      const children = [
+        <Foo text="first" />,
+        <Bar text="second" />,
+      ];
+
+      const found = findChildren(children, []);
+      expect(found).toEqual([]);
+    });
+  });
+
   it('should find mapped children', () => {
     const COUNT = 5;
     const children = new Array(COUNT).fill(null).map((_, i) => {

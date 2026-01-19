@@ -1,7 +1,27 @@
-import { ReactElement, ReactNode } from 'react';
+import { Children, isValidElement, ReactElement, ReactNode } from 'react';
 
-import { isChildWithProperty } from '../isChildWithProperty';
+import {
+  hasAnyStaticProperty,
+  hasStaticProperty,
+} from '../hasStaticProperty';
 import { unwrapRootFragment } from '../unwrapRootFragment';
+
+/**
+ * Type guard to check if a child is a valid ReactElement with a matching static property
+ */
+const isChildWithMatchingProperty = (
+  child: ReactNode,
+  staticProperty: string | Array<string>,
+): child is ReactElement => {
+  if (!isValidElement(child)) return false;
+  if (Children.count(child) !== 1) return false;
+
+  if (Array.isArray(staticProperty)) {
+    return hasAnyStaticProperty(child.type, staticProperty);
+  }
+
+  return hasStaticProperty(child.type, staticProperty);
+};
 
 /**
  *
@@ -31,6 +51,12 @@ import { unwrapRootFragment } from '../unwrapRootFragment';
  *   </>
  * ), 'isFoo') // [<Foo />, <Foo />]
  *
+ * // ✅ Will find: Multiple static properties (array)
+ * findChildren([
+ *   <Foo />,
+ *   <Bar />
+ * ], ['isFoo', 'isBar']) // [<Foo />, <Bar />]
+ *
  * // ❌ Will NOT find: Deeply nested fragments
  * findChildren((
  *   <>
@@ -45,12 +71,12 @@ import { unwrapRootFragment } from '../unwrapRootFragment';
  * ```
  *
  * @param children Any React children
- * @param staticProperty The static property name to check for
+ * @param staticProperty The static property name (or array of names) to check for
  * @returns All matching ReactElements (or empty array if not found)
  */
 export const findChildren = (
   children: ReactNode,
-  staticProperty: string,
+  staticProperty: string | Array<string>,
 ): Array<ReactElement> => {
   const allChildren = unwrapRootFragment(children);
 
@@ -58,7 +84,7 @@ export const findChildren = (
 
   return allChildren
     .flat()
-    .filter(child =>
-      isChildWithProperty(child, staticProperty),
-    ) as Array<ReactElement>;
+    .filter((child): child is ReactElement =>
+      isChildWithMatchingProperty(child, staticProperty),
+    );
 };
