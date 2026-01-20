@@ -41,7 +41,6 @@
 '@leafygreen-ui/progress-bar': patch
 '@leafygreen-ui/radio-box-group': patch
 '@leafygreen-ui/radio-group': patch
-'@leafygreen-ui/ripple': patch
 '@leafygreen-ui/search-input': patch
 '@leafygreen-ui/section-nav': patch
 '@leafygreen-ui/segmented-control': patch
