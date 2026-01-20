@@ -1,5 +1,11 @@
 # @lg-charts/core
 
+## 2.5.1
+
+### Patch Changes
+
+- 9a3668d: Fix bug where pinned chart tooltips would disappear on parent component re-renders
+
 ## 2.5.0
 
 ### Minor Changes

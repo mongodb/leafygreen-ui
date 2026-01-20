@@ -1,5 +1,17 @@
 # @leafygreen-ui/code-editor
 
+## 1.0.5
+
+### Patch Changes
+
+- Updated dependencies [5c9da14]
+- Updated dependencies [1800b48]
+- Updated dependencies [cc7b513]
+- Updated dependencies [39e43fb]
+  - @leafygreen-ui/modal@22.0.0
+  - @leafygreen-ui/button@25.2.0
+  - @leafygreen-ui/menu@33.2.0
+
 ## 1.0.4
 
 ### Patch Changes

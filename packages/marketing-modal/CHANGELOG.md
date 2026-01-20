@@ -1,5 +1,18 @@
 # @leafygreen-ui/marketing-modal
 
+## 8.2.0
+
+### Minor Changes
+
+- 5c9da14: [LG-5735](https://jira.mongodb.org/browse/LG-5735): explicitly sets initial focus to primary button when `initialFocus` prop is not set. Previously, it would focus the first focusable child.
+
+### Patch Changes
+
+- Updated dependencies [5c9da14]
+- Updated dependencies [1800b48]
+  - @leafygreen-ui/modal@22.0.0
+  - @leafygreen-ui/button@25.2.0
+
 ## 8.1.7
 
 ### Patch Changes
