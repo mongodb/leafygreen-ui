@@ -11,6 +11,8 @@ import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { ActionCard, ActionCardProps, State } from './index';
 
+const DESCRIPTION_TEXT =
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
 const chips = [
   { label: 'docdb-elastic.amazonaws.com:27017', glyph: <DatabaseIcon /> },
 ];
@@ -34,6 +36,7 @@ const meta: StoryMetaType<typeof ActionCard> = {
       storyNames: ['Canceled', 'Error', 'Idle', 'Running', 'Success'],
       combineArgs: {
         darkMode: [false, true],
+        description: [undefined, DESCRIPTION_TEXT],
         initialIsExpanded: [false, true],
         showExpandButton: [false, true],
       },
@@ -47,6 +50,9 @@ const meta: StoryMetaType<typeof ActionCard> = {
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
+    description: {
+      control: 'text',
+    },
     state: {
       control: 'select',
       options: Object.values(State),
@@ -65,11 +71,12 @@ const meta: StoryMetaType<typeof ActionCard> = {
     },
   },
   args: {
-    title: 'Run list-databases?',
     chips,
-    state: State.Idle,
-    showExpandButton: true,
+    description: DESCRIPTION_TEXT,
     initialIsExpanded: false,
+    showExpandButton: true,
+    state: State.Idle,
+    title: 'Run list-databases?',
   },
 };
 
@@ -121,6 +128,7 @@ export const LiveExample: StoryObj<typeof ActionCard> = {
   render: Template,
   args: {
     title: titles[State.Idle],
+    description: DESCRIPTION_TEXT,
     chips,
     state: State.Idle,
     showExpandButton: true,

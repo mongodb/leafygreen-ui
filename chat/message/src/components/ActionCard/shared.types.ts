@@ -52,6 +52,11 @@ export interface SharedActionCardProps extends ActionCardStateProps {
   chips?: Array<ActionCardChipProps>;
 
   /**
+   * Optional description text displayed below the title row.
+   */
+  description?: ReactNode;
+
+  /**
    * Whether the toggle button is visible.
    * @default true
    */

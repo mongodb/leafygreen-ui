@@ -29,12 +29,24 @@ const CHIP_CHARACTER_LIMIT = 25;
 
 export const Header = forwardRef<HTMLDivElement, HeaderProps>(
   (
-    { chips = [], className, showExpandButton = true, state, title, ...rest },
+    {
+      chips = [],
+      className,
+      description,
+      showExpandButton = true,
+      state,
+      title,
+      ...rest
+    },
     ref,
   ) => {
     const { theme } = useDarkMode();
     const { isExpanded, toggleExpand } = useActionCardContext();
 
+    const titleAs = ['string', 'number'].includes(typeof title) ? 'p' : 'div';
+    const descriptionAs = ['string', 'number'].includes(typeof description)
+      ? 'p'
+      : 'div';
     const isErrorState = state === State.Error;
 
     return (
@@ -46,7 +58,9 @@ export const Header = forwardRef<HTMLDivElement, HeaderProps>(
         <div className={upperRowStyles}>
           <div className={titleContainerStyles}>
             <TitleIcon state={state} />
-            <Body weight={FontWeight.SemiBold}>{title}</Body>
+            <Body as={titleAs} weight={FontWeight.SemiBold}>
+              {title}
+            </Body>
           </div>
           {showExpandButton && (
             <IconButton
@@ -59,6 +73,7 @@ export const Header = forwardRef<HTMLDivElement, HeaderProps>(
             </IconButton>
           )}
         </div>
+        {description && <Body as={descriptionAs}>{description}</Body>}
         {chips.length > 0 && (
           <div className={chipsContainerStyles}>
             {chips.map((props, index) => (
