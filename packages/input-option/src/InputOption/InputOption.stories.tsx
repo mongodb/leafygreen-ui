@@ -52,6 +52,8 @@ export default {
       control: 'boolean',
     },
     showWedge: {
+      description:
+        'Whether a wedge displays on the left side of the item when the element is highlighted or selected',
       control: 'boolean',
     },
     leftGlyph: {

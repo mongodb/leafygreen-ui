@@ -1,7 +1,8 @@
-import React, { forwardRef, useMemo, useState } from 'react';
+import React, { forwardRef, useMemo, useRef, useState } from 'react';
 
 import { Button } from '@leafygreen-ui/button';
 import { cx } from '@leafygreen-ui/emotion';
+import { useMergeRefs } from '@leafygreen-ui/hooks';
 import WarningIcon from '@leafygreen-ui/icon/dist/Warning';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Footer, Modal } from '@leafygreen-ui/modal';
@@ -11,7 +12,6 @@ import { H3 } from '@leafygreen-ui/typography';
 
 import { getLgIds } from '../utils/getLgIds';
 
-import { ConfirmationModalProps, Variant } from './ConfirmationModal.types';
 import {
   baseModalStyle,
   buttonStyle,
@@ -22,7 +22,8 @@ import {
   titleStyle,
   warningIconStyle,
   warningIconThemeStyle,
-} from './styles';
+} from './ConfirmationModal.styles';
+import { ConfirmationModalProps, Variant } from './ConfirmationModal.types';
 
 /**
  * Modals can be used to display a simple task, confirm actions, prompt users to input information, or display additional information.
@@ -45,14 +46,47 @@ export const ConfirmationModal = forwardRef<
       confirmButtonProps = {},
       cancelButtonProps = {},
       'data-lgid': dataLgId,
+      initialFocus: initialFocusProp,
       ...modalProps
     },
     fwdRef,
   ) => {
+    const textInputRef = useRef<HTMLInputElement>(null);
+    const internalCancelButtonRef = useRef<HTMLButtonElement>(null);
+    const cancelButtonRef = useMergeRefs([
+      internalCancelButtonRef,
+      cancelButtonProps.ref,
+    ]);
+    const internalConfirmButtonRef = useRef<HTMLButtonElement>(null);
+    const confirmButtonRef = useMergeRefs([
+      internalConfirmButtonRef,
+      confirmButtonProps.ref,
+    ]);
+
     const [confirmEnabled, setConfirmEnabled] = useState(!requiredInputText);
     const { theme, darkMode } = useDarkMode(darkModeProp);
 
     const lgIds = getLgIds(dataLgId);
+
+    // TODO: remove - submitDisabled is deprecated
+    const isConfirmDisabled =
+      submitDisabled ?? confirmButtonProps?.disabled ?? false;
+
+    const initialFocus = useMemo(() => {
+      if (initialFocusProp) {
+        return initialFocusProp;
+      }
+
+      if (requiredInputText) {
+        return textInputRef;
+      }
+
+      if (variant === Variant.Danger || isConfirmDisabled) {
+        return internalCancelButtonRef;
+      }
+
+      return internalConfirmButtonRef;
+    }, [initialFocusProp, isConfirmDisabled, requiredInputText, variant]);
 
     const textEntryConfirmation = useMemo(() => {
       setConfirmEnabled(!requiredInputText);
@@ -68,11 +102,10 @@ export const ConfirmationModal = forwardRef<
             label={`Type "${requiredInputText}" to confirm your action`}
             className={textEntryInputStyle}
             onChange={onInputChange}
-            // eslint-disable-next-line jsx-a11y/no-autofocus
-            autoFocus
             darkMode={darkMode}
             data-testid={lgIds.input}
-          ></TextInput>
+            ref={textInputRef}
+          />
         );
       }
 
@@ -99,19 +132,16 @@ export const ConfirmationModal = forwardRef<
       resetConfirmButton();
     };
 
-    // TODO: remove - submitDisabled is deprecated
-    const isConfirmDisabled =
-      submitDisabled ?? confirmButtonProps?.disabled ?? false;
-
     return (
       <Modal
         data-testid={lgIds.root}
         data-lgid={lgIds.root}
         {...modalProps}
         className={baseModalStyle}
-        setOpen={handleCancel}
         darkMode={darkMode}
+        initialFocus={initialFocus}
         ref={fwdRef}
+        setOpen={handleCancel}
       >
         <div
           className={cx(contentStyle, contentVariantStyles[variant], {
@@ -134,23 +164,25 @@ export const ConfirmationModal = forwardRef<
         </div>
         <Footer>
           <Button
+            data-testid={lgIds.cancel}
+            {...cancelButtonProps}
+            onClick={handleCancel}
+            className={cx(buttonStyle, cancelButtonProps?.className)}
+            ref={cancelButtonRef}
+          >
+            Cancel
+          </Button>
+          <Button
             data-testid={lgIds.confirm}
             {...confirmButtonProps}
             disabled={!confirmEnabled || isConfirmDisabled}
             className={cx(buttonStyle, confirmButtonProps?.className)}
             variant={variant}
             onClick={handleConfirm}
+            ref={confirmButtonRef}
           >
             {/* TODO: remove - buttonText is deprecated */}
             {buttonText || confirmButtonProps?.children || 'Confirm'}
-          </Button>
-          <Button
-            data-testid={lgIds.cancel}
-            {...cancelButtonProps}
-            onClick={handleCancel}
-            className={cx(buttonStyle, cancelButtonProps?.className)}
-          >
-            Cancel
           </Button>
         </Footer>
       </Modal>

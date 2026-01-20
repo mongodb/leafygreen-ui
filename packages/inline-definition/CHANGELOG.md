@@ -1,5 +1,11 @@
 # @leafygreen-ui/inline-definition
 
+## 9.2.0
+
+### Minor Changes
+
+- 323395e: Re-export `Align` enum from `@leafygreen-ui/tooltip`
+
 ## 9.1.4
 
 ### Patch Changes

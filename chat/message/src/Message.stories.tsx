@@ -156,7 +156,9 @@ const getPromotionChild = () => (
 
 const getToolCardChild = () => (
   <Message.ToolCard
-    chips={[{ label: 'MongoDB', glyph: <DatabaseIcon /> }]}
+    chips={[
+      { label: 'docdb-elastic.amazonaws.com:27017', glyph: <DatabaseIcon /> },
+    ]}
     state={ToolCardState.Idle}
     title="Run list-databases?"
   >

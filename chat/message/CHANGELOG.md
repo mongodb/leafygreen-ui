@@ -1,5 +1,26 @@
 # @lg-chat/message
 
+## 10.2.2
+
+### Patch Changes
+
+- 8502a46: [internal] Refactor `Message` subcomponents
+- 201459f: [LG-5861](https://jira.mongodb.org/browse/LG-5861): adds max-height to code blocks in `ToolCard.ExpandableContent`
+- 323395e: [LG-5857](https://jira.mongodb.org/browse/LG-5857): truncate `Chip` instances in `Message.ToolCard` if label exceeds 25 characters. Also, pass through `formatTooltip` prop for `Chip` instances to allow formatting tooltip content.
+- Updated dependencies [323395e]
+  - @leafygreen-ui/chip@4.2.0
+
+## 10.2.1
+
+### Patch Changes
+
+- dca5ddb: [LG-5853](https://jira.mongodb.org/browse/LG-5853): use `"white"` variant for `Chip` instances
+- a94c874: [LG-5856](https://jira.mongodb.org/browse/LG-5856): update selected state styles for thumbs up and thumbs down buttons
+- Updated dependencies [a94c874]
+- Updated dependencies [dca5ddb]
+  - @lg-chat/message-rating@7.1.1
+  - @leafygreen-ui/chip@4.1.0
+
 ## 10.2.0
 
 ### Minor Changes

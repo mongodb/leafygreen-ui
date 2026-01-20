@@ -16,3 +16,6 @@ mcp-ui @mongodb/lg-mcp-ui
 packages/date-picker @mongodb/lg-time-input
 packages/date-utils @mongodb/lg-time-input
 packages/time-input @mongodb/lg-time-input
+
+# project:collection-toolbar
+packages/collection-toolbar @mongodb/lg-collection-toolbar

@@ -1,4 +1,5 @@
 import { css } from '@leafygreen-ui/emotion';
+import { spacing } from '@leafygreen-ui/tokens';
 
 export const footerStyle = css`
   position: relative;
@@ -7,6 +8,5 @@ export const footerStyle = css`
   width: 100%;
   display: flex;
   justify-content: right;
-  flex-direction: row-reverse;
-  padding: 24px 35px 35px;
+  padding: ${spacing[600]}px ${spacing[900]}px ${spacing[900]}px;
 `;

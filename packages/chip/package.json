@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/chip",
-  "version": "4.0.10",
+  "version": "4.2.0",
   "description": "LeafyGreen UI Kit Chip",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -34,6 +34,7 @@
     "url": "https://jira.mongodb.org/projects/PD/summary"
   },
   "devDependencies": {
+    "@leafygreen-ui/typography": "workspace:^",
     "@lg-tools/build": "workspace:^"
   },
   "exports": {

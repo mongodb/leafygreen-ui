@@ -1201,6 +1201,9 @@ importers:
         specifier: workspace:^
         version: link:../tokens
     devDependencies:
+      '@leafygreen-ui/typography':
+        specifier: workspace:^
+        version: link:../typography
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
@@ -1477,6 +1480,9 @@ importers:
         specifier: ^4.2.2
         version: 4.3.1
     devDependencies:
+      '@leafygreen-ui/badge':
+        specifier: workspace:^
+        version: link:../badge
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../button
@@ -1501,6 +1507,9 @@ importers:
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion
+      '@leafygreen-ui/hooks':
+        specifier: workspace:^
+        version: link:../hooks
       '@leafygreen-ui/icon':
         specifier: workspace:^
         version: link:../icon

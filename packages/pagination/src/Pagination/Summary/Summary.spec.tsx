@@ -3,6 +3,7 @@ import { render } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 import { DEFAULT_ITEMS_PER_PAGE_OPTIONS } from '../constants';
+import { DEFAULT_LGID_ROOT, getLgIds } from '../getLgIds';
 
 import PaginationRangeView from '.';
 
@@ -202,6 +203,70 @@ describe('PaginationRangeView', () => {
       );
       expect(getByTestId('lg-pagination-item-range').textContent).toBe(
         '91 - 100 of 100 items',
+      );
+    });
+  });
+
+  describe('lgid props', () => {
+    const defaultLgIds = getLgIds();
+
+    test('renders default lgid values when data-lgid is not provided', () => {
+      const { getByTestId } = render(
+        <PaginationRangeView
+          itemsPerPage={10}
+          currentPage={1}
+          numTotalItems={100}
+        />,
+      );
+
+      expect(getByTestId(defaultLgIds.summary)).toBeInTheDocument();
+    });
+
+    test('renders default data-lgid attribute when data-lgid is not provided', () => {
+      const { getByTestId } = render(
+        <PaginationRangeView
+          itemsPerPage={10}
+          currentPage={1}
+          numTotalItems={100}
+        />,
+      );
+
+      expect(getByTestId(defaultLgIds.summary)).toHaveAttribute(
+        'data-lgid',
+        `${DEFAULT_LGID_ROOT}-summary`,
+      );
+    });
+
+    test('renders custom lgid value when data-lgid is provided', () => {
+      const customLgId = 'lg-my-pagination';
+      const customLgIds = getLgIds(customLgId);
+      const { getByTestId } = render(
+        <PaginationRangeView
+          itemsPerPage={10}
+          currentPage={1}
+          numTotalItems={100}
+          data-lgid={customLgId}
+        />,
+      );
+
+      expect(getByTestId(customLgIds.summary)).toBeInTheDocument();
+    });
+
+    test('renders custom data-lgid attribute when data-lgid is provided', () => {
+      const customLgId = 'lg-my-pagination';
+      const customLgIds = getLgIds(customLgId);
+      const { getByTestId } = render(
+        <PaginationRangeView
+          itemsPerPage={10}
+          currentPage={1}
+          numTotalItems={100}
+          data-lgid={customLgId}
+        />,
+      );
+
+      expect(getByTestId(customLgIds.summary)).toHaveAttribute(
+        'data-lgid',
+        `${customLgId}-summary`,
       );
     });
   });

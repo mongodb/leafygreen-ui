@@ -15,7 +15,12 @@ import {
   getWrapperStyles,
   inlineDefinitionStyles,
 } from './Chip.styles';
-import { ChipProps, TruncationLocation, Variant } from './Chip.types';
+import {
+  ChipProps,
+  TooltipAlign,
+  TruncationLocation,
+  Variant,
+} from './Chip.types';
 
 /**
  * Chips are used to display discrete pieces of information such as results for a filter, or tagging for a group of items.
@@ -34,6 +39,9 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       className,
       dismissButtonAriaLabel,
       glyph,
+      enableAlwaysShowTooltip = false,
+      formatTooltip,
+      tooltipAlign = TooltipAlign.Bottom,
       ...rest
     }: ChipProps,
     forwardedRef,
@@ -51,15 +59,23 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
       !!label &&
       (label as string).length > (chipCharacterLimit as number);
 
-    const truncatedName = useMemo(
-      () =>
-        getTruncatedName(
+    const triggerText = useMemo(() => {
+      if (isTruncated) {
+        return getTruncatedName(
           chipCharacterLimit as number,
           chipTruncationLocation,
           label as string,
-        ),
-      [chipCharacterLimit, chipTruncationLocation, label],
-    );
+        );
+      }
+
+      return label;
+    }, [chipCharacterLimit, chipTruncationLocation, isTruncated, label]);
+
+    const shouldShowTooltip = enableAlwaysShowTooltip || isTruncated;
+
+    const tooltipContent = useMemo(() => {
+      return formatTooltip ? formatTooltip(label) : label;
+    }, [formatTooltip, label]);
 
     return (
       <span
@@ -79,15 +95,15 @@ export const Chip = React.forwardRef<HTMLSpanElement, ChipProps>(
           )}
         >
           {glyph ?? glyph}
-          {isTruncated ? (
+          {shouldShowTooltip ? (
             <InlineDefinition
               darkMode={darkMode}
-              definition={label}
-              align="bottom"
+              definition={tooltipContent}
+              align={tooltipAlign}
               className={chipInlineDefinitionClassName}
               tooltipClassName={inlineDefinitionStyles}
             >
-              {truncatedName}
+              {triggerText}
             </InlineDefinition>
           ) : (
             label
