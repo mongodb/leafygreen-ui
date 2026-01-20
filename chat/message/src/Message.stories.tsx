@@ -5,6 +5,7 @@ import { StoryFn, StoryObj } from '@storybook/react';
 import { userEvent, within } from '@storybook/test';
 
 import DatabaseIcon from '@leafygreen-ui/icon/dist/Database';
+import ReturnIcon from '@leafygreen-ui/icon/dist/Return';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { Message, MessageProps, MessageSourceType } from '..';
@@ -169,16 +170,24 @@ const getActionCardChild = () => (
 {}
 \`\`\``}
     </Message.ActionCard.ExpandableContent>
-    <Message.ActionCard.Actions
-      onClickCancel={() => {
+    <Message.ActionCard.Button
+      onClick={() => {
         // eslint-disable-next-line no-console
         console.log('Cancel clicked');
       }}
-      onClickRun={() => {
+    >
+      Cancel
+    </Message.ActionCard.Button>
+    <Message.ActionCard.Button
+      onClick={() => {
         // eslint-disable-next-line no-console
         console.log('Run clicked');
       }}
-    />
+      rightGlyph={<ReturnIcon />}
+      variant="primary"
+    >
+      Run
+    </Message.ActionCard.Button>
   </Message.ActionCard>
 );
 

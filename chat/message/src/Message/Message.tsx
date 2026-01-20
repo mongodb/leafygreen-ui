@@ -57,7 +57,7 @@ export const Message = CompoundComponent(
       );
 
       // Find subcomponents
-      const toolCard = findChild(
+      const actionCard = findChild(
         children,
         MessageSubcomponentProperty.ActionCard,
       );
@@ -105,7 +105,7 @@ export const Message = CompoundComponent(
                 <MessageContent sourceType={sourceType} {...markdownProps}>
                   {messageBody ?? ''}
                 </MessageContent>
-                {toolCard}
+                {actionCard}
                 {promotion}
                 {actions}
                 {verifiedBanner}
@@ -120,10 +120,10 @@ export const Message = CompoundComponent(
   ),
   {
     displayName: 'Message',
+    ActionCard,
     Actions,
     Links,
     VerifiedBanner,
     Promotion,
-    ActionCard,
   },
 );

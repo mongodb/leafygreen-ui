@@ -26,7 +26,7 @@ export interface ActionCardStateProps {
  * These are implementation details for the compound component pattern and should not be exported.
  */
 export const ActionCardSubcomponentProperty = {
-  Actions: 'isLGActionCardActions',
+  Button: 'isLGActionCardButton',
   ExpandableContent: 'isLGActionCardExpandableContent',
 } as const;
 

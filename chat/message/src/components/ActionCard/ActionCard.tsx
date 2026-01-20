@@ -10,6 +10,7 @@ import {
   CompoundSubComponent,
   filterChildren,
   findChild,
+  findChildren,
 } from '@leafygreen-ui/compound-component';
 import LeafyGreenProvider, {
   useDarkMode,
@@ -18,12 +19,13 @@ import LeafyGreenProvider, {
 import { MessageSubcomponentProperty } from '../../shared.types';
 
 import {
+  actionsContainerStyles,
   getContainerStyles,
   getContentContainerStyles,
 } from './ActionCard.styles';
 import { ActionCardProps } from './ActionCard.types';
 import { ActionCardProvider } from './ActionCardContext';
-import { Actions } from './Actions';
+import { Button } from './Button';
 import { ExpandableContent } from './ExpandableContent';
 import { Header } from './Header';
 import { ActionCardSubcomponentProperty, State } from './shared.types';
@@ -75,13 +77,14 @@ export const ActionCard = CompoundSubComponent(
         children,
         ActionCardSubcomponentProperty.ExpandableContent,
       );
-      const actions = findChild(
+      const buttons = findChildren(
         children,
-        ActionCardSubcomponentProperty.Actions,
+        ActionCardSubcomponentProperty.Button,
       );
 
+      const hasButtons = React.Children.count(buttons) > 0;
       const isErrorState = state === State.Error;
-      const shouldRenderActions = !!actions && state === State.Idle;
+      const shouldRenderActions = hasButtons && state === State.Idle;
       const shouldRenderBorderTop =
         Children.count(remainingChildren) > 0 ||
         (!!expandableContent && isExpanded) ||
@@ -111,7 +114,9 @@ export const ActionCard = CompoundSubComponent(
               >
                 {remainingChildren}
                 {expandableContent}
-                {shouldRenderActions && actions}
+                {shouldRenderActions && (
+                  <div className={actionsContainerStyles}>{buttons}</div>
+                )}
               </div>
             </div>
           </ActionCardProvider>
@@ -122,7 +127,7 @@ export const ActionCard = CompoundSubComponent(
   {
     displayName: 'Message.ActionCard',
     key: MessageSubcomponentProperty.ActionCard,
-    Actions,
+    Button,
     ExpandableContent,
   },
 );

@@ -1,6 +1,6 @@
 export {
   ActionCard,
-  type ActionCardActionsProps,
+  type ActionCardButtonProps,
   type ActionCardChipProps,
   type ActionCardExpandableContentProps,
   type ActionCardProps,

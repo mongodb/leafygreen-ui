@@ -81,10 +81,7 @@ describe('chat/message/ActionCard', () => {
         children: (
           <>
             <ActionCard.ExpandableContent>Content</ActionCard.ExpandableContent>
-            <ActionCard.Actions
-              onClickCancel={() => {}}
-              onClickRun={() => {}}
-            />
+            <ActionCard.Button onClick={() => {}}>Action</ActionCard.Button>
           </>
         ),
       });
@@ -101,10 +98,7 @@ describe('chat/message/ActionCard', () => {
         children: (
           <>
             <ActionCard.ExpandableContent>Content</ActionCard.ExpandableContent>
-            <ActionCard.Actions
-              onClickCancel={() => {}}
-              onClickRun={() => {}}
-            />
+            <ActionCard.Button onClick={() => {}}>Action</ActionCard.Button>
           </>
         ),
       });
@@ -119,10 +113,7 @@ describe('chat/message/ActionCard', () => {
         children: (
           <>
             <ActionCard.ExpandableContent>Content</ActionCard.ExpandableContent>
-            <ActionCard.Actions
-              onClickCancel={() => {}}
-              onClickRun={() => {}}
-            />
+            <ActionCard.Button onClick={() => {}}>Action</ActionCard.Button>
           </>
         ),
       });
@@ -139,10 +130,7 @@ describe('chat/message/ActionCard', () => {
         children: (
           <>
             <ActionCard.ExpandableContent>Content</ActionCard.ExpandableContent>
-            <ActionCard.Actions
-              onClickCancel={() => {}}
-              onClickRun={() => {}}
-            />
+            <ActionCard.Button onClick={() => {}}>Action</ActionCard.Button>
           </>
         ),
       });
@@ -158,10 +146,7 @@ describe('chat/message/ActionCard', () => {
         children: (
           <>
             <ActionCard.ExpandableContent>Content</ActionCard.ExpandableContent>
-            <ActionCard.Actions
-              onClickCancel={() => {}}
-              onClickRun={() => {}}
-            />
+            <ActionCard.Button onClick={() => {}}>Action</ActionCard.Button>
           </>
         ),
       });
@@ -180,10 +165,7 @@ describe('chat/message/ActionCard', () => {
             <ActionCard.ExpandableContent>
               Expandable content
             </ActionCard.ExpandableContent>
-            <ActionCard.Actions
-              onClickCancel={() => {}}
-              onClickRun={() => {}}
-            />
+            <ActionCard.Button onClick={() => {}}>Action</ActionCard.Button>
           </>
         ),
         initialIsExpanded: true,
@@ -198,10 +180,7 @@ describe('chat/message/ActionCard', () => {
         children: (
           <>
             <ActionCard.ExpandableContent>Content</ActionCard.ExpandableContent>
-            <ActionCard.Actions
-              onClickCancel={() => {}}
-              onClickRun={() => {}}
-            />
+            <ActionCard.Button onClick={() => {}}>Action</ActionCard.Button>
           </>
         ),
       });
@@ -215,36 +194,59 @@ describe('chat/message/ActionCard', () => {
     });
   });
 
-  describe('actions', () => {
+  describe('button', () => {
     test(`renders when state is ${State.Idle}`, () => {
+      const mockOnClick = jest.fn();
       renderActionCard({
         state: State.Idle,
         children: (
-          <ActionCard.Actions onClickCancel={() => {}} onClickRun={() => {}} />
+          <ActionCard.Button onClick={mockOnClick}>Click Me</ActionCard.Button>
+        ),
+      });
+
+      const button = screen.getByRole('button', { name: 'Click Me' });
+      expect(button).toBeInTheDocument();
+    });
+
+    test('renders multiple buttons', () => {
+      const mockOnClick1 = jest.fn();
+      const mockOnClick2 = jest.fn();
+      renderActionCard({
+        state: State.Idle,
+        children: (
+          <>
+            <ActionCard.Button onClick={mockOnClick1}>
+              First Button
+            </ActionCard.Button>
+            <ActionCard.Button onClick={mockOnClick2}>
+              Second Button
+            </ActionCard.Button>
+          </>
         ),
       });
 
       expect(
-        screen.getByRole('button', { name: 'Cancel' }),
+        screen.getByRole('button', { name: 'First Button' }),
       ).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: 'Run' })).toBeInTheDocument();
+      expect(
+        screen.getByRole('button', { name: 'Second Button' }),
+      ).toBeInTheDocument();
     });
 
     test.each([State.Canceled, State.Error, State.Running, State.Success])(
       'does not render when state is %s',
       state => {
+        const mockOnClick = jest.fn();
         renderActionCard({
           state,
           children: (
-            <ActionCard.Actions
-              onClickCancel={() => {}}
-              onClickRun={() => {}}
-            />
+            <ActionCard.Button onClick={mockOnClick}>
+              Click Me
+            </ActionCard.Button>
           ),
         });
 
-        expect(screen.queryByRole('button', { name: 'Cancel' })).toBeNull();
-        expect(screen.queryByRole('button', { name: 'Run' })).toBeNull();
+        expect(screen.queryByRole('button', { name: 'Click Me' })).toBeNull();
       },
     );
   });

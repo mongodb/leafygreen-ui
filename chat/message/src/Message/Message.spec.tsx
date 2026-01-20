@@ -55,10 +55,9 @@ describe('Message', () => {
             <Message.ActionCard.ExpandableContent>
               Action Card Expandable Content
             </Message.ActionCard.ExpandableContent>
-            <Message.ActionCard.Actions
-              onClickCancel={() => {}}
-              onClickRun={() => {}}
-            />
+            <Message.ActionCard.Button onClick={() => {}}>
+              Action
+            </Message.ActionCard.Button>
           </Message.ActionCard>
           <div>Another regular child</div>
         </>
@@ -75,8 +74,7 @@ describe('Message', () => {
     expect(
       screen.getByText('Action Card Expandable Content'),
     ).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /run/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /action/i })).toBeInTheDocument();
 
     // No duplication - each subcomponent should only render once
     const verifiedBanners = screen.getAllByText(/Verified by MongoDB Staff/);
@@ -96,14 +94,9 @@ describe('Message', () => {
     );
     expect(actionCardExpandableContents).toHaveLength(1);
 
-    const actionCardActions = screen.getAllByRole('button', {
-      name: /cancel/i,
+    const actionCardButtons = screen.getAllByRole('button', {
+      name: /action/i,
     });
-    expect(actionCardActions).toHaveLength(1);
-
-    const actionCardRunActions = screen.getAllByRole('button', {
-      name: /run/i,
-    });
-    expect(actionCardRunActions).toHaveLength(1);
+    expect(actionCardButtons).toHaveLength(1);
   });
 });
