@@ -19,6 +19,7 @@ import { State } from '../shared.types';
 import {
   chipsContainerStyles,
   getContainerStyles,
+  getTextStyles,
   titleContainerStyles,
   upperRowStyles,
 } from './Header.styles';
@@ -58,7 +59,11 @@ export const Header = forwardRef<HTMLDivElement, HeaderProps>(
         <div className={upperRowStyles}>
           <div className={titleContainerStyles}>
             <TitleIcon state={state} />
-            <Body as={titleAs} weight={FontWeight.SemiBold}>
+            <Body
+              as={titleAs}
+              className={getTextStyles({ state, theme })}
+              weight={FontWeight.SemiBold}
+            >
               {title}
             </Body>
           </div>
@@ -73,7 +78,11 @@ export const Header = forwardRef<HTMLDivElement, HeaderProps>(
             </IconButton>
           )}
         </div>
-        {description && <Body as={descriptionAs}>{description}</Body>}
+        {description && (
+          <Body as={descriptionAs} className={getTextStyles({ state, theme })}>
+            {description}
+          </Body>
+        )}
         {chips.length > 0 && (
           <div className={chipsContainerStyles}>
             {chips.map((props, index) => (

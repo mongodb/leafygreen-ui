@@ -7,6 +7,8 @@ import {
   Variant,
 } from '@leafygreen-ui/tokens';
 
+import { State } from '../shared.types';
+
 export const getBaseContainerStyles = ({
   isErrorState,
   theme,
@@ -45,6 +47,38 @@ export const titleContainerStyles = css`
   align-items: center;
   gap: ${spacing[150]}px;
 `;
+
+const getCanceledTextStyles = (theme: Theme) => css`
+  color: ${color[theme].text[Variant.Secondary][InteractionState.Default]};
+`;
+
+const getErrorTextStyles = (theme: Theme) => css`
+  color: ${color[theme].text[Variant.OnError][InteractionState.Default]};
+`;
+
+const getDefaultTextStyles = (theme: Theme) => css`
+  color: ${color[theme].text[Variant.Primary][InteractionState.Default]};
+`;
+
+export const getTextStyles = ({
+  state,
+  theme,
+}: {
+  state: State;
+  theme: Theme;
+}) => {
+  switch (state) {
+    case State.Canceled:
+      return getCanceledTextStyles(theme);
+    case State.Error:
+      return getErrorTextStyles(theme);
+    case State.Idle:
+    case State.Running:
+    case State.Success:
+    default:
+      return getDefaultTextStyles(theme);
+  }
+};
 
 export const chipsContainerStyles = css`
   padding-top: ${spacing[200]}px;
