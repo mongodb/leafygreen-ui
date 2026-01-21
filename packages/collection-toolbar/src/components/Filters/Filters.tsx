@@ -1,6 +1,7 @@
+
 import React, { forwardRef } from 'react';
 
-import { CompoundSubComponent, filterChildren } from '@leafygreen-ui/compound-component';
+import { CompoundSubComponent, findChildren } from '@leafygreen-ui/compound-component';
 
 import { useCollectionToolbarContext } from '../../Context/CollectionToolbarProvider';
 import { CollectionToolbarFiltersSubComponentProperty, CollectionToolbarSubComponentProperty } from '../../shared.types';
@@ -20,17 +21,17 @@ export const Filters = CompoundSubComponent(
     ({ className, children, ...props }, fwdRef) => {
       const { lgIds } = useCollectionToolbarContext();
 
-      // const filterComponents = filterChildren(
-      //   children,
-      //   [
-      //     CollectionToolbarFiltersSubComponentProperty.NumberInput,
-      //     CollectionToolbarFiltersSubComponentProperty.Select,
-      //     CollectionToolbarFiltersSubComponentProperty.SegmentedControl,
-      //     CollectionToolbarFiltersSubComponentProperty.TextInput,
-      //     CollectionToolbarFiltersSubComponentProperty.Combobox,
-      //     CollectionToolbarFiltersSubComponentProperty.DatePicker,
-      //   ],
-      // );
+      const filterComponents = findChildren(
+        children,
+        [
+          CollectionToolbarFiltersSubComponentProperty.NumberInput,
+          CollectionToolbarFiltersSubComponentProperty.Select,
+          CollectionToolbarFiltersSubComponentProperty.SegmentedControl,
+          CollectionToolbarFiltersSubComponentProperty.TextInput,
+          CollectionToolbarFiltersSubComponentProperty.Combobox,
+          CollectionToolbarFiltersSubComponentProperty.DatePicker,
+        ],
+      );
 
 
       return (
@@ -40,7 +41,7 @@ export const Filters = CompoundSubComponent(
           data-lgid={lgIds.filters}
           {...props}
         >
-          {children}
+          {filterComponents}
         </div>
       );
     },
