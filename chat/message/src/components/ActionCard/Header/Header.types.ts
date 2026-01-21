@@ -1,7 +1,7 @@
 import { ComponentPropsWithRef } from 'react';
 
-import { SharedToolCardProps } from '../shared.types';
+import { SharedActionCardProps } from '../shared.types';
 
 export interface HeaderProps
-  extends SharedToolCardProps,
+  extends SharedActionCardProps,
     Omit<ComponentPropsWithRef<'div'>, 'title'> {}

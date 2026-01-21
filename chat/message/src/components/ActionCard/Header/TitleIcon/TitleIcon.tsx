@@ -9,11 +9,11 @@ import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Spinner } from '@leafygreen-ui/loading-indicator';
 import { Size } from '@leafygreen-ui/tokens';
 
-import { State, ToolCardStateProps } from '../../shared.types';
+import { ActionCardStateProps, State } from '../../shared.types';
 
 import { getIconFill, TitleIconVariant } from './TitleIcon.styles';
 
-export const TitleIcon = ({ state }: ToolCardStateProps) => {
+export const TitleIcon = ({ state }: ActionCardStateProps) => {
   const { theme } = useDarkMode();
 
   switch (state) {

@@ -3,9 +3,9 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
+import { ActionCard } from './ActionCard';
+import { ActionCardProps } from './ActionCard.types';
 import { State } from './shared.types';
-import { ToolCard } from './ToolCard';
-import { ToolCardProps } from './ToolCard.types';
 
 jest.mock('@lg-chat/lg-markdown', () => ({
   LGMarkdown: jest.fn(({ children }) => <div>{children}</div>),
@@ -17,13 +17,13 @@ const defaultProps = {
   title: 'Test Title',
 } as const;
 
-const renderToolCard = (props?: Partial<ToolCardProps>) =>
-  render(<ToolCard {...defaultProps} {...props} />);
+const renderActionCard = (props?: Partial<ActionCardProps>) =>
+  render(<ActionCard {...defaultProps} {...props} />);
 
-describe('chat/message/ToolCard', () => {
+describe('chat/message/ActionCard', () => {
   describe('a11y', () => {
     test('does not have basic accessibility issues', async () => {
-      const { container } = renderToolCard();
+      const { container } = renderActionCard();
       const results = await axe(container);
       expect(results).toHaveNoViolations();
     });
@@ -31,7 +31,7 @@ describe('chat/message/ToolCard', () => {
 
   test('forwards ref correctly', () => {
     const ref = createRef<HTMLDivElement>();
-    const { container } = renderToolCard({ ref });
+    const { container } = renderActionCard({ ref });
 
     expect(ref.current).toBeInstanceOf(HTMLDivElement);
     expect(ref.current).toBe(container.firstChild);
@@ -39,15 +39,28 @@ describe('chat/message/ToolCard', () => {
   });
 
   test('accepts and applies className', () => {
-    renderToolCard({ className: 'custom-class' });
+    renderActionCard({ className: 'custom-class' });
     const element = screen.getByText('Test Title');
 
     expect(element.closest('.custom-class')).toBeInTheDocument();
   });
 
   test('renders title', () => {
-    renderToolCard({ title: 'My Custom Title' });
+    renderActionCard({ title: 'My Custom Title' });
     expect(screen.getByText('My Custom Title')).toBeInTheDocument();
+  });
+
+  describe('description', () => {
+    test('renders description when provided', () => {
+      renderActionCard({ description: 'Test description text' });
+      expect(screen.getByText('Test description text')).toBeInTheDocument();
+    });
+
+    test('does not render description when not provided', () => {
+      renderActionCard();
+      const description = screen.queryByText('Test description text');
+      expect(description).toBeNull();
+    });
   });
 
   test('renders chips', () => {
@@ -55,20 +68,20 @@ describe('chat/message/ToolCard', () => {
       { label: 'MongoDB', glyph: <div>Icon</div> },
       { label: 'Atlas', glyph: <div>Icon</div> },
     ];
-    renderToolCard({ chips });
+    renderActionCard({ chips });
     expect(screen.getByText('MongoDB')).toBeInTheDocument();
     expect(screen.getByText('Atlas')).toBeInTheDocument();
   });
 
   describe('initialIsExpanded', () => {
     test('respects initialIsExpanded when showExpandButton is true', () => {
-      renderToolCard({
+      renderActionCard({
         initialIsExpanded: true,
         showExpandButton: true,
         children: (
           <>
-            <ToolCard.ExpandableContent>Content</ToolCard.ExpandableContent>
-            <ToolCard.Actions onClickCancel={() => {}} onClickRun={() => {}} />
+            <ActionCard.ExpandableContent>Content</ActionCard.ExpandableContent>
+            <ActionCard.Button onClick={() => {}}>Action</ActionCard.Button>
           </>
         ),
       });
@@ -79,13 +92,13 @@ describe('chat/message/ToolCard', () => {
     });
 
     test('ignores initialIsExpanded when showExpandButton is false', () => {
-      renderToolCard({
+      renderActionCard({
         initialIsExpanded: true,
         showExpandButton: false,
         children: (
           <>
-            <ToolCard.ExpandableContent>Content</ToolCard.ExpandableContent>
-            <ToolCard.Actions onClickCancel={() => {}} onClickRun={() => {}} />
+            <ActionCard.ExpandableContent>Content</ActionCard.ExpandableContent>
+            <ActionCard.Button onClick={() => {}}>Action</ActionCard.Button>
           </>
         ),
       });
@@ -95,12 +108,12 @@ describe('chat/message/ToolCard', () => {
     });
 
     test('defaults to collapsed when showExpandButton is false', () => {
-      renderToolCard({
+      renderActionCard({
         showExpandButton: false,
         children: (
           <>
-            <ToolCard.ExpandableContent>Content</ToolCard.ExpandableContent>
-            <ToolCard.Actions onClickCancel={() => {}} onClickRun={() => {}} />
+            <ActionCard.ExpandableContent>Content</ActionCard.ExpandableContent>
+            <ActionCard.Button onClick={() => {}}>Action</ActionCard.Button>
           </>
         ),
       });
@@ -112,12 +125,12 @@ describe('chat/message/ToolCard', () => {
 
   describe('showExpandButton', () => {
     test('shows expand button when showExpandButton is true', () => {
-      renderToolCard({
+      renderActionCard({
         showExpandButton: true,
         children: (
           <>
-            <ToolCard.ExpandableContent>Content</ToolCard.ExpandableContent>
-            <ToolCard.Actions onClickCancel={() => {}} onClickRun={() => {}} />
+            <ActionCard.ExpandableContent>Content</ActionCard.ExpandableContent>
+            <ActionCard.Button onClick={() => {}}>Action</ActionCard.Button>
           </>
         ),
       });
@@ -128,12 +141,12 @@ describe('chat/message/ToolCard', () => {
     });
 
     test('hides expand button when showExpandButton is false', () => {
-      renderToolCard({
+      renderActionCard({
         showExpandButton: false,
         children: (
           <>
-            <ToolCard.ExpandableContent>Content</ToolCard.ExpandableContent>
-            <ToolCard.Actions onClickCancel={() => {}} onClickRun={() => {}} />
+            <ActionCard.ExpandableContent>Content</ActionCard.ExpandableContent>
+            <ActionCard.Button onClick={() => {}}>Action</ActionCard.Button>
           </>
         ),
       });
@@ -146,13 +159,13 @@ describe('chat/message/ToolCard', () => {
 
   describe('expandable content', () => {
     test('renders ExpandableContent when provided', () => {
-      renderToolCard({
+      renderActionCard({
         children: (
           <>
-            <ToolCard.ExpandableContent>
+            <ActionCard.ExpandableContent>
               Expandable content
-            </ToolCard.ExpandableContent>
-            <ToolCard.Actions onClickCancel={() => {}} onClickRun={() => {}} />
+            </ActionCard.ExpandableContent>
+            <ActionCard.Button onClick={() => {}}>Action</ActionCard.Button>
           </>
         ),
         initialIsExpanded: true,
@@ -162,12 +175,12 @@ describe('chat/message/ToolCard', () => {
 
     test('calls onToggleExpanded when expand button is clicked', async () => {
       const mockOnToggleExpanded = jest.fn();
-      renderToolCard({
+      renderActionCard({
         onToggleExpanded: mockOnToggleExpanded,
         children: (
           <>
-            <ToolCard.ExpandableContent>Content</ToolCard.ExpandableContent>
-            <ToolCard.Actions onClickCancel={() => {}} onClickRun={() => {}} />
+            <ActionCard.ExpandableContent>Content</ActionCard.ExpandableContent>
+            <ActionCard.Button onClick={() => {}}>Action</ActionCard.Button>
           </>
         ),
       });
@@ -181,33 +194,59 @@ describe('chat/message/ToolCard', () => {
     });
   });
 
-  describe('actions', () => {
+  describe('button', () => {
     test(`renders when state is ${State.Idle}`, () => {
-      renderToolCard({
+      const mockOnClick = jest.fn();
+      renderActionCard({
         state: State.Idle,
         children: (
-          <ToolCard.Actions onClickCancel={() => {}} onClickRun={() => {}} />
+          <ActionCard.Button onClick={mockOnClick}>Click Me</ActionCard.Button>
+        ),
+      });
+
+      const button = screen.getByRole('button', { name: 'Click Me' });
+      expect(button).toBeInTheDocument();
+    });
+
+    test('renders multiple buttons', () => {
+      const mockOnClick1 = jest.fn();
+      const mockOnClick2 = jest.fn();
+      renderActionCard({
+        state: State.Idle,
+        children: (
+          <>
+            <ActionCard.Button onClick={mockOnClick1}>
+              First Button
+            </ActionCard.Button>
+            <ActionCard.Button onClick={mockOnClick2}>
+              Second Button
+            </ActionCard.Button>
+          </>
         ),
       });
 
       expect(
-        screen.getByRole('button', { name: 'Cancel' }),
+        screen.getByRole('button', { name: 'First Button' }),
       ).toBeInTheDocument();
-      expect(screen.getByRole('button', { name: 'Run' })).toBeInTheDocument();
+      expect(
+        screen.getByRole('button', { name: 'Second Button' }),
+      ).toBeInTheDocument();
     });
 
     test.each([State.Canceled, State.Error, State.Running, State.Success])(
       'does not render when state is %s',
       state => {
-        renderToolCard({
+        const mockOnClick = jest.fn();
+        renderActionCard({
           state,
           children: (
-            <ToolCard.Actions onClickCancel={() => {}} onClickRun={() => {}} />
+            <ActionCard.Button onClick={mockOnClick}>
+              Click Me
+            </ActionCard.Button>
           ),
         });
 
-        expect(screen.queryByRole('button', { name: 'Cancel' })).toBeNull();
-        expect(screen.queryByRole('button', { name: 'Run' })).toBeNull();
+        expect(screen.queryByRole('button', { name: 'Click Me' })).toBeNull();
       },
     );
   });

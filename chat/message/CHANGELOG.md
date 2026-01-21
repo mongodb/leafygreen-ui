@@ -1,5 +1,37 @@
 # @lg-chat/message
 
+## 11.0.0
+
+### Major Changes
+
+- 0f65282: [LG-5868](https://jira.mongodb.org/browse/LG-5868): rename `Message.ToolCard` to `Message.ActionCard`
+- 0f65282: [LG-5862](https://jira.mongodb.org/browse/LG-5862): Remove `Message.ActionCard.Actions` and replace with `Message.ActionCard.Button`
+
+### Minor Changes
+
+- 0f65282: [LG-5869](https://jira.mongodb.org/browse/LG-5869): add optional `description` prop to `Message.ActionCard`
+
+### Patch Changes
+
+- 1c0c03a: Updates the focus ring token to use the base blue color in light mode. [LG-5847](https://jira.mongodb.org/browse/LG-5847)
+- 0f65282: [LG-5870](https://jira.mongodb.org/browse/LG-5870): update text colors in `Message.ActionCard` depending on `state` prop value
+- Updated dependencies [1c0c03a]
+  - @leafygreen-ui/avatar@3.2.1
+  - @leafygreen-ui/badge@10.2.4
+  - @leafygreen-ui/banner@10.2.5
+  - @leafygreen-ui/button@25.2.1
+  - @leafygreen-ui/chip@4.2.1
+  - @leafygreen-ui/hooks@9.3.1
+  - @leafygreen-ui/icon-button@17.1.5
+  - @leafygreen-ui/loading-indicator@5.1.1
+  - @leafygreen-ui/tokens@4.2.2
+  - @leafygreen-ui/tooltip@14.3.1
+  - @leafygreen-ui/typography@22.2.4
+  - @lg-chat/lg-markdown@5.0.3
+  - @lg-chat/message-feedback@9.0.2
+  - @lg-chat/message-rating@7.1.2
+  - @lg-chat/rich-links@4.0.8
+
 ## 10.2.2
 
 ### Patch Changes
