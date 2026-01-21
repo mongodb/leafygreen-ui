@@ -1,6 +1,6 @@
 import { Children, ReactElement, ReactNode } from 'react';
 
-import { isChildWithSomeProperty } from '../isChildWithSomeProperty';
+import { isChildWithProperty } from '../isChildWithProperty';
 import { unwrapRootFragment } from '../unwrapRootFragment';
 
 /**
@@ -46,7 +46,5 @@ export const findChild = (
 
   return allChildren
     .flat()
-    .find(child =>
-      isChildWithSomeProperty(child, staticProperty),
-    ) as ReactElement;
+    .find(child => isChildWithProperty(child, staticProperty)) as ReactElement;
 };

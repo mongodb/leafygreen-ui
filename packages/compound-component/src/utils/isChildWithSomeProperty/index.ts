@@ -1,1 +1,0 @@
-export { isChildWithSomeProperty } from './isChildWithSomeProperty';
