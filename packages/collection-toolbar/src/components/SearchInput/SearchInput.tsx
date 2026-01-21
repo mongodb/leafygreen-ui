@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { ComponentType, forwardRef } from 'react';
 
 import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
@@ -14,7 +14,7 @@ export const SearchInput = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
   forwardRef<HTMLInputElement, SearchInputProps>(
     ({ className, ...props }, fwdRef) => {
-      const { size, variant, darkMode, lgIds } = useCollectionToolbarContext();
+      const { size, darkMode, lgIds } = useCollectionToolbarContext();
 
       validateAriaLabelProps(props, 'SearchInput');
 
@@ -24,12 +24,14 @@ export const SearchInput = CompoundSubComponent(
           darkMode={darkMode}
           ref={fwdRef}
           data-lgid={lgIds.searchInput}
-          className={getSearchInputStyles({ variant, size, className })}
+          className={getSearchInputStyles({ className })}
           {...props}
         />
       );
     },
-  ),
+    // Cast required: TypeScript cannot reconcile ForwardRefExoticComponent's propTypes
+    // with the AriaLabelProps discriminated union (aria-label OR aria-labelledby required)
+  ) as ComponentType<SearchInputProps>,
   {
     displayName: 'SearchInput',
     key: CollectionToolbarSubComponentProperty.SearchInput,
