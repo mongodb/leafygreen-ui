@@ -38,10 +38,10 @@
     "@lg-tools/build": "workspace:^",
     "@lg-tools/storybook-utils": "workspace:^"
   },
-  "homepage": "https://github.com/10gen/leafygreen-ui/tree/main/packages/vertical-stepper",
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/vertical-stepper",
   "repository": {
     "type": "git",
-    "url": "https://github.com/10gen/leafygreen-ui"
+    "url": "https://github.com/mongodb/leafygreen-ui"
   },
   "bugs": {
     "url": "https://jira.mongodb.org/projects/PD/summary"
