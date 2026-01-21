@@ -1,5 +1,14 @@
 # @leafygreen-ui/info-sprinkle
 
+## 5.0.11
+
+### Patch Changes
+
+- 1c0c03a: Updates the focus ring token to use the base blue color in light mode. [LG-5847](https://jira.mongodb.org/browse/LG-5847)
+- Updated dependencies [1c0c03a]
+  - @leafygreen-ui/tokens@4.2.2
+  - @leafygreen-ui/tooltip@14.3.1
+
 ## 5.0.10
 
 ### Patch Changes
