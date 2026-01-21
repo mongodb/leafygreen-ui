@@ -4,6 +4,7 @@ import {
   borderRadius,
   color,
   InteractionState,
+  spacing,
   Variant,
 } from '@leafygreen-ui/tokens';
 
@@ -55,3 +56,10 @@ export const getContentContainerStyles = ({
           ][InteractionState.Default]};
       `
     : css``;
+
+export const actionsContainerStyles = css`
+  width: 100%;
+  padding: ${spacing[300]}px;
+  display: flex;
+  gap: ${spacing[200]}px;
+`;

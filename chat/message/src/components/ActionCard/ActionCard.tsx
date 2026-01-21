@@ -10,6 +10,7 @@ import {
   CompoundSubComponent,
   filterChildren,
   findChild,
+  findChildren,
 } from '@leafygreen-ui/compound-component';
 import LeafyGreenProvider, {
   useDarkMode,
@@ -17,26 +18,28 @@ import LeafyGreenProvider, {
 
 import { MessageSubcomponentProperty } from '../../shared.types';
 
-import { Actions } from './Actions';
-import { ExpandableContent } from './ExpandableContent';
-import { Header } from './Header';
-import { State, ToolCardSubcomponentProperty } from './shared.types';
 import {
+  actionsContainerStyles,
   getContainerStyles,
   getContentContainerStyles,
-} from './ToolCard.styles';
-import { ToolCardProps } from './ToolCard.types';
-import { ToolCardProvider } from './ToolCardContext';
+} from './ActionCard.styles';
+import { ActionCardProps } from './ActionCard.types';
+import { ActionCardProvider } from './ActionCardContext';
+import { Button } from './Button';
+import { ExpandableContent } from './ExpandableContent';
+import { Header } from './Header';
+import { ActionCardSubcomponentProperty, State } from './shared.types';
 
-export const ToolCard = CompoundSubComponent(
+export const ActionCard = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
-  forwardRef<HTMLDivElement, ToolCardProps>(
+  forwardRef<HTMLDivElement, ActionCardProps>(
     (
       {
         children,
         chips,
         className,
         darkMode: darkModeProp,
+        description,
         initialIsExpanded = false,
         onToggleExpanded,
         showExpandButton = true,
@@ -68,16 +71,20 @@ export const ToolCard = CompoundSubComponent(
 
       const remainingChildren = filterChildren(
         children,
-        Object.values(ToolCardSubcomponentProperty),
+        Object.values(ActionCardSubcomponentProperty),
       );
       const expandableContent = findChild(
         children,
-        ToolCardSubcomponentProperty.ExpandableContent,
+        ActionCardSubcomponentProperty.ExpandableContent,
       );
-      const actions = findChild(children, ToolCardSubcomponentProperty.Actions);
+      const buttons = findChildren(
+        children,
+        ActionCardSubcomponentProperty.Button,
+      );
 
+      const hasButtons = React.Children.count(buttons) > 0;
       const isErrorState = state === State.Error;
-      const shouldRenderActions = !!actions && state === State.Idle;
+      const shouldRenderActions = hasButtons && state === State.Idle;
       const shouldRenderBorderTop =
         Children.count(remainingChildren) > 0 ||
         (!!expandableContent && isExpanded) ||
@@ -85,7 +92,7 @@ export const ToolCard = CompoundSubComponent(
 
       return (
         <LeafyGreenProvider darkMode={darkMode}>
-          <ToolCardProvider value={contextValue}>
+          <ActionCardProvider value={contextValue}>
             <div
               className={getContainerStyles({ className, isErrorState, theme })}
               ref={fwdRef}
@@ -93,6 +100,7 @@ export const ToolCard = CompoundSubComponent(
             >
               <Header
                 chips={chips}
+                description={description}
                 showExpandButton={showExpandButton}
                 state={state}
                 title={title}
@@ -106,18 +114,20 @@ export const ToolCard = CompoundSubComponent(
               >
                 {remainingChildren}
                 {expandableContent}
-                {shouldRenderActions && actions}
+                {shouldRenderActions && (
+                  <div className={actionsContainerStyles}>{buttons}</div>
+                )}
               </div>
             </div>
-          </ToolCardProvider>
+          </ActionCardProvider>
         </LeafyGreenProvider>
       );
     },
   ),
   {
-    displayName: 'Message.ToolCard',
-    key: MessageSubcomponentProperty.ToolCard,
-    Actions,
+    displayName: 'Message.ActionCard',
+    key: MessageSubcomponentProperty.ActionCard,
+    Button,
     ExpandableContent,
   },
 );
