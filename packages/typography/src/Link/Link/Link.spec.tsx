@@ -1,7 +1,7 @@
 import React, { createRef } from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 
-import { PolymorphicAs } from '@leafygreen-ui/polymorphic';
+import { InferredPolymorphic, PolymorphicAs } from '@leafygreen-ui/polymorphic';
 
 import Link from './Link';
 import { LinkProps } from './Link.types';
@@ -201,6 +201,8 @@ describe('packages/typography', () => {
         return <a {...props}>test</a>;
       };
 
+      const MyInferredPoly = InferredPolymorphic<{}, 'button'>(p => <></>);
+
       // eslint-disable-next-line
       test.skip('Link Component types', () => {
         <>
@@ -240,6 +242,8 @@ describe('packages/typography', () => {
           </Link>
           {/* @ts-expect-error as anchor is not allowed without an href */}
           <Link as="a">Content</Link>
+
+          <MyInferredPoly as={Link} href="string" />
         </>;
       });
     });
