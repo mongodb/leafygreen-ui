@@ -3,10 +3,10 @@
  * These are implementation details for the compound component pattern and should not be exported.
  */
 export const MessageSubcomponentProperty = {
+  ActionCard: 'isLGMessageActionCard',
   Actions: 'isLGMessageActions',
   Links: 'isLGMessageLinks',
   Promotion: 'isLGMessagePromotion',
-  ToolCard: 'isLGMessageToolCard',
   VerifiedBanner: 'isLGMessageVerifiedBanner',
 } as const;
 

@@ -3,8 +3,8 @@ import { LGMarkdown } from '@lg-chat/lg-markdown';
 
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 
-import { ToolCardSubcomponentProperty } from '../shared.types';
-import { useToolCardContext } from '../ToolCardContext';
+import { useActionCardContext } from '../ActionCardContext';
+import { ActionCardSubcomponentProperty } from '../shared.types';
 
 import {
   getContentWrapperStyles,
@@ -16,7 +16,7 @@ export const ExpandableContent = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
   forwardRef<HTMLDivElement, ExpandableContentProps>(
     ({ children, className, ...rest }, fwdRef) => {
-      const { isExpanded } = useToolCardContext();
+      const { isExpanded } = useActionCardContext();
 
       return (
         <div
@@ -35,7 +35,7 @@ export const ExpandableContent = CompoundSubComponent(
     },
   ),
   {
-    displayName: 'Message.ToolCard.ExpandableContent',
-    key: ToolCardSubcomponentProperty.ExpandableContent,
+    displayName: 'Message.ActionCard.ExpandableContent',
+    key: ActionCardSubcomponentProperty.ExpandableContent,
   },
 );
