@@ -1,5 +1,14 @@
 # @leafygreen-ui/chip
 
+## 4.2.1
+
+### Patch Changes
+
+- 1c0c03a: Updates the focus ring token to use the base blue color in light mode. [LG-5847](https://jira.mongodb.org/browse/LG-5847)
+- Updated dependencies [1c0c03a]
+  - @leafygreen-ui/inline-definition@9.2.1
+  - @leafygreen-ui/tokens@4.2.2
+
 ## 4.2.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @lg-charts/colors
 
+## 1.0.7
+
+### Patch Changes
+
+- 1c0c03a: Updates the focus ring token to use the base blue color in light mode. [LG-5847](https://jira.mongodb.org/browse/LG-5847)
+
 ## 1.0.6
 
 ### Patch Changes
