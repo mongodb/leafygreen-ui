@@ -445,12 +445,12 @@ Finds the first child component with a matching static property.
 
 ### `findChildren(children, staticProperty)`
 
-Finds all child components with a matching static property.
+Finds all child components with a matching static property or an array of static properties.
 
 **Parameters:**
 
 - `children`: Any React children (ReactNode)
-- `staticProperty`: The static property name to check for (string)
+- `staticProperty`: The static property name(s) to check for (string | string[])
 
 **Returns:** Array of matching ReactElements (empty array if none found)
 
