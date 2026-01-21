@@ -52,7 +52,6 @@ export const getCollectionToolbarStyles = ({
   className,
   variant,
 }: {
-  size?: Size;
   variant?: Variant;
   className?: string;
 }) =>

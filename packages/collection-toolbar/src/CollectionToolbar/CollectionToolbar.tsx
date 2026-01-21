@@ -65,7 +65,7 @@ export const CollectionToolbar = CompoundComponent(
         >
           <div
             data-lgid={lgIds.root}
-            className={getCollectionToolbarStyles({ size, variant, className })}
+            className={getCollectionToolbarStyles({ variant, className })}
             ref={fwdRef}
             {...rest}
           >
