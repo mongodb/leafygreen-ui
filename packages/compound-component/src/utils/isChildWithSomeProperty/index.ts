@@ -1,0 +1,1 @@
+export { isChildWithSomeProperty } from './isChildWithSomeProperty';

@@ -11,5 +11,6 @@ export {
   hasAnyStaticProperty,
   hasStaticProperty,
   isChildWithProperty,
+  isChildWithSomeProperty,
   unwrapRootFragment,
 } from './utils';

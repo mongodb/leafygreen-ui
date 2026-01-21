@@ -1,24 +1,7 @@
-import { Children, isValidElement, ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode } from 'react';
 
-import { hasAnyStaticProperty, hasStaticProperty } from '../hasStaticProperty';
+import { isChildWithSomeProperty } from '../isChildWithSomeProperty';
 import { unwrapRootFragment } from '../unwrapRootFragment';
-
-/**
- * Type guard to check if a child is a valid ReactElement with a matching static property
- */
-const isChildWithMatchingProperty = (
-  child: ReactNode,
-  staticProperty: string | Array<string>,
-): child is ReactElement => {
-  if (!isValidElement(child)) return false;
-  if (Children.count(child) !== 1) return false;
-
-  if (Array.isArray(staticProperty)) {
-    return hasAnyStaticProperty(child.type, staticProperty);
-  }
-
-  return hasStaticProperty(child.type, staticProperty);
-};
 
 /**
  *
@@ -82,6 +65,6 @@ export const findChildren = (
   return allChildren
     .flat()
     .filter((child): child is ReactElement =>
-      isChildWithMatchingProperty(child, staticProperty),
+      isChildWithSomeProperty(child, staticProperty),
     );
 };
