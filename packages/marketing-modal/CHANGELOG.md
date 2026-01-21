@@ -1,5 +1,29 @@
 # @leafygreen-ui/marketing-modal
 
+## 8.2.1
+
+### Patch Changes
+
+- 1c0c03a: Updates the focus ring token to use the base blue color in light mode. [LG-5847](https://jira.mongodb.org/browse/LG-5847)
+- Updated dependencies [1c0c03a]
+  - @leafygreen-ui/button@25.2.1
+  - @leafygreen-ui/modal@22.0.1
+  - @leafygreen-ui/tokens@4.2.2
+  - @leafygreen-ui/typography@22.2.4
+
+## 8.2.0
+
+### Minor Changes
+
+- 5c9da14: [LG-5735](https://jira.mongodb.org/browse/LG-5735): explicitly sets initial focus to primary button when `initialFocus` prop is not set. Previously, it would focus the first focusable child.
+
+### Patch Changes
+
+- Updated dependencies [5c9da14]
+- Updated dependencies [1800b48]
+  - @leafygreen-ui/modal@22.0.0
+  - @leafygreen-ui/button@25.2.0
+
 ## 8.1.7
 
 ### Patch Changes

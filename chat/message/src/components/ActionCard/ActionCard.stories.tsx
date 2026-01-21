@@ -7,10 +7,13 @@ import {
 import { StoryFn, StoryObj } from '@storybook/react';
 
 import DatabaseIcon from '@leafygreen-ui/icon/dist/Database';
+import ReturnIcon from '@leafygreen-ui/icon/dist/Return';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
-import { State, ToolCard, ToolCardProps } from './index';
+import { ActionCard, ActionCardProps, State } from './index';
 
+const DESCRIPTION_TEXT =
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
 const chips = [
   { label: 'docdb-elastic.amazonaws.com:27017', glyph: <DatabaseIcon /> },
 ];
@@ -22,9 +25,9 @@ const titles = {
   [State.Success]: 'Ran list-databases',
 } as const;
 
-const meta: StoryMetaType<typeof ToolCard> = {
-  title: 'Composition/Chat/Message/ToolCard',
-  component: ToolCard,
+const meta: StoryMetaType<typeof ActionCard> = {
+  title: 'Composition/Chat/Message/ActionCard',
+  component: ActionCard,
   parameters: {
     default: 'LiveExample',
     controls: {
@@ -34,6 +37,7 @@ const meta: StoryMetaType<typeof ToolCard> = {
       storyNames: ['Canceled', 'Error', 'Idle', 'Running', 'Success'],
       combineArgs: {
         darkMode: [false, true],
+        description: [undefined, DESCRIPTION_TEXT],
         initialIsExpanded: [false, true],
         showExpandButton: [false, true],
       },
@@ -47,6 +51,9 @@ const meta: StoryMetaType<typeof ToolCard> = {
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
+    description: {
+      control: 'text',
+    },
     state: {
       control: 'select',
       options: Object.values(State),
@@ -65,19 +72,20 @@ const meta: StoryMetaType<typeof ToolCard> = {
     },
   },
   args: {
-    title: 'Run list-databases?',
     chips,
-    state: State.Idle,
-    showExpandButton: true,
+    description: DESCRIPTION_TEXT,
     initialIsExpanded: false,
+    showExpandButton: true,
+    state: State.Idle,
+    title: 'Run list-databases?',
   },
 };
 
 export default meta;
 
-const renderToolCardChildren = () => (
+const renderActionCardChildren = () => (
   <>
-    <ToolCard.ExpandableContent>
+    <ActionCard.ExpandableContent>
       {`#### ARGUMENTS
 
 \`\`\`json
@@ -97,30 +105,39 @@ const renderToolCardChildren = () => (
   ]
 }
 \`\`\``}
-    </ToolCard.ExpandableContent>
-    <ToolCard.Actions
-      onClickCancel={() => {
+    </ActionCard.ExpandableContent>
+    <ActionCard.Button
+      onClick={() => {
         // eslint-disable-next-line no-console
         console.log('Cancel clicked');
       }}
-      onClickRun={() => {
+    >
+      Cancel
+    </ActionCard.Button>
+    <ActionCard.Button
+      onClick={() => {
         // eslint-disable-next-line no-console
         console.log('Run clicked');
       }}
-    />
+      rightGlyph={<ReturnIcon />}
+      variant="primary"
+    >
+      Run
+    </ActionCard.Button>
   </>
 );
 
-const Template: StoryFn<ToolCardProps> = props => (
+const Template: StoryFn<ActionCardProps> = props => (
   <LeafyGreenProvider darkMode={props.darkMode}>
-    <ToolCard {...props}>{renderToolCardChildren()}</ToolCard>
+    <ActionCard {...props}>{renderActionCardChildren()}</ActionCard>
   </LeafyGreenProvider>
 );
 
-export const LiveExample: StoryObj<typeof ToolCard> = {
+export const LiveExample: StoryObj<typeof ActionCard> = {
   render: Template,
   args: {
     title: titles[State.Idle],
+    description: DESCRIPTION_TEXT,
     chips,
     state: State.Idle,
     showExpandButton: true,
@@ -133,43 +150,43 @@ export const LiveExample: StoryObj<typeof ToolCard> = {
   },
 };
 
-export const Canceled: StoryObj<typeof ToolCard> = {
+export const Canceled: StoryObj<typeof ActionCard> = {
   render: Template,
   args: {
     state: State.Canceled,
     title: titles[State.Canceled],
     chips,
-    children: renderToolCardChildren(),
+    children: renderActionCardChildren(),
   },
 };
 
-export const Error: StoryObj<typeof ToolCard> = {
+export const Error: StoryObj<typeof ActionCard> = {
   render: Template,
   args: {
     state: State.Error,
     title: titles[State.Error],
     chips,
-    children: renderToolCardChildren(),
+    children: renderActionCardChildren(),
   },
 };
 
-export const Idle: StoryObj<typeof ToolCard> = {
+export const Idle: StoryObj<typeof ActionCard> = {
   render: Template,
   args: {
     state: State.Idle,
     title: titles[State.Idle],
     chips,
-    children: renderToolCardChildren(),
+    children: renderActionCardChildren(),
   },
 };
 
-export const Running: StoryObj<typeof ToolCard> = {
+export const Running: StoryObj<typeof ActionCard> = {
   render: Template,
   args: {
     state: State.Running,
     title: titles[State.Running],
     chips,
-    children: renderToolCardChildren(),
+    children: renderActionCardChildren(),
   },
   parameters: {
     chromatic: {
@@ -178,12 +195,12 @@ export const Running: StoryObj<typeof ToolCard> = {
   },
 };
 
-export const Success: StoryObj<typeof ToolCard> = {
+export const Success: StoryObj<typeof ActionCard> = {
   render: Template,
   args: {
     state: State.Success,
     title: titles[State.Success],
     chips,
-    children: renderToolCardChildren(),
+    children: renderActionCardChildren(),
   },
 };

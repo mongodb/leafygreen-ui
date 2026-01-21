@@ -1,5 +1,43 @@
 # @leafygreen-ui/confirmation-modal
 
+## 11.0.1
+
+### Patch Changes
+
+- 1c0c03a: Updates the focus ring token to use the base blue color in light mode. [LG-5847](https://jira.mongodb.org/browse/LG-5847)
+- Updated dependencies [1c0c03a]
+  - @leafygreen-ui/button@25.2.1
+  - @leafygreen-ui/hooks@9.3.1
+  - @leafygreen-ui/modal@22.0.1
+  - @leafygreen-ui/text-input@16.2.3
+  - @leafygreen-ui/tokens@4.2.2
+  - @leafygreen-ui/typography@22.2.4
+
+## 11.0.0
+
+### Major Changes
+
+- 5c9da14: [LG-5735](https://jira.mongodb.org/browse/LG-5735):
+
+  #### Breaking Changes
+
+  - Modal `Footer` component now uses a different `flex-direction` which changes the layout of buttons in `ConfirmationModal` and any other component using a `Footer` instance
+
+  #### Non-breaking Changes
+
+  - Adds more robust initial focus behavior to `ConfirmationModal`
+    - Focuses confirm button when `variant={Variant.Default}`
+    - Focuses cancel button when `variant={Variant.Danger}`
+    - Focuses text input when `requiredInputText` is provided
+    - Otherwise, `initialFocus` prop can be used for alternative focusable element
+
+### Patch Changes
+
+- Updated dependencies [5c9da14]
+- Updated dependencies [1800b48]
+  - @leafygreen-ui/modal@22.0.0
+  - @leafygreen-ui/button@25.2.0
+
 ## 10.3.1
 
 ### Patch Changes
