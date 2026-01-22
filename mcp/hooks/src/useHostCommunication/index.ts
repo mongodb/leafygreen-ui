@@ -1,0 +1,1 @@
+export { useHostCommunication } from "./useHostCommunication";
