@@ -1,5 +1,13 @@
 # @leafygreen-ui/drawer
 
+## 5.2.3
+
+### Patch Changes
+
+- ea892da: [LG-5920](https://jira.mongodb.org/browse/LG-5920): Update to latest `AssistantAvatar` from `@leafygreen-ui/avatar`
+- Updated dependencies [ea892da]
+  - @leafygreen-ui/toolbar@1.3.2
+
 ## 5.2.2
 
 ### Patch Changes

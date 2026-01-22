@@ -1,5 +1,13 @@
 # @lg-chat/chat-button
 
+## 0.2.2
+
+### Patch Changes
+
+- ea892da: [LG-5920](https://jira.mongodb.org/browse/LG-5920): Update to latest `AssistantAvatar` from `@leafygreen-ui/avatar`
+- Updated dependencies [b80eade]
+  - @leafygreen-ui/avatar@3.3.0
+
 ## 0.2.1
 
 ### Patch Changes

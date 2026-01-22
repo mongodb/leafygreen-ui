@@ -1,5 +1,11 @@
 # @leafygreen-ui/avatar
 
+## 3.3.0
+
+### Minor Changes
+
+- b80eade: [LG-5920](https://jira.mongodb.org/browse/LG-5920): conditionally render animation in `AssistantAvatar` instead of relying on opacity transition
+
 ## 3.2.1
 
 ### Patch Changes
