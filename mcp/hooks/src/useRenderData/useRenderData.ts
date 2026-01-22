@@ -44,7 +44,6 @@ export function useRenderData<T = unknown>(): UseRenderDataResult<T> {
     useEffect(() => {
         const handleMessage = (event: MessageEvent<RenderDataMessage>): void => {
             if (event.data?.type !== "ui-lifecycle-iframe-render-data") {
-                // Silently ignore messages that aren't for us
                 return;
             }
 
@@ -59,7 +58,6 @@ export function useRenderData<T = unknown>(): UseRenderDataResult<T> {
 
             if (renderData === undefined || renderData === null) {
                 setIsLoading(false);
-                // Not an error - parent may intentionally send null
                 return;
             }
 
