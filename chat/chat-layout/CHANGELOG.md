@@ -1,5 +1,28 @@
 # @lg-chat/chat-layout
 
+## 0.2.3
+
+### Patch Changes
+
+- ea892da: [LG-5920](https://jira.mongodb.org/browse/LG-5920): Update to latest `AssistantAvatar` from `@leafygreen-ui/avatar`
+- Updated dependencies [7153907]
+- Updated dependencies [b80eade]
+  - @leafygreen-ui/compound-component@0.3.0
+  - @leafygreen-ui/avatar@3.3.0
+
+## 0.2.2
+
+### Patch Changes
+
+- 1c0c03a: Updates the focus ring token to use the base blue color in light mode. [LG-5847](https://jira.mongodb.org/browse/LG-5847)
+- Updated dependencies [1c0c03a]
+  - @leafygreen-ui/avatar@3.2.1
+  - @leafygreen-ui/button@25.2.1
+  - @leafygreen-ui/hooks@9.3.1
+  - @leafygreen-ui/tokens@4.2.2
+  - @leafygreen-ui/tooltip@14.3.1
+  - @leafygreen-ui/typography@22.2.4
+
 ## 0.2.1
 
 ### Patch Changes

@@ -361,6 +361,7 @@ export const InDrawerLayout: StoryObj<ChatWindowStoryProps> = {
       name: /MongoDB Assistant/i,
     });
     await userEvent.click(chatButton);
+    await userEvent.unhover(chatButton);
   },
   parameters: {
     chromatic: {

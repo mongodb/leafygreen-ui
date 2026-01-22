@@ -1,5 +1,27 @@
 # @leafygreen-ui/drawer
 
+## 5.2.3
+
+### Patch Changes
+
+- ea892da: [LG-5920](https://jira.mongodb.org/browse/LG-5920): Update to latest `AssistantAvatar` from `@leafygreen-ui/avatar`
+- Updated dependencies [ea892da]
+  - @leafygreen-ui/toolbar@1.3.2
+
+## 5.2.2
+
+### Patch Changes
+
+- 1c0c03a: Updates the focus ring token to use the base blue color in light mode. [LG-5847](https://jira.mongodb.org/browse/LG-5847)
+- Updated dependencies [1c0c03a]
+  - @leafygreen-ui/button@25.2.1
+  - @leafygreen-ui/hooks@9.3.1
+  - @leafygreen-ui/icon-button@17.1.5
+  - @leafygreen-ui/tabs@17.0.11
+  - @leafygreen-ui/tokens@4.2.2
+  - @leafygreen-ui/toolbar@1.3.1
+  - @leafygreen-ui/typography@22.2.4
+
 ## 5.2.1
 
 ### Patch Changes
