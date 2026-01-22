@@ -1,5 +1,13 @@
 # @leafygreen-ui/toolbar
 
+## 1.3.2
+
+### Patch Changes
+
+- ea892da: [LG-5920](https://jira.mongodb.org/browse/LG-5920): Update to latest `AssistantAvatar` from `@leafygreen-ui/avatar`
+- Updated dependencies [ea892da]
+  - @lg-chat/chat-button@0.2.2
+
 ## 1.3.1
 
 ### Patch Changes

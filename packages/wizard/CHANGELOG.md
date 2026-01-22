@@ -1,5 +1,12 @@
 # @leafygreen-ui/wizard
 
+## 0.1.4
+
+### Patch Changes
+
+- Updated dependencies [7153907]
+  - @leafygreen-ui/compound-component@0.3.0
+
 ## 0.1.3
 
 ### Patch Changes
