@@ -5,7 +5,7 @@ import { actionsClassName } from '../components/Actions/Action.styles';
 import { paginationClassName } from '../components/Actions/Pagination/Pagination.styles';
 import { filtersClassName } from '../components/Filters/Filters.styles';
 import { titleClassName } from '../components/Title/Title.styles';
-import { Size, Variant } from '../shared.types';
+import { Variant } from '../shared.types';
 
 export const baseStyles = css`
   display: flex;

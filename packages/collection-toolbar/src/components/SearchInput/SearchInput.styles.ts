@@ -1,17 +1,9 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 
-import { Size, Variant } from '../../shared.types';
-
 export const baseStyles = css`
-  flex: 1;
+  width: 100%;
 `;
 
-export const getSearchInputStyles = ({
-  className,
-}: {
-  className?: string;
-  variant?: Variant;
-  size?: Size;
-}) => {
+export const getSearchInputStyles = ({ className }: { className?: string }) => {
   return cx(baseStyles, className);
 };

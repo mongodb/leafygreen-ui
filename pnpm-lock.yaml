@@ -1428,6 +1428,9 @@ importers:
 
   packages/collection-toolbar:
     dependencies:
+      '@leafygreen-ui/a11y':
+        specifier: workspace:^
+        version: link:../a11y
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../button
