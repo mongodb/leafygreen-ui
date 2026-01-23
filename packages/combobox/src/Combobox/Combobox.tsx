@@ -164,6 +164,26 @@ export function Combobox<M extends boolean>({
   const [highlightedOption, setHighlightedOption] = useState<string | null>(
     null,
   );
+
+  /**
+   * Array of all of the options objects
+   */
+  const allOptions: Array<OptionObject> = useMemo(
+    () => flattenChildren(children),
+    [children],
+  );
+
+  /**
+   * Returns whether the given value is in the options array
+   * @param value the value to check
+   */
+  const isValueValid = useCallback(
+    (value: string | null): boolean => {
+      return value ? !!allOptions.find(opt => opt.value === value) : false;
+    },
+    [allOptions],
+  );
+
   const [selection, setSelection] = useState<SelectValueType<M> | null>(() => {
     if (initialValue) {
       if (isArray(initialValue)) {
@@ -205,14 +225,6 @@ export function Combobox<M extends boolean>({
 
   const closeMenu = () => setOpen(false);
   const openMenu = () => setOpen(true);
-
-  /**
-   * Array of all of the options objects
-   */
-  const allOptions: Array<OptionObject> = useMemo(
-    () => flattenChildren(children),
-    [children],
-  );
 
   /**
    * Utility function that tells Typescript whether selection is multiselect
@@ -359,17 +371,6 @@ export function Combobox<M extends boolean>({
   const visibleOptions: Array<OptionObject> = useMemo(
     () => allOptions.filter(shouldOptionBeVisible),
     [allOptions, shouldOptionBeVisible],
-  );
-
-  /**
-   * Returns whether the given value is in the options array
-   * @param value the value to check
-   */
-  const isValueValid = useCallback(
-    (value: string | null): boolean => {
-      return value ? !!allOptions.find(opt => opt.value === value) : false;
-    },
-    [allOptions],
   );
 
   /**
