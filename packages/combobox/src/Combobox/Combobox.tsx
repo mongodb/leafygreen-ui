@@ -167,16 +167,12 @@ export function Combobox<M extends boolean>({
   const [selection, setSelection] = useState<SelectValueType<M> | null>(() => {
     if (initialValue) {
       if (isArray(initialValue)) {
-        const isValid = (val: string) =>
-          !!flattenChildren(children).find(opt => opt.value === val);
+        // Ensure the values we set are real options
         const filteredValue =
-          initialValue.filter(value => isValid(value)) ?? [];
+          initialValue.filter(value => isValueValid(value)) ?? [];
         return filteredValue as SelectValueType<M>;
       } else {
-        const isValid = (val: string) =>
-          !!flattenChildren(children).find(opt => opt.value === val);
-
-        if (isValid(initialValue as string)) {
+        if (isValueValid(initialValue as string)) {
           return initialValue;
         }
       }
