@@ -164,7 +164,26 @@ export function Combobox<M extends boolean>({
   const [highlightedOption, setHighlightedOption] = useState<string | null>(
     null,
   );
-  const [selection, setSelection] = useState<SelectValueType<M> | null>(null);
+  const [selection, setSelection] = useState<SelectValueType<M> | null>(() => {
+    if (initialValue) {
+      if (isArray(initialValue)) {
+        const isValid = (val: string) =>
+          !!flattenChildren(children).find(opt => opt.value === val);
+        const filteredValue =
+          initialValue.filter(value => isValid(value)) ?? [];
+        return filteredValue as SelectValueType<M>;
+      } else {
+        const isValid = (val: string) =>
+          !!flattenChildren(children).find(opt => opt.value === val);
+
+        if (isValid(initialValue as string)) {
+          return initialValue;
+        }
+      }
+    }
+
+    return getNullSelection(multiselect);
+  });
   const prevSelection = usePrevious(selection);
   const [inputValue, setInputValue] = useState<string>(inputValueProp ?? '');
 
@@ -834,25 +853,6 @@ export function Combobox<M extends boolean>({
       updateInputValue('');
     }
   }, [allOptions, isMultiselect, selection, overflow]);
-
-  // Set the initialValue
-  useEffect(() => {
-    if (initialValue) {
-      if (isArray(initialValue)) {
-        // Ensure the values we set are real options
-        const filteredValue =
-          initialValue.filter(value => isValueValid(value)) ?? [];
-        setSelection(filteredValue as SelectValueType<M>);
-      } else {
-        if (isValueValid(initialValue as string)) {
-          setSelection(initialValue);
-        }
-      }
-    } else {
-      setSelection(getNullSelection(multiselect));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   // When controlled value changes, update the selection
   // TODO: use useControlledValue
