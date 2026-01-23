@@ -28,6 +28,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@leafygreen-ui/a11y": "workspace:^",
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/compound-component": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
@@ -37,6 +38,7 @@
     "@leafygreen-ui/icon-button": "workspace:^",
     "@leafygreen-ui/menu": "workspace:^",
     "@leafygreen-ui/pagination": "workspace:^",
+    "@leafygreen-ui/search-input": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/tooltip": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",

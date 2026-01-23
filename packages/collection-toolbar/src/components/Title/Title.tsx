@@ -6,6 +6,7 @@ import { H3 } from '@leafygreen-ui/typography';
 import { useCollectionToolbarContext } from '../../Context/CollectionToolbarProvider';
 import { CollectionToolbarSubComponentProperty } from '../../shared.types';
 
+import { getTitleStyles } from './Title.styles';
 import { TitleProps } from './Title.types';
 
 /**
@@ -20,7 +21,7 @@ export const Title = CompoundSubComponent(
       return (
         <H3
           data-lgid={lgIds.title}
-          className={className}
+          className={getTitleStyles({ className })}
           {...rest}
           ref={fwdRef}
         >

@@ -11,4 +11,5 @@ export {
   Pagination,
   type PaginationProps,
 } from './Actions';
+export { SearchInput, type SearchInputProps } from './SearchInput';
 export { Title, type TitleProps } from './Title';
