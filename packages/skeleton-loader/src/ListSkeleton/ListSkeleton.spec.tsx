@@ -1,17 +1,20 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+
+import { getTestUtils } from '../testing/getTestUtils';
 
 import { ListSkeleton } from '.';
 
 describe('packages/skeleton-list', () => {
   test('renders', () => {
-    const { queryByTestId } = render(<ListSkeleton />);
-    expect(queryByTestId('lg-skeleton-list')).toBeInTheDocument();
+    render(<ListSkeleton />);
+    const { getSkeletonLoader } = getTestUtils();
+    expect(getSkeletonLoader()).toBeInTheDocument();
   });
 
   test('renders `count` items', () => {
-    const { queryAllByTestId } = render(<ListSkeleton count={3} />);
-    const listItems = queryAllByTestId('lg-skeleton-list_item');
-    expect(listItems.length).toBe(3);
+    render(<ListSkeleton count={3} />);
+    const listItems = screen.getAllByRole('listitem');
+    expect(listItems).toHaveLength(3);
   });
 });
