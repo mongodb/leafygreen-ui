@@ -59,8 +59,10 @@ export type CollectionToolbarActionsSubComponentProperty =
  */
 export const CollectionToolbarFiltersSubComponentProperty = {
   Select: 'isCollectionToolbarFiltersSelect',
+  Option: 'isCollectionToolbarFiltersOption',
   DatePicker: 'isCollectionToolbarFiltersDatePicker',
   SegmentedControl: 'isCollectionToolbarFiltersSegmentedControl',
+  SegmentedControlOption: 'isCollectionToolbarFiltersSegmentedControlOption',
   TextInput: 'isCollectionToolbarFiltersTextInput',
   NumberInput: 'isCollectionToolbarFiltersNumberInput',
   Combobox: 'isCollectionToolbarFiltersCombobox',

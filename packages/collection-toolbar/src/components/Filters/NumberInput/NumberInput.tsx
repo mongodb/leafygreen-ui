@@ -19,6 +19,7 @@ export const NumberInput = CompoundSubComponent(
         unit,
         onSelectChange,
         selectClassName,
+        inputClassName,
         ...rest
       },
       fwdRef,

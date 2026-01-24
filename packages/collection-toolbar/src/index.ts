@@ -8,8 +8,10 @@ export {
   ButtonVariant,
   type MenuItemProps,
   type MenuProps,
+  type OptionProps,
   type PaginationProps,
   type SearchInputProps,
+  type SelectProps,
   type TitleProps,
 } from './components';
 export { Size, Variant } from './shared.types';

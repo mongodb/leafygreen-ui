@@ -8,6 +8,8 @@ export type { NumberInputProps } from './NumberInput';
 export { NumberInput } from './NumberInput';
 export type { SegmentedControlProps } from './SegmentedControl';
 export { SegmentedControl } from './SegmentedControl';
+export type { SegmentedControlOptionProps } from './SegmentedControl/SegmentedControlOption';
+export { SegmentedControlOption } from './SegmentedControl/SegmentedControlOption';
 export type { SelectProps } from './Select';
 export { Select } from './Select';
 export type { TextInputProps } from './TextInput';

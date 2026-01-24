@@ -53,10 +53,22 @@ export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
       aria-label="Search for a collection"
     />
     <CollectionToolbar.Filters>
-      <CollectionToolbar.Filters.NumberInput label="Number Input" value={"10"} />
-      <CollectionToolbar.Filters.TextInput label="Text Input" value="Text Input" />
-      <CollectionToolbar.Filters.Combobox label="Combobox" value="Combobox" />
-      <CollectionToolbar.Filters.DatePicker label="Date Picker" value={new Date()} />
+      {/* <CollectionToolbar.Filters.SegmentedControl label="Segmented Control" value="Segmented Control" aria-label="Segmented Control">
+        <CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption value="Segmented Control Option 1">
+          Segmented Control Option 1
+        </CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption>
+        <CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption value="Segmented Control Option 2">
+          Segmented Control Option 2
+        </CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption>
+      </CollectionToolbar.Filters.SegmentedControl> */}
+      <CollectionToolbar.Filters.TextInput label="Text Input" value="Text Input" aria-label="Text Input" />
+      <CollectionToolbar.Filters.NumberInput label="Number Input" value={"10"} aria-label="Number Input" />
+      <CollectionToolbar.Filters.Combobox label="Combobox" value="Combobox" aria-label="Combobox" />
+      <CollectionToolbar.Filters.DatePicker label="Date Picker" value={new Date()} aria-label="Date Picker" />
+      <CollectionToolbar.Filters.Select label="Select" value="Select" aria-label="Select">
+        <CollectionToolbar.Filters.Select.Option value="Select Option 1">Select Option 1</CollectionToolbar.Filters.Select.Option>
+        <CollectionToolbar.Filters.Select.Option value="Select Option 2">Select Option 2</CollectionToolbar.Filters.Select.Option>
+      </CollectionToolbar.Filters.Select>
     </CollectionToolbar.Filters>
     <CollectionToolbar.Actions showToggleButton>
       <CollectionToolbar.Actions.Button variant={ButtonVariant.Default}>
@@ -89,12 +101,14 @@ export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
 
 export const SearchInput: StoryFn<typeof CollectionToolbar.SearchInput> = ({
   placeholder,
+  'aria-label': ariaLabel = '',
   'aria-labelledby': ariaLabelledby = '',
   ...props
 }) => (
   <CollectionToolbar size={Size.Default} variant={Variant.Collapsible}>
     <CollectionToolbar.SearchInput
       placeholder={placeholder}
+      aria-label={ariaLabel}
       aria-labelledby={ariaLabelledby}
       {...props}
     />

@@ -25,7 +25,10 @@ export const baseStyles = css`
 
   .${filtersClassName} {
     flex: 100%;
-    background: lightblue;
+
+    & > * {
+      width: fit-content;
+    }
   }
 `;
 

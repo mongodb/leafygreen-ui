@@ -5,7 +5,7 @@ import {
   findChild,
 } from '@leafygreen-ui/compound-component';
 
-import { Actions, Filters, SearchInput, Title } from '../components';
+import { Actions, Filters, Option, SearchInput, Select, Title } from '../components';
 import { CollectionToolbarProvider } from '../Context/CollectionToolbarProvider';
 import {
   CollectionToolbarSubComponentProperty,
@@ -89,6 +89,8 @@ export const CollectionToolbar = CompoundComponent(
     Title,
     Actions,
     Filters,
+    Option,
+    Select,
     SearchInput,
   },
 );

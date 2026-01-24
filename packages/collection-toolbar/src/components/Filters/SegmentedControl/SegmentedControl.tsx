@@ -7,6 +7,7 @@ import { useCollectionToolbarContext } from '../../../Context/CollectionToolbarP
 import { CollectionToolbarFiltersSubComponentProperty } from '../../../shared.types';
 
 import { SegmentedControlProps } from './SegmentedControl.types';
+import { SegmentedControlOption } from './SegmentedControlOption';
 
 export const SegmentedControl = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
@@ -19,5 +20,6 @@ export const SegmentedControl = CompoundSubComponent(
   {
     displayName: 'SegmentedControl',
     key: CollectionToolbarFiltersSubComponentProperty.SegmentedControl,
+    SegmentedControlOption,
   },
 );
