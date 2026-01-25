@@ -33,7 +33,6 @@ export const baseStyles = css`
 `;
 
 const collapsibleStyles = css`
-
   .${titleClassName} {
     flex: 1;
   }

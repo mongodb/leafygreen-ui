@@ -10,11 +10,16 @@ import { CollectionToolbarFiltersSubComponentProperty } from '../../../shared.ty
 import { ComboboxProps } from './Combobox.types';
 
 // Note: LGCombobox doesn't support ref forwarding
-const ComboboxComponent = <M extends boolean>({ 'aria-label': ariaLabel, ...props }: ComboboxProps<M>) => {
+const ComboboxComponent = <M extends boolean>({
+  'aria-label': ariaLabel,
+  ...props
+}: ComboboxProps<M>) => {
   const { size } = useCollectionToolbarContext();
 
-  if(!ariaLabel) {
-    consoleOnce.error('For screen-reader accessibility, aria-label must be provided to Combobox.');
+  if (!ariaLabel) {
+    consoleOnce.error(
+      'For screen-reader accessibility, aria-label must be provided to Combobox.',
+    );
     return null;
   }
 

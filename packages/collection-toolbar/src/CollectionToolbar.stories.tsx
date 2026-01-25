@@ -61,13 +61,37 @@ export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
           Segmented Control Option 2
         </CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption>
       </CollectionToolbar.Filters.SegmentedControl> */}
-      <CollectionToolbar.Filters.TextInput label="Text Input" value="Text Input" aria-label="Text Input" />
-      <CollectionToolbar.Filters.NumberInput label="Number Input" value={"10"} aria-label="Number Input" />
-      <CollectionToolbar.Filters.Combobox label="Combobox" value="Combobox" aria-label="Combobox" />
-      <CollectionToolbar.Filters.DatePicker label="Date Picker" value={new Date()} aria-label="Date Picker" />
-      <CollectionToolbar.Filters.Select label="Select" value="Select" aria-label="Select">
-        <CollectionToolbar.Filters.Select.Option value="Select Option 1">Select Option 1</CollectionToolbar.Filters.Select.Option>
-        <CollectionToolbar.Filters.Select.Option value="Select Option 2">Select Option 2</CollectionToolbar.Filters.Select.Option>
+      <CollectionToolbar.Filters.TextInput
+        label="Text Input"
+        value="Text Input"
+        aria-label="Text Input"
+      />
+      <CollectionToolbar.Filters.NumberInput
+        label="Number Input"
+        value={'10'}
+        aria-label="Number Input"
+      />
+      <CollectionToolbar.Filters.Combobox
+        label="Combobox"
+        value="Combobox"
+        aria-label="Combobox"
+      />
+      <CollectionToolbar.Filters.DatePicker
+        label="Date Picker"
+        value={new Date()}
+        aria-label="Date Picker"
+      />
+      <CollectionToolbar.Filters.Select
+        label="Select"
+        value="Select"
+        aria-label="Select"
+      >
+        <CollectionToolbar.Filters.Select.Option value="Select Option 1">
+          Select Option 1
+        </CollectionToolbar.Filters.Select.Option>
+        <CollectionToolbar.Filters.Select.Option value="Select Option 2">
+          Select Option 2
+        </CollectionToolbar.Filters.Select.Option>
       </CollectionToolbar.Filters.Select>
     </CollectionToolbar.Filters>
     <CollectionToolbar.Actions showToggleButton>

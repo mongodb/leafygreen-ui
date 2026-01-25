@@ -1,10 +1,10 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef } from 'react';
 
-import { CompoundSubComponent } from "@leafygreen-ui/compound-component";
+import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 
-import { CollectionToolbarFiltersSubComponentProperty } from "../../../../shared.types";
+import { CollectionToolbarFiltersSubComponentProperty } from '../../../../shared.types';
 
-import { SegmentedControlOptionProps } from "./SegmentedControlOption.types";
+import { SegmentedControlOptionProps } from './SegmentedControlOption.types';
 
 export const SegmentedControlOption = CompoundSubComponent(
   // eslint-disable-next-line react/display-name

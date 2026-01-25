@@ -5,7 +5,14 @@ import {
   findChild,
 } from '@leafygreen-ui/compound-component';
 
-import { Actions, Filters, Option, SearchInput, Select, Title } from '../components';
+import {
+  Actions,
+  Filters,
+  Option,
+  SearchInput,
+  Select,
+  Title,
+} from '../components';
 import { CollectionToolbarProvider } from '../Context/CollectionToolbarProvider';
 import {
   CollectionToolbarSubComponentProperty,
@@ -74,10 +81,10 @@ export const CollectionToolbar = CompoundComponent(
             {actions}
             {!isCollapsible && filters}
             {isCollapsible && (
-                <div className={collapsibleContentStyles}>
-                  {searchInput}
-                  {filters}
-                </div>
+              <div className={collapsibleContentStyles}>
+                {searchInput}
+                {filters}
+              </div>
             )}
           </div>
         </CollectionToolbarProvider>

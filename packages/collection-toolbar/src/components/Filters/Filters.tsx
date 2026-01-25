@@ -1,10 +1,15 @@
-
 import React, { forwardRef } from 'react';
 
-import { CompoundSubComponent, findChildren } from '@leafygreen-ui/compound-component';
+import {
+  CompoundSubComponent,
+  findChildren,
+} from '@leafygreen-ui/compound-component';
 
 import { useCollectionToolbarContext } from '../../Context/CollectionToolbarProvider';
-import { CollectionToolbarFiltersSubComponentProperty, CollectionToolbarSubComponentProperty } from '../../shared.types';
+import {
+  CollectionToolbarFiltersSubComponentProperty,
+  CollectionToolbarSubComponentProperty,
+} from '../../shared.types';
 
 import { Combobox } from './Combobox';
 import { DatePicker } from './DatePicker';
@@ -21,18 +26,14 @@ export const Filters = CompoundSubComponent(
     ({ className, children, ...props }, fwdRef) => {
       const { lgIds } = useCollectionToolbarContext();
 
-      const filterComponents = findChildren(
-        children,
-        [
-          CollectionToolbarFiltersSubComponentProperty.NumberInput,
-          CollectionToolbarFiltersSubComponentProperty.Select,
-          CollectionToolbarFiltersSubComponentProperty.SegmentedControl,
-          CollectionToolbarFiltersSubComponentProperty.TextInput,
-          CollectionToolbarFiltersSubComponentProperty.Combobox,
-          CollectionToolbarFiltersSubComponentProperty.DatePicker,
-        ],
-      );
-
+      const filterComponents = findChildren(children, [
+        CollectionToolbarFiltersSubComponentProperty.NumberInput,
+        CollectionToolbarFiltersSubComponentProperty.Select,
+        CollectionToolbarFiltersSubComponentProperty.SegmentedControl,
+        CollectionToolbarFiltersSubComponentProperty.TextInput,
+        CollectionToolbarFiltersSubComponentProperty.Combobox,
+        CollectionToolbarFiltersSubComponentProperty.DatePicker,
+      ]);
 
       return (
         <div
