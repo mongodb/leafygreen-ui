@@ -2,6 +2,8 @@ import React from 'react';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
+import { css } from '@leafygreen-ui/emotion';
+
 import { ButtonVariant, CollectionToolbar, Size, Variant } from '.';
 
 const meta: StoryMetaType<typeof CollectionToolbar> = {
@@ -53,11 +55,23 @@ export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
       aria-label="Search for a collection"
     />
     <CollectionToolbar.Filters>
-      {/* <CollectionToolbar.Filters.SegmentedControl label="Segmented Control" value="Segmented Control" aria-label="Segmented Control">
-        <CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption value="Segmented Control Option 1">
+      {/* Will add back once we update exports for SegmentedControlOption */}
+      {/* <CollectionToolbar.Filters.SegmentedControl
+        label="Segmented Control"
+        value="Segmented Control"
+        aria-label="Segmented Control"
+      >
+        <CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption
+          key="segmented-control-option-1"
+          value="Segmented Control Option 1"
+        >
           Segmented Control Option 1
         </CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption>
-        <CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption value="Segmented Control Option 2">
+        <CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption
+          key="segmented-control-option-2"
+          value="Segmented Control Option 2"
+          glyph={<Icon glyph="GlobeAmericas" />}
+        >
           Segmented Control Option 2
         </CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption>
       </CollectionToolbar.Filters.SegmentedControl> */}
@@ -85,6 +99,9 @@ export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
         label="Select"
         value="Select"
         aria-label="Select"
+        className={css`
+          width: 200px !important;
+        `}
       >
         <CollectionToolbar.Filters.Select.Option value="Select Option 1">
           Select Option 1

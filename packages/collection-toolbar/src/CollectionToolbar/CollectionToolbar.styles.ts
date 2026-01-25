@@ -3,6 +3,7 @@ import { spacing } from '@leafygreen-ui/tokens';
 
 import { actionsClassName } from '../components/Actions/Action.styles';
 import { paginationClassName } from '../components/Actions/Pagination/Pagination.styles';
+import { comboboxClassName } from '../components/Filters/Combobox/Combobox.styles';
 import { filtersClassName } from '../components/Filters/Filters.styles';
 import { titleClassName } from '../components/Title/Title.styles';
 import { Variant } from '../shared.types';
@@ -26,8 +27,12 @@ export const baseStyles = css`
   .${filtersClassName} {
     flex: 100%;
 
-    & > * {
+    & .${comboboxClassName} {
       width: fit-content;
+    }
+
+    & input[type='number'] {
+      width: auto;
     }
   }
 `;

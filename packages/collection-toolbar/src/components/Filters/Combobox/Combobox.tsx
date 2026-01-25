@@ -7,11 +7,13 @@ import { consoleOnce } from '@leafygreen-ui/lib';
 import { useCollectionToolbarContext } from '../../../Context/CollectionToolbarProvider';
 import { CollectionToolbarFiltersSubComponentProperty } from '../../../shared.types';
 
+import { getComboboxStyles } from './Combobox.styles';
 import { ComboboxProps } from './Combobox.types';
 
 // Note: LGCombobox doesn't support ref forwarding
 const ComboboxComponent = <M extends boolean>({
   'aria-label': ariaLabel,
+  className,
   ...props
 }: ComboboxProps<M>) => {
   const { size } = useCollectionToolbarContext();
@@ -23,7 +25,14 @@ const ComboboxComponent = <M extends boolean>({
     return null;
   }
 
-  return <LGCombobox size={size} aria-label={ariaLabel} {...props} />;
+  return (
+    <LGCombobox
+      size={size}
+      aria-label={ariaLabel}
+      className={getComboboxStyles({ className })}
+      {...props}
+    />
+  );
 };
 
 ComboboxComponent.displayName = 'Combobox';

@@ -7,6 +7,7 @@ import { useCollectionToolbarContext } from '../../../Context/CollectionToolbarP
 import { CollectionToolbarFiltersSubComponentProperty } from '../../../shared.types';
 
 import { Option } from './Option';
+import { getSelectStyles } from './Select.styles';
 import { SelectProps } from './Select.types';
 
 export const Select = CompoundSubComponent(
@@ -21,6 +22,7 @@ export const Select = CompoundSubComponent(
         defaultValue,
         onChange,
         ref: _ref,
+        className,
         ...rest
       },
       fwdRef,
@@ -38,6 +40,7 @@ export const Select = CompoundSubComponent(
             aria-labelledby={ariaLabelledby}
             value={value}
             onChange={onChange}
+            className={getSelectStyles({ className })}
             {...rest}
           />
         );
@@ -52,6 +55,7 @@ export const Select = CompoundSubComponent(
           aria-labelledby={ariaLabelledby}
           defaultValue={defaultValue}
           onChange={onChange}
+          className={getSelectStyles({ className })}
           {...rest}
         />
       );
