@@ -45,7 +45,7 @@ export interface AnchorLikeProps<TAsProp extends AnchorLike | undefined> {
 }
 
 /** Anchor props where `href` is required */
-export type InferredAnchorProps<TComponentProps = {}> = {
+export type InferredAnchorProps<TComponentProps> = {
   /**
    * The URL that the hyperlink points to
    */
