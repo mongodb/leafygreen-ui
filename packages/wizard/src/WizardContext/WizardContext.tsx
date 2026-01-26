@@ -1,7 +1,9 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
 
+import { Optional } from '@leafygreen-ui/lib';
+
+import type { GetLgIdsReturnType } from '../utils/getLgIds';
 import { getLgIds } from '../utils/getLgIds';
-import { GetLgIdsReturnType } from '../utils/getLgIds';
 
 export interface WizardContextData {
   /**
@@ -43,7 +45,9 @@ export const WizardContext = createContext<WizardContextData>({
 });
 
 interface WizardProviderProps
-  extends PropsWithChildren<Omit<WizardContextData, 'isWizardContext'>> {}
+  extends PropsWithChildren<
+    Omit<Optional<WizardContextData, 'lgIds'>, 'isWizardContext'>
+  > {}
 
 export const WizardProvider = ({
   children,

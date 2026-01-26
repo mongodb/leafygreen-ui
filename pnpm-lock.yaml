@@ -1726,6 +1726,43 @@ importers:
         specifier: ^29.5.12
         version: 29.5.12
 
+  packages/delete-wizard:
+    dependencies:
+      '@leafygreen-ui/canvas-header':
+        specifier: workspace:^
+        version: link:../canvas-header
+      '@leafygreen-ui/compound-component':
+        specifier: workspace:^
+        version: link:../compound-component
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../emotion
+      '@leafygreen-ui/form-footer':
+        specifier: workspace:^
+        version: link:../form-footer
+      '@leafygreen-ui/icon':
+        specifier: workspace:^
+        version: link:../icon
+      '@leafygreen-ui/lib':
+        specifier: workspace:^
+        version: link:../lib
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../tokens
+      '@leafygreen-ui/wizard':
+        specifier: workspace:^
+        version: link:../wizard
+      '@lg-tools/test-harnesses':
+        specifier: workspace:^
+        version: link:../../tools/test-harnesses
+    devDependencies:
+      '@faker-js/faker':
+        specifier: ^10.1.0
+        version: 10.1.0
+      '@leafygreen-ui/typography':
+        specifier: workspace:^
+        version: link:../typography
+
   packages/descendants:
     dependencies:
       '@leafygreen-ui/hooks':
