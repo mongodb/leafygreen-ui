@@ -29,6 +29,7 @@ export const Filters = CompoundSubComponent(
     ({ className, children, ...props }, fwdRef) => {
       const { lgIds, variant } = useCollectionToolbarContext();
 
+      // TODO: add max-filter count logic in LG-5845
       const filterComponents = findChildren(children, [
         CollectionToolbarFiltersSubComponentProperty.NumberInput,
         CollectionToolbarFiltersSubComponentProperty.Select,
