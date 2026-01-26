@@ -164,7 +164,42 @@ export function Combobox<M extends boolean>({
   const [highlightedOption, setHighlightedOption] = useState<string | null>(
     null,
   );
-  const [selection, setSelection] = useState<SelectValueType<M> | null>(null);
+
+  /**
+   * Array of all of the options objects
+   */
+  const allOptions: Array<OptionObject> = useMemo(
+    () => flattenChildren(children),
+    [children],
+  );
+
+  /**
+   * Returns whether the given value is in the options array
+   * @param value the value to check
+   */
+  const isValueValid = useCallback(
+    (value: string | null): boolean => {
+      return value ? !!allOptions.find(opt => opt.value === value) : false;
+    },
+    [allOptions],
+  );
+
+  const [selection, setSelection] = useState<SelectValueType<M> | null>(() => {
+    if (initialValue) {
+      if (isArray(initialValue)) {
+        // Ensure the values we set are real options
+        const filteredValue =
+          initialValue.filter(value => isValueValid(value)) ?? [];
+        return filteredValue as SelectValueType<M>;
+      } else {
+        if (isValueValid(initialValue as string)) {
+          return initialValue;
+        }
+      }
+    }
+
+    return getNullSelection(multiselect);
+  });
   const prevSelection = usePrevious(selection);
   const [inputValue, setInputValue] = useState<string>(inputValueProp ?? '');
 
@@ -190,14 +225,6 @@ export function Combobox<M extends boolean>({
 
   const closeMenu = () => setOpen(false);
   const openMenu = () => setOpen(true);
-
-  /**
-   * Array of all of the options objects
-   */
-  const allOptions: Array<OptionObject> = useMemo(
-    () => flattenChildren(children),
-    [children],
-  );
 
   /**
    * Utility function that tells Typescript whether selection is multiselect
@@ -344,17 +371,6 @@ export function Combobox<M extends boolean>({
   const visibleOptions: Array<OptionObject> = useMemo(
     () => allOptions.filter(shouldOptionBeVisible),
     [allOptions, shouldOptionBeVisible],
-  );
-
-  /**
-   * Returns whether the given value is in the options array
-   * @param value the value to check
-   */
-  const isValueValid = useCallback(
-    (value: string | null): boolean => {
-      return value ? !!allOptions.find(opt => opt.value === value) : false;
-    },
-    [allOptions],
   );
 
   /**
@@ -834,25 +850,6 @@ export function Combobox<M extends boolean>({
       updateInputValue('');
     }
   }, [allOptions, isMultiselect, selection, overflow]);
-
-  // Set the initialValue
-  useEffect(() => {
-    if (initialValue) {
-      if (isArray(initialValue)) {
-        // Ensure the values we set are real options
-        const filteredValue =
-          initialValue.filter(value => isValueValid(value)) ?? [];
-        setSelection(filteredValue as SelectValueType<M>);
-      } else {
-        if (isValueValid(initialValue as string)) {
-          setSelection(initialValue);
-        }
-      }
-    } else {
-      setSelection(getNullSelection(multiselect));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   // When controlled value changes, update the selection
   // TODO: use useControlledValue
