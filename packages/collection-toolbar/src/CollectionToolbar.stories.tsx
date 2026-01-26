@@ -2,7 +2,9 @@ import React from 'react';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
+import { ComboboxOption } from '@leafygreen-ui/combobox';
 import { css } from '@leafygreen-ui/emotion';
+import { Icon } from '@leafygreen-ui/icon';
 
 import { ButtonVariant, CollectionToolbar, Size, Variant } from '.';
 
@@ -55,52 +57,55 @@ export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
       aria-label="Search for a collection"
     />
     <CollectionToolbar.Filters>
-      {/* Will add back once we update exports for SegmentedControlOption */}
-      {/* <CollectionToolbar.Filters.SegmentedControl
-        label="Segmented Control"
-        value="Segmented Control"
+      <CollectionToolbar.Filters.SegmentedControl
+        value="option-1"
         aria-label="Segmented Control"
       >
         <CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption
           key="segmented-control-option-1"
-          value="Segmented Control Option 1"
+          value="option-1"
         >
           Segmented Control Option 1
         </CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption>
         <CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption
           key="segmented-control-option-2"
-          value="Segmented Control Option 2"
+          value="option-2"
           glyph={<Icon glyph="GlobeAmericas" />}
         >
           Segmented Control Option 2
         </CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption>
-      </CollectionToolbar.Filters.SegmentedControl> */}
+      </CollectionToolbar.Filters.SegmentedControl>
+
       <CollectionToolbar.Filters.TextInput
-        label="Text Input"
         value="Text Input"
         aria-label="Text Input"
       />
       <CollectionToolbar.Filters.NumberInput
-        label="Number Input"
         value={'10'}
         aria-label="Number Input"
       />
       <CollectionToolbar.Filters.Combobox
-        label="Combobox"
         value="Combobox"
         aria-label="Combobox"
-      />
+        placeholder="Combobox"
+      >
+        <ComboboxOption value="Combobox Option 1">
+          Combobox Option 1
+        </ComboboxOption>
+        <ComboboxOption value="Combobox Option 2">
+          Combobox Option 2
+        </ComboboxOption>
+      </CollectionToolbar.Filters.Combobox>
       <CollectionToolbar.Filters.DatePicker
-        label="Date Picker"
         value={new Date()}
         aria-label="Date Picker"
       />
       <CollectionToolbar.Filters.Select
-        label="Select"
         value="Select"
         aria-label="Select"
         className={css`
-          width: 200px !important;
+          width: 100%;
+          max-width: 160px !important;
         `}
       >
         <CollectionToolbar.Filters.Select.Option value="Select Option 1">

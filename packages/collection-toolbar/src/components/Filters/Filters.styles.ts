@@ -6,7 +6,7 @@ export const filtersClassName = createUniqueClassName('filters');
 
 export const baseStyles = css`
   display: flex;
-  flex-direction: row;
+  flex-flow: row wrap;
   align-items: center;
   gap: ${spacing[200]}px;
 `;

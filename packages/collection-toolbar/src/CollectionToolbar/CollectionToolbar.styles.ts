@@ -49,6 +49,10 @@ const collapsibleStyles = css`
   .${paginationClassName} {
     width: max-content;
   }
+
+  .${filtersClassName} {
+    margin-top: ${spacing[200]}px;
+  }
 `;
 
 export const collapsibleContentStyles = css`
