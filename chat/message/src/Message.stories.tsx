@@ -200,7 +200,6 @@ const meta: StoryMetaType<typeof Message> = {
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
     isSender: { control: 'boolean' },
-    avatar: { control: 'none' },
     components: { control: 'none' },
     markdownProps: { control: 'none' },
   },

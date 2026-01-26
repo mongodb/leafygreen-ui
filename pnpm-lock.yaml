@@ -565,9 +565,6 @@ importers:
 
   chat/message:
     dependencies:
-      '@leafygreen-ui/avatar':
-        specifier: workspace:^
-        version: link:../../packages/avatar
       '@leafygreen-ui/badge':
         specifier: workspace:^
         version: link:../../packages/badge
