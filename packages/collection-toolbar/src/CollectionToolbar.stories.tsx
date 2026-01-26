@@ -76,22 +76,22 @@ export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
         </CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption>
       </CollectionToolbar.Filters.SegmentedControl> */}
       <CollectionToolbar.Filters.TextInput
-        label="Text Input"
         value="Text Input"
         aria-label="Text Input"
       />
       <CollectionToolbar.Filters.NumberInput
-        label="Number Input"
         value={'10'}
         aria-label="Number Input"
       />
+      <CollectionToolbar.Filters.NumberInput
+        value={'20'}
+        aria-label="Second Number Input"
+      />
       <CollectionToolbar.Filters.Combobox
-        label="Combobox"
         value="Combobox"
         aria-label="Combobox"
       />
       <CollectionToolbar.Filters.DatePicker
-        label="Date Picker"
         value={new Date()}
         aria-label="Date Picker"
       />

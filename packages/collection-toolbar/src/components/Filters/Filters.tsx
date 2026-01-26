@@ -1,15 +1,18 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useMemo } from 'react';
 
 import {
   CompoundSubComponent,
   findChildren,
 } from '@leafygreen-ui/compound-component';
+import { consoleOnce } from '@leafygreen-ui/lib';
 
 import { useCollectionToolbarContext } from '../../Context/CollectionToolbarProvider';
 import {
   CollectionToolbarFiltersSubComponentProperty,
   CollectionToolbarSubComponentProperty,
+  Variant,
 } from '../../shared.types';
+import { getMaxFilterCount, MAX_FILTER_COUNT } from '../../utils';
 
 import { Combobox } from './Combobox';
 import { DatePicker } from './DatePicker';
@@ -24,7 +27,7 @@ export const Filters = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
   forwardRef<HTMLDivElement, FiltersProps>(
     ({ className, children, ...props }, fwdRef) => {
-      const { lgIds } = useCollectionToolbarContext();
+      const { lgIds, variant } = useCollectionToolbarContext();
 
       const filterComponents = findChildren(children, [
         CollectionToolbarFiltersSubComponentProperty.NumberInput,
@@ -35,6 +38,15 @@ export const Filters = CompoundSubComponent(
         CollectionToolbarFiltersSubComponentProperty.DatePicker,
       ]);
 
+      const count = filterComponents.length;
+      const maxCount = useMemo(() => getMaxFilterCount(variant), [variant]);
+
+      if (count > maxCount) {
+        consoleOnce.error(
+          `CollectionToolbar Filters can only have up to ${maxCount} filters`,
+        );
+      }
+
       return (
         <div
           ref={fwdRef}
@@ -42,7 +54,7 @@ export const Filters = CompoundSubComponent(
           data-lgid={lgIds.filters}
           {...props}
         >
-          {filterComponents}
+          {filterComponents.slice(0, maxCount)}
         </div>
       );
     },

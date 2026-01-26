@@ -1,5 +1,17 @@
 import { LgIdString } from '@leafygreen-ui/lib';
 
+import { Variant } from './shared.types';
+
+export const MAX_FILTER_COUNT: Record<Variant, number> = {
+  [Variant.Default]: 5,
+  [Variant.Compact]: 3,
+  [Variant.Collapsible]: 5,
+} as const;
+
+export const getMaxFilterCount = (variant: Variant) => {
+  return MAX_FILTER_COUNT[variant];
+}
+
 export const DEFAULT_LGID_ROOT = 'lg-collection_toolbar';
 
 export const getLgIds = (root: LgIdString = DEFAULT_LGID_ROOT) => {
