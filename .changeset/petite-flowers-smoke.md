@@ -2,4 +2,4 @@
 '@leafygreen-ui/segmented-control': minor
 ---
 
-Exported out BaseSegmentedControlOptionProps in package
+Exported BaseSegmentedControlOptionProps from the package public API
