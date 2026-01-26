@@ -276,5 +276,13 @@ describe('packages/button', () => {
     test('accepts a component as `as`', () => {
       <Button as={() => <>JSX</>} />;
     });
+
+    test('onClick event parameter is properly typed without explicit `as` prop', () => {
+      <Button
+        onClick={event => {
+          event.preventDefault();
+        }}
+      />;
+    });
   });
 });
