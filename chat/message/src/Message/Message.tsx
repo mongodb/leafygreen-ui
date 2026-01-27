@@ -1,5 +1,7 @@
 import React, { forwardRef, useMemo } from 'react';
+import { useLeafyGreenChatContext } from '@lg-chat/leafygreen-chat-provider';
 
+import { AssistantAvatar } from '@leafygreen-ui/avatar';
 import {
   CompoundComponent,
   filterChildren,
@@ -8,6 +10,7 @@ import {
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { Body } from '@leafygreen-ui/typography';
 
 import {
   ActionCard,
@@ -20,6 +23,7 @@ import { MessageContext } from '../MessageContext';
 import { MessageSubcomponentProperty } from '../shared.types';
 
 import {
+  avatarContainerStyles,
   getContainerStyles,
   getMessageContainerStyles,
 } from './Message.styles';
@@ -43,6 +47,7 @@ export const Message = CompoundComponent(
       fwdRef,
     ) => {
       const { darkMode, theme } = useDarkMode(darkModeProp);
+      const { assistantName } = useLeafyGreenChatContext();
 
       const contextValue = useMemo(
         () => ({
@@ -85,6 +90,12 @@ export const Message = CompoundComponent(
               ref={fwdRef}
               {...rest}
             >
+              {!isSender && (
+                <div className={avatarContainerStyles}>
+                  <AssistantAvatar size={20} />
+                  <Body weight="semiBold">{assistantName}</Body>
+                </div>
+              )}
               <div
                 className={getMessageContainerStyles({
                   isSender,
