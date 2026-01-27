@@ -25,7 +25,7 @@ export const useMessageFeedContext = () => {
 
   if (!context) {
     throw new Error(
-      'useMessageFeedContext must be used within a MessageFeedContextProvider',
+      'useMessageFeedContext must be used within a MessageFeedProvider',
     );
   }
 

@@ -42,7 +42,7 @@ describe('useMessageFeedContext', () => {
     expect(() => {
       renderHook(() => useMessageFeedContext());
     }).toThrow(
-      'useMessageFeedContext must be used within a MessageFeedContextProvider',
+      'useMessageFeedContext must be used within a MessageFeedProvider',
     );
   });
 });
