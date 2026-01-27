@@ -67,7 +67,10 @@ export function useTooltipExtension({
               }: CodeEditorTooltipType) => {
                 const lineInfo = doc.line(line);
                 const lineLength = lineInfo.to - lineInfo.from;
-                const safeColumn = Math.max(1, Math.min(column, lineLength + 1));
+                const safeColumn = Math.max(
+                  1,
+                  Math.min(column, lineLength + 1),
+                );
                 const from = lineInfo.from + safeColumn - 1;
                 const maxLength = Math.max(0, lineInfo.to - from);
                 const safeLength = Math.min(length, maxLength);
