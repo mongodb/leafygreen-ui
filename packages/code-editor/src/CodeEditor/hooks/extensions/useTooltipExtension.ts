@@ -49,41 +49,55 @@ export function useTooltipExtension({
 
       return module.linter(
         linterView => {
-          const diagnostics: Array<Diagnostic> = tooltips.map(
-            ({
-              line,
-              column = 1,
-              severity = 'info',
-              length,
-              messages,
-              links,
-            }: CodeEditorTooltipType) => {
-              const lineInfo = linterView.state.doc.line(line);
-              const from = lineInfo.from + column - 1;
-              const to = from + length;
+          const doc = linterView.state.doc;
+          const totalLines = doc.lines;
 
-              const renderMessage = () => {
-                const dom = document.createElement('div');
-                dom.innerHTML = renderToString(
-                  React.createElement(CodeEditorTooltip, {
-                    messages,
-                    links,
-                    darkMode: props.darkMode,
-                    baseFontSize: props.baseFontSize,
-                  }),
+          const diagnostics: Array<Diagnostic> = tooltips
+            .filter(({ line }: CodeEditorTooltipType) => {
+              return line >= 1 && line <= totalLines;
+            })
+            .map(
+              ({
+                line,
+                column = 1,
+                severity = 'info',
+                length,
+                messages,
+                links,
+              }: CodeEditorTooltipType) => {
+                const lineInfo = doc.line(line);
+                const lineLength = lineInfo.to - lineInfo.from;
+                const safeColumn = Math.max(
+                  1,
+                  Math.min(column, lineLength + 1),
                 );
-                return dom;
-              };
+                const from = lineInfo.from + safeColumn - 1;
+                const maxLength = Math.max(0, lineInfo.to - from);
+                const safeLength = Math.min(length, maxLength);
+                const to = from + safeLength;
 
-              return {
-                from,
-                to,
-                severity,
-                message: ' ', // Provide a non-empty string to satisfy Diagnostic type
-                renderMessage,
-              };
-            },
-          );
+                const renderMessage = () => {
+                  const dom = document.createElement('div');
+                  dom.innerHTML = renderToString(
+                    React.createElement(CodeEditorTooltip, {
+                      messages,
+                      links,
+                      darkMode: props.darkMode,
+                      baseFontSize: props.baseFontSize,
+                    }),
+                  );
+                  return dom;
+                };
+
+                return {
+                  from,
+                  to,
+                  severity,
+                  message: ' ', // Provide a non-empty string to satisfy Diagnostic type
+                  renderMessage,
+                };
+              },
+            );
           return diagnostics;
         },
         {
