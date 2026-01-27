@@ -5,6 +5,7 @@ import { consoleOnce } from '@leafygreen-ui/lib';
 
 import { CollectionToolbarProvider } from '../../Context/CollectionToolbarProvider';
 import { Size, Variant } from '../../shared.types';
+import { getTestUtils } from '../../testing/getTestUtils';
 import { getLgIds } from '../../utils';
 
 import { Filters } from './Filters';
@@ -19,9 +20,7 @@ jest.mock('@leafygreen-ui/lib', () => ({
 }));
 
 const lgIds = getLgIds();
-
-const getByLgId = (lgId: string) =>
-  document.querySelector(`[data-lgid="${lgId}"]`);
+const { getFilters } = getTestUtils();
 
 interface RenderFiltersProps extends React.ComponentProps<typeof Filters> {
   children?: React.ReactNode;
@@ -52,22 +51,22 @@ describe('packages/collection-toolbar/components/Filters', () => {
   describe('rendering', () => {
     test('renders container with correct data-lgid', () => {
       renderFilters();
-      const filtersContainer = getByLgId(lgIds.filters);
+      const filtersContainer = getFilters();
       expect(filtersContainer).toBeInTheDocument();
       expect(filtersContainer).toHaveAttribute('data-lgid', lgIds.filters);
     });
 
     test('renders as a div element', () => {
       renderFilters();
-      const filtersContainer = getByLgId(lgIds.filters);
-      expect(filtersContainer?.tagName).toBe('DIV');
+      const filtersContainer = getFilters();
+      expect(filtersContainer.tagName).toBe('DIV');
     });
   });
 
   describe('props & styling', () => {
     test('applies className prop to container', () => {
       renderFilters({ className: 'custom-class' });
-      const filtersContainer = getByLgId(lgIds.filters);
+      const filtersContainer = getFilters();
       expect(filtersContainer).toHaveClass('custom-class');
     });
 
@@ -77,7 +76,7 @@ describe('packages/collection-toolbar/components/Filters', () => {
         id: 'custom-id',
       } as React.ComponentProps<typeof Filters>);
 
-      const filtersContainer = getByLgId(lgIds.filters);
+      const filtersContainer = getFilters();
       expect(filtersContainer).toHaveAttribute('aria-label', 'Filter controls');
       expect(filtersContainer).toHaveAttribute('id', 'custom-id');
     });

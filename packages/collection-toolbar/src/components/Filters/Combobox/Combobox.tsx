@@ -12,21 +12,23 @@ import { ComboboxProps } from './Combobox.types';
 
 // Note: LGCombobox doesn't support ref forwarding
 const ComboboxComponent = <M extends boolean>({
-  'aria-label': ariaLabel,
+  //Add default values for aria-label to satisfy LGCombobox props
+  'aria-label': ariaLabel = '',
   className,
+  label,
   ...props
 }: ComboboxProps<M>) => {
   const { size } = useCollectionToolbarContext();
 
-  if (!ariaLabel) {
+  if (!ariaLabel && !label) {
     consoleOnce.error(
       'For screen-reader accessibility, aria-label must be provided to Combobox.',
     );
-    return null;
   }
 
   return (
     <LGCombobox
+      label={label}
       size={size}
       aria-label={ariaLabel}
       className={getComboboxStyles({ className })}

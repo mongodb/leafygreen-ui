@@ -1,3 +1,3 @@
-import { HTMLAttributes } from 'react';
+import React from 'react';
 
-export type FiltersProps = HTMLAttributes<HTMLDivElement>;
+export interface FiltersProps extends React.ComponentPropsWithoutRef<'div'> {}

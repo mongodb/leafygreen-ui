@@ -2,6 +2,7 @@ import { findByLgId, getByLgId, queryByLgId } from '@lg-tools/test-harnesses';
 
 import { LgIdString } from '@leafygreen-ui/lib';
 
+import { CollectionToolbarFiltersSubComponentProperty } from '../shared.types';
 import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 
 import { TestUtilsReturnType } from './getTestUtils.types';
@@ -24,6 +25,20 @@ export const getTestUtils = <T extends HTMLElement = HTMLElement>(
   const queryPagination = () =>
     queryByLgId!<T>(`${lgIds.pagination}-navigation`);
 
+  const getFilters = () => getByLgId!<T>(lgIds.filters);
+  const findFilters = () => findByLgId!<T>(lgIds.filters);
+  const queryFilters = () => queryByLgId!<T>(lgIds.filters);
+
+  const getFilterByType = (
+    type: CollectionToolbarFiltersSubComponentProperty,
+  ) => getByLgId!<T>(`${lgIds.filters}-${type}`);
+  const findFilterByType = (
+    type: CollectionToolbarFiltersSubComponentProperty,
+  ) => findByLgId!<T>(`${lgIds.filters}-${type}`);
+  const queryFilterByType = (
+    type: CollectionToolbarFiltersSubComponentProperty,
+  ) => queryByLgId!<T>(`${lgIds.filters}-${type}`);
+
   return {
     findCollectionToolbar,
     getCollectionToolbar,
@@ -34,5 +49,11 @@ export const getTestUtils = <T extends HTMLElement = HTMLElement>(
     getPagination,
     findPagination,
     queryPagination,
+    getFilters,
+    findFilters,
+    queryFilters,
+    getFilterByType,
+    findFilterByType,
+    queryFilterByType,
   };
 };
