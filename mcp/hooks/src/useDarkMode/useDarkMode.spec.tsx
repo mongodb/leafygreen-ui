@@ -15,10 +15,8 @@ describe('mcp/hooks/useDarkMode', () => {
       get matches() {
         return currentMatches;
       },
-      addEventListener: (
-        _: string,
-        cb: (event: MediaQueryListEvent) => void,
-      ) => listeners.push(cb),
+      addEventListener: (_: string, cb: (event: MediaQueryListEvent) => void) =>
+        listeners.push(cb),
       removeEventListener: (
         _: string,
         cb: (event: MediaQueryListEvent) => void,
