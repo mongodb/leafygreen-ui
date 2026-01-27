@@ -2,7 +2,7 @@ import { findByLgId, getByLgId, queryByLgId } from '@lg-tools/test-harnesses';
 
 import { LgIdString } from '@leafygreen-ui/lib';
 
-import { CollectionToolbarFiltersSubComponentProperty } from '../shared.types';
+import { CollectionToolbarFiltersSubComponentProperty } from '../components/Filters/share.types';
 import { DEFAULT_LGID_ROOT, getLgIds } from '../utils';
 
 import { TestUtilsReturnType } from './getTestUtils.types';

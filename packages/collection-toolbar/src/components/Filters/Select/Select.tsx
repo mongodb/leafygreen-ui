@@ -14,17 +14,7 @@ export const Select = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
   forwardRef<HTMLDivElement, SelectProps>(
     (
-      {
-        label,
-        'aria-label': ariaLabel = '',
-        'aria-labelledby': ariaLabelledby,
-        value,
-        defaultValue,
-        onChange,
-        ref: _ref,
-        className,
-        ...rest
-      },
+      { label, value, defaultValue, onChange, ref: _ref, className, ...rest },
       fwdRef,
     ) => {
       const { size } = useCollectionToolbarContext();
@@ -36,8 +26,6 @@ export const Select = CompoundSubComponent(
             size={size}
             ref={fwdRef}
             label={label}
-            aria-label={ariaLabel}
-            aria-labelledby={ariaLabelledby}
             value={value}
             onChange={onChange}
             className={getSelectStyles({ className })}
@@ -51,8 +39,6 @@ export const Select = CompoundSubComponent(
           size={size}
           ref={fwdRef}
           label={label}
-          aria-label={ariaLabel}
-          aria-labelledby={ariaLabelledby}
           defaultValue={defaultValue}
           onChange={onChange}
           className={getSelectStyles({ className })}

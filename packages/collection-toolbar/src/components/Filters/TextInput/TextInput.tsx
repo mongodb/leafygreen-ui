@@ -10,19 +10,11 @@ import { TextInputProps } from './TextInput.types';
 
 export const TextInput = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
-  forwardRef<HTMLInputElement, TextInputProps>(
-    ({ 'aria-label': ariaLabel = '', ...props }, fwdRef) => {
-      const { size } = useCollectionToolbarContext();
-      return (
-        <LGTextInput
-          sizeVariant={size}
-          ref={fwdRef}
-          aria-label={ariaLabel}
-          {...props}
-        />
-      );
-    },
-  ),
+  forwardRef<HTMLInputElement, TextInputProps>(({ ...props }, fwdRef) => {
+    const { size } = useCollectionToolbarContext();
+
+    return <LGTextInput sizeVariant={size} ref={fwdRef} {...props} />;
+  }),
   {
     displayName: 'TextInput',
     key: CollectionToolbarFiltersSubComponentProperty.TextInput,

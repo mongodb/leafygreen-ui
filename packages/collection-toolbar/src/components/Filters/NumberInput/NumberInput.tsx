@@ -1,7 +1,6 @@
 import React, { forwardRef } from 'react';
 
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
-import { consoleOnce } from '@leafygreen-ui/lib';
 import { NumberInput as LGNumberInput } from '@leafygreen-ui/number-input';
 
 import { useCollectionToolbarContext } from '../../../Context/CollectionToolbarProvider';
@@ -15,7 +14,6 @@ export const NumberInput = CompoundSubComponent(
   forwardRef<HTMLInputElement, NumberInputProps>(
     (
       {
-        'aria-label': ariaLabel,
         unitOptions,
         unit,
         onSelectChange,
@@ -27,20 +25,12 @@ export const NumberInput = CompoundSubComponent(
     ) => {
       const { size } = useCollectionToolbarContext();
 
-      if (!ariaLabel) {
-        consoleOnce.error(
-          'For screen-reader accessibility, aria-label must be provided to NumberInput.',
-        );
-        return null;
-      }
-
       // Handle the two variants of NumberInput separately to satisfy the union type
       if (unitOptions && unitOptions.length > 0) {
         return (
           <LGNumberInput
             ref={fwdRef}
             size={size}
-            aria-label={ariaLabel}
             unitOptions={unitOptions}
             unit={unit as string}
             onSelectChange={onSelectChange!}
@@ -55,7 +45,6 @@ export const NumberInput = CompoundSubComponent(
         <LGNumberInput
           ref={fwdRef}
           size={size}
-          aria-label={ariaLabel}
           unit={unit}
           inputClassName={getInputStyles({ className: inputClassName })}
           {...rest}

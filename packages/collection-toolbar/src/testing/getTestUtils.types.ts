@@ -1,4 +1,4 @@
-import { CollectionToolbarFiltersSubComponentProperty } from '../shared.types';
+import { CollectionToolbarFiltersSubComponentProperty } from '../components/Filters/share.types';
 
 export interface TestUtilsReturnType<T extends HTMLElement = HTMLElement> {
   findCollectionToolbar: () => Promise<T>;
