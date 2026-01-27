@@ -6,7 +6,8 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 
-// import { MessageFeedSubcomponentProperty } from '../../../shared.types';
+import { MessageFeedSubcomponentProperty } from '../../shared.types';
+
 import { type InitialMessageProps } from './InitialMessage.types';
 
 /**
@@ -30,6 +31,6 @@ export const InitialMessage = CompoundSubComponent(
   ),
   {
     displayName: 'InitialMessage',
-    key: 'isLGMessageFeedInitialMessage',
+    key: MessageFeedSubcomponentProperty.InitialMessage,
   },
 );
