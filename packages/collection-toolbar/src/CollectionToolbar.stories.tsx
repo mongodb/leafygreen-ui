@@ -2,6 +2,10 @@ import React from 'react';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
+import { ComboboxOption } from '@leafygreen-ui/combobox';
+import { css } from '@leafygreen-ui/emotion';
+import { Icon } from '@leafygreen-ui/icon';
+
 import { ButtonVariant, CollectionToolbar, Size, Variant } from '.';
 
 const meta: StoryMetaType<typeof CollectionToolbar> = {
@@ -52,6 +56,70 @@ export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
       placeholder="Search for a collection"
       aria-label="Search for a collection"
     />
+    <CollectionToolbar.Filters>
+      <CollectionToolbar.Filters.SegmentedControl
+        value="option-1"
+        aria-label="Segmented Control"
+      >
+        <CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption
+          key="segmented-control-option-1"
+          value="option-1"
+        >
+          Segmented Control Option 1
+        </CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption>
+        <CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption
+          key="segmented-control-option-2"
+          value="option-2"
+          glyph={<Icon glyph="GlobeAmericas" />}
+        >
+          Segmented Control Option 2
+        </CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption>
+      </CollectionToolbar.Filters.SegmentedControl>
+
+      <CollectionToolbar.Filters.TextInput
+        value="Text Input"
+        aria-label="Text Input"
+      />
+      <CollectionToolbar.Filters.NumberInput
+        value={'10'}
+        aria-label="Number Input"
+      />
+      <CollectionToolbar.Filters.NumberInput
+        value={'20'}
+        aria-label="Second Number Input"
+      />
+      <CollectionToolbar.Filters.Combobox
+        value="Combobox"
+        aria-label="Combobox"
+        placeholder="Combobox"
+      >
+        <ComboboxOption value="Combobox Option 1">
+          Combobox Option 1
+        </ComboboxOption>
+        <ComboboxOption value="Combobox Option 2">
+          Combobox Option 2
+        </ComboboxOption>
+      </CollectionToolbar.Filters.Combobox>
+      <CollectionToolbar.Filters.DatePicker
+        value={new Date()}
+        aria-label="Date Picker"
+      />
+      <CollectionToolbar.Filters.Select
+        value="Select"
+        aria-label="Select"
+        className={css`
+          width: 100%;
+          max-width: 160px !important;
+        `}
+      >
+        <CollectionToolbar.Filters.Select.Option value="Select Option 1">
+          Select Option 1
+        </CollectionToolbar.Filters.Select.Option>
+        <CollectionToolbar.Filters.Select.Option value="Select Option 2">
+          Select Option 2
+        </CollectionToolbar.Filters.Select.Option>
+      </CollectionToolbar.Filters.Select>
+    </CollectionToolbar.Filters>
     <CollectionToolbar.Actions showToggleButton>
       <CollectionToolbar.Actions.Button variant={ButtonVariant.Default}>
         Action
@@ -77,17 +145,20 @@ export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
         </CollectionToolbar.Actions.Menu.MenuItem>
       </CollectionToolbar.Actions.Menu>
     </CollectionToolbar.Actions>
+    <CollectionToolbar.Filters />
   </CollectionToolbar>
 );
 
 export const SearchInput: StoryFn<typeof CollectionToolbar.SearchInput> = ({
   placeholder,
+  'aria-label': ariaLabel = '',
   'aria-labelledby': ariaLabelledby = '',
   ...props
 }) => (
   <CollectionToolbar size={Size.Default} variant={Variant.Collapsible}>
     <CollectionToolbar.SearchInput
       placeholder={placeholder}
+      aria-label={ariaLabel}
       aria-labelledby={ariaLabelledby}
       {...props}
     />

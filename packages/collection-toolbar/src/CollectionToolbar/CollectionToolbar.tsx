@@ -1,11 +1,11 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useMemo } from 'react';
 
 import {
   CompoundComponent,
   findChild,
 } from '@leafygreen-ui/compound-component';
 
-import { Actions, SearchInput, Title } from '../components';
+import { Actions, Filters, SearchInput, Title } from '../components';
 import { CollectionToolbarProvider } from '../Context/CollectionToolbarProvider';
 import {
   CollectionToolbarSubComponentProperty,
@@ -14,8 +14,8 @@ import {
 } from '../shared.types';
 import { getLgIds } from '../utils';
 
+import CollapsibleContent from './CollapsibleContent';
 import { getCollectionToolbarStyles } from './CollectionToolbar.styles';
-import { collapsibleContentStyles } from './CollectionToolbar.styles';
 import { CollectionToolbarProps } from './CollectionToolbar.types';
 
 export const CollectionToolbar = CompoundComponent(
@@ -49,7 +49,31 @@ export const CollectionToolbar = CompoundComponent(
         CollectionToolbarSubComponentProperty.Actions,
       );
 
+      const filters = findChild(
+        children,
+        CollectionToolbarSubComponentProperty.Filters,
+      );
+
       const isCollapsible = variant === Variant.Collapsible;
+      const isCompact = variant === Variant.Compact;
+
+      const content = useMemo(() => {
+        if (isCompact) {
+          return (
+            <>
+              {filters}
+              {actions}
+            </>
+          );
+        }
+
+        return (
+          <>
+            {actions}
+            {!isCollapsible && filters}
+          </>
+        );
+      }, [isCompact, isCollapsible, filters, actions]);
 
       return (
         <CollectionToolbarProvider
@@ -60,15 +84,18 @@ export const CollectionToolbar = CompoundComponent(
         >
           <div
             data-lgid={lgIds.root}
-            className={getCollectionToolbarStyles({ size, variant, className })}
+            className={getCollectionToolbarStyles({ variant, className })}
             ref={fwdRef}
             {...rest}
           >
             {isCollapsible && title}
             {!isCollapsible && searchInput}
-            {actions}
+            {content}
             {isCollapsible && (
-              <div className={collapsibleContentStyles}>{searchInput}</div>
+              <CollapsibleContent
+                searchInput={searchInput}
+                filters={filters}
+              />
             )}
           </div>
         </CollectionToolbarProvider>
@@ -79,6 +106,7 @@ export const CollectionToolbar = CompoundComponent(
     displayName: 'CollectionToolbar',
     Title,
     Actions,
+    Filters,
     SearchInput,
   },
 );

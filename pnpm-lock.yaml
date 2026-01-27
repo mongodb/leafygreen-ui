@@ -1434,9 +1434,15 @@ importers:
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../button
+      '@leafygreen-ui/combobox':
+        specifier: workspace:^
+        version: link:../combobox
       '@leafygreen-ui/compound-component':
         specifier: workspace:^
         version: link:../compound-component
+      '@leafygreen-ui/date-picker':
+        specifier: workspace:^
+        version: link:../date-picker
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../emotion
@@ -1458,12 +1464,24 @@ importers:
       '@leafygreen-ui/menu':
         specifier: workspace:^
         version: link:../menu
+      '@leafygreen-ui/number-input':
+        specifier: workspace:^
+        version: link:../number-input
       '@leafygreen-ui/pagination':
         specifier: workspace:^
         version: link:../pagination
       '@leafygreen-ui/search-input':
         specifier: workspace:^
         version: link:../search-input
+      '@leafygreen-ui/segmented-control':
+        specifier: workspace:^
+        version: link:../segmented-control
+      '@leafygreen-ui/select':
+        specifier: workspace:^
+        version: link:../select
+      '@leafygreen-ui/text-input':
+        specifier: workspace:^
+        version: link:../text-input
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../tokens

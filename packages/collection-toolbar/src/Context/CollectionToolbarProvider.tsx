@@ -21,13 +21,13 @@ export interface CollectionToolbarContextProps extends DarkModeProps {
    *
    * @default `'default'`
    */
-  size?: Size;
+  size: Size;
   /**
    * The variant of the CollectionToolbar. Determines the layout of the CollectionToolbar.
    *
    * @default `'default'`
    */
-  variant?: Variant;
+  variant: Variant;
   /**
    * LGIDs for CollectionToolbar components
    */

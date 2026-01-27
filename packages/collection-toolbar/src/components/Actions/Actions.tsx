@@ -17,7 +17,7 @@ import {
   Variant,
 } from '../../shared.types';
 
-import { getActionStyles } from './Action.styles';
+import { getActionStyles, getIconStyles } from './Action.styles';
 import { ActionsProps } from './Actions.types';
 import { Button } from './Button';
 import { Menu } from './Menu';
@@ -83,14 +83,16 @@ export const Actions = CompoundSubComponent(
             <Tooltip
               justify={Justify.Middle}
               trigger={
-                // TODO: Add animations in LG-5845
                 <IconButton
                   onClick={onToggleCollapsed}
                   aria-label="Toggle collapse"
                   aria-expanded={!isCollapsed}
                   aria-controls={ariaControls}
                 >
-                  <Icon glyph="ChevronDown" />
+                  <Icon
+                    glyph="ChevronDown"
+                    className={getIconStyles({ isExpanded: !isCollapsed })}
+                  />
                 </IconButton>
               }
             >
