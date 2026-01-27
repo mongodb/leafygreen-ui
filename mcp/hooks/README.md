@@ -40,21 +40,23 @@ import { useDarkMode } from '@lg-mcp/hooks';
 function MyComponent() {
   const darkMode = useDarkMode();
 
-  return <div style={{ background: darkMode ? '#1a1a1a' : '#ffffff' }}>Content</div>;
+  return (
+    <div style={{ background: darkMode ? '#1a1a1a' : '#ffffff' }}>Content</div>
+  );
 }
 ```
 
 #### Parameters
 
-| Param      | Type      | Description                                                                 |
-| ---------- | --------- | --------------------------------------------------------------------------- |
+| Param      | Type      | Description                                                                   |
+| ---------- | --------- | ----------------------------------------------------------------------------- |
 | `override` | `boolean` | Optional. When provided, returns this value instead of the system preference. |
 
 #### Returns
 
-| Type      | Description                                              |
-| --------- | -------------------------------------------------------- |
-| `boolean` | `true` if dark mode is preferred, `false` otherwise.     |
+| Type      | Description                                          |
+| --------- | ---------------------------------------------------- |
+| `boolean` | `true` if dark mode is preferred, `false` otherwise. |
 
 ---
 
@@ -85,11 +87,11 @@ function MyComponent() {
 
 #### Returns
 
-| Property    | Type           | Description                                           |
-| ----------- | -------------- | ----------------------------------------------------- |
-| `data`      | `T \| null`    | The received render data, or `null` if not yet received. |
-| `isLoading` | `boolean`      | `true` while waiting for data from the parent window. |
-| `error`     | `string \| null` | Error message if message validation failed.          |
+| Property    | Type             | Description                                              |
+| ----------- | ---------------- | -------------------------------------------------------- |
+| `data`      | `T \| null`      | The received render data, or `null` if not yet received. |
+| `isLoading` | `boolean`        | `true` while waiting for data from the parent window.    |
+| `error`     | `string \| null` | Error message if message validation failed.              |
 
 ---
 
@@ -113,9 +115,7 @@ function MyComponent() {
       <button onClick={() => notify('Operation completed successfully')}>
         Show Notification
       </button>
-      <button onClick={() => link('https://mongodb.com')}>
-        Open Link
-      </button>
+      <button onClick={() => link('https://mongodb.com')}>Open Link</button>
     </div>
   );
 }
@@ -123,10 +123,10 @@ function MyComponent() {
 
 #### Returns
 
-| Property | Type       | Description                                      |
-| -------- | ---------- | ------------------------------------------------ |
-| `intent` | `function` | Sends an intent message for the host to act on.  |
-| `notify` | `function` | Notifies the host of something that happened.    |
-| `prompt` | `function` | Asks the host to run a prompt.                   |
-| `tool`   | `function` | Asks the host to execute a tool.                 |
-| `link`   | `function` | Asks the host to navigate to a URL.              |
+| Property | Type       | Description                                     |
+| -------- | ---------- | ----------------------------------------------- |
+| `intent` | `function` | Sends an intent message for the host to act on. |
+| `notify` | `function` | Notifies the host of something that happened.   |
+| `prompt` | `function` | Asks the host to run a prompt.                  |
+| `tool`   | `function` | Asks the host to execute a tool.                |
+| `link`   | `function` | Asks the host to navigate to a URL.             |

@@ -1,1 +1,1 @@
-export { useHostCommunication } from "./useHostCommunication";
+export { useHostCommunication } from './useHostCommunication';

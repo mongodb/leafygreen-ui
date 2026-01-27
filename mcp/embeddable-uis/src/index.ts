@@ -1,4 +1,1 @@
-export {
-    ListDatabases,
-    type ListDatabasesProps,
-} from "./ListDatabases";
+export { ListDatabases, type ListDatabasesProps } from './ListDatabases';

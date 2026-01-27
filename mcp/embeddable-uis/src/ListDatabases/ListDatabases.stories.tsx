@@ -36,7 +36,9 @@ const meta: StoryMetaType<typeof ListDatabases> = {
 
 export default meta;
 
-const Template: StoryFn<ListDatabasesProps> = (args) => <ListDatabases {...args} />;
+const Template: StoryFn<ListDatabasesProps> = args => (
+  <ListDatabases {...args} />
+);
 
 export const LiveExample = Template.bind({});
 LiveExample.args = {

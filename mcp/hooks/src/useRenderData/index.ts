@@ -1,1 +1,1 @@
-export { useRenderData } from "./useRenderData";
+export { useRenderData } from './useRenderData';

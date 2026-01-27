@@ -48,14 +48,14 @@ const databases = [
 
 #### Properties
 
-| Prop        | Type               | Description                                              | Default |
-| ----------- | ------------------ | -------------------------------------------------------- | ------- |
-| `databases` | `Array<Database>`  | Array of database objects to display in the table.       | -       |
-| `darkMode`  | `boolean`          | Determines if the component renders in dark mode.        | -       |
+| Prop        | Type              | Description                                        | Default |
+| ----------- | ----------------- | -------------------------------------------------- | ------- |
+| `databases` | `Array<Database>` | Array of database objects to display in the table. | -       |
+| `darkMode`  | `boolean`         | Determines if the component renders in dark mode.  | -       |
 
 #### Database Type
 
-| Property | Type     | Description                    |
-| -------- | -------- | ------------------------------ |
-| `name`   | `string` | The name of the database.      |
+| Property | Type     | Description                        |
+| -------- | -------- | ---------------------------------- |
+| `name`   | `string` | The name of the database.          |
 | `size`   | `number` | The size of the database in bytes. |
