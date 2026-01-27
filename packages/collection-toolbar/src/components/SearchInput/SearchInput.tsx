@@ -13,7 +13,7 @@ import { SearchInputProps } from './SearchInput.types';
 export const SearchInput = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
   forwardRef<HTMLInputElement, SearchInputProps>(
-    ({ className, ...props }, fwdRef) => {
+    ({ className, 'aria-label': ariaLabel = '', ...props }, fwdRef) => {
       const { size, darkMode, lgIds } = useCollectionToolbarContext();
 
       validateAriaLabelProps(props, 'SearchInput');
@@ -23,6 +23,7 @@ export const SearchInput = CompoundSubComponent(
           size={size}
           darkMode={darkMode}
           ref={fwdRef}
+          aria-label={ariaLabel}
           data-lgid={lgIds.searchInput}
           className={getSearchInputStyles({ className })}
           {...props}
