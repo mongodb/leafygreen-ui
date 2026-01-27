@@ -1,8 +1,6 @@
 import React, { createRef } from 'react';
 import { render, screen } from '@testing-library/react';
 
-import { consoleOnce } from '@leafygreen-ui/lib';
-
 import { CollectionToolbarProvider } from '../../Context/CollectionToolbarProvider';
 import { Size, Variant } from '../../shared.types';
 import { getTestUtils } from '../../testing/getTestUtils';

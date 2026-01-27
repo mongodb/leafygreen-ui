@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { ComponentType, forwardRef } from 'react';
 
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 import { NumberInput as LGNumberInput } from '@leafygreen-ui/number-input';
@@ -51,7 +51,9 @@ export const NumberInput = CompoundSubComponent(
         />
       );
     },
-  ),
+    // Cast required for React 17: TypeScript cannot reconcile ForwardRefExoticComponent's propTypes
+    // with the AriaLabelProps discriminated union (aria-label OR aria-labelledby required)
+  ) as ComponentType<NumberInputProps>,
   {
     displayName: 'NumberInput',
     key: CollectionToolbarFiltersSubComponentProperty.NumberInput,
