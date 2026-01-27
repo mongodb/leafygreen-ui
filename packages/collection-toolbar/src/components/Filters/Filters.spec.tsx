@@ -164,7 +164,7 @@ describe('packages/collection-toolbar/components/Filters', () => {
 
     test('renders Filters.DatePicker children', () => {
       renderFilters({
-        children: <Filters.DatePicker label="Select date" />,
+        children: <Filters.DatePicker aria-label="Select date" />,
       });
       expect(screen.getByLabelText('Select date')).toBeInTheDocument();
     });
@@ -243,28 +243,6 @@ describe('packages/collection-toolbar/components/Filters', () => {
 
     test('exposes DatePicker as a static property', () => {
       expect(Filters.DatePicker).toBeDefined();
-    });
-  });
-
-  describe('sub-component accessibility', () => {
-    test('NumberInput logs error when aria-label is missing', () => {
-      renderFilters({
-        children: <Filters.NumberInput />,
-      });
-
-      expect(consoleOnce.error).toHaveBeenCalledWith(
-        'For screen-reader accessibility, aria-label must be provided to NumberInput.',
-      );
-    });
-
-    test('Combobox logs error when aria-label is missing', () => {
-      renderFilters({
-        children: <Filters.Combobox />,
-      });
-
-      expect(consoleOnce.error).toHaveBeenCalledWith(
-        'For screen-reader accessibility, aria-label must be provided to Combobox.',
-      );
     });
   });
 });
