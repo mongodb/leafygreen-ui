@@ -1,19 +1,32 @@
-import { useSyncExternalStore } from 'react';
+import { useEffect, useState } from 'react';
 
-function subscribeToPrefersColorScheme(callback: () => void): () => void {
-  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-  mediaQuery.addEventListener('change', callback);
-  return () => mediaQuery.removeEventListener('change', callback);
-}
-
-function getPrefersDarkMode(): boolean {
-  return window.matchMedia('(prefers-color-scheme: dark)').matches;
-}
-
+/**
+ * Returns whether the user has `prefers-color-scheme: dark`
+ * set in their browser, or the override value if provided.
+ *
+ * @param override - Optional boolean to override the system preference
+ * @returns boolean
+ */
 export function useDarkMode(override?: boolean): boolean {
-  const prefersDarkMode = useSyncExternalStore(
-    subscribeToPrefersColorScheme,
-    getPrefersDarkMode,
-  );
+  const [prefersDarkMode, setPrefersDarkMode] = useState<boolean>(false);
+
+  const handler = (event: MediaQueryListEvent) => {
+    setPrefersDarkMode(event.matches);
+  };
+
+  useEffect(() => {
+    if (
+      window &&
+      window.matchMedia &&
+      typeof window.matchMedia === 'function'
+    ) {
+      const MQ = window.matchMedia('(prefers-color-scheme: dark)');
+      setPrefersDarkMode(MQ.matches);
+      MQ.addEventListener('change', handler);
+
+      return () => MQ.removeEventListener('change', handler);
+    }
+  }, []);
+
   return override ?? prefersDarkMode;
 }

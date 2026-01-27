@@ -4,7 +4,7 @@ import { useDarkMode } from './useDarkMode';
 
 describe('mcp/hooks/useDarkMode', () => {
   const originalMatchMedia = window.matchMedia;
-  let listeners: Array<() => void> = [];
+  let listeners: Array<(event: MediaQueryListEvent) => void> = [];
   let currentMatches = false;
 
   beforeEach(() => {
@@ -15,8 +15,14 @@ describe('mcp/hooks/useDarkMode', () => {
       get matches() {
         return currentMatches;
       },
-      addEventListener: (_: string, cb: () => void) => listeners.push(cb),
-      removeEventListener: (_: string, cb: () => void) => {
+      addEventListener: (
+        _: string,
+        cb: (event: MediaQueryListEvent) => void,
+      ) => listeners.push(cb),
+      removeEventListener: (
+        _: string,
+        cb: (event: MediaQueryListEvent) => void,
+      ) => {
         listeners = listeners.filter(l => l !== cb);
       },
     }));
@@ -57,7 +63,7 @@ describe('mcp/hooks/useDarkMode', () => {
 
     act(() => {
       currentMatches = true;
-      listeners.forEach(cb => cb());
+      listeners.forEach(cb => cb({ matches: true } as MediaQueryListEvent));
     });
 
     expect(result.current).toBe(true);
@@ -70,7 +76,7 @@ describe('mcp/hooks/useDarkMode', () => {
 
     act(() => {
       currentMatches = false;
-      listeners.forEach(cb => cb());
+      listeners.forEach(cb => cb({ matches: false } as MediaQueryListEvent));
     });
 
     expect(result.current).toBe(false);

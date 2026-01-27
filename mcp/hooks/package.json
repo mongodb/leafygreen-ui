@@ -18,6 +18,7 @@
     "@mcp-ui/server": "^5.16.3"
   },
   "devDependencies": {
+    "@leafygreen-ui/testing-lib": "workspace:^",
     "@lg-tools/build": "workspace:^"
   },
   "repository": {
