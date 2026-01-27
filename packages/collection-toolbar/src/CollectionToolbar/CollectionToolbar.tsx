@@ -65,12 +65,12 @@ export const CollectionToolbar = CompoundComponent(
         >
           <div
             data-lgid={lgIds.root}
+            // TODO: Compact and Collapsible styles in LG-5845
             className={getCollectionToolbarStyles({ className })}
             ref={fwdRef}
             {...rest}
           >
-            {isCollapsible && title}
-            {!isCollapsible && searchInput}
+            {isCollapsible ? title : searchInput}
             {actions}
             {!isCollapsible && filters}
             {isCollapsible && (
