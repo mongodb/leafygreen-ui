@@ -41,7 +41,6 @@
     ".": {
       "types": "./dist/types/index.d.ts",
       "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
-      "default": "./dist/umd/index.js",
       "import": {
         "browser": {
           "production": "./dist/esm/index-min.js"
@@ -53,7 +52,8 @@
           "production": "./dist/umd/index-min.js"
         },
         "default": "./dist/umd/index.js"
-      }
+      },
+      "default": "./dist/umd/index.js"
     }
   },
   "typesVersions": {}
