@@ -5,7 +5,7 @@ import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 import { consoleOnce } from '@leafygreen-ui/lib';
 
 import { useCollectionToolbarContext } from '../../../Context/CollectionToolbarProvider';
-import { CollectionToolbarFiltersSubComponentProperty } from '../../../shared.types';
+import { CollectionToolbarFiltersSubComponentProperty } from '../share.types';
 
 import { getComboboxStyles } from './Combobox.styles';
 import { ComboboxProps } from './Combobox.types';

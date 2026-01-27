@@ -1,3 +1,3 @@
-import React from 'react';
+import { ComponentPropsWithRef } from 'react';
 
-export interface FiltersProps extends React.ComponentPropsWithoutRef<'div'> {}
+export interface FiltersProps extends ComponentPropsWithRef<'div'> {}

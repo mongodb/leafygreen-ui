@@ -4,7 +4,7 @@ import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 import { TextInput as LGTextInput } from '@leafygreen-ui/text-input';
 
 import { useCollectionToolbarContext } from '../../../Context/CollectionToolbarProvider';
-import { CollectionToolbarFiltersSubComponentProperty } from '../../../shared.types';
+import { CollectionToolbarFiltersSubComponentProperty } from '../share.types';
 
 import { TextInputProps } from './TextInput.types';
 

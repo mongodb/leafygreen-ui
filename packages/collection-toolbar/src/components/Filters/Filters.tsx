@@ -6,10 +6,7 @@ import {
 } from '@leafygreen-ui/compound-component';
 
 import { useCollectionToolbarContext } from '../../Context/CollectionToolbarProvider';
-import {
-  CollectionToolbarFiltersSubComponentProperty,
-  CollectionToolbarSubComponentProperty,
-} from '../../shared.types';
+import { CollectionToolbarSubComponentProperty } from '../../shared.types';
 
 import { Combobox } from './Combobox';
 import { DatePicker } from './DatePicker';
@@ -18,6 +15,7 @@ import { FiltersProps } from './Filters.types';
 import { NumberInput } from './NumberInput';
 import { SegmentedControl } from './SegmentedControl';
 import { Select } from './Select';
+import { CollectionToolbarFiltersSubComponentProperty } from './share.types';
 import { TextInput } from './TextInput';
 
 export const Filters = CompoundSubComponent(

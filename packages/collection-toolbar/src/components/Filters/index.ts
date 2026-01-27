@@ -1,16 +1,18 @@
-export type { ComboboxProps } from './Combobox';
-export { Combobox } from './Combobox';
-export type { DatePickerProps } from './DatePicker';
-export { DatePicker } from './DatePicker';
+export { Combobox, type ComboboxProps } from './Combobox';
+export { DatePicker, type DatePickerProps } from './DatePicker';
 export { Filters } from './Filters';
 export type { FiltersProps } from './Filters.types';
-export type { NumberInputProps } from './NumberInput';
-export { NumberInput } from './NumberInput';
-export type { SegmentedControlProps } from './SegmentedControl';
-export { SegmentedControl } from './SegmentedControl';
-export type { SegmentedControlOptionProps } from './SegmentedControl/SegmentedControlOption';
-export { SegmentedControlOption } from './SegmentedControl/SegmentedControlOption';
-export type { SelectProps } from './Select';
-export { Select } from './Select';
-export type { TextInputProps } from './TextInput';
-export { TextInput } from './TextInput';
+export { NumberInput, type NumberInputProps } from './NumberInput';
+export {
+  SegmentedControl,
+  SegmentedControlOption,
+  type SegmentedControlOptionProps,
+  type SegmentedControlProps,
+} from './SegmentedControl';
+export {
+  DropdownWidthBasis,
+  type OptionProps,
+  Select,
+  type SelectProps,
+} from './Select';
+export { TextInput, type TextInputProps } from './TextInput';

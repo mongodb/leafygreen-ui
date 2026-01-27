@@ -5,7 +5,7 @@ import { DatePicker as LGDatePicker } from '@leafygreen-ui/date-picker';
 import { consoleOnce } from '@leafygreen-ui/lib';
 
 import { useCollectionToolbarContext } from '../../../Context/CollectionToolbarProvider';
-import { CollectionToolbarFiltersSubComponentProperty } from '../../../shared.types';
+import { CollectionToolbarFiltersSubComponentProperty } from '../share.types';
 
 import { DatePickerProps } from './DatePicker.types';
 

@@ -6,6 +6,7 @@ export {
   type ActionsProps,
   type ButtonProps,
   ButtonVariant,
+  type DropdownWidthBasis,
   type MenuItemProps,
   type MenuProps,
   type OptionProps,

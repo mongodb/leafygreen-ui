@@ -4,7 +4,7 @@ import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 import { Select as LGSelect } from '@leafygreen-ui/select';
 
 import { useCollectionToolbarContext } from '../../../Context/CollectionToolbarProvider';
-import { CollectionToolbarFiltersSubComponentProperty } from '../../../shared.types';
+import { CollectionToolbarFiltersSubComponentProperty } from '../share.types';
 
 import { Option } from './Option';
 import { getSelectStyles } from './Select.styles';

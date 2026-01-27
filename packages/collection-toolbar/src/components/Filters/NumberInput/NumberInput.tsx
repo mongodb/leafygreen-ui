@@ -5,8 +5,9 @@ import { consoleOnce } from '@leafygreen-ui/lib';
 import { NumberInput as LGNumberInput } from '@leafygreen-ui/number-input';
 
 import { useCollectionToolbarContext } from '../../../Context/CollectionToolbarProvider';
-import { CollectionToolbarFiltersSubComponentProperty } from '../../../shared.types';
+import { CollectionToolbarFiltersSubComponentProperty } from '../share.types';
 
+import { getInputStyles } from './NumberInput.styles';
 import { NumberInputProps } from './NumberInput.types';
 
 export const NumberInput = CompoundSubComponent(
@@ -44,6 +45,7 @@ export const NumberInput = CompoundSubComponent(
             unit={unit as string}
             onSelectChange={onSelectChange!}
             selectClassName={selectClassName}
+            inputClassName={getInputStyles({ className: inputClassName })}
             {...rest}
           />
         );
@@ -55,6 +57,7 @@ export const NumberInput = CompoundSubComponent(
           size={size}
           aria-label={ariaLabel}
           unit={unit}
+          inputClassName={getInputStyles({ className: inputClassName })}
           {...rest}
         />
       );

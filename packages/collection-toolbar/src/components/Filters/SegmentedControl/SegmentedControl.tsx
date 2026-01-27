@@ -4,7 +4,7 @@ import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 import { SegmentedControl as LGSegmentedControl } from '@leafygreen-ui/segmented-control';
 
 import { useCollectionToolbarContext } from '../../../Context/CollectionToolbarProvider';
-import { CollectionToolbarFiltersSubComponentProperty } from '../../../shared.types';
+import { CollectionToolbarFiltersSubComponentProperty } from '../share.types';
 
 import { SegmentedControlProps } from './SegmentedControl.types';
 import { SegmentedControlOption } from './SegmentedControlOption';

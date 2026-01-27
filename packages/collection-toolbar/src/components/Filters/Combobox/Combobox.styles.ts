@@ -1,9 +1,8 @@
-import { cx } from '@leafygreen-ui/emotion';
-import { createUniqueClassName } from '@leafygreen-ui/lib';
+import { css, cx } from '@leafygreen-ui/emotion';
 
-export const comboboxClassName = createUniqueClassName(
-  'collection-toolbar-combobox',
-);
+const baseComboboxStyles = css`
+  width: fit-content;
+`;
 
 export const getComboboxStyles = ({ className }: { className?: string }) =>
-  cx(comboboxClassName, className);
+  cx(baseComboboxStyles, className);

@@ -1,3 +1,3 @@
 import { NumberInputProps as LGNumberInputProps } from '@leafygreen-ui/number-input';
 
-export type NumberInputProps = Omit<LGNumberInputProps, 'size'>;
+export type NumberInputProps = Omit<LGNumberInputProps, 'size' | 'darkMode'>;

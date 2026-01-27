@@ -1,10 +1,8 @@
 import { css, cx } from '@leafygreen-ui/emotion';
-import { createUniqueClassName } from '@leafygreen-ui/lib';
 import { spacing } from '@leafygreen-ui/tokens';
 
-export const filtersClassName = createUniqueClassName('filters');
-
 export const baseStyles = css`
+  flex: 100%;
   display: flex;
   flex-flow: row wrap;
   align-items: center;
@@ -12,4 +10,4 @@ export const baseStyles = css`
 `;
 
 export const getFiltersStyles = ({ className }: { className?: string }) =>
-  cx(filtersClassName, baseStyles, className);
+  cx(baseStyles, className);
