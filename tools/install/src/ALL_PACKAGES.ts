@@ -21,6 +21,7 @@ export const ALL_PACKAGES = [
   '@leafygreen-ui/copyable',
   '@leafygreen-ui/date-picker',
   '@leafygreen-ui/date-utils',
+  '@leafygreen-ui/delete-wizard',
   '@leafygreen-ui/descendants',
   '@leafygreen-ui/drawer',
   '@leafygreen-ui/emotion',
@@ -118,4 +119,6 @@ export const ALL_PACKAGES = [
   '@lg-tools/test-harnesses',
   '@lg-tools/update',
   '@lg-tools/validate',
+  '@lg-mcp/embeddable-uis',
+  '@lg-mcp/hooks',
 ] as const;

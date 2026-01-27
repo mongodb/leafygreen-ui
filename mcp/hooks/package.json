@@ -1,0 +1,41 @@
+{
+  "name": "@lg-mcp/hooks",
+  "version": "0.1.0",
+  "description": "lg-mcp React Hooks",
+  "main": "./dist/umd/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@mcp-ui/server": "^5.16.3"
+  },
+  "devDependencies": {
+    "@leafygreen-ui/testing-lib": "workspace:^",
+    "@lg-tools/build": "workspace:^"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/LG/summary"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/mcp/hooks",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/umd/index.js"
+    }
+  },
+  "typesVersions": {}
+}
