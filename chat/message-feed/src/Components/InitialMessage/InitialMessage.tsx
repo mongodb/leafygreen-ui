@@ -6,6 +6,7 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 
+import { useMessageFeedContext } from '../../MessageFeedContext';
 import { MessageFeedSubcomponentProperty } from '../../shared.types';
 
 import { type InitialMessageProps } from './InitialMessage.types';
@@ -20,6 +21,8 @@ export const InitialMessage = CompoundSubComponent(
   forwardRef<HTMLDivElement, InitialMessageProps>(
     ({ darkMode: darkModeProp, className, children, ...rest }, fwdRef) => {
       const { darkMode } = useDarkMode(darkModeProp);
+      const { shouldHideInitialMessage } = useMessageFeedContext();
+
       return (
         <LeafyGreenProvider darkMode={darkMode}>
           <div ref={fwdRef} className={cx(className)} {...rest}>
