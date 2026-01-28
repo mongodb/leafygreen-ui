@@ -13,7 +13,11 @@ import {
   INITIAL_MESSAGE_DESCRIPTION,
   INITIAL_MESSAGE_TITLE,
 } from './constants';
-import { getWrapperStyles, titleStyles } from './InitialMessage.styles';
+import {
+  getWrapperStyles,
+  innerWrapperStyles,
+  titleStyles,
+} from './InitialMessage.styles';
 import { type InitialMessageProps } from './InitialMessage.types';
 /**
  * Renders an initial message in the message feed.
@@ -35,21 +39,23 @@ export const InitialMessage = CompoundSubComponent(
           ref={fwdRef}
           {...rest}
         >
-          <div className="">
-            <AssistantAvatar size={20} />
-            <Body weight="semiBold" className={titleStyles}>
-              {INITIAL_MESSAGE_TITLE}
-            </Body>
-            <Body>{INITIAL_MESSAGE_DESCRIPTION}</Body>
-          </div>
           <div
+            data-testid="initial-message-wrapper"
             className={getWrapperStyles({
               shouldHide: shouldHideInitialMessage,
               className,
             })}
             {...rest}
           >
-            {children}
+            <div className={innerWrapperStyles}>
+              <AssistantAvatar size={20} />
+              <Body weight="semiBold" className={titleStyles}>
+                {INITIAL_MESSAGE_TITLE}
+              </Body>
+              <Body>{INITIAL_MESSAGE_DESCRIPTION}</Body>
+
+              {children}
+            </div>
           </div>
         </Message>
       );

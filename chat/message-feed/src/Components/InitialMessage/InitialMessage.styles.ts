@@ -2,7 +2,6 @@ import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing, transitionDuration, typeScales } from '@leafygreen-ui/tokens';
 
 const baseOuterWrapperStyles = css`
-  overflow: hidden;
   display: grid;
   grid-template-rows: 1fr;
   gap: ${spacing[200]}px;
@@ -41,4 +40,8 @@ export const titleStyles = css`
   font-size: ${typeScales.body2.fontSize}px;
   line-height: ${typeScales.body2.lineHeight}px;
   margin-block-end: ${spacing[200]}px;
+`;
+
+export const innerWrapperStyles = css`
+  overflow: hidden;
 `;

@@ -168,7 +168,44 @@ export const InitialMessage = ({ darkMode, ...rest }: MessageFeedProps) => {
         <MessageFeed.InitialMessage>
           Filler content for initial message
         </MessageFeed.InitialMessage>
+        {/* <MyMessage {...baseMessages[1]} /> */}
       </MessageFeed>
+    </div>
+  );
+};
+
+export const InitialMessageWithMessage = ({
+  darkMode,
+  ...rest
+}: MessageFeedProps) => {
+  const [messages, setMessages] = useState<Array<any>>([]);
+
+  const handleButtonClick = () => {
+    setMessages([...messages, baseMessages[1]]);
+  };
+
+  return (
+    <div>
+      <MessageFeed style={{ width: 700, height: 400 }} {...rest}>
+        <MessageFeed.InitialMessage>
+          Filler content for initial message
+        </MessageFeed.InitialMessage>
+        {messages.map(message => {
+          const { id, messageBody, userName } = message as MessageFields;
+          return (
+            <Message
+              key={id}
+              sourceType="markdown"
+              isSender={!!userName}
+              messageBody={messageBody}
+            />
+          );
+        })}
+        {/* <MyMessage {...baseMessages[1]} /> */}
+      </MessageFeed>
+      <button onClick={() => handleButtonClick()}>
+        Click me to add a message
+      </button>
     </div>
   );
 };

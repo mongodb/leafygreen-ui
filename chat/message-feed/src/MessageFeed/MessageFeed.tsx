@@ -3,12 +3,17 @@ import React, {
   forwardRef,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { CompoundComponent } from '@leafygreen-ui/compound-component';
+import {
+  CompoundComponent,
+  filterChildren,
+  findChild,
+} from '@leafygreen-ui/compound-component';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
@@ -16,6 +21,7 @@ import LeafyGreenProvider, {
 import { InitialMessage } from '../Components/InitialMessage';
 import { MessageFeedProvider } from '../MessageFeedContext';
 import { ScrollToLatestButton } from '../ScrollToLatestButton';
+import { MessageFeedSubcomponentProperty } from '../shared.types';
 
 import {
   getWrapperStyles,
@@ -37,6 +43,11 @@ export const MessageFeed = CompoundComponent(
       ref: ForwardedRef<HTMLDivElement>,
     ) => {
       const { darkMode, theme } = useDarkMode(darkModeProp);
+
+      const [shouldHideInitialMessage, setShouldHideInitialMessage] =
+        useState(false);
+      const [shouldRenderInitialMessage, setShouldRenderInitialMessage] =
+        useState(true);
 
       const scrollContainerRef = useRef<HTMLDivElement | null>(null);
       const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -106,10 +117,45 @@ export const MessageFeed = CompoundComponent(
         }
       }, [children, showScrollButton, scrollToLatest]);
 
+      // Find the InitialMessage component
+      const initialMessage = findChild(
+        children,
+        MessageFeedSubcomponentProperty.InitialMessage,
+      );
+
+      // Filter out subcomponents from children
+      const remainingChildren = useMemo(
+        () =>
+          filterChildren(
+            children,
+            Object.values(MessageFeedSubcomponentProperty),
+          ),
+        [children],
+      );
+
+      useEffect(() => {
+        const childrenArray = React.Children.toArray(children);
+
+        if (childrenArray.length > 1) {
+          setShouldRenderInitialMessage(false);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []); //this useEffect should only run on initial render
+
+      useEffect(() => {
+        if (
+          React.Children.toArray(remainingChildren).length > 0 &&
+          shouldRenderInitialMessage
+        ) {
+          setShouldHideInitialMessage(true);
+        }
+      }, [remainingChildren, shouldRenderInitialMessage]);
+
       return (
         <LeafyGreenProvider darkMode={darkMode}>
-          {/* TODO: Add logic to hide initial message */}
-          <MessageFeedProvider shouldHideInitialMessage={false}>
+          <MessageFeedProvider
+            shouldHideInitialMessage={shouldHideInitialMessage}
+          >
             <div
               {...rest}
               className={getWrapperStyles({
@@ -123,7 +169,8 @@ export const MessageFeed = CompoundComponent(
               <div className={scrollContainerStyles} ref={scrollContainerRef}>
                 {/* Empty span element used to track if container can scroll up */}
                 <span className={interceptStyles} ref={topInterceptRef} />
-                {children}
+                {shouldRenderInitialMessage && initialMessage}
+                {remainingChildren}
                 {/* Empty span element used to track if container can scroll down */}
                 <span className={interceptStyles} ref={bottomInterceptRef} />
               </div>
