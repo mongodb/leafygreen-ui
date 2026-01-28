@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { renderHook } from '@leafygreen-ui/testing-lib';
+import { isReact17, renderHook } from '@leafygreen-ui/testing-lib';
 
 import {
   MessageFeedProvider,
@@ -39,10 +39,22 @@ describe('useMessageFeedContext', () => {
   });
 
   test('should throw an error when used outside the provider', () => {
-    expect(() => {
-      renderHook(() => useMessageFeedContext());
-    }).toThrow(
-      'useMessageFeedContext must be used within a MessageFeedProvider',
-    );
+    /**
+     * The version of `renderHook` imported from "@testing-library/react-hooks" (used in React 17)
+     * has an error boundary, and doesn't throw errors as expected:
+     * https://github.com/testing-library/react-hooks-testing-library/blob/main/src/index.ts#L5
+     */
+    if (isReact17()) {
+      const { result } = renderHook(() => useMessageFeedContext());
+      expect(result.error.message).toEqual(
+        'useMessageFeedContext must be used within a MessageFeedProvider',
+      );
+    } else {
+      expect(() => {
+        renderHook(() => useMessageFeedContext());
+      }).toThrow(
+        'useMessageFeedContext must be used within a MessageFeedProvider',
+      );
+    }
   });
 });
