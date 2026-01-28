@@ -1,45 +1,46 @@
 import { useEffect, useState } from 'react';
 
-/** Expected structure of the postMessage data from parent window */
-interface RenderDataMessage {
-  type: string;
-  payload?: {
-    renderData?: unknown;
-  };
-}
-
-/** Return type for the useRenderData hook */
-interface UseRenderDataResult<T> {
-  data: T | null;
-  isLoading: boolean;
-  error: string | null;
-}
+import {
+  BaseRenderData,
+  RenderDataMessage,
+  UseRenderDataResult,
+} from './useRenderData.types';
 
 /**
- * Hook for receiving render data from parent window via postMessage
- * This is used by iframe-based UI components that receive data from an MCP client
- *
- * @template T - The type of data expected in the renderData payload
- * @returns An object containing:
- *   - data: The received render data (or null if not yet received)
- *   - isLoading: Whether data is still being loaded
- *   - error: Error message if message validation failed
+ * Hook for receiving render data from parent window via postMessage.
+ * This is used by iframe-based UI components that receive data from an MCP client.
  *
  * @example
  * ```tsx
- * interface MyData {
- *   items: string[];
- * }
- *
  * function MyComponent() {
- *   const { data, isLoading, error } = useRenderData<MyData>();
+ *   const { data, darkMode, isLoading } = useRenderData<{ items: string[] }>();
  * }
  * ```
  */
 export function useRenderData<T = unknown>(): UseRenderDataResult<T> {
-  const [data, setData] = useState<T | null>(null);
+  const [data, setData] = useState<(T & BaseRenderData) | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [prefersDarkMode, setPrefersDarkMode] = useState<boolean>(() => {
+    if (typeof window !== 'undefined' && window.matchMedia) {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+
+    return false;
+  });
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const handler = (event: MediaQueryListEvent) => {
+      setPrefersDarkMode(event.matches);
+    };
+
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent<RenderDataMessage>): void => {
@@ -68,7 +69,7 @@ export function useRenderData<T = unknown>(): UseRenderDataResult<T> {
         return;
       }
 
-      setData(renderData as T);
+      setData(renderData as T & BaseRenderData);
       setIsLoading(false);
       setError(null);
     };
@@ -81,9 +82,12 @@ export function useRenderData<T = unknown>(): UseRenderDataResult<T> {
     };
   }, []);
 
+  const darkMode = data?.darkMode ?? prefersDarkMode;
+
   return {
     data,
     isLoading,
     error,
+    darkMode,
   };
 }
