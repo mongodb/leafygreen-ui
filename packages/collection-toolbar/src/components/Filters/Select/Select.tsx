@@ -13,34 +13,13 @@ import { SelectProps } from './Select.types';
 export const Select = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
   forwardRef<HTMLDivElement, SelectProps>(
-    (
-      { label, value, defaultValue, onChange, ref: _ref, className, ...rest },
-      fwdRef,
-    ) => {
+    ({ value, className, ref: _ref, ...rest }, fwdRef) => {
       const { size } = useCollectionToolbarContext();
-
-      // Handle controlled vs uncontrolled variants separately
-      if (value !== undefined) {
-        return (
-          <LGSelect
-            size={size}
-            ref={fwdRef}
-            label={label}
-            value={value}
-            onChange={onChange}
-            className={getSelectStyles({ className })}
-            {...rest}
-          />
-        );
-      }
 
       return (
         <LGSelect
           size={size}
           ref={fwdRef}
-          label={label}
-          defaultValue={defaultValue}
-          onChange={onChange}
           className={getSelectStyles({ className })}
           {...rest}
         />
