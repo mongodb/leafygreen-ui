@@ -1,5 +1,5 @@
 ---
-'@lg-chat/message-feed': path
+'@lg-chat/message-feed': minor
 ---
 
 - [LG-5932](https://jira.mongodb.org/browse/LG-5932): Refactor to use `CompoundComponent` pattern
