@@ -12,6 +12,7 @@ export {
 
 // Filters
 export {
+  type ComboboxOptionProps,
   type ComboboxProps,
   type DatePickerProps,
   DropdownWidthBasis,

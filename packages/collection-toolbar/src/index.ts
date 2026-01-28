@@ -6,6 +6,7 @@ export {
   type ActionsProps,
   type ButtonProps,
   ButtonVariant,
+  type ComboboxOptionProps,
   type ComboboxProps,
   type DatePickerProps,
   DropdownWidthBasis,

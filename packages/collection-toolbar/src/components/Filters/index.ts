@@ -1,4 +1,8 @@
-export { Combobox, type ComboboxProps } from './Combobox';
+export {
+  Combobox,
+  type ComboboxOptionProps,
+  type ComboboxProps,
+} from './Combobox';
 export { DatePicker, type DatePickerProps } from './DatePicker';
 export { Filters } from './Filters';
 export type { FiltersProps } from './Filters.types';
