@@ -13,6 +13,7 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 
+import { InitialMessage } from '../Components/InitialMessage';
 import { ScrollToLatestButton } from '../ScrollToLatestButton';
 
 import {
@@ -135,5 +136,6 @@ export const MessageFeed = CompoundComponent(
   ),
   {
     displayName: 'MessageFeed',
+    InitialMessage,
   },
 );

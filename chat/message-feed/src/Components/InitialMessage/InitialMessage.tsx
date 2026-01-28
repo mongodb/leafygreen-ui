@@ -1,7 +1,6 @@
 import React, { forwardRef } from 'react';
 
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
-import { cx } from '@leafygreen-ui/emotion';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
@@ -9,6 +8,7 @@ import LeafyGreenProvider, {
 import { useMessageFeedContext } from '../../MessageFeedContext';
 import { MessageFeedSubcomponentProperty } from '../../shared.types';
 
+import { getWrapperStyles } from './InitialMessage.styles';
 import { type InitialMessageProps } from './InitialMessage.types';
 
 /**
@@ -25,7 +25,14 @@ export const InitialMessage = CompoundSubComponent(
 
       return (
         <LeafyGreenProvider darkMode={darkMode}>
-          <div ref={fwdRef} className={cx(className)} {...rest}>
+          <div
+            ref={fwdRef}
+            className={getWrapperStyles({
+              shouldHide: shouldHideInitialMessage,
+              className,
+            })}
+            {...rest}
+          >
             {children}
           </div>
         </LeafyGreenProvider>
