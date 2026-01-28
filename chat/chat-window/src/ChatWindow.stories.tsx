@@ -314,7 +314,6 @@ const WithInitialMessageComponent = ({
           <MessageFeed.InitialMessage>
             <MessagePrompts
               label="Suggested Prompts"
-              enableHideOnSelect
               onClickRefresh={() => {
                 // eslint-disable-next-line no-console
                 console.log('Refresh prompts');
