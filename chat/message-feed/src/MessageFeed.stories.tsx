@@ -161,6 +161,18 @@ const ChangingMessagesComponent = ({ darkMode, ...rest }: MessageFeedProps) => {
   );
 };
 
+export const InitialMessage = ({ darkMode, ...rest }: MessageFeedProps) => {
+  return (
+    <div>
+      <MessageFeed style={{ width: 700, height: 400 }} {...rest}>
+        <MessageFeed.InitialMessage>
+          Filler content for initial message
+        </MessageFeed.InitialMessage>
+      </MessageFeed>
+    </div>
+  );
+};
+
 export const ChangingMessages: StoryObj<MessageFeedProps> = {
   render: ChangingMessagesComponent,
 };

@@ -1,15 +1,20 @@
 import React, { forwardRef } from 'react';
+import { Message } from '@lg-chat/message';
 
+import { AssistantAvatar } from '@leafygreen-ui/avatar';
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
-import LeafyGreenProvider, {
-  useDarkMode,
-} from '@leafygreen-ui/leafygreen-provider';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
+import { Body } from '@leafygreen-ui/typography';
 
 import { useMessageFeedContext } from '../../MessageFeedContext';
 import { MessageFeedSubcomponentProperty } from '../../shared.types';
 
-import { getWrapperStyles } from './InitialMessage.styles';
+import { getWrapperStyles, titleStyles } from './InitialMessage.styles';
 import { type InitialMessageProps } from './InitialMessage.types';
+
+const TITLE = 'Hello! How can I help you?';
+const DESCRIPTION =
+  "I'm here to give expert guidance and recommendations for all things MongoDB.";
 
 /**
  * Renders promotional content with an award icon and "Learn More" link.
@@ -19,14 +24,26 @@ import { type InitialMessageProps } from './InitialMessage.types';
 export const InitialMessage = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
   forwardRef<HTMLDivElement, InitialMessageProps>(
-    ({ darkMode: darkModeProp, className, children, ...rest }, fwdRef) => {
-      const { darkMode } = useDarkMode(darkModeProp);
+    ({ className, children, ...rest }, fwdRef) => {
       const { shouldHideInitialMessage } = useMessageFeedContext();
+      const initialMessageId = useIdAllocator({ prefix: 'initial-message' });
 
       return (
-        <LeafyGreenProvider darkMode={darkMode}>
+        <Message
+          key={initialMessageId}
+          sourceType="markdown"
+          isSender={false}
+          ref={fwdRef}
+          {...rest}
+        >
+          <div className="">
+            <AssistantAvatar size={20} />
+            <Body weight="semiBold" className={titleStyles}>
+              {TITLE}
+            </Body>
+            <Body>{DESCRIPTION}</Body>
+          </div>
           <div
-            ref={fwdRef}
             className={getWrapperStyles({
               shouldHide: shouldHideInitialMessage,
               className,
@@ -35,7 +52,7 @@ export const InitialMessage = CompoundSubComponent(
           >
             {children}
           </div>
-        </LeafyGreenProvider>
+        </Message>
       );
     },
   ),

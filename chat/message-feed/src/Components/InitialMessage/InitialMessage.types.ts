@@ -1,7 +1,4 @@
-import React from 'react';
-
-import { DarkModeProps } from '@leafygreen-ui/lib';
+import { MessageProps } from '@lg-chat/message';
 
 export interface InitialMessageProps
-  extends React.ComponentPropsWithRef<'div'>,
-    DarkModeProps {}
+  extends Omit<MessageProps, 'messageBody' | 'isSender'> {}

@@ -14,6 +14,7 @@ import LeafyGreenProvider, {
 } from '@leafygreen-ui/leafygreen-provider';
 
 import { InitialMessage } from '../Components/InitialMessage';
+import { MessageFeedProvider } from '../MessageFeedContext';
 import { ScrollToLatestButton } from '../ScrollToLatestButton';
 
 import {
@@ -107,29 +108,32 @@ export const MessageFeed = CompoundComponent(
 
       return (
         <LeafyGreenProvider darkMode={darkMode}>
-          <div
-            {...rest}
-            className={getWrapperStyles({
-              className,
-              hasBottomShadow: !isBottomInView,
-              hasTopShadow: !isTopInView,
-              theme,
-            })}
-            ref={ref}
-          >
-            <div className={scrollContainerStyles} ref={scrollContainerRef}>
-              {/* Empty span element used to track if container can scroll up */}
-              <span className={interceptStyles} ref={topInterceptRef} />
-              {children}
-              {/* Empty span element used to track if container can scroll down */}
-              <span className={interceptStyles} ref={bottomInterceptRef} />
+          {/* TODO: Add logic to hide initial message */}
+          <MessageFeedProvider shouldHideInitialMessage={false}>
+            <div
+              {...rest}
+              className={getWrapperStyles({
+                className,
+                hasBottomShadow: !isBottomInView,
+                hasTopShadow: !isTopInView,
+                theme,
+              })}
+              ref={ref}
+            >
+              <div className={scrollContainerStyles} ref={scrollContainerRef}>
+                {/* Empty span element used to track if container can scroll up */}
+                <span className={interceptStyles} ref={topInterceptRef} />
+                {children}
+                {/* Empty span element used to track if container can scroll down */}
+                <span className={interceptStyles} ref={bottomInterceptRef} />
+              </div>
+              <ScrollToLatestButton
+                darkMode={darkMode}
+                onClick={scrollToLatest}
+                visible={showScrollButton}
+              />
             </div>
-            <ScrollToLatestButton
-              darkMode={darkMode}
-              onClick={scrollToLatest}
-              visible={showScrollButton}
-            />
-          </div>
+          </MessageFeedProvider>
         </LeafyGreenProvider>
       );
     },

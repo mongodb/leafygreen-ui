@@ -1,5 +1,5 @@
 import { css, cx } from '@leafygreen-ui/emotion';
-import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
+import { spacing, transitionDuration, typeScales } from '@leafygreen-ui/tokens';
 
 const baseOuterWrapperStyles = css`
   overflow: hidden;
@@ -36,3 +36,9 @@ export const getWrapperStyles = ({
     },
     className,
   );
+
+export const titleStyles = css`
+  font-size: ${typeScales.body2.fontSize}px;
+  line-height: ${typeScales.body2.lineHeight}px;
+  margin-block-end: ${spacing[200]}px;
+`;
