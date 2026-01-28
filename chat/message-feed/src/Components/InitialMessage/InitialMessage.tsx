@@ -9,17 +9,16 @@ import { Body } from '@leafygreen-ui/typography';
 import { useMessageFeedContext } from '../../MessageFeedContext';
 import { MessageFeedSubcomponentProperty } from '../../shared.types';
 
+import {
+  INITIAL_MESSAGE_DESCRIPTION,
+  INITIAL_MESSAGE_TITLE,
+} from './constants';
 import { getWrapperStyles, titleStyles } from './InitialMessage.styles';
 import { type InitialMessageProps } from './InitialMessage.types';
-
-const TITLE = 'Hello! How can I help you?';
-const DESCRIPTION =
-  "I'm here to give expert guidance and recommendations for all things MongoDB.";
-
 /**
- * Renders promotional content with an award icon and "Learn More" link.
+ * Renders an initial message in the message feed.
  *
- * @returns The rendered promotional message component.
+ * @returns The rendered initial message component.
  */
 export const InitialMessage = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
@@ -39,9 +38,9 @@ export const InitialMessage = CompoundSubComponent(
           <div className="">
             <AssistantAvatar size={20} />
             <Body weight="semiBold" className={titleStyles}>
-              {TITLE}
+              {INITIAL_MESSAGE_TITLE}
             </Body>
-            <Body>{DESCRIPTION}</Body>
+            <Body>{INITIAL_MESSAGE_DESCRIPTION}</Body>
           </div>
           <div
             className={getWrapperStyles({
