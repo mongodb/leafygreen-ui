@@ -5,7 +5,7 @@ export const baseStyles = css`
   flex: 100%;
   display: flex;
   flex-flow: row wrap;
-  align-items: center;
+  align-items: flex-end;
   gap: ${spacing[200]}px;
 `;
 

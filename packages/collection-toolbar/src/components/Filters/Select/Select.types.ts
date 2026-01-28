@@ -6,7 +6,7 @@ import {
 
 export type SelectProps = Omit<
   LGSelectProps,
-  'size' | 'darkMode' | 'aria-label' | 'aria-labelledby' | 'ref'
+  'size' | 'darkMode' | 'aria-label' | 'aria-labelledby'
 > &
   AriaLabelProps;
 
