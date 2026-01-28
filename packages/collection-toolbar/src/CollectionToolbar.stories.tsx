@@ -2,7 +2,6 @@ import React from 'react';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import { ComboboxOption } from '@leafygreen-ui/combobox';
 import { css } from '@leafygreen-ui/emotion';
 import { Icon } from '@leafygreen-ui/icon';
 
@@ -229,12 +228,26 @@ export const Filters: StoryFn<typeof CollectionToolbar.Filters> = props => (
         aria-label="Combobox"
         placeholder="Combobox"
       >
-        <ComboboxOption value="Combobox Option 1">
+        <CollectionToolbar.Filters.Combobox.ComboboxOption
+          value="Combobox Option 1"
+          isFocused={false}
+          isSelected={false}
+          setSelected={() => {}}
+          index={0}
+          displayName="Combobox Option 1"
+        >
           Combobox Option 1
-        </ComboboxOption>
-        <ComboboxOption value="Combobox Option 2">
+        </CollectionToolbar.Filters.Combobox.ComboboxOption>
+        <CollectionToolbar.Filters.Combobox.ComboboxOption
+          value="Combobox Option 2"
+          isFocused={false}
+          isSelected={false}
+          setSelected={() => {}}
+          index={0}
+          displayName="Combobox Option 2"
+        >
           Combobox Option 2
-        </ComboboxOption>
+        </CollectionToolbar.Filters.Combobox.ComboboxOption>
       </CollectionToolbar.Filters.Combobox>
       <CollectionToolbar.Filters.DatePicker
         value={new Date()}

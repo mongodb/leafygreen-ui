@@ -26,14 +26,14 @@ export const NumberInput = CompoundSubComponent(
       const { size } = useCollectionToolbarContext();
 
       // Handle the two variants of NumberInput separately to satisfy the union type
-      if (unitOptions && unitOptions.length > 0) {
+      if (unitOptions && unitOptions.length > 0 && onSelectChange) {
         return (
           <LGNumberInput
             ref={fwdRef}
             size={size}
             unitOptions={unitOptions}
             unit={unit as string}
-            onSelectChange={onSelectChange!}
+            onSelectChange={onSelectChange}
             selectClassName={selectClassName}
             inputClassName={getInputStyles({ className: inputClassName })}
             {...rest}

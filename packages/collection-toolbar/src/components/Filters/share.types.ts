@@ -11,6 +11,7 @@ export const CollectionToolbarFiltersSubComponentProperty = {
   TextInput: 'isCollectionToolbarFiltersTextInput',
   NumberInput: 'isCollectionToolbarFiltersNumberInput',
   Combobox: 'isCollectionToolbarFiltersCombobox',
+  ComboboxOption: 'isCollectionToolbarFiltersComboboxOption',
 } as const;
 export type CollectionToolbarFiltersSubComponentProperty =
   (typeof CollectionToolbarFiltersSubComponentProperty)[keyof typeof CollectionToolbarFiltersSubComponentProperty];

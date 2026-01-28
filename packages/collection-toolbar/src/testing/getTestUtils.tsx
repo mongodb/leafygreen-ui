@@ -20,6 +20,10 @@ export const getTestUtils = <T extends HTMLElement = HTMLElement>(
   const findTitle = () => findByLgId!<T>(lgIds.title);
   const queryTitle = () => queryByLgId!<T>(lgIds.title);
 
+  const getActions = () => getByLgId!<T>(lgIds.actions);
+  const findActions = () => findByLgId!<T>(lgIds.actions);
+  const queryActions = () => queryByLgId!<T>(lgIds.actions);
+
   const getPagination = () => getByLgId!<T>(`${lgIds.pagination}-navigation`);
   const findPagination = () => findByLgId!<T>(`${lgIds.pagination}-navigation`);
   const queryPagination = () =>
@@ -46,6 +50,9 @@ export const getTestUtils = <T extends HTMLElement = HTMLElement>(
     getTitle,
     findTitle,
     queryTitle,
+    getActions,
+    findActions,
+    queryActions,
     getPagination,
     findPagination,
     queryPagination,

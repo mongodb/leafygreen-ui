@@ -20,9 +20,9 @@ export const SearchInput = CompoundSubComponent(
           size={size}
           darkMode={darkMode}
           ref={fwdRef}
-          data-lgid={lgIds.searchInput}
           className={getSearchInputStyles({ className })}
           {...props}
+          data-lgid={lgIds.searchInput}
         />
       );
     },

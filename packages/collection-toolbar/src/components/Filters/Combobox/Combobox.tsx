@@ -8,6 +8,7 @@ import { CollectionToolbarFiltersSubComponentProperty } from '../share.types';
 
 import { getComboboxStyles } from './Combobox.styles';
 import { ComboboxProps } from './Combobox.types';
+import { ComboboxOption } from './ComboBoxOption';
 
 // Note: LGCombobox doesn't support ref forwarding
 const ComboboxComponent = <M extends boolean>({
@@ -35,4 +36,5 @@ ComboboxComponent.displayName = 'Combobox';
 export const Combobox = CompoundSubComponent(ComboboxComponent, {
   displayName: 'Combobox',
   key: CollectionToolbarFiltersSubComponentProperty.Combobox,
+  ComboboxOption,
 });

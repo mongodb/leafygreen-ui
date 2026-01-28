@@ -9,6 +9,10 @@ export interface TestUtilsReturnType<T extends HTMLElement = HTMLElement> {
   findTitle: () => Promise<T>;
   queryTitle: () => T | null;
 
+  getActions: () => T;
+  findActions: () => Promise<T>;
+  queryActions: () => T | null;
+
   getPagination: () => T;
   findPagination: () => Promise<T>;
   queryPagination: () => T | null;

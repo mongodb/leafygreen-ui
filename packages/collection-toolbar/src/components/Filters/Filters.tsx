@@ -38,8 +38,8 @@ export const Filters = CompoundSubComponent(
         <div
           ref={fwdRef}
           className={getFiltersStyles({ className })}
-          data-lgid={lgIds.filters}
           {...props}
+          data-lgid={lgIds.filters}
         >
           {filterComponents}
         </div>
