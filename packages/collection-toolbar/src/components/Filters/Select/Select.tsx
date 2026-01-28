@@ -13,7 +13,7 @@ import { SelectProps } from './Select.types';
 export const Select = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
   forwardRef<HTMLDivElement, SelectProps>(
-    ({ value, className, ref: _ref, ...rest }, fwdRef) => {
+    ({ value, className, ...rest }, fwdRef) => {
       const { size } = useCollectionToolbarContext();
 
       return (
