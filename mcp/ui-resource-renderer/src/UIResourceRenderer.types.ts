@@ -27,5 +27,4 @@ export interface UIResourceRendererProps
   htmlProps?: HTMLProps;
 }
 
-// Re-export useful types from @mcp-ui/client
 export type { UIActionResult } from '@mcp-ui/client';
