@@ -6,16 +6,29 @@ import { useRenderData } from './useRenderData';
 
 describe('mcp/hooks/useRenderData', () => {
   const originalPostMessage = window.parent.postMessage;
+  const originalMatchMedia = window.matchMedia;
   let postMessageSpy: jest.SpyInstance;
 
   beforeEach(() => {
     postMessageSpy = jest
       .spyOn(window.parent, 'postMessage')
       .mockImplementation(() => {});
+
+    window.matchMedia = jest.fn().mockImplementation(query => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: jest.fn(),
+      removeListener: jest.fn(),
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+      dispatchEvent: jest.fn(),
+    }));
   });
 
   afterEach(() => {
     window.parent.postMessage = originalPostMessage;
+    window.matchMedia = originalMatchMedia;
   });
 
   function sendMessage(data: unknown) {
@@ -29,6 +42,7 @@ describe('mcp/hooks/useRenderData', () => {
     expect(result.current.isLoading).toBe(true);
     expect(result.current.data).toBe(null);
     expect(result.current.error).toBe(null);
+    expect(result.current.darkMode).toBe(false);
   });
 
   test('sends ready message to parent on mount', () => {
@@ -117,5 +131,65 @@ describe('mcp/hooks/useRenderData', () => {
       expect.any(Function),
     );
     removeEventListenerSpy.mockRestore();
+  });
+
+  describe('darkMode', () => {
+    test('uses darkMode from render data when provided', async () => {
+      const { result } = renderHook(() => useRenderData());
+
+      sendMessage({
+        type: 'ui-lifecycle-iframe-render-data',
+        payload: { renderData: { darkMode: true } },
+      });
+
+      await waitFor(() => {
+        expect(result.current.darkMode).toBe(true);
+      });
+    });
+
+    test('falls back to browser preference when darkMode not in render data', async () => {
+      window.matchMedia = jest.fn().mockImplementation(query => ({
+        matches: query === '(prefers-color-scheme: dark)',
+        media: query,
+        onchange: null,
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      }));
+
+      const { result } = renderHook(() => useRenderData());
+
+      sendMessage({
+        type: 'ui-lifecycle-iframe-render-data',
+        payload: { renderData: { someData: 'value' } },
+      });
+
+      await waitFor(() => {
+        expect(result.current.isLoading).toBe(false);
+        expect(result.current.darkMode).toBe(true);
+      });
+    });
+
+    test('render data darkMode takes precedence over browser preference', async () => {
+      window.matchMedia = jest.fn().mockImplementation(query => ({
+        matches: query === '(prefers-color-scheme: dark)',
+        media: query,
+        onchange: null,
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      }));
+
+      const { result } = renderHook(() => useRenderData());
+
+      sendMessage({
+        type: 'ui-lifecycle-iframe-render-data',
+        payload: { renderData: { darkMode: false } },
+      });
+
+      await waitFor(() => {
+        expect(result.current.darkMode).toBe(false);
+      });
+    });
   });
 });
