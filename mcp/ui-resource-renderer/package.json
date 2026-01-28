@@ -1,5 +1,5 @@
 {
-  "name": "ui-resource-renderer",
+  "name": "@lg-mcp/ui-resource-renderer",
   "version": "0.1.0",
   "description": "lg-mcp UI Resource Renderer",
   "main": "./dist/umd/index.js",
@@ -16,6 +16,12 @@
   },
   "dependencies": {
     "@mcp-ui/client": "^6.0.0"
+  },
+  "peerDependencies": {
+    "react": "^17.0.0 || ^18.0.0"
+  },
+  "devDependencies": {
+    "@lg-tools/build": "workspace:^"
   },
   "repository": {
     "type": "git",
