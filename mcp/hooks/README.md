@@ -28,43 +28,13 @@ npm install @lg-mcp/hooks
 
 ## Hooks
 
-### useDarkMode
-
-Detects the user's system dark mode preference using the `prefers-color-scheme` media query. Automatically updates when the system preference changes.
-
-#### Example
-
-```tsx
-import { useDarkMode } from '@lg-mcp/hooks';
-
-function MyComponent() {
-  const darkMode = useDarkMode();
-
-  return (
-    <div style={{ background: darkMode ? '#1a1a1a' : '#ffffff' }}>Content</div>
-  );
-}
-```
-
-#### Parameters
-
-| Param      | Type      | Description                                                                   |
-| ---------- | --------- | ----------------------------------------------------------------------------- |
-| `override` | `boolean` | Optional. When provided, returns this value instead of the system preference. |
-
-#### Returns
-
-| Type      | Description                                          |
-| --------- | ---------------------------------------------------- |
-| `boolean` | `true` if dark mode is preferred, `false` otherwise. |
-
----
-
 ### useRenderData
 
 Receives render data from a parent window via `postMessage`. This hook is used by iframe-based UI components that receive data from an MCP client.
 
 On mount, the hook sends a `ui-lifecycle-iframe-ready` message to the parent window and listens for `ui-lifecycle-iframe-render-data` messages containing the render data.
+
+The hook also provides a computed `darkMode` value that uses the render data's `darkMode` field if available, falling back to the browser's `prefers-color-scheme` preference.
 
 #### Example
 
@@ -76,22 +46,27 @@ interface DatabaseData {
 }
 
 function MyComponent() {
-  const { data, isLoading, error } = useRenderData<DatabaseData>();
+  const { data, darkMode, isLoading, error } = useRenderData<DatabaseData>();
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
-  return <div>{data?.databases.length} databases found</div>;
+  return (
+    <div style={{ background: darkMode ? '#1a1a1a' : '#ffffff' }}>
+      {data?.databases.length} databases found
+    </div>
+  );
 }
 ```
 
 #### Returns
 
-| Property    | Type             | Description                                              |
-| ----------- | ---------------- | -------------------------------------------------------- |
-| `data`      | `T \| null`      | The received render data, or `null` if not yet received. |
-| `isLoading` | `boolean`        | `true` while waiting for data from the parent window.    |
-| `error`     | `string \| null` | Error message if message validation failed.              |
+| Property    | Type                      | Description                                                                 |
+| ----------- | ------------------------- | --------------------------------------------------------------------------- |
+| `data`      | `(T & BaseRenderData) \| null` | The received render data, or `null` if not yet received.               |
+| `isLoading` | `boolean`                 | `true` while waiting for data from the parent window.                       |
+| `error`     | `string \| null`          | Error message if message validation failed.                                 |
+| `darkMode`  | `boolean`                 | Computed dark mode: render data value or browser preference fallback.       |
 
 ---
 
