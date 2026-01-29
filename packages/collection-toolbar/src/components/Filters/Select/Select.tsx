@@ -7,25 +7,15 @@ import { useCollectionToolbarContext } from '../../../Context/CollectionToolbarP
 import { CollectionToolbarFiltersSubComponentProperty } from '../share.types';
 
 import { Option } from './Option';
-import { getSelectStyles } from './Select.styles';
 import { SelectProps } from './Select.types';
 
 export const Select = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
-  forwardRef<HTMLDivElement, SelectProps>(
-    ({ value, className, ref: _ref, ...rest }, fwdRef) => {
-      const { size } = useCollectionToolbarContext();
+  forwardRef<HTMLDivElement, SelectProps>(({ ref: _ref, ...rest }, fwdRef) => {
+    const { size } = useCollectionToolbarContext();
 
-      return (
-        <LGSelect
-          size={size}
-          ref={fwdRef}
-          className={getSelectStyles({ className })}
-          {...rest}
-        />
-      );
-    },
-  ),
+    return <LGSelect size={size} ref={fwdRef} {...rest} />;
+  }),
   {
     displayName: 'Select',
     key: CollectionToolbarFiltersSubComponentProperty.Select,

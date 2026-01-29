@@ -13,8 +13,6 @@ import { ComboboxOption } from './ComboBoxOption';
 // Note: LGCombobox doesn't support ref forwarding
 const ComboboxComponent = <M extends boolean>({
   className,
-  'aria-label': ariaLabel,
-  label,
   ...props
 }: ComboboxProps<M>) => {
   const { size } = useCollectionToolbarContext();
@@ -22,9 +20,6 @@ const ComboboxComponent = <M extends boolean>({
   return (
     <LGCombobox
       size={size}
-      // TODO: Fix
-      aria-label={ariaLabel ?? label ?? ''}
-      label={label}
       className={getComboboxStyles({ className })}
       {...props}
     />

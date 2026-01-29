@@ -243,4 +243,78 @@ describe('packages/collection-toolbar/components/Filters', () => {
       expect(Filters.DatePicker).toBeDefined();
     });
   });
+
+  // eslint-disable-next-line jest/no-disabled-tests
+  describe.skip('types', () => {
+    test('TextInput requires aria-label or label', () => {
+      <>
+        {/* @ts-expect-error - Missing aria-label or label */}
+        <Filters.TextInput />
+
+        {/* Valid: aria-label provided */}
+        <Filters.TextInput aria-label="Search" />
+
+        {/* Valid: label provided */}
+        <Filters.TextInput label="Search" />
+      </>;
+    });
+
+    test('Select requires aria-label or label', () => {
+      <>
+        {/* @ts-expect-error - Missing aria-label or label */}
+        <Filters.Select>
+          <Filters.Select.Option value="1">Option 1</Filters.Select.Option>
+        </Filters.Select>
+
+        {/* Valid: aria-label provided */}
+        <Filters.Select aria-label="Select option">
+          <Filters.Select.Option value="1">Option 1</Filters.Select.Option>
+        </Filters.Select>
+
+        {/* Valid: label provided */}
+        <Filters.Select label="Select option">
+          <Filters.Select.Option value="1">Option 1</Filters.Select.Option>
+        </Filters.Select>
+      </>;
+    });
+
+    test('NumberInput requires aria-label or label', () => {
+      <>
+        {/* @ts-expect-error - Missing aria-label or label */}
+        <Filters.NumberInput />
+
+        {/* Valid: aria-label provided */}
+        <Filters.NumberInput aria-label="Enter number" />
+
+        {/* Valid: label provided */}
+        <Filters.NumberInput label="Enter number" />
+      </>;
+    });
+
+    test('Combobox requires aria-label or label', () => {
+      <>
+        {/* @ts-expect-error - Missing aria-label or label */}
+        <Filters.Combobox />
+
+        {/* Valid: aria-label provided */}
+        <Filters.Combobox aria-label="Search" />
+
+        {/* Valid: label provided */}
+        <Filters.Combobox label="Search" />
+      </>;
+    });
+
+    test('DatePicker requires aria-label or label', () => {
+      <>
+        {/* @ts-expect-error - Missing aria-label or label */}
+        <Filters.DatePicker />
+
+        {/* Valid: aria-label provided */}
+        <Filters.DatePicker aria-label="Select date" />
+
+        {/* Valid: label provided */}
+        <Filters.DatePicker label="Select date" />
+      </>;
+    });
+  });
 });

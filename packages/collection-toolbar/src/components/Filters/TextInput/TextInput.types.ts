@@ -1,8 +1,8 @@
-import { AriaLabelProps } from '@leafygreen-ui/a11y';
 import { TextInputProps as LGTextInputProps } from '@leafygreen-ui/text-input';
 
-export type TextInputProps = Omit<
+import { DistributiveOmit } from '../../../shared.types';
+
+export type TextInputProps = DistributiveOmit<
   LGTextInputProps,
-  'sizeVariant' | 'darkMode' | 'aria-label' | 'aria-labelledby'
-> &
-  AriaLabelProps;
+  'sizeVariant' | 'darkMode'
+>;

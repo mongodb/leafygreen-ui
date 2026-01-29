@@ -6,15 +6,23 @@ import { SegmentedControl as LGSegmentedControl } from '@leafygreen-ui/segmented
 import { useCollectionToolbarContext } from '../../../Context/CollectionToolbarProvider';
 import { CollectionToolbarFiltersSubComponentProperty } from '../share.types';
 
+import { getSegmentedControlStyles } from './SegmentedControl.styles';
 import { SegmentedControlProps } from './SegmentedControl.types';
 import { SegmentedControlOption } from './SegmentedControlOption';
 
 export const SegmentedControl = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
   forwardRef<HTMLDivElement, SegmentedControlProps>(
-    ({ ref: _ref, ...props }, fwdRef) => {
+    ({ ref: _ref, className, ...props }, fwdRef) => {
       const { size } = useCollectionToolbarContext();
-      return <LGSegmentedControl size={size} ref={fwdRef} {...props} />;
+      return (
+        <LGSegmentedControl
+          size={size}
+          ref={fwdRef}
+          className={getSegmentedControlStyles({ className })}
+          {...props}
+        />
+      );
     },
   ),
   {

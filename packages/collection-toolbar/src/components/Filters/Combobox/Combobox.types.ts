@@ -1,8 +1,8 @@
-import { AriaLabelPropsWithLabel } from '@leafygreen-ui/a11y';
 import { ComboboxProps as LGComboboxProps } from '@leafygreen-ui/combobox';
 
-export type ComboboxProps<M extends boolean> = Omit<
+import { DistributiveOmit } from '../../../shared.types';
+
+export type ComboboxProps<M extends boolean> = DistributiveOmit<
   LGComboboxProps<M>,
   'size' | 'darkMode'
-> &
-  AriaLabelPropsWithLabel;
+>;

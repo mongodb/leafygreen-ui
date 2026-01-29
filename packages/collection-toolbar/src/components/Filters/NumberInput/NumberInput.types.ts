@@ -1,8 +1,8 @@
-import { AriaLabelProps } from '@leafygreen-ui/a11y';
 import { NumberInputProps as LGNumberInputProps } from '@leafygreen-ui/number-input';
 
-export type NumberInputProps = Omit<
+import { DistributiveOmit } from '../../../shared.types';
+
+export type NumberInputProps = DistributiveOmit<
   LGNumberInputProps,
-  'size' | 'darkMode' | 'aria-label' | 'aria-labelledby'
-> &
-  AriaLabelProps;
+  'size' | 'darkMode'
+>;
