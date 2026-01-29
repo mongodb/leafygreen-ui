@@ -133,23 +133,26 @@ export const MessageFeed = CompoundComponent(
         [children],
       );
 
-      useEffect(() => {
-        const childrenArray = React.Children.toArray(children);
+      const remainingChildrenArray = React.Children.toArray(remainingChildren);
 
-        if (childrenArray.length > 1) {
+      /**
+       * If there are remaining children, we should not render the initial message
+       */
+      useEffect(() => {
+        if (remainingChildrenArray.length > 0) {
           setShouldRenderInitialMessage(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []); //this useEffect should only run on initial render
+      }, []); // this useEffect should only run on initial render
 
+      /**
+       * If there are remaining children and the initial message is rendered, we should hide the initial message
+       */
       useEffect(() => {
-        if (
-          React.Children.toArray(remainingChildren).length > 0 &&
-          shouldRenderInitialMessage
-        ) {
+        if (remainingChildrenArray.length > 0 && shouldRenderInitialMessage) {
           setShouldHideInitialMessage(true);
         }
-      }, [remainingChildren, shouldRenderInitialMessage]);
+      }, [remainingChildrenArray, shouldRenderInitialMessage]);
 
       return (
         <LeafyGreenProvider darkMode={darkMode}>
