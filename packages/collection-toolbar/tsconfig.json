@@ -16,7 +16,13 @@
       "path": "../button"
     },
     {
+      "path": "../combobox"
+    },
+    {
       "path": "../compound-component"
+    },
+    {
+      "path": "../date-picker"
     },
     {
       "path": "../emotion"
@@ -40,6 +46,9 @@
       "path": "../menu"
     },
     {
+      "path": "../number-input"
+    },
+    {
       "path": "../tokens"
     },
     {
@@ -47,6 +56,15 @@
     },
     {
       "path": "../search-input"
+    },
+    {
+      "path": "../segmented-control"
+    },
+    {
+      "path": "../select"
+    },
+    {
+      "path": "../text-input"
     },
     {
       "path": "../tooltip"

@@ -1,15 +1,33 @@
+// Actions
 export {
   Actions,
   type ActionsProps,
-  Button,
   type ButtonProps,
   ButtonVariant,
-  Menu,
-  MenuItem,
   type MenuItemProps,
   type MenuProps,
-  Pagination,
+  MenuVariant,
   type PaginationProps,
 } from './Actions';
+
+// Filters
+export {
+  type ComboboxOptionProps,
+  type ComboboxProps,
+  type DatePickerProps,
+  DropdownWidthBasis,
+  Filters,
+  type FiltersProps,
+  type NumberInputProps,
+  type SegmentedControlOptionProps,
+  type SegmentedControlProps,
+  type OptionProps as SelectOptionProps,
+  type SelectProps,
+  type TextInputProps,
+} from './Filters';
+
+// SearchInput
 export { SearchInput, type SearchInputProps } from './SearchInput';
+
+// Title
 export { Title, type TitleProps } from './Title';

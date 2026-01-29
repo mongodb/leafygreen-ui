@@ -9,6 +9,7 @@ export const getLgIds = (root: LgIdString = DEFAULT_LGID_ROOT) => {
     searchInput: `${root}-search-input`,
     actions: `${root}-actions`,
     button: `${root}-button`,
+    filters: `${root}-filters`,
     pagination: `${root}-pagination`,
     menu: `${root}-menu`,
     menuItem: `${root}-menu-item`,

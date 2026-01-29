@@ -1,8 +1,19 @@
-import { cx } from '@leafygreen-ui/emotion';
-import { createUniqueClassName } from '@leafygreen-ui/lib';
+import { css, cx } from '@leafygreen-ui/emotion';
 
-export const titleClassName = createUniqueClassName('title');
+import { Variant } from '../../shared.types';
 
-export const getTitleStyles = ({ className }: { className?: string }) => {
-  return cx(titleClassName, className);
+const collapsibleTitleStyles = css`
+  flex: 1;
+`;
+
+export const getTitleStyles = ({
+  className,
+  variant,
+}: {
+  className?: string;
+  variant?: Variant;
+}) => {
+  return cx(className, {
+    [collapsibleTitleStyles]: variant === Variant.Collapsible,
+  });
 };

@@ -1,6 +1,5 @@
 import React, { ComponentType, forwardRef } from 'react';
 
-import { validateAriaLabelProps } from '@leafygreen-ui/a11y';
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 import { SearchInput as LGSearchInput } from '@leafygreen-ui/search-input';
 
@@ -16,16 +15,14 @@ export const SearchInput = CompoundSubComponent(
     ({ className, ...props }, fwdRef) => {
       const { size, darkMode, lgIds } = useCollectionToolbarContext();
 
-      validateAriaLabelProps(props, 'SearchInput');
-
       return (
         <LGSearchInput
           size={size}
           darkMode={darkMode}
           ref={fwdRef}
-          data-lgid={lgIds.searchInput}
           className={getSearchInputStyles({ className })}
           {...props}
+          data-lgid={lgIds.searchInput}
         />
       );
     },

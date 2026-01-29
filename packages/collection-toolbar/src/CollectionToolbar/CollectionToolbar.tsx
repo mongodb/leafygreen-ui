@@ -5,7 +5,7 @@ import {
   findChild,
 } from '@leafygreen-ui/compound-component';
 
-import { Actions, SearchInput, Title } from '../components';
+import { Actions, Filters, SearchInput, Title } from '../components';
 import { CollectionToolbarProvider } from '../Context/CollectionToolbarProvider';
 import {
   CollectionToolbarSubComponentProperty,
@@ -49,6 +49,11 @@ export const CollectionToolbar = CompoundComponent(
         CollectionToolbarSubComponentProperty.Actions,
       );
 
+      const filters = findChild(
+        children,
+        CollectionToolbarSubComponentProperty.Filters,
+      );
+
       const isCollapsible = variant === Variant.Collapsible;
 
       return (
@@ -60,15 +65,19 @@ export const CollectionToolbar = CompoundComponent(
         >
           <div
             data-lgid={lgIds.root}
-            className={getCollectionToolbarStyles({ size, variant, className })}
+            // TODO: Compact and Collapsible styles in LG-5845
+            className={getCollectionToolbarStyles({ className })}
             ref={fwdRef}
             {...rest}
           >
-            {isCollapsible && title}
-            {!isCollapsible && searchInput}
+            {isCollapsible ? title : searchInput}
             {actions}
+            {!isCollapsible && filters}
             {isCollapsible && (
-              <div className={collapsibleContentStyles}>{searchInput}</div>
+              <div className={collapsibleContentStyles}>
+                {searchInput}
+                {filters}
+              </div>
             )}
           </div>
         </CollectionToolbarProvider>
@@ -79,6 +88,7 @@ export const CollectionToolbar = CompoundComponent(
     displayName: 'CollectionToolbar',
     Title,
     Actions,
+    Filters,
     SearchInput,
   },
 );
