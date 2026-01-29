@@ -870,7 +870,7 @@ export function Combobox<M extends boolean>({
   }, [isMultiselect, isValueValid, prevValue, value]);
 
   // onSelect
-  // Side effects to run when the selection changes
+  // Side effects to run when the selection changes (or initial render has a selection)
   useEffect(() => {
     const hasSelectionChanged =
       !isUndefined(prevSelection) &&
@@ -879,7 +879,10 @@ export function Combobox<M extends boolean>({
         isNull(selection)) &&
       !isEqual(selection, prevSelection);
 
-    if (hasSelectionChanged) {
+    const isInitialRender =
+      isUndefined(prevSelection) && doesSelectionExist(selection);
+
+    if (hasSelectionChanged || isInitialRender) {
       onSelect();
     }
   }, [onSelect, prevSelection, selection]);
