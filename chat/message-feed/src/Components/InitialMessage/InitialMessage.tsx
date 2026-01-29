@@ -15,6 +15,7 @@ import {
   INITIAL_MESSAGE_TITLE,
 } from './constants';
 import {
+  descriptionStyles,
   getWrapperStyles,
   innerWrapperStyles,
   titleStyles,
@@ -43,8 +44,9 @@ export const InitialMessage = CompoundSubComponent(
               <Body weight="semiBold" className={titleStyles}>
                 {INITIAL_MESSAGE_TITLE}
               </Body>
-              <Body>{INITIAL_MESSAGE_DESCRIPTION}</Body>
-
+              <Body className={descriptionStyles}>
+                {INITIAL_MESSAGE_DESCRIPTION}
+              </Body>
               {children}
             </div>
           </div>

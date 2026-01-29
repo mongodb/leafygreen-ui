@@ -1,6 +1,8 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing, transitionDuration, typeScales } from '@leafygreen-ui/tokens';
 
+const FOCUS_RING_WIDTH = 4;
+
 const baseOuterWrapperStyles = css`
   display: grid;
   grid-template-rows: 1fr;
@@ -28,9 +30,14 @@ export const getWrapperStyles = ({ shouldHide }: { shouldHide: boolean }) =>
 export const titleStyles = css`
   font-size: ${typeScales.body2.fontSize}px;
   line-height: ${typeScales.body2.lineHeight}px;
-  margin-block-end: ${spacing[200]}px;
+`;
+
+export const descriptionStyles = css`
+  margin-block-end: ${spacing[400]}px;
 `;
 
 export const innerWrapperStyles = css`
   overflow: hidden;
+  margin: -${FOCUS_RING_WIDTH}px;
+  padding: ${FOCUS_RING_WIDTH}px;
 `;
