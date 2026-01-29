@@ -13,6 +13,6 @@ export const MessagePrompt = CompoundSubComponent(
   },
   {
     displayName: 'MessagePrompt',
-    key: MessageFeedSubcomponentProperty.MessagePrompts,
+    key: MessageFeedSubcomponentProperty.MessagePrompt,
   },
 );

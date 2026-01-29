@@ -2,10 +2,10 @@ import React from 'react';
 
 import { MessagePrompt } from './MessagePrompt';
 
-describe('MessagePrompts', () => {
+describe('MessagePrompt', () => {
   /* eslint-disable jest/no-disabled-tests */
   describe.skip('types behave as expected', () => {
-    test('MessagePrompts throws error when no required props are provided', () => {
+    test('MessagePrompt does not throw error', () => {
       <>
         <MessagePrompt>hello</MessagePrompt>
         <MessagePrompt onClick={() => {}} disabled selected>

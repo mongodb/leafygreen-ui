@@ -59,4 +59,60 @@ describe('InitialMessage', () => {
   });
 
   // renders the MessagePrompts component
+  test('renders the MessagePrompts component', () => {
+    renderInitialMessage({
+      children: (
+        <InitialMessage.MessagePrompts>
+          <InitialMessage.MessagePrompt>
+            What is MongoDB?
+          </InitialMessage.MessagePrompt>
+          <InitialMessage.MessagePrompt>
+            How do I query MongoDB?
+          </InitialMessage.MessagePrompt>
+          <InitialMessage.MessagePrompt>
+            What is blue but not heavy?
+          </InitialMessage.MessagePrompt>
+        </InitialMessage.MessagePrompts>
+      ),
+    });
+    expect(screen.getByText('What is MongoDB?')).toBeInTheDocument();
+    expect(screen.getByText('How do I query MongoDB?')).toBeInTheDocument();
+    expect(screen.getByText('What is blue but not heavy?')).toBeInTheDocument();
+  });
+
+  /* eslint-disable jest/no-disabled-tests */
+  describe.skip('types behave as expected', () => {
+    test('does not throw errors', () => {
+      <>
+        <InitialMessage.MessagePrompts label="hello">
+          <InitialMessage.MessagePrompt selected>
+            What is MongoDB?
+          </InitialMessage.MessagePrompt>
+          <InitialMessage.MessagePrompt disabled>
+            How do I query MongoDB?
+          </InitialMessage.MessagePrompt>
+          <InitialMessage.MessagePrompt onClick={() => {}}>
+            What is blue but not heavy?
+          </InitialMessage.MessagePrompt>
+        </InitialMessage.MessagePrompts>
+      </>;
+    });
+
+    test('throw errors when enableHideOnSelect is used', () => {
+      <>
+        {/* @ts-expect-error - enableHideOnSelect is not a prop */}
+        <InitialMessage.MessagePrompts enableHideOnSelect={false}>
+          <InitialMessage.MessagePrompt>
+            What is MongoDB?
+          </InitialMessage.MessagePrompt>
+          <InitialMessage.MessagePrompt>
+            How do I query MongoDB?
+          </InitialMessage.MessagePrompt>
+          <InitialMessage.MessagePrompt>
+            What is blue but not heavy?
+          </InitialMessage.MessagePrompt>
+        </InitialMessage.MessagePrompts>
+      </>;
+    });
+  });
 });

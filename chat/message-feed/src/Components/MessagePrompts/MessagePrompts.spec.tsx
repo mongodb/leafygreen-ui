@@ -5,7 +5,13 @@ import { MessagePrompts } from './MessagePrompts';
 describe('MessagePrompts', () => {
   /* eslint-disable jest/no-disabled-tests */
   describe.skip('types behave as expected', () => {
-    test('MessagePrompts throws error when no required props are provided', () => {
+    test('MessagePrompts throws error when enableHideOnSelect is used', () => {
+      <>
+        {/* @ts-expect-error - enableHideOnSelect is not a prop */}
+        <MessagePrompts enableHideOnSelect={false} />
+      </>;
+    });
+    test('MessagePrompts does not throw errors', () => {
       <>
         <MessagePrompts>hello</MessagePrompts>
         <MessagePrompts label="hello" onClickRefresh={() => {}}>
