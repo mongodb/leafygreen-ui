@@ -7,6 +7,8 @@ import { Body } from '@leafygreen-ui/typography';
 
 import { useMessageFeedContext } from '../../MessageFeedContext';
 import { MessageFeedSubcomponentProperty } from '../../shared.types';
+import { MessagePrompt } from '../MessagePrompt';
+import { MessagePrompts } from '../MessagePrompts';
 
 import {
   INITIAL_MESSAGE_DESCRIPTION,
@@ -53,5 +55,7 @@ export const InitialMessage = CompoundSubComponent(
   {
     displayName: 'InitialMessage',
     key: MessageFeedSubcomponentProperty.InitialMessage,
+    MessagePrompts,
+    MessagePrompt,
   },
 );

@@ -57,4 +57,6 @@ describe('InitialMessage', () => {
     expect(screen.getByText(INITIAL_MESSAGE_DESCRIPTION)).not.toBeVisible();
     expect(screen.getByText('I heard you like MongoDB')).not.toBeVisible();
   });
+
+  // renders the MessagePrompts component
 });

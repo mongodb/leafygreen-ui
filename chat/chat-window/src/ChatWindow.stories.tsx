@@ -313,26 +313,25 @@ const WithInitialMessageWithMessagePromptsComponent = ({
         <MessageFeed>
           <MessageFeed.InitialMessage>
             {/* TODO: will replace with MessageFeed.MessagePrompts in next PR */}
-            <MessagePrompts
+            <MessageFeed.InitialMessage.MessagePrompts
               label="Suggested Prompts"
               onClickRefresh={() => {
                 // eslint-disable-next-line no-console
                 console.log('Refresh prompts');
                 setSelectedPromptIndex(undefined);
               }}
-              enableHideOnSelect={false}
             >
               {prompts.map((prompt, promptIndex) => (
-                <MessagePrompt
+                <MessageFeed.InitialMessage.MessagePrompt
                   key={prompt}
                   selected={selectedPromptIndex === promptIndex}
                   onClick={() => handlePromptSelect(promptIndex)}
                   data-testid={`prompt-${promptIndex}`}
                 >
                   {prompt}
-                </MessagePrompt>
+                </MessageFeed.InitialMessage.MessagePrompt>
               ))}
-            </MessagePrompts>
+            </MessageFeed.InitialMessage.MessagePrompts>
           </MessageFeed.InitialMessage>
           {messages.map(messageFields => (
             <Message
