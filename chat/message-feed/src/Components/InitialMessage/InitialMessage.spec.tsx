@@ -83,7 +83,7 @@ describe('InitialMessage', () => {
   /* eslint-disable jest/no-disabled-tests */
   describe.skip('types behave as expected', () => {
     test('does not throw errors', () => {
-      <>
+      <InitialMessage>
         <InitialMessage.MessagePrompts label="hello">
           <InitialMessage.MessagePrompt selected>
             What is MongoDB?
@@ -95,11 +95,11 @@ describe('InitialMessage', () => {
             What is blue but not heavy?
           </InitialMessage.MessagePrompt>
         </InitialMessage.MessagePrompts>
-      </>;
+      </InitialMessage>;
     });
 
     test('throws errors when enableHideOnSelect is used', () => {
-      <>
+      <InitialMessage>
         {/* @ts-expect-error - enableHideOnSelect is not a prop */}
         <InitialMessage.MessagePrompts enableHideOnSelect={false}>
           <InitialMessage.MessagePrompt>
@@ -112,7 +112,7 @@ describe('InitialMessage', () => {
             What is blue but not heavy?
           </InitialMessage.MessagePrompt>
         </InitialMessage.MessagePrompts>
-      </>;
+      </InitialMessage>;
     });
   });
 });
