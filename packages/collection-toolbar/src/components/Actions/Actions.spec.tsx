@@ -10,6 +10,7 @@ import {
   Size,
   Variant,
 } from '../../shared.types';
+import { getTestUtils } from '../../testing/getTestUtils';
 import { getLgIds } from '../../utils';
 
 import { Actions } from './Actions';
@@ -24,6 +25,7 @@ jest.mock('@leafygreen-ui/lib', () => ({
 }));
 
 const lgIds = getLgIds();
+const { getActions } = getTestUtils();
 
 const renderActions = ({
   children,
@@ -53,7 +55,7 @@ describe('packages/collection-toolbar/components/Actions', () => {
   describe('rendering', () => {
     test('renders container with correct data-testid and data-lgid', () => {
       renderActions();
-      const actionsContainer = screen.getByTestId(lgIds.actions);
+      const actionsContainer = getActions();
       expect(actionsContainer).toBeInTheDocument();
       expect(actionsContainer).toHaveAttribute('data-lgid', lgIds.actions);
     });
@@ -284,7 +286,7 @@ describe('packages/collection-toolbar/components/Actions', () => {
   describe('props & styling', () => {
     test('applies className prop to container', () => {
       renderActions({ className: 'custom-class' });
-      const actionsContainer = screen.getByTestId(lgIds.actions);
+      const actionsContainer = getActions();
       expect(actionsContainer).toHaveClass('custom-class');
     });
 
@@ -294,7 +296,7 @@ describe('packages/collection-toolbar/components/Actions', () => {
         id: 'custom-id',
       } as React.ComponentProps<typeof Actions>);
 
-      const actionsContainer = screen.getByTestId(lgIds.actions);
+      const actionsContainer = getActions();
       expect(actionsContainer).toHaveAttribute('aria-label', 'Action buttons');
       expect(actionsContainer).toHaveAttribute('id', 'custom-id');
     });

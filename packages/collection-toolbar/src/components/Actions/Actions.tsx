@@ -70,11 +70,10 @@ export const Actions = CompoundSubComponent(
 
       return (
         <div
-          data-testid={lgIds.actions}
-          data-lgid={lgIds.actions}
           className={getActionStyles({ className })}
           ref={fwdRef}
           {...rest}
+          data-lgid={lgIds.actions}
         >
           {PrimaryButtons}
           {showPagination && pagination}
