@@ -262,7 +262,7 @@ export const WithMessagePrompts: StoryObj<ChatWindowStoryProps> = {
   },
 };
 
-const WithInitialMessageComponent = ({
+const WithInitialMessageWithMessagePromptsComponent = ({
   assistantName,
   ...props
 }: ChatWindowStoryProps) => {
@@ -312,6 +312,7 @@ const WithInitialMessageComponent = ({
       <ChatWindow {...props}>
         <MessageFeed>
           <MessageFeed.InitialMessage>
+            {/* TODO: will replace with MessageFeed.MessagePrompts in next PR */}
             <MessagePrompts
               label="Suggested Prompts"
               onClickRefresh={() => {
@@ -319,7 +320,7 @@ const WithInitialMessageComponent = ({
                 console.log('Refresh prompts');
                 setSelectedPromptIndex(undefined);
               }}
-              data-testid="message-prompts"
+              enableHideOnSelect={false}
             >
               {prompts.map((prompt, promptIndex) => (
                 <MessagePrompt
@@ -348,14 +349,15 @@ const WithInitialMessageComponent = ({
   );
 };
 
-export const WithInitialMessage: StoryObj<ChatWindowStoryProps> = {
-  render: WithInitialMessageComponent,
-  parameters: {
-    chromatic: {
-      disableSnapshot: true,
+export const WithInitialMessageWithMessagePrompts: StoryObj<ChatWindowStoryProps> =
+  {
+    render: WithInitialMessageWithMessagePromptsComponent,
+    parameters: {
+      chromatic: {
+        disableSnapshot: true,
+      },
     },
-  },
-};
+  };
 
 const ChatDrawerContent = ({ assistantName }: { assistantName?: string }) => {
   const [messages, setMessages] = useState<Array<any>>(baseMessages);

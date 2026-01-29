@@ -8,7 +8,7 @@ const baseOuterWrapperStyles = css`
 `;
 
 const transitionStyles = css`
-  transform-origin: bottom right;
+  transform-origin: top left;
   transition-property: grid-template-rows, opacity, transform;
   transition-duration: ${transitionDuration.slower}ms;
   transition-timing-function: ease-out;
