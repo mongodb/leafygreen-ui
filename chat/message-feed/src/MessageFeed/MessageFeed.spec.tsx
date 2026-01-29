@@ -122,4 +122,27 @@ describe('MessageFeed', () => {
       screen.getByText('Hello, how can I help you today?'),
     ).toBeInTheDocument();
   });
+
+  test('renders the MessagePrompts component', () => {
+    render(
+      <MessageFeed>
+        <MessageFeed.InitialMessage>
+          <MessageFeed.InitialMessage.MessagePrompts>
+            <MessageFeed.InitialMessage.MessagePrompt>
+              What is MongoDB?
+            </MessageFeed.InitialMessage.MessagePrompt>
+            <MessageFeed.InitialMessage.MessagePrompt>
+              How do I query MongoDB?
+            </MessageFeed.InitialMessage.MessagePrompt>
+            <MessageFeed.InitialMessage.MessagePrompt>
+              What is blue but not heavy?
+            </MessageFeed.InitialMessage.MessagePrompt>
+          </MessageFeed.InitialMessage.MessagePrompts>
+        </MessageFeed.InitialMessage>
+      </MessageFeed>,
+    );
+    expect(screen.getByText('What is MongoDB?')).toBeInTheDocument();
+    expect(screen.getByText('How do I query MongoDB?')).toBeInTheDocument();
+    expect(screen.getByText('What is blue but not heavy?')).toBeInTheDocument();
+  });
 });
