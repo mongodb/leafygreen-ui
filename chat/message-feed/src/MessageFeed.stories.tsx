@@ -201,7 +201,6 @@ export const InitialMessageWithMessage = ({
             />
           );
         })}
-        {/* <MyMessage {...baseMessages[1]} /> */}
       </MessageFeed>
       <button onClick={() => handleButtonClick()}>
         Click me to add a message

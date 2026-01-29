@@ -20,21 +20,10 @@ const hiddenWrapperStyles = css`
   transform: scale(0.8);
 `;
 
-export const getWrapperStyles = ({
-  shouldHide,
-  className,
-}: {
-  className?: string;
-  shouldHide: boolean;
-}) =>
-  cx(
-    baseOuterWrapperStyles,
-    transitionStyles,
-    {
-      [hiddenWrapperStyles]: shouldHide,
-    },
-    className,
-  );
+export const getWrapperStyles = ({ shouldHide }: { shouldHide: boolean }) =>
+  cx(baseOuterWrapperStyles, transitionStyles, {
+    [hiddenWrapperStyles]: shouldHide,
+  });
 
 export const titleStyles = css`
   font-size: ${typeScales.body2.fontSize}px;

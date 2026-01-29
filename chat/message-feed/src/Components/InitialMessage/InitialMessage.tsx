@@ -27,7 +27,7 @@ import { type InitialMessageProps } from './InitialMessage.types';
 export const InitialMessage = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
   forwardRef<HTMLDivElement, InitialMessageProps>(
-    ({ className, children, ...rest }, fwdRef) => {
+    ({ children, ...rest }, fwdRef) => {
       const { shouldHideInitialMessage } = useMessageFeedContext();
       const initialMessageId = useIdAllocator({ prefix: 'initial-message' });
 
@@ -40,12 +40,9 @@ export const InitialMessage = CompoundSubComponent(
           {...rest}
         >
           <div
-            data-testid="initial-message-wrapper"
             className={getWrapperStyles({
               shouldHide: shouldHideInitialMessage,
-              className,
             })}
-            {...rest}
           >
             <div className={innerWrapperStyles}>
               <AssistantAvatar size={20} />
