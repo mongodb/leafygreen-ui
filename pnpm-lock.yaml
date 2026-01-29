@@ -644,6 +644,9 @@ importers:
 
   chat/message-feed:
     dependencies:
+      '@leafygreen-ui/avatar':
+        specifier: workspace:^
+        version: link:../../packages/avatar
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../../packages/button
@@ -653,6 +656,9 @@ importers:
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../../packages/emotion
+      '@leafygreen-ui/hooks':
+        specifier: workspace:^
+        version: link:../../packages/hooks
       '@leafygreen-ui/icon':
         specifier: workspace:^
         version: link:../../packages/icon
@@ -668,6 +674,9 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../../packages/tokens
+      '@leafygreen-ui/typography':
+        specifier: workspace:^
+        version: link:../../packages/typography
       '@lg-chat/leafygreen-chat-provider':
         specifier: workspace:^6.0.0
         version: link:../leafygreen-chat-provider
