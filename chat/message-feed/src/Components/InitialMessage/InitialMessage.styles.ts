@@ -1,6 +1,8 @@
 import { css, cx } from '@leafygreen-ui/emotion';
 import { spacing, transitionDuration, typeScales } from '@leafygreen-ui/tokens';
 
+const FOCUS_RING_WIDTH = 4;
+
 const baseOuterWrapperStyles = css`
   display: grid;
   grid-template-rows: 1fr;
@@ -36,4 +38,6 @@ export const descriptionStyles = css`
 
 export const innerWrapperStyles = css`
   overflow: hidden;
+  margin: -${FOCUS_RING_WIDTH}px;
+  padding: ${FOCUS_RING_WIDTH}px;
 `;
