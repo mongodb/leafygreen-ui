@@ -312,7 +312,6 @@ const WithInitialMessageWithMessagePromptsComponent = ({
       <ChatWindow {...props}>
         <MessageFeed>
           <MessageFeed.InitialMessage>
-            {/* TODO: will replace with MessageFeed.MessagePrompts in next PR */}
             <MessageFeed.InitialMessage.MessagePrompts
               label="Suggested Prompts"
               onClickRefresh={() => {
