@@ -9,7 +9,6 @@ import { useCollectionToolbarContext } from '../../../Context/CollectionToolbarP
 import { CollectionToolbarActionsSubComponentProperty } from '../../../shared.types';
 
 import { MenuProps } from './Menu.types';
-import { MenuItem } from './MenuItem';
 
 export const Menu = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
@@ -35,6 +34,5 @@ export const Menu = CompoundSubComponent(
   {
     displayName: 'Menu',
     key: CollectionToolbarActionsSubComponentProperty.Menu,
-    MenuItem,
   },
 );

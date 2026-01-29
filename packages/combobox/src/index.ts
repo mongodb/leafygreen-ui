@@ -1,6 +1,10 @@
 export { Combobox, type ComboboxProps, RenderMode } from './Combobox';
 export { ComboboxGroup, type ComboboxGroupProps } from './ComboboxGroup';
-export { ComboboxOption, type ComboboxOptionProps } from './ComboboxOption';
+export {
+  ComboboxOption,
+  type ComboboxOptionProps,
+  type InternalComboboxOptionProps,
+} from './ComboboxOption';
 export {
   ComboboxSize,
   DropdownWidthBasis,

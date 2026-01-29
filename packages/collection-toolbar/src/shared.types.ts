@@ -1,6 +1,21 @@
 import { Size as ImportedSize } from '@leafygreen-ui/tokens';
 
 /**
+ * Forces TypeScript to fully expand the type structure,
+ * avoiding references to internal (non-exported) types in declarations.
+ */
+export type Prettify<T> = { [K in keyof T]: T[K] } & {};
+
+/**
+ * Distributive Omit that preserves discriminated unions.
+ * Standard `Omit` flattens unions; this distributes over each union member.
+ * Uses `Prettify` to inline type structure and avoid declaration emit errors.
+ */
+export type DistributiveOmit<T, K extends PropertyKey> = T extends unknown
+  ? Prettify<Omit<T, K>>
+  : never;
+
+/**
  * Variant options for CollectionToolbar.
  *
  * @default 'default'

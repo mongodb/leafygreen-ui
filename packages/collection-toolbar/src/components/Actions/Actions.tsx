@@ -21,6 +21,7 @@ import { getActionStyles } from './Action.styles';
 import { ActionsProps } from './Actions.types';
 import { Button } from './Button';
 import { Menu } from './Menu';
+import { MenuItem } from './MenuItem';
 import { Pagination } from './Pagination';
 
 export const Actions = CompoundSubComponent(
@@ -70,11 +71,10 @@ export const Actions = CompoundSubComponent(
 
       return (
         <div
-          data-testid={lgIds.actions}
-          data-lgid={lgIds.actions}
           className={getActionStyles({ className })}
           ref={fwdRef}
           {...rest}
+          data-lgid={lgIds.actions}
         >
           {PrimaryButtons}
           {showPagination && pagination}
@@ -107,5 +107,6 @@ export const Actions = CompoundSubComponent(
     Button,
     Pagination,
     Menu,
+    MenuItem,
   },
 );
