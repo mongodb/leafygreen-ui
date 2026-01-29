@@ -28,7 +28,10 @@ export const getWrapperStyles = ({ shouldHide }: { shouldHide: boolean }) =>
 export const titleStyles = css`
   font-size: ${typeScales.body2.fontSize}px;
   line-height: ${typeScales.body2.lineHeight}px;
-  margin-block-end: ${spacing[200]}px;
+`;
+
+export const descriptionStyles = css`
+  margin-block-end: ${spacing[400]}px;
 `;
 
 export const innerWrapperStyles = css`
