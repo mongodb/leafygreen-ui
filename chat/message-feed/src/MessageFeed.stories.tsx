@@ -161,12 +161,25 @@ const ChangingMessagesComponent = ({ darkMode, ...rest }: MessageFeedProps) => {
   );
 };
 
-export const InitialMessage = ({ darkMode, ...rest }: MessageFeedProps) => {
+export const InitialMessageWithMessagePrompts = ({
+  darkMode,
+  ...rest
+}: MessageFeedProps) => {
   return (
     <div>
       <MessageFeed style={{ width: 700, height: 400 }} {...rest}>
         <MessageFeed.InitialMessage>
-          Filler content for initial message
+          <MessageFeed.InitialMessage.MessagePrompts>
+            <MessageFeed.InitialMessage.MessagePrompt>
+              What is MongoDB?
+            </MessageFeed.InitialMessage.MessagePrompt>
+            <MessageFeed.InitialMessage.MessagePrompt>
+              How do I query MongoDB?
+            </MessageFeed.InitialMessage.MessagePrompt>
+            <MessageFeed.InitialMessage.MessagePrompt>
+              What is MongoDB&apos;s astrology sign?
+            </MessageFeed.InitialMessage.MessagePrompt>
+          </MessageFeed.InitialMessage.MessagePrompts>
         </MessageFeed.InitialMessage>
       </MessageFeed>
     </div>
