@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { ComponentType, forwardRef } from 'react';
 
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 import { DatePicker as LGDatePicker } from '@leafygreen-ui/date-picker';
@@ -14,7 +14,9 @@ export const DatePicker = CompoundSubComponent(
     const { size } = useCollectionToolbarContext();
 
     return <LGDatePicker size={size} ref={fwdRef} {...props} />;
-  }),
+    // Cast required for React 17: propTypes WeakValidationMap can't reconcile
+    // discriminated unions in ForwardRefExoticComponent
+  }) as ComponentType<DatePickerProps>,
   {
     displayName: 'DatePicker',
     key: CollectionToolbarFiltersSubComponentProperty.DatePicker,
