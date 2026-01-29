@@ -3,7 +3,6 @@ import { Message } from '@lg-chat/message';
 
 import { AssistantAvatar } from '@leafygreen-ui/avatar';
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
-import { useIdAllocator } from '@leafygreen-ui/hooks';
 import { Body } from '@leafygreen-ui/typography';
 
 import { useMessageFeedContext } from '../../MessageFeedContext';
@@ -29,16 +28,9 @@ export const InitialMessage = CompoundSubComponent(
   forwardRef<HTMLDivElement, InitialMessageProps>(
     ({ children, ...rest }, fwdRef) => {
       const { shouldHideInitialMessage } = useMessageFeedContext();
-      const initialMessageId = useIdAllocator({ prefix: 'initial-message' });
 
       return (
-        <Message
-          key={initialMessageId}
-          sourceType="markdown"
-          isSender={false}
-          ref={fwdRef}
-          {...rest}
-        >
+        <Message sourceType="markdown" isSender={false} ref={fwdRef} {...rest}>
           <div
             className={getWrapperStyles({
               shouldHide: shouldHideInitialMessage,
