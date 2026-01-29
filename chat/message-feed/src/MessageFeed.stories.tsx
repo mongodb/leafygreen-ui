@@ -168,7 +168,6 @@ export const InitialMessage = ({ darkMode, ...rest }: MessageFeedProps) => {
         <MessageFeed.InitialMessage>
           Filler content for initial message
         </MessageFeed.InitialMessage>
-        {/* <MyMessage {...baseMessages[1]} /> */}
       </MessageFeed>
     </div>
   );
