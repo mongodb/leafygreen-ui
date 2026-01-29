@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@leafygreen-ui/button": "workspace:^",
+    "@leafygreen-ui/compound-component": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
     "@leafygreen-ui/icon": "workspace:^",
     "@leafygreen-ui/lib": "workspace:^",
