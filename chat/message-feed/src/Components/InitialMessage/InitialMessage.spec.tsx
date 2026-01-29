@@ -98,7 +98,7 @@ describe('InitialMessage', () => {
       </>;
     });
 
-    test('throw errors when enableHideOnSelect is used', () => {
+    test('throws errors when enableHideOnSelect is used', () => {
       <>
         {/* @ts-expect-error - enableHideOnSelect is not a prop */}
         <InitialMessage.MessagePrompts enableHideOnSelect={false}>
