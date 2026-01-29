@@ -3,13 +3,13 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { CollectionToolbarProvider } from '../../../Context/CollectionToolbarProvider';
-import { CollectionToolbarActionsSubComponentProperty } from '../../../shared.types';
 import { getLgIds } from '../../../utils';
+import { MenuItem } from '../MenuItem';
 
 import { Menu } from './Menu';
 
 const renderMenu = ({
-  children = <Menu.MenuItem>Test Item</Menu.MenuItem>,
+  children = <MenuItem>Test Item</MenuItem>,
   ...props
 }: Partial<React.ComponentProps<typeof Menu>> & {
   children?: React.ReactNode;
@@ -45,7 +45,7 @@ describe('packages/collection-toolbar/components/Actions/Menu', () => {
   describe('interaction', () => {
     test('opens menu when trigger is clicked', async () => {
       renderMenu({
-        children: <Menu.MenuItem>Menu Item 1</Menu.MenuItem>,
+        children: <MenuItem>Menu Item 1</MenuItem>,
       });
 
       const trigger = screen.getByLabelText('More options');
@@ -60,9 +60,9 @@ describe('packages/collection-toolbar/components/Actions/Menu', () => {
       renderMenu({
         children: (
           <>
-            <Menu.MenuItem>Item 1</Menu.MenuItem>
-            <Menu.MenuItem>Item 2</Menu.MenuItem>
-            <Menu.MenuItem>Item 3</Menu.MenuItem>
+            <MenuItem>Item 1</MenuItem>
+            <MenuItem>Item 2</MenuItem>
+            <MenuItem>Item 3</MenuItem>
           </>
         ),
       });
@@ -75,18 +75,6 @@ describe('packages/collection-toolbar/components/Actions/Menu', () => {
         expect(screen.getByText('Item 2')).toBeVisible();
         expect(screen.getByText('Item 3')).toBeVisible();
       });
-    });
-  });
-
-  describe('compound component', () => {
-    test('has the correct static property for compound component identification', () => {
-      expect(Menu[CollectionToolbarActionsSubComponentProperty.Menu]).toBe(
-        true,
-      );
-    });
-
-    test('exposes MenuItem as a static property', () => {
-      expect(Menu.MenuItem).toBeDefined();
     });
   });
 });

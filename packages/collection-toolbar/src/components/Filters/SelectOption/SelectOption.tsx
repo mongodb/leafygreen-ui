@@ -10,7 +10,7 @@ import { SelectOptionProps } from './SelectOption.types';
 export const SelectOption = CompoundSubComponent(
   (props: SelectOptionProps) => <LGOption {...props} />,
   {
-    displayName: 'SelectOption',
+    displayName: 'Option', // Need to name this as Option to make it compatible with the LG Select component
     key: CollectionToolbarFiltersSubComponentProperty.SelectOption,
   },
 );

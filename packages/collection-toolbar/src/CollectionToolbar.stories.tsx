@@ -88,17 +88,16 @@ export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
         aria-label="Date Picker"
       />
       <CollectionToolbar.Filters.Select
-        value="Select"
         aria-label="Select"
         className={css`
           width: 100%;
           max-width: 160px !important;
         `}
       >
-        <CollectionToolbar.Filters.SelectOption value="Select Option 1">
+        <CollectionToolbar.Filters.SelectOption value="option-1">
           Select Option 1
         </CollectionToolbar.Filters.SelectOption>
-        <CollectionToolbar.Filters.SelectOption value="Select Option 2">
+        <CollectionToolbar.Filters.SelectOption value="option-2">
           Select Option 2
         </CollectionToolbar.Filters.SelectOption>
       </CollectionToolbar.Filters.Select>
