@@ -60,19 +60,19 @@ export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
         value="option-1"
         aria-label="Segmented Control"
       >
-        <CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption
+        <CollectionToolbar.Filters.SegmentedControlOption
           key="option-1"
           value="option-1"
         >
           Option 1
-        </CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption>
-        <CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption
+        </CollectionToolbar.Filters.SegmentedControlOption>
+        <CollectionToolbar.Filters.SegmentedControlOption
           key="option-2"
           value="option-2"
           glyph={<Icon glyph="GlobeAmericas" />}
         >
           Option 2
-        </CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption>
+        </CollectionToolbar.Filters.SegmentedControlOption>
       </CollectionToolbar.Filters.SegmentedControl>
 
       <CollectionToolbar.Filters.TextInput
@@ -95,12 +95,12 @@ export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
           max-width: 160px !important;
         `}
       >
-        <CollectionToolbar.Filters.Select.Option value="Select Option 1">
+        <CollectionToolbar.Filters.SelectOption value="Select Option 1">
           Select Option 1
-        </CollectionToolbar.Filters.Select.Option>
-        <CollectionToolbar.Filters.Select.Option value="Select Option 2">
+        </CollectionToolbar.Filters.SelectOption>
+        <CollectionToolbar.Filters.SelectOption value="Select Option 2">
           Select Option 2
-        </CollectionToolbar.Filters.Select.Option>
+        </CollectionToolbar.Filters.SelectOption>
       </CollectionToolbar.Filters.Select>
     </CollectionToolbar.Filters>
     <CollectionToolbar.Actions showToggleButton>
@@ -117,15 +117,15 @@ export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
         numTotalItems={100}
       />
       <CollectionToolbar.Actions.Menu>
-        <CollectionToolbar.Actions.Menu.MenuItem>
+        <CollectionToolbar.Actions.MenuItem>
           Menu Item
-        </CollectionToolbar.Actions.Menu.MenuItem>
-        <CollectionToolbar.Actions.Menu.MenuItem>
+        </CollectionToolbar.Actions.MenuItem>
+        <CollectionToolbar.Actions.MenuItem>
           Menu Item
-        </CollectionToolbar.Actions.Menu.MenuItem>
-        <CollectionToolbar.Actions.Menu.MenuItem>
+        </CollectionToolbar.Actions.MenuItem>
+        <CollectionToolbar.Actions.MenuItem>
           Menu Item
-        </CollectionToolbar.Actions.Menu.MenuItem>
+        </CollectionToolbar.Actions.MenuItem>
       </CollectionToolbar.Actions.Menu>
     </CollectionToolbar.Actions>
     <CollectionToolbar.Filters />
@@ -165,6 +165,10 @@ export const Title: StoryFn<typeof CollectionToolbar> = props => (
   </CollectionToolbar>
 );
 
+Title.args = {
+  variant: Variant.Collapsible,
+};
+
 export const Actions: StoryFn<typeof CollectionToolbar.Actions> = ({
   showToggleButton,
   ...props
@@ -179,6 +183,20 @@ export const Actions: StoryFn<typeof CollectionToolbar.Actions> = ({
         <CollectionToolbar.Actions.Button variant={ButtonVariant.Primary}>
           Action
         </CollectionToolbar.Actions.Button>
+        <CollectionToolbar.Actions.Pagination
+          onBackArrowClick={() => {}}
+          onForwardArrowClick={() => {}}
+          itemsPerPage={10}
+          numTotalItems={100}
+        />
+        <CollectionToolbar.Actions.Menu>
+          <CollectionToolbar.Actions.MenuItem>
+            Menu Item
+          </CollectionToolbar.Actions.MenuItem>
+          <CollectionToolbar.Actions.MenuItem>
+            Menu Item
+          </CollectionToolbar.Actions.MenuItem>
+        </CollectionToolbar.Actions.Menu>
       </CollectionToolbar.Actions>
     </CollectionToolbar>
   );
@@ -201,19 +219,19 @@ export const Filters: StoryObj<typeof CollectionToolbar.Filters> = {
           value="option-1"
           label="Segmented Control"
         >
-          <CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption
+          <CollectionToolbar.Filters.SegmentedControlOption
             key="segmented-control-option-1"
             value="option-1"
           >
             Segmented Control Option 1
-          </CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption>
-          <CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption
+          </CollectionToolbar.Filters.SegmentedControlOption>
+          <CollectionToolbar.Filters.SegmentedControlOption
             key="segmented-control-option-2"
             value="option-2"
             glyph={<Icon glyph="GlobeAmericas" />}
           >
             Segmented Control Option 2
-          </CollectionToolbar.Filters.SegmentedControl.SegmentedControlOption>
+          </CollectionToolbar.Filters.SegmentedControlOption>
         </CollectionToolbar.Filters.SegmentedControl>
 
         <CollectionToolbar.Filters.TextInput
@@ -231,7 +249,7 @@ export const Filters: StoryObj<typeof CollectionToolbar.Filters> = {
           description="Combobox description"
           placeholder="Combobox"
         >
-          <CollectionToolbar.Filters.Combobox.ComboboxOption
+          <CollectionToolbar.Filters.ComboboxOption
             value="Combobox Option 1"
             isFocused={false}
             isSelected={false}
@@ -240,8 +258,8 @@ export const Filters: StoryObj<typeof CollectionToolbar.Filters> = {
             displayName="Combobox Option 1"
           >
             Combobox Option 1
-          </CollectionToolbar.Filters.Combobox.ComboboxOption>
-          <CollectionToolbar.Filters.Combobox.ComboboxOption
+          </CollectionToolbar.Filters.ComboboxOption>
+          <CollectionToolbar.Filters.ComboboxOption
             value="Combobox Option 2"
             isFocused={false}
             isSelected={false}
@@ -250,7 +268,7 @@ export const Filters: StoryObj<typeof CollectionToolbar.Filters> = {
             displayName="Combobox Option 2"
           >
             Combobox Option 2
-          </CollectionToolbar.Filters.Combobox.ComboboxOption>
+          </CollectionToolbar.Filters.ComboboxOption>
         </CollectionToolbar.Filters.Combobox>
         <CollectionToolbar.Filters.DatePicker
           value={new Date()}
@@ -264,12 +282,12 @@ export const Filters: StoryObj<typeof CollectionToolbar.Filters> = {
             max-width: 160px !important;
           `}
         >
-          <CollectionToolbar.Filters.Select.Option value="Select Option 1">
+          <CollectionToolbar.Filters.SelectOption value="Select Option 1">
             Select Option 1
-          </CollectionToolbar.Filters.Select.Option>
-          <CollectionToolbar.Filters.Select.Option value="Select Option 2">
+          </CollectionToolbar.Filters.SelectOption>
+          <CollectionToolbar.Filters.SelectOption value="Select Option 2">
             Select Option 2
-          </CollectionToolbar.Filters.Select.Option>
+          </CollectionToolbar.Filters.SelectOption>
         </CollectionToolbar.Filters.Select>
       </CollectionToolbar.Filters>
     </CollectionToolbar>

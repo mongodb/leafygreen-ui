@@ -21,7 +21,7 @@ export {
   type NumberInputProps,
   type SegmentedControlOptionProps,
   type SegmentedControlProps,
-  type OptionProps as SelectOptionProps,
+  type SelectOptionProps,
   type SelectProps,
   type TextInputProps,
 } from './Filters';

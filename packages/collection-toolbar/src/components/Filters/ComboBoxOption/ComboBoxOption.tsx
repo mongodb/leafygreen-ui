@@ -3,7 +3,7 @@ import React from 'react';
 import { ComboboxOption as LGComboboxOption } from '@leafygreen-ui/combobox';
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 
-import { CollectionToolbarFiltersSubComponentProperty } from '../../share.types';
+import { CollectionToolbarFiltersSubComponentProperty } from '../share.types';
 
 import { ComboboxOptionProps } from './ComboBoxOption.types';
 

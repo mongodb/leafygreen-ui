@@ -6,7 +6,6 @@ import { Select as LGSelect } from '@leafygreen-ui/select';
 import { useCollectionToolbarContext } from '../../../Context/CollectionToolbarProvider';
 import { CollectionToolbarFiltersSubComponentProperty } from '../share.types';
 
-import { Option } from './Option';
 import { SelectProps } from './Select.types';
 
 export const Select = CompoundSubComponent(
@@ -19,6 +18,5 @@ export const Select = CompoundSubComponent(
   {
     displayName: 'Select',
     key: CollectionToolbarFiltersSubComponentProperty.Select,
-    Option,
   },
 );
