@@ -134,3 +134,13 @@ LiveExample.args = {
     databases: ['admin', 'local', 'config'],
   },
 };
+
+export const DarkMode = Template.bind({});
+DarkMode.args = {
+  resource: createMockUIResource(htmlContent),
+  darkMode: true,
+  iframeRenderData: {
+    clusterName: 'my-cluster',
+    databases: ['admin', 'local', 'config'],
+  },
+};
