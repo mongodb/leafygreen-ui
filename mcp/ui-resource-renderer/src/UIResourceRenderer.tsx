@@ -5,6 +5,7 @@ import { UIResourceRendererProps } from './UIResourceRenderer.types';
 
 export function UIResourceRenderer({
   darkMode,
+  iframeRenderData,
   htmlProps,
   ...props
 }: UIResourceRendererProps) {
@@ -13,8 +14,11 @@ export function UIResourceRenderer({
       {...props}
       htmlProps={{
         autoResizeIframe: true,
-        iframeRenderData: { darkMode },
         ...htmlProps,
+        iframeRenderData: {
+          ...iframeRenderData,
+          darkMode,
+        },
       }}
     />
   );

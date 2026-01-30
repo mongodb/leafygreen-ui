@@ -48,6 +48,7 @@ function MyComponent() {
     <UIResourceRenderer
       resource={resource}
       darkMode={false}
+      iframeRenderData={{ databases: ['db1', 'db2'] }}
       onActionResult={(result) => {
         console.log('Action result:', result);
       }}
@@ -62,6 +63,7 @@ function MyComponent() {
 | ----------------- | ------------------------- | ------------------------------------------------------------------------------------------------ | ------- |
 | `resource`        | `UIResource`              | The MCP UI resource to render. Required.                                                         | -       |
 | `darkMode`        | `boolean`                 | Whether to render in dark mode. Passed to iframe via renderData.                                | -       |
+| `iframeRenderData`| `Record<string, unknown>` | Additional data to pass to the iframe via renderData. Merged with `darkMode` (which cannot be overridden). | `{}`    |
 | `onActionResult`  | `(result: UIActionResult) => void` | Callback invoked when the embedded UI performs an action.                                       | -       |
 | `htmlProps`       | `object`                  | Additional props to pass to the underlying HTML iframe element.                                 | `{}`    |
 

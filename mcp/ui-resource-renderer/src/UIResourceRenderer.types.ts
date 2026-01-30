@@ -14,6 +14,11 @@ export interface UIResourceRendererProps
   resource: BaseUIResourceRendererProps['resource'];
   /** Whether to render in dark mode. Passed to iframe via renderData. */
   darkMode?: boolean;
+  /**
+   * Additional data to pass to the iframe via renderData.
+   * This is merged with `darkMode` (which cannot be overridden here).
+   */
+  iframeRenderData?: Record<string, unknown>;
 }
 
 export type { UIActionResult } from '@mcp-ui/client';
