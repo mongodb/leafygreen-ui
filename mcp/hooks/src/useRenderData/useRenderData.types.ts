@@ -15,3 +15,7 @@ export interface UseRenderDataResult<T> {
   error: string | null;
   darkMode: boolean;
 }
+
+export type ValidationResult<T> =
+  | { valid: true; data: T & BaseRenderData }
+  | { valid: false; error: string | null };
