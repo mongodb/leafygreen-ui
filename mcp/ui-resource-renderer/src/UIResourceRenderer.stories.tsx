@@ -18,7 +18,7 @@ function createMockUIResource(htmlContent: string) {
   return {
     uri: 'ui://mcp-server/example-resource',
     mimeType: 'text/html' as const,
-    blob: btoa(htmlContent),
+    text: htmlContent,
   };
 }
 
