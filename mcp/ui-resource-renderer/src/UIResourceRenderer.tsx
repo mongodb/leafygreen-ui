@@ -15,6 +15,7 @@ export function UIResourceRenderer({
       htmlProps={{
         autoResizeIframe: true,
         ...htmlProps,
+        style: { border: 'none', ...htmlProps?.style },
         iframeRenderData: {
           ...iframeRenderData,
           darkMode,
