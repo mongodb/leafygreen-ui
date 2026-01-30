@@ -6,8 +6,8 @@ export const MessageFeedSubcomponentProperty = {
   InitialMessage: 'isLGMessageFeedInitialMessage',
   MessagePrompts: 'isLGMessageFeedMessagePrompts',
   MessagePrompt: 'isLGMessageFeedMessagePrompt',
-  ResourceLists: 'isLGMessageFeedResourceLists',
   ResourceList: 'isLGMessageFeedResourceList',
+  ResourceListItem: 'isLGMessageFeedResourceListItem',
 } as const;
 
 /**

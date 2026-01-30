@@ -161,6 +161,32 @@ const ChangingMessagesComponent = ({ darkMode, ...rest }: MessageFeedProps) => {
   );
 };
 
+export const InitialMessageWithResourceList = ({
+  darkMode,
+  ...rest
+}: MessageFeedProps) => {
+  return (
+    <div>
+      <MessageFeed style={{ width: 400, height: 400 }} {...rest}>
+        <MessageFeed.InitialMessage>
+          <MessageFeed.InitialMessage.ResourceList>
+            <MessageFeed.InitialMessage.ResourceListItem glyph="QuestionMarkWithCircle">
+              Ask me technical questions
+            </MessageFeed.InitialMessage.ResourceListItem>
+            <MessageFeed.InitialMessage.ResourceListItem glyph="Bulb">
+              Learn best practices
+            </MessageFeed.InitialMessage.ResourceListItem>
+            <MessageFeed.InitialMessage.ResourceListItem glyph="InfoWithCircle">
+              Note: I won’t have access to any of your data unless you provide
+              it
+            </MessageFeed.InitialMessage.ResourceListItem>
+          </MessageFeed.InitialMessage.ResourceList>
+        </MessageFeed.InitialMessage>
+      </MessageFeed>
+    </div>
+  );
+};
+
 export const InitialMessageWithMessagePrompts = ({
   darkMode,
   ...rest
