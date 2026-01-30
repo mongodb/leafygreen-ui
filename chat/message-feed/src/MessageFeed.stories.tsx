@@ -162,7 +162,6 @@ const ChangingMessagesComponent = ({ darkMode, ...rest }: MessageFeedProps) => {
 };
 
 export const InitialMessageWithMessagePrompts = ({
-  darkMode,
   ...rest
 }: MessageFeedProps) => {
   return (
@@ -186,10 +185,7 @@ export const InitialMessageWithMessagePrompts = ({
   );
 };
 
-export const InitialMessageWithMessage = ({
-  darkMode,
-  ...rest
-}: MessageFeedProps) => {
+export const InitialMessageWithMessage = ({ ...rest }: MessageFeedProps) => {
   const [messages, setMessages] = useState<Array<any>>([]);
 
   const handleButtonClick = () => {
