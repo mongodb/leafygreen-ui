@@ -2,7 +2,10 @@ import React, { forwardRef } from 'react';
 import { Message } from '@lg-chat/message';
 
 import { AssistantAvatar } from '@leafygreen-ui/avatar';
-import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
+import {
+  CompoundSubComponent,
+  findChild,
+} from '@leafygreen-ui/compound-component';
 import { Body } from '@leafygreen-ui/typography';
 
 import { useMessageFeedContext } from '../../MessageFeedContext';
@@ -33,6 +36,11 @@ export const InitialMessage = CompoundSubComponent(
     ({ children, ...rest }, fwdRef) => {
       const { shouldHideInitialMessage } = useMessageFeedContext();
 
+      const messagePrompts = findChild(
+        children,
+        MessageFeedSubcomponentProperty.MessagePrompts,
+      );
+
       return (
         <Message sourceType="markdown" isSender={false} ref={fwdRef} {...rest}>
           <div
@@ -48,7 +56,7 @@ export const InitialMessage = CompoundSubComponent(
                 </Body>
                 <Body>{INITIAL_MESSAGE_DESCRIPTION}</Body>
               </div>
-              {children}
+              {messagePrompts}
             </div>
           </div>
         </Message>

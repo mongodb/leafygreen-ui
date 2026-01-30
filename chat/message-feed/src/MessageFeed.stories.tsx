@@ -188,14 +188,16 @@ export const InitialMessageWithResourceList = ({
 };
 
 export const InitialMessageWithMessagePrompts = ({
-  darkMode,
   ...rest
 }: MessageFeedProps) => {
   return (
     <div>
       <MessageFeed style={{ width: 700, height: 400 }} {...rest}>
         <MessageFeed.InitialMessage>
-          <MessageFeed.InitialMessage.MessagePrompts>
+          <MessageFeed.InitialMessage.MessagePrompts
+            onClickRefresh={() => {}}
+            label="Suggested Prompts"
+          >
             <MessageFeed.InitialMessage.MessagePrompt>
               What is MongoDB?
             </MessageFeed.InitialMessage.MessagePrompt>
@@ -212,10 +214,7 @@ export const InitialMessageWithMessagePrompts = ({
   );
 };
 
-export const InitialMessageWithMessage = ({
-  darkMode,
-  ...rest
-}: MessageFeedProps) => {
+export const InitialMessageWithMessage = ({ ...rest }: MessageFeedProps) => {
   const [messages, setMessages] = useState<Array<any>>([]);
 
   const handleButtonClick = () => {

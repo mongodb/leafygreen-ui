@@ -41,25 +41,33 @@ describe('InitialMessage', () => {
     expect(screen.getByText(INITIAL_MESSAGE_DESCRIPTION)).toBeInTheDocument();
   });
 
-  test('renders the children', () => {
+  test('does not render children if its not a subcomponent', () => {
     renderInitialMessage({
       children: <div>I heard you like MongoDB</div>,
     });
-    expect(screen.getByText('I heard you like MongoDB')).toBeInTheDocument();
+    expect(
+      screen.queryByText('I heard you like MongoDB'),
+    ).not.toBeInTheDocument();
   });
 
   test('is hidden when the shouldHideInitialMessage is true', () => {
     renderInitialMessage({
       shouldHideInitialMessage: true,
-      children: <div>I heard you like MongoDB</div>,
+      children: (
+        <InitialMessage.MessagePrompts>
+          <InitialMessage.MessagePrompt>
+            I heard you like MongoDB
+          </InitialMessage.MessagePrompt>
+        </InitialMessage.MessagePrompts>
+      ),
     });
     expect(screen.getByText(INITIAL_MESSAGE_TITLE)).not.toBeVisible();
     expect(screen.getByText(INITIAL_MESSAGE_DESCRIPTION)).not.toBeVisible();
     expect(screen.getByText('I heard you like MongoDB')).not.toBeVisible();
   });
 
-  // renders the MessagePrompts component
-  test('renders the MessagePrompts component', () => {
+  // renders the MessagePrompts subcomponent
+  test('renders the MessagePrompts subcomponent', () => {
     renderInitialMessage({
       children: (
         <InitialMessage.MessagePrompts>
