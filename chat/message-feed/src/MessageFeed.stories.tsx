@@ -162,7 +162,6 @@ const ChangingMessagesComponent = ({ darkMode, ...rest }: MessageFeedProps) => {
 };
 
 export const InitialMessageWithResourceList = ({
-  darkMode,
   ...rest
 }: MessageFeedProps) => {
   return (

@@ -41,6 +41,11 @@ export const InitialMessage = CompoundSubComponent(
         MessageFeedSubcomponentProperty.MessagePrompts,
       );
 
+      const resourceList = findChild(
+        children,
+        MessageFeedSubcomponentProperty.ResourceList,
+      );
+
       return (
         <Message sourceType="markdown" isSender={false} ref={fwdRef} {...rest}>
           <div
@@ -57,6 +62,7 @@ export const InitialMessage = CompoundSubComponent(
                 <Body>{INITIAL_MESSAGE_DESCRIPTION}</Body>
               </div>
               {messagePrompts}
+              {resourceList}
             </div>
           </div>
         </Message>
