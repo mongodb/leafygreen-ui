@@ -18,7 +18,24 @@ const messagePrompts = [
     <InitialMessage.MessagePrompt>
       How do I query MongoDB?
     </InitialMessage.MessagePrompt>
+    <InitialMessage.MessagePrompt>
+      What is MongoDB&apos;s favorite color?
+    </InitialMessage.MessagePrompt>
   </InitialMessage.MessagePrompts>,
+];
+
+const resourceList = [
+  <InitialMessage.ResourceList key="resource-list">
+    <InitialMessage.ResourceListItem glyph="QuestionMarkWithCircle">
+      Ask me technical questions
+    </InitialMessage.ResourceListItem>
+    <InitialMessage.ResourceListItem glyph="Bulb">
+      Learn best practices
+    </InitialMessage.ResourceListItem>
+    <InitialMessage.ResourceListItem glyph="InfoWithCircle">
+      Note: I won’t have access to any of your data unless you provide it
+    </InitialMessage.ResourceListItem>
+  </InitialMessage.ResourceList>,
 ];
 
 const meta: StoryMetaType<typeof InitialMessage> = {
@@ -29,7 +46,7 @@ const meta: StoryMetaType<typeof InitialMessage> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
-        children: [messagePrompts, undefined],
+        children: [messagePrompts, resourceList, undefined],
       },
       decorator: Instance => {
         return (
