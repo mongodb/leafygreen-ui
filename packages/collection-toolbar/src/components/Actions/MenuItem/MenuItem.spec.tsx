@@ -2,9 +2,9 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { CollectionToolbarProvider } from '../../../../Context/CollectionToolbarProvider';
-import { CollectionToolbarActionsSubComponentProperty } from '../../../../shared.types';
-import { getLgIds } from '../../../../utils';
+import { CollectionToolbarProvider } from '../../../Context/CollectionToolbarProvider';
+import { CollectionToolbarActionsSubComponentProperty } from '../../../shared.types';
+import { getLgIds } from '../../../utils';
 
 import { MenuItem } from './MenuItem';
 import { MenuItemProps } from './MenuItem.types';

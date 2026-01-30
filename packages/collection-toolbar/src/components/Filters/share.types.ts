@@ -4,7 +4,7 @@
  */
 export const CollectionToolbarFiltersSubComponentProperty = {
   Select: 'isCollectionToolbarFiltersSelect',
-  Option: 'isCollectionToolbarFiltersOption',
+  SelectOption: 'isCollectionToolbarFiltersSelectOption',
   DatePicker: 'isCollectionToolbarFiltersDatePicker',
   SegmentedControl: 'isCollectionToolbarFiltersSegmentedControl',
   SegmentedControlOption: 'isCollectionToolbarFiltersSegmentedControlOption',

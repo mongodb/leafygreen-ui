@@ -110,12 +110,12 @@ describe('packages/collection-toolbar/components/Filters', () => {
       renderFilters({
         children: (
           <Filters.Select aria-label="Select option" defaultValue="option1">
-            <Filters.Select.Option value="option1">
+            <Filters.SelectOption value="option1">
               Option 1
-            </Filters.Select.Option>
-            <Filters.Select.Option value="option2">
+            </Filters.SelectOption>
+            <Filters.SelectOption value="option2">
               Option 2
-            </Filters.Select.Option>
+            </Filters.SelectOption>
           </Filters.Select>
         ),
       });
@@ -133,12 +133,12 @@ describe('packages/collection-toolbar/components/Filters', () => {
             aria-label="View mode"
             defaultValue="option1"
           >
-            <Filters.SegmentedControl.SegmentedControlOption value="option1">
+            <Filters.SegmentedControlOption value="option1">
               Grid
-            </Filters.SegmentedControl.SegmentedControlOption>
-            <Filters.SegmentedControl.SegmentedControlOption value="option2">
+            </Filters.SegmentedControlOption>
+            <Filters.SegmentedControlOption value="option2">
               List
-            </Filters.SegmentedControl.SegmentedControlOption>
+            </Filters.SegmentedControlOption>
           </Filters.SegmentedControl>
         ),
       });
@@ -173,9 +173,9 @@ describe('packages/collection-toolbar/components/Filters', () => {
           <>
             <Filters.TextInput aria-label="Search text" />
             <Filters.Select aria-label="Select option" defaultValue="option1">
-              <Filters.Select.Option value="option1">
+              <Filters.SelectOption value="option1">
                 Option 1
-              </Filters.Select.Option>
+              </Filters.SelectOption>
             </Filters.Select>
             <Filters.NumberInput aria-label="Enter number" />
           </>
@@ -263,17 +263,17 @@ describe('packages/collection-toolbar/components/Filters', () => {
       <>
         {/* @ts-expect-error - Missing aria-label or label */}
         <Filters.Select>
-          <Filters.Select.Option value="1">Option 1</Filters.Select.Option>
+          <Filters.SelectOption value="1">Option 1</Filters.SelectOption>
         </Filters.Select>
 
         {/* Valid: aria-label provided */}
         <Filters.Select aria-label="Select option">
-          <Filters.Select.Option value="1">Option 1</Filters.Select.Option>
+          <Filters.SelectOption value="1">Option 1</Filters.SelectOption>
         </Filters.Select>
 
         {/* Valid: label provided */}
         <Filters.Select label="Select option">
-          <Filters.Select.Option value="1">Option 1</Filters.Select.Option>
+          <Filters.SelectOption value="1">Option 1</Filters.SelectOption>
         </Filters.Select>
       </>;
     });

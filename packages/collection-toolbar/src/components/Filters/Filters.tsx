@@ -9,12 +9,15 @@ import { useCollectionToolbarContext } from '../../Context/CollectionToolbarProv
 import { CollectionToolbarSubComponentProperty } from '../../shared.types';
 
 import { Combobox } from './Combobox';
+import { ComboboxOption } from './ComboboxOption';
 import { DatePicker } from './DatePicker';
 import { getFiltersStyles } from './Filters.styles';
 import { FiltersProps } from './Filters.types';
 import { NumberInput } from './NumberInput';
 import { SegmentedControl } from './SegmentedControl';
+import { SegmentedControlOption } from './SegmentedControlOption';
 import { Select } from './Select';
+import { SelectOption } from './SelectOption';
 import { CollectionToolbarFiltersSubComponentProperty } from './share.types';
 import { TextInput } from './TextInput';
 
@@ -52,8 +55,11 @@ export const Filters = CompoundSubComponent(
     NumberInput,
     Select,
     SegmentedControl,
+    SegmentedControlOption,
+    SelectOption,
     TextInput,
     Combobox,
+    ComboboxOption,
     DatePicker,
   },
 );

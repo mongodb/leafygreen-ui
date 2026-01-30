@@ -7,8 +7,8 @@ import {
   MenuItem as LGMenuItem,
 } from '@leafygreen-ui/menu';
 
-import { useCollectionToolbarContext } from '../../../../Context/CollectionToolbarProvider';
-import { CollectionToolbarActionsSubComponentProperty } from '../../../../shared.types';
+import { useCollectionToolbarContext } from '../../../Context/CollectionToolbarProvider';
+import { CollectionToolbarActionsSubComponentProperty } from '../../../shared.types';
 
 export const MenuItem = CompoundSubComponent(
   ({ children, ...props }: InternalMenuItemProps) => {

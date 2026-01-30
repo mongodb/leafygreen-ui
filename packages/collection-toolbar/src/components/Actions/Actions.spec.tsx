@@ -134,7 +134,7 @@ describe('packages/collection-toolbar/components/Actions', () => {
         variant: Variant.Default,
         children: (
           <Actions.Menu>
-            <Actions.Menu.MenuItem>Item 1</Actions.Menu.MenuItem>
+            <Actions.MenuItem>Item 1</Actions.MenuItem>
           </Actions.Menu>
         ),
       });
@@ -146,7 +146,7 @@ describe('packages/collection-toolbar/components/Actions', () => {
         variant: Variant.Compact,
         children: (
           <Actions.Menu>
-            <Actions.Menu.MenuItem>Item 1</Actions.Menu.MenuItem>
+            <Actions.MenuItem>Item 1</Actions.MenuItem>
           </Actions.Menu>
         ),
       });
@@ -158,7 +158,7 @@ describe('packages/collection-toolbar/components/Actions', () => {
         variant: Variant.Collapsible,
         children: (
           <Actions.Menu>
-            <Actions.Menu.MenuItem>Item 1</Actions.Menu.MenuItem>
+            <Actions.MenuItem>Item 1</Actions.MenuItem>
           </Actions.Menu>
         ),
       });

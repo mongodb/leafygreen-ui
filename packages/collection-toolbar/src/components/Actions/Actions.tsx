@@ -21,6 +21,7 @@ import { getActionStyles } from './Action.styles';
 import { ActionsProps } from './Actions.types';
 import { Button } from './Button';
 import { Menu } from './Menu';
+import { MenuItem } from './MenuItem';
 import { Pagination } from './Pagination';
 
 export const Actions = CompoundSubComponent(
@@ -106,5 +107,6 @@ export const Actions = CompoundSubComponent(
     Button,
     Pagination,
     Menu,
+    MenuItem,
   },
 );

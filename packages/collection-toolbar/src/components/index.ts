@@ -4,6 +4,7 @@ export {
   type ActionsProps,
   type ButtonProps,
   ButtonVariant,
+  menuItemClassName,
   type MenuItemProps,
   type MenuProps,
   MenuVariant,
@@ -21,7 +22,7 @@ export {
   type NumberInputProps,
   type SegmentedControlOptionProps,
   type SegmentedControlProps,
-  type OptionProps as SelectOptionProps,
+  type SelectOptionProps,
   type SelectProps,
   type TextInputProps,
 } from './Filters';
