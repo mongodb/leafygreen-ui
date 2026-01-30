@@ -168,7 +168,10 @@ export const InitialMessageWithMessagePrompts = ({
     <div>
       <MessageFeed style={{ width: 700, height: 400 }} {...rest}>
         <MessageFeed.InitialMessage>
-          <MessageFeed.InitialMessage.MessagePrompts>
+          <MessageFeed.InitialMessage.MessagePrompts
+            onClickRefresh={() => {}}
+            label="Suggested Prompts"
+          >
             <MessageFeed.InitialMessage.MessagePrompt>
               What is MongoDB?
             </MessageFeed.InitialMessage.MessagePrompt>

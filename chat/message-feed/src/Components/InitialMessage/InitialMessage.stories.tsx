@@ -6,6 +6,21 @@ import { MessageFeedProvider } from '../../MessageFeedContext';
 
 import { InitialMessage, InitialMessageProps } from '.';
 
+const messagePrompts = [
+  <InitialMessage.MessagePrompts
+    key="message-prompts"
+    onClickRefresh={() => {}}
+    label="Suggested Prompts"
+  >
+    <InitialMessage.MessagePrompt>
+      What is MongoDB?
+    </InitialMessage.MessagePrompt>
+    <InitialMessage.MessagePrompt>
+      How do I query MongoDB?
+    </InitialMessage.MessagePrompt>
+  </InitialMessage.MessagePrompts>,
+];
+
 const meta: StoryMetaType<typeof InitialMessage> = {
   title: 'Composition/Chat/MessageFeed/InitialMessage',
   component: InitialMessage,
@@ -14,6 +29,7 @@ const meta: StoryMetaType<typeof InitialMessage> = {
     generate: {
       combineArgs: {
         darkMode: [false, true],
+        children: [messagePrompts, undefined],
       },
       decorator: Instance => {
         return (
@@ -26,9 +42,6 @@ const meta: StoryMetaType<typeof InitialMessage> = {
   },
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
-  },
-  args: {
-    children: <div>I heard you like MongoDB</div>, // TODO: will replace with a real content in the next PR
   },
   decorators: [
     Instance => (
