@@ -1,3 +1,7 @@
 import { ComponentPropsWithRef } from 'react';
 
-export type ResourceListProps = ComponentPropsWithRef<'ul'>;
+import { DarkModeProps } from '@leafygreen-ui/lib';
+
+export interface ResourceListProps
+  extends ComponentPropsWithRef<'ul'>,
+    DarkModeProps {}

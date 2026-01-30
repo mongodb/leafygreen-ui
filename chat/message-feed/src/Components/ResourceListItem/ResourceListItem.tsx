@@ -3,6 +3,7 @@ import React, { forwardRef } from 'react';
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 import { Icon } from '@leafygreen-ui/icon';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { Body } from '@leafygreen-ui/typography';
 
 import { MessageFeedSubcomponentProperty } from '../../shared.types';
 
@@ -28,7 +29,7 @@ export const ResourceListItem = CompoundSubComponent(
           <div className={iconWrapperStyles}>
             <Icon className={getIconStyles({ theme })} glyph={glyph} />
           </div>
-          <div>{children}</div>
+          <Body>{children}</Body>
         </li>
       );
     },
