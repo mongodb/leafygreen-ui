@@ -32,12 +32,11 @@ export const titleStyles = css`
   line-height: ${typeScales.body2.lineHeight}px;
 `;
 
-export const descriptionStyles = css`
-  margin-block-end: ${spacing[400]}px;
-`;
-
 export const innerWrapperStyles = css`
   overflow: hidden;
   margin: -${FOCUS_RING_WIDTH}px;
   padding: ${FOCUS_RING_WIDTH}px;
+  display: flex;
+  flex-direction: column;
+  gap: ${spacing[400]}px;
 `;
