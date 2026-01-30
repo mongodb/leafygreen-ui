@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import kebabCase from 'lodash/kebabCase';
 
 import { getNodeTextContent } from '@leafygreen-ui/lib';
@@ -18,7 +19,7 @@ export const getNameAndValue = ({
   displayName: nameProp,
 }: ComboboxOptionProps): {
   value: string;
-  displayName: string;
+  displayName: ReactNode;
 } => {
   const displayNameProps = getNodeTextContent(nameProp);
 
