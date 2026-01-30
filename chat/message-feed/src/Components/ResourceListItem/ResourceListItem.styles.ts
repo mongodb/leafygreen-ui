@@ -1,5 +1,6 @@
 import { css, cx } from '@leafygreen-ui/emotion';
-import { spacing, typeScales } from '@leafygreen-ui/tokens';
+import { Theme } from '@leafygreen-ui/lib';
+import { color, spacing, typeScales } from '@leafygreen-ui/tokens';
 
 export const getListItemStyles = ({ className }: { className?: string }) =>
   cx(
@@ -13,8 +14,13 @@ export const getListItemStyles = ({ className }: { className?: string }) =>
     className,
   );
 
-export const glyphStyles = css`
+export const iconWrapperStyles = css`
   display: flex;
 `;
 
-export const contentStyles = css``;
+export const getIconStyles = ({ theme }: { theme: Theme }) =>
+  cx(
+    css`
+      color: ${color[theme].icon.primary.default};
+    `,
+  );

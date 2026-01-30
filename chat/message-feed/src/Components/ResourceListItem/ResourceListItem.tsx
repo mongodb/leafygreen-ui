@@ -2,13 +2,14 @@ import React, { forwardRef } from 'react';
 
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 import { Icon } from '@leafygreen-ui/icon';
+import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { MessageFeedSubcomponentProperty } from '../../shared.types';
 
 import {
-  contentStyles,
+  getIconStyles,
   getListItemStyles,
-  glyphStyles,
+  iconWrapperStyles,
 } from './ResourceListItem.styles';
 import { type ResourceListItemProps } from './ResourceListItem.types';
 
@@ -21,12 +22,13 @@ export const ResourceListItem = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
   forwardRef<HTMLLIElement, ResourceListItemProps>(
     ({ className, children, glyph, ...rest }, fwdRef) => {
+      const { theme } = useDarkMode();
       return (
         <li ref={fwdRef} className={getListItemStyles({ className })} {...rest}>
-          <div className={glyphStyles}>
-            <Icon glyph={glyph} />
+          <div className={iconWrapperStyles}>
+            <Icon className={getIconStyles({ theme })} glyph={glyph} />
           </div>
-          <div className={contentStyles}>{children}</div>
+          <div>{children}</div>
         </li>
       );
     },
