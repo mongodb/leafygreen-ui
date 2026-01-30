@@ -65,7 +65,11 @@ describe('MessageFeed', () => {
     render(
       <MessageFeed>
         <MessageFeed.InitialMessage>
-          <div>I heard you like MongoDB</div>
+          <MessageFeed.InitialMessage.MessagePrompts>
+            <MessageFeed.InitialMessage.MessagePrompt>
+              I heard you like MongoDB
+            </MessageFeed.InitialMessage.MessagePrompt>
+          </MessageFeed.InitialMessage.MessagePrompts>
         </MessageFeed.InitialMessage>
       </MessageFeed>,
     );
@@ -78,7 +82,11 @@ describe('MessageFeed', () => {
     render(
       <MessageFeed>
         <MessageFeed.InitialMessage>
-          <div>I heard you like MongoDB</div>
+          <MessageFeed.InitialMessage.MessagePrompts>
+            <MessageFeed.InitialMessage.MessagePrompt>
+              I heard you like MongoDB
+            </MessageFeed.InitialMessage.MessagePrompt>
+          </MessageFeed.InitialMessage.MessagePrompts>
         </MessageFeed.InitialMessage>
         <div>Hello, fellow message</div>
       </MessageFeed>,
@@ -97,7 +105,11 @@ describe('MessageFeed', () => {
     const { rerender } = render(
       <MessageFeed>
         <MessageFeed.InitialMessage>
-          <div>I heard you like MongoDB</div>
+          <MessageFeed.InitialMessage.MessagePrompts>
+            <MessageFeed.InitialMessage.MessagePrompt>
+              I heard you like MongoDB
+            </MessageFeed.InitialMessage.MessagePrompt>
+          </MessageFeed.InitialMessage.MessagePrompts>
         </MessageFeed.InitialMessage>
       </MessageFeed>,
     );
@@ -109,7 +121,11 @@ describe('MessageFeed', () => {
     rerender(
       <MessageFeed>
         <MessageFeed.InitialMessage>
-          <div>I heard you like MongoDB</div>
+          <MessageFeed.InitialMessage.MessagePrompts>
+            <MessageFeed.InitialMessage.MessagePrompt>
+              I heard you like MongoDB
+            </MessageFeed.InitialMessage.MessagePrompt>
+          </MessageFeed.InitialMessage.MessagePrompts>
         </MessageFeed.InitialMessage>
         <div>Hello, how can I help you today?</div>
       </MessageFeed>,
