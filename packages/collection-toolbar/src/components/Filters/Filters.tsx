@@ -9,7 +9,7 @@ import { useCollectionToolbarContext } from '../../Context/CollectionToolbarProv
 import { CollectionToolbarSubComponentProperty } from '../../shared.types';
 
 import { Combobox } from './Combobox';
-import { ComboboxOption } from './ComboBoxOption';
+import { ComboboxOption } from './ComboBoxOption1';
 import { DatePicker } from './DatePicker';
 import { getFiltersStyles } from './Filters.styles';
 import { FiltersProps } from './Filters.types';

@@ -1,5 +1,5 @@
 export { Combobox, type ComboboxProps } from './Combobox';
-export { ComboboxOption, type ComboboxOptionProps } from './ComboBoxOption';
+export { ComboboxOption, type ComboboxOptionProps } from './ComboBoxOption1';
 export { DatePicker, type DatePickerProps } from './DatePicker';
 export { Filters } from './Filters';
 export type { FiltersProps } from './Filters.types';
