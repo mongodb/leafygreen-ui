@@ -40,6 +40,7 @@ describe('UIResourceRenderer', () => {
       onActionResult,
       htmlProps: {
         autoResizeIframe: true,
+        style: { border: 'none' },
         iframeRenderData: { darkMode: true },
       },
     });

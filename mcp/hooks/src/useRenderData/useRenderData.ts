@@ -19,7 +19,7 @@ function validateRenderData<T>(
 ): ValidationResult<T> | null {
   const isRenderDataMessage = event.data?.type === MESSAGE_TYPE_RENDER_DATA;
 
-  if (isRenderDataMessage) {
+  if (!isRenderDataMessage) {
     return null;
   }
 
@@ -35,6 +35,13 @@ function validateRenderData<T>(
 
   if (!hasData) {
     return { valid: false, error: null };
+  }
+
+  if (typeof renderData !== 'object') {
+    return {
+      valid: false,
+      error: `Expected object but received ${typeof renderData}`,
+    };
   }
 
   return { valid: true, data: renderData as T & BaseRenderData };
@@ -89,6 +96,7 @@ export function useRenderData<T = unknown>(): UseRenderDataResult<T> {
 
       if (!result.valid) {
         setError(result.error);
+        setIsLoading(false);
         return;
       }
 
