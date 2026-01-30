@@ -4,6 +4,7 @@ export {
   type ActionsProps,
   type ButtonProps,
   ButtonVariant,
+  menuItemClassName,
   type MenuItemProps,
   type MenuProps,
   MenuVariant,

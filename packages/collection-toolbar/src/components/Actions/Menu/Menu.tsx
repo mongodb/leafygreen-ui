@@ -1,6 +1,9 @@
 import React, { forwardRef } from 'react';
 
-import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
+import {
+  CompoundSubComponent,
+  findChildren,
+} from '@leafygreen-ui/compound-component';
 import { Icon } from '@leafygreen-ui/icon';
 import { IconButton } from '@leafygreen-ui/icon-button';
 import { Menu as LGMenu } from '@leafygreen-ui/menu';
@@ -15,6 +18,11 @@ export const Menu = CompoundSubComponent(
   forwardRef<HTMLDivElement, MenuProps>(({ children, ...props }, fwdRef) => {
     const { lgIds } = useCollectionToolbarContext();
 
+    const menuItems = findChildren(
+      children,
+      CollectionToolbarActionsSubComponentProperty.MenuItem,
+    );
+
     return (
       <LGMenu
         data-lgid={lgIds.menu}
@@ -27,7 +35,7 @@ export const Menu = CompoundSubComponent(
           </IconButton>
         }
       >
-        {children}
+        {menuItems}
       </LGMenu>
     );
   }),

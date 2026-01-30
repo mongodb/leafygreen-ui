@@ -11,6 +11,7 @@ export {
   type DatePickerProps,
   DropdownWidthBasis,
   type FiltersProps,
+  menuItemClassName,
   type MenuItemProps,
   type MenuProps,
   MenuVariant,
