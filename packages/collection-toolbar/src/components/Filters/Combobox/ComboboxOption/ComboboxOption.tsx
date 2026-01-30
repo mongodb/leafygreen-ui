@@ -5,7 +5,7 @@ import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 
 import { CollectionToolbarFiltersSubComponentProperty } from '../../share.types';
 
-import { ComboboxOptionProps } from './ComboBoxOption.types';
+import { ComboboxOptionProps } from './ComboboxOption.types';
 
 // Note: LGCombobox doesn't support ref forwarding
 // LGComboboxOption technically does but doesn't play nice with ref forwarding
