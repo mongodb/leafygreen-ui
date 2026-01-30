@@ -19,7 +19,7 @@ export const getNameAndValue = ({
   displayName: nameProp,
 }: ComboboxOptionProps): {
   value: string;
-  displayName: ReactNode | string;
+  displayName: Exclude<ReactNode, null | undefined>;
 } => {
   const displayNameProps = getNodeTextContent(nameProp);
 
