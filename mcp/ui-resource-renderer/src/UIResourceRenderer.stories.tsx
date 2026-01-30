@@ -12,16 +12,8 @@ import {
 import { UIResourceRenderer } from './UIResourceRenderer';
 import { UIResourceRendererProps } from './UIResourceRenderer.types';
 
-/**
- * Calculated height for the mock UI resource container.
- * Based on the HTML content structure with padding, typography, and pre block.
- */
 const CONTAINER_HEIGHT = 340;
 
-/**
- * Creates a mock MCP UI resource with the given HTML content.
- * In a real application, this resource would come from an MCP server response.
- */
 function createMockUIResource(htmlContent: string) {
   return {
     uri: 'ui://mcp-server/example-resource',
@@ -30,9 +22,6 @@ function createMockUIResource(htmlContent: string) {
   };
 }
 
-// Simple HTML that reads renderData and displays it.
-// Uses the postMessage protocol: sends 'ui-lifecycle-iframe-ready' and
-// listens for 'ui-lifecycle-iframe-render-data' messages.
 const htmlContent = `
 <!DOCTYPE html>
 <html>
