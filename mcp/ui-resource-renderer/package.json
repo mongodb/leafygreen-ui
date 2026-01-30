@@ -21,6 +21,7 @@
     "react": "^17.0.0 || ^18.0.0"
   },
   "devDependencies": {
+    "@leafygreen-ui/tokens": "workspace:^",
     "@lg-tools/build": "workspace:^"
   },
   "repository": {
