@@ -75,7 +75,6 @@ const htmlContent = `
 <body>
   <div class="card">
     <h2>MCP UI Resource</h2>
-    <p>Dark mode: <strong id="darkMode">loading...</strong></p>
     <p>Render data received:</p>
     <pre id="renderData">loading...</pre>
   </div>
@@ -88,7 +87,6 @@ const htmlContent = `
       const data = event.data.payload?.renderData;
       if (!data) return;
       
-      document.getElementById('darkMode').textContent = String(data.darkMode);
       document.getElementById('renderData').textContent = JSON.stringify(data, null, 2);
       if (data.darkMode) {
         document.body.classList.add('dark');
