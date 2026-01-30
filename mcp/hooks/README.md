@@ -61,12 +61,12 @@ function MyComponent() {
 
 #### Returns
 
-| Property    | Type                      | Description                                                                 |
-| ----------- | ------------------------- | --------------------------------------------------------------------------- |
-| `data`      | `(T & BaseRenderData) \| null` | The received render data, or `null` if not yet received.               |
-| `isLoading` | `boolean`                 | `true` while waiting for data from the parent window.                       |
-| `error`     | `string \| null`          | Error message if message validation failed.                                 |
-| `darkMode`  | `boolean`                 | Computed dark mode: render data value or browser preference fallback.       |
+| Property    | Type                           | Description                                                           |
+| ----------- | ------------------------------ | --------------------------------------------------------------------- |
+| `data`      | `(T & BaseRenderData) \| null` | The received render data, or `null` if not yet received.              |
+| `isLoading` | `boolean`                      | `true` while waiting for data from the parent window.                 |
+| `error`     | `string \| null`               | Error message if message validation failed.                           |
+| `darkMode`  | `boolean`                      | Computed dark mode: render data value or browser preference fallback. |
 
 ---
 
