@@ -4,9 +4,11 @@ import { MessagePrompt, MessagePrompts } from '@lg-chat/message-prompts';
 import { MessageRating } from '@lg-chat/message-rating';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
+import { expect, userEvent, waitFor, within } from '@storybook/test';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
+import { InitialMessageProps } from './components/InitialMessage/InitialMessage.types';
 import {
   baseMessages,
   type MessageFields,
@@ -173,7 +175,30 @@ export const InitialMessage = ({ ...rest }: MessageFeedProps) => {
   );
 };
 
-export const InitialMessageWithMessage = ({ ...rest }: MessageFeedProps) => {
+export const InitialMessageWithMessages = ({ ...rest }: MessageFeedProps) => {
+  return (
+    <div>
+      <MessageFeed style={{ width: 700, height: 400 }} {...rest}>
+        <MessageFeed.InitialMessage>
+          Filler content for initial message
+        </MessageFeed.InitialMessage>
+        {baseMessages.slice(0, 2).map(message => {
+          const { id, messageBody, userName } = message as MessageFields;
+          return (
+            <Message
+              key={id}
+              sourceType="markdown"
+              isSender={!!userName}
+              messageBody={messageBody}
+            />
+          );
+        })}
+      </MessageFeed>
+    </div>
+  );
+};
+
+export const InitialMessageWithNewMessage = ({ ...rest }: MessageFeedProps) => {
   const [messages, setMessages] = useState<Array<any>>([]);
 
   const handleButtonClick = () => {
@@ -198,7 +223,10 @@ export const InitialMessageWithMessage = ({ ...rest }: MessageFeedProps) => {
           );
         })}
       </MessageFeed>
-      <button onClick={() => handleButtonClick()}>
+      <button
+        data-testid="add-message-button"
+        onClick={() => handleButtonClick()}
+      >
         Click me to add a message
       </button>
     </div>
@@ -207,4 +235,35 @@ export const InitialMessageWithMessage = ({ ...rest }: MessageFeedProps) => {
 
 export const ChangingMessages: StoryObj<MessageFeedProps> = {
   render: ChangingMessagesComponent,
+};
+
+export const InitialMessageTransition: StoryObj<InitialMessageProps> = {
+  render: InitialMessageWithNewMessage,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    expect(
+      canvas.getByText('Filler content for initial message'),
+    ).toBeVisible();
+
+    // Click add message button
+    const addMessageButton = canvas.getByTestId('add-message-button');
+
+    // Click the message button to add a message
+    await userEvent.click(addMessageButton);
+
+    await waitFor(() =>
+      expect(
+        canvas.getByText('Filler content for initial message'),
+      ).not.toBeVisible(),
+    );
+    await waitFor(() =>
+      expect(canvas.getByText(baseMessages[1].messageBody)).toBeVisible(),
+    );
+  },
+  parameters: {
+    chromatic: {
+      delay: 300,
+    },
+  },
 };
