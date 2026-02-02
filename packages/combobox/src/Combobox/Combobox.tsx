@@ -878,10 +878,10 @@ export function Combobox<M extends boolean>({
         isNull(selection)) &&
       !isEqual(selection, prevSelection);
 
-    const isInitialRender =
+    const isInitialRenderWithSelection =
       isUndefined(prevSelection) && doesSelectionExist(selection);
 
-    if (hasSelectionChanged || isInitialRender) {
+    if (hasSelectionChanged || isInitialRenderWithSelection) {
       onSelect();
     }
   }, [onSelect, prevSelection, selection]);
