@@ -1,1 +1,1 @@
-export { type MessagePromptProps } from '@lg-chat/message-prompts';
+export { type MessagePromptProps as MessagePromptsItemProps } from '@lg-chat/message-prompts';

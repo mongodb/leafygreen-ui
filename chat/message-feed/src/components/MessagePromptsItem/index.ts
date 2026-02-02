@@ -1,2 +1,2 @@
-export { MessagePrompt } from './MessagePrompt';
-export { type MessagePromptProps } from './MessagePrompt.types';
+export { MessagePromptsItem } from './MessagePromptsItem';
+export { type MessagePromptsItemProps } from './MessagePromptsItem.types';

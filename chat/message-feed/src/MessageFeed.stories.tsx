@@ -174,15 +174,15 @@ export const InitialMessageWithMessagePrompts = ({
             onClickRefresh={() => {}}
             label="Suggested Prompts"
           >
-            <MessageFeed.InitialMessage.MessagePrompt>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
               What is MongoDB?
-            </MessageFeed.InitialMessage.MessagePrompt>
-            <MessageFeed.InitialMessage.MessagePrompt>
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
               How do I query MongoDB?
-            </MessageFeed.InitialMessage.MessagePrompt>
-            <MessageFeed.InitialMessage.MessagePrompt>
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
               What is MongoDB&apos;s astrology sign?
-            </MessageFeed.InitialMessage.MessagePrompt>
+            </MessageFeed.InitialMessage.MessagePromptsItem>
           </MessageFeed.InitialMessage.MessagePrompts>
         </MessageFeed.InitialMessage>
       </MessageFeed>
@@ -228,15 +228,15 @@ export const InitialMessageWithNewMessage = ({ ...rest }: MessageFeedProps) => {
             onClickRefresh={() => {}}
             label="Suggested Prompts"
           >
-            <MessageFeed.InitialMessage.MessagePrompt>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
               What is MongoDB?
-            </MessageFeed.InitialMessage.MessagePrompt>
-            <MessageFeed.InitialMessage.MessagePrompt>
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
               How do I query MongoDB?
-            </MessageFeed.InitialMessage.MessagePrompt>
-            <MessageFeed.InitialMessage.MessagePrompt>
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
               What is MongoDB&apos;s astrology sign?
-            </MessageFeed.InitialMessage.MessagePrompt>
+            </MessageFeed.InitialMessage.MessagePromptsItem>
           </MessageFeed.InitialMessage.MessagePrompts>
         </MessageFeed.InitialMessage>
         {messages.map(message => {

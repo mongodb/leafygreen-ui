@@ -5,14 +5,14 @@ import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 
 import { InitialMessageSubcomponentProperty } from '../InitialMessage/InitialMessage.types';
 
-import { type MessagePromptProps } from './MessagePrompt.types';
+import { type MessagePromptsItemProps } from './MessagePromptsItem.types';
 
-export const MessagePrompt = CompoundSubComponent(
-  ({ children, ...rest }: MessagePromptProps) => {
+export const MessagePromptsItem = CompoundSubComponent(
+  ({ children, ...rest }: MessagePromptsItemProps) => {
     return <LGMessagePrompt {...rest}>{children}</LGMessagePrompt>;
   },
   {
-    displayName: 'MessagePrompt',
-    key: InitialMessageSubcomponentProperty.MessagePrompt,
+    displayName: 'MessagePromptsItem',
+    key: InitialMessageSubcomponentProperty.MessagePromptsItem,
   },
 );

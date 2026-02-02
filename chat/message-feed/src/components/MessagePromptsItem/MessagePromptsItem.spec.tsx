@@ -1,16 +1,16 @@
 import React from 'react';
 
-import { MessagePrompt } from './MessagePrompt';
+import { MessagePromptsItem } from './MessagePromptsItem';
 
-describe('MessagePrompt', () => {
+describe('MessagePromptsItem', () => {
   /* eslint-disable jest/no-disabled-tests */
   describe.skip('types behave as expected', () => {
-    test('MessagePrompt does not throw error', () => {
+    test('MessagePromptsItem does not throw error', () => {
       <>
-        <MessagePrompt>hello</MessagePrompt>
-        <MessagePrompt onClick={() => {}} disabled selected>
+        <MessagePromptsItem>hello</MessagePromptsItem>
+        <MessagePromptsItem onClick={() => {}} disabled selected>
           hello
-        </MessagePrompt>
+        </MessagePromptsItem>
       </>;
     });
   });

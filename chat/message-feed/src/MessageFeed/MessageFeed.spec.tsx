@@ -66,9 +66,9 @@ describe('MessageFeed', () => {
       <MessageFeed>
         <MessageFeed.InitialMessage>
           <MessageFeed.InitialMessage.MessagePrompts>
-            <MessageFeed.InitialMessage.MessagePrompt>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
               I heard you like MongoDB
-            </MessageFeed.InitialMessage.MessagePrompt>
+            </MessageFeed.InitialMessage.MessagePromptsItem>
           </MessageFeed.InitialMessage.MessagePrompts>
         </MessageFeed.InitialMessage>
       </MessageFeed>,
@@ -83,9 +83,9 @@ describe('MessageFeed', () => {
       <MessageFeed>
         <MessageFeed.InitialMessage>
           <MessageFeed.InitialMessage.MessagePrompts>
-            <MessageFeed.InitialMessage.MessagePrompt>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
               I heard you like MongoDB
-            </MessageFeed.InitialMessage.MessagePrompt>
+            </MessageFeed.InitialMessage.MessagePromptsItem>
           </MessageFeed.InitialMessage.MessagePrompts>
         </MessageFeed.InitialMessage>
         <div>Hello, fellow message</div>
@@ -102,9 +102,9 @@ describe('MessageFeed', () => {
       <MessageFeed>
         <MessageFeed.InitialMessage>
           <MessageFeed.InitialMessage.MessagePrompts>
-            <MessageFeed.InitialMessage.MessagePrompt>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
               I heard you like MongoDB
-            </MessageFeed.InitialMessage.MessagePrompt>
+            </MessageFeed.InitialMessage.MessagePromptsItem>
           </MessageFeed.InitialMessage.MessagePrompts>
         </MessageFeed.InitialMessage>
       </MessageFeed>,
@@ -118,9 +118,9 @@ describe('MessageFeed', () => {
       <MessageFeed>
         <MessageFeed.InitialMessage>
           <MessageFeed.InitialMessage.MessagePrompts>
-            <MessageFeed.InitialMessage.MessagePrompt>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
               I heard you like MongoDB
-            </MessageFeed.InitialMessage.MessagePrompt>
+            </MessageFeed.InitialMessage.MessagePromptsItem>
           </MessageFeed.InitialMessage.MessagePrompts>
         </MessageFeed.InitialMessage>
         <div>Hello, how can I help you today?</div>
@@ -140,15 +140,15 @@ describe('MessageFeed', () => {
       <MessageFeed>
         <MessageFeed.InitialMessage>
           <MessageFeed.InitialMessage.MessagePrompts>
-            <MessageFeed.InitialMessage.MessagePrompt>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
               What is MongoDB?
-            </MessageFeed.InitialMessage.MessagePrompt>
-            <MessageFeed.InitialMessage.MessagePrompt>
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
               How do I query MongoDB?
-            </MessageFeed.InitialMessage.MessagePrompt>
-            <MessageFeed.InitialMessage.MessagePrompt>
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
               What is blue but not heavy?
-            </MessageFeed.InitialMessage.MessagePrompt>
+            </MessageFeed.InitialMessage.MessagePromptsItem>
           </MessageFeed.InitialMessage.MessagePrompts>
         </MessageFeed.InitialMessage>
       </MessageFeed>,
