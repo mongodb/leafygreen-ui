@@ -12,7 +12,7 @@ const MESSAGE_TYPE_IFRAME_READY = 'ui-lifecycle-iframe-ready';
 
 /**
  * Validates the render data from a message event.
- * Returns either the validated data or an error message.
+ * Returns either the validated data, an error message, or null if the message is not a render data message.
  */
 function validateRenderData<T>(
   event: MessageEvent<RenderDataMessage>,
