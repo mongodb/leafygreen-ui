@@ -35,6 +35,14 @@ return (
 );
 ```
 
+### Compound Components
+
+The `MessageFeed` component uses a compound component pattern to compose the initial message component, `MessageFeed.InitialMessage`. Additionally, `MessageFeed.InitialMessage` also uses a compound pattern to compose it's children. These subcomponents include `MessageFeed.InitialMessage.MessagePrompts`, `MessageFeed.InitialMessage.MessagePromptsItem`, `MessageFeed.InitialMessage.ResourceList`, and `MessageFeed.InitialMessage.ResourceListItem`.
+
+#### MessageFeed.InitialMessage.MessagePrompts
+
+
+
 ## Properties
 
 | Prop       | Type                      | Description                                            | Default |
