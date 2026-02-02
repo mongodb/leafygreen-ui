@@ -1,5 +1,11 @@
 # @leafygreen-ui/combobox
 
+## 12.4.2
+
+### Patch Changes
+
+- cc59a2d: Fix selection initialization
+
 ## 12.4.1
 
 ### Patch Changes
