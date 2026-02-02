@@ -61,12 +61,12 @@ function MyComponent() {
 
 #### Properties
 
-| Prop               | Type                               | Description                                                                                               | Default     |
-| ------------------ | ---------------------------------- | --------------------------------------------------------------------------------------------------------- | ----------- |
-| `resource`         | `UIResource`                       | The MCP UI resource to render. Required.                                                                  | -           |
+| Prop               | Type                               | Description                                                                                                  | Default     |
+| ------------------ | ---------------------------------- | ------------------------------------------------------------------------------------------------------------ | ----------- |
+| `resource`         | `UIResource`                       | The MCP UI resource to render. Required.                                                                     | -           |
 | `iframeRenderData` | `Record<string, unknown>`          | Data to pass to the iframe via renderData. Use this for any data needed in the iframe, including `darkMode`. | `undefined` |
-| `onActionResult`   | `(result: UIActionResult) => void` | Callback invoked when the embedded UI performs an action.                                                 | -           |
-| `htmlProps`        | `object`                           | Additional props to pass to the underlying HTML iframe element.                                           | `{}`        |
+| `onActionResult`   | `(result: UIActionResult) => void` | Callback invoked when the embedded UI performs an action.                                                    | -           |
+| `htmlProps`        | `object`                           | Additional props to pass to the underlying HTML iframe element.                                              | `{}`        |
 
 #### Types
 
