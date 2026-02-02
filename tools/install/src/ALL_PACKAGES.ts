@@ -21,7 +21,6 @@ export const ALL_PACKAGES = [
   '@leafygreen-ui/copyable',
   '@leafygreen-ui/date-picker',
   '@leafygreen-ui/date-utils',
-  '@leafygreen-ui/delete-wizard',
   '@leafygreen-ui/descendants',
   '@leafygreen-ui/drawer',
   '@leafygreen-ui/emotion',
