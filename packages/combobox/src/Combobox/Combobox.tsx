@@ -188,8 +188,7 @@ export function Combobox<M extends boolean>({
     if (initialValue) {
       if (isArray(initialValue)) {
         // Ensure the values we set are real options
-        const filteredValue =
-          initialValue.filter(value => isValueValid(value)) ?? [];
+        const filteredValue = initialValue.filter(value => isValueValid(value));
         return filteredValue as SelectValueType<M>;
       } else {
         if (isValueValid(initialValue as string)) {
