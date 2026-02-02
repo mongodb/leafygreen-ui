@@ -1,12 +1,14 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useMemo } from 'react';
 
 import {
   CompoundSubComponent,
   findChildren,
 } from '@leafygreen-ui/compound-component';
+import { consoleOnce } from '@leafygreen-ui/lib';
 
 import { useCollectionToolbarContext } from '../../Context/CollectionToolbarProvider';
 import { CollectionToolbarSubComponentProperty } from '../../shared.types';
+import { getIsFilterCountValid, MAX_FILTER_COUNT } from '../../utils';
 
 import { Combobox } from './Combobox';
 import { ComboboxOption } from './ComboboxOption';
@@ -21,13 +23,23 @@ import { SelectOption } from './SelectOption';
 import { CollectionToolbarFiltersSubComponentProperty } from './share.types';
 import { TextInput } from './TextInput';
 
+/**
+ * Filters component
+ *
+ * @param className - Class name to apply to the component
+ * @param children - Children to render
+ * @param props - Props to apply to the component
+ * @returns React element
+ *
+ * @note Default and Collapsible variants allow up to 5 filters.
+ * @note Compact variant allows up to 2 filters.
+ */
 export const Filters = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
   forwardRef<HTMLDivElement, FiltersProps>(
     ({ className, children, ...props }, fwdRef) => {
-      const { lgIds } = useCollectionToolbarContext();
+      const { lgIds, variant } = useCollectionToolbarContext();
 
-      // TODO: add max-filter count logic in LG-5845
       const filterComponents = findChildren(children, [
         CollectionToolbarFiltersSubComponentProperty.NumberInput,
         CollectionToolbarFiltersSubComponentProperty.Select,
@@ -37,10 +49,21 @@ export const Filters = CompoundSubComponent(
         CollectionToolbarFiltersSubComponentProperty.DatePicker,
       ]);
 
+      const isFilterCountValid = useMemo(
+        () => getIsFilterCountValid(filterComponents.length, variant),
+        [filterComponents.length, variant],
+      );
+
+      if (!isFilterCountValid) {
+        consoleOnce.error(
+          `CollectionToolbarFilters with ${variant} variant can only have up to ${MAX_FILTER_COUNT[variant]} filters`,
+        );
+      }
+
       return (
         <div
           ref={fwdRef}
-          className={getFiltersStyles({ className })}
+          className={getFiltersStyles({ className, variant })}
           {...props}
           data-lgid={lgIds.filters}
         >

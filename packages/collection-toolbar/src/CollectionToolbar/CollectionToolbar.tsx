@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useMemo } from 'react';
 
 import {
   CompoundComponent,
@@ -6,6 +6,7 @@ import {
 } from '@leafygreen-ui/compound-component';
 
 import { Actions, Filters, SearchInput, Title } from '../components';
+import { CollapsibleContent } from '../components/CollapsibleContent';
 import { CollectionToolbarProvider } from '../Context/CollectionToolbarProvider';
 import {
   CollectionToolbarSubComponentProperty,
@@ -15,7 +16,6 @@ import {
 import { getLgIds } from '../utils';
 
 import { getCollectionToolbarStyles } from './CollectionToolbar.styles';
-import { collapsibleContentStyles } from './CollectionToolbar.styles';
 import { CollectionToolbarProps } from './CollectionToolbar.types';
 
 export const CollectionToolbar = CompoundComponent(
@@ -55,6 +55,25 @@ export const CollectionToolbar = CompoundComponent(
       );
 
       const isCollapsible = variant === Variant.Collapsible;
+      const isCompact = variant === Variant.Compact;
+
+      const content = useMemo(() => {
+        if (isCompact) {
+          return (
+            <>
+              {filters}
+              {actions}
+            </>
+          );
+        }
+
+        return (
+          <>
+            {actions}
+            {!isCollapsible && filters}
+          </>
+        );
+      }, [isCompact, isCollapsible, filters, actions]);
 
       return (
         <CollectionToolbarProvider
@@ -65,19 +84,14 @@ export const CollectionToolbar = CompoundComponent(
         >
           <div
             data-lgid={lgIds.root}
-            // TODO: Compact and Collapsible styles in LG-5845
             className={getCollectionToolbarStyles({ className })}
             ref={fwdRef}
             {...rest}
           >
             {isCollapsible ? title : searchInput}
-            {actions}
-            {!isCollapsible && filters}
+            {content}
             {isCollapsible && (
-              <div className={collapsibleContentStyles}>
-                {searchInput}
-                {filters}
-              </div>
+              <CollapsibleContent searchInput={searchInput} filters={filters} />
             )}
           </div>
         </CollectionToolbarProvider>
