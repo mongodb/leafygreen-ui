@@ -7,11 +7,12 @@ const baseOuterWrapperStyles = css`
   display: grid;
   grid-template-rows: 1fr;
   gap: ${spacing[200]}px;
+  visibility: visible;
 `;
 
 const transitionStyles = css`
   transform-origin: top left;
-  transition-property: grid-template-rows, opacity, transform;
+  transition-property: grid-template-rows, opacity, transform, visibility;
   transition-duration: ${transitionDuration.slower}ms;
   transition-timing-function: ease-out;
 `;
@@ -20,6 +21,7 @@ const hiddenWrapperStyles = css`
   grid-template-rows: 0fr;
   opacity: 0;
   transform: scale(0.8);
+  visibility: hidden;
 `;
 
 export const getWrapperStyles = ({ shouldHide }: { shouldHide: boolean }) =>

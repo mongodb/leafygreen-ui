@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { Message } from '@lg-chat/message';
 
-import { AssistantAvatar } from '@leafygreen-ui/avatar';
+import { AssistantAvatar, AvatarSize } from '@leafygreen-ui/avatar';
 import {
   CompoundSubComponent,
   findChild,
@@ -40,7 +40,7 @@ export const InitialMessage = CompoundSubComponent(
       );
 
       return (
-        <Message sourceType="markdown" isSender={false} ref={fwdRef} {...rest}>
+        <Message isSender={false} ref={fwdRef} {...rest}>
           <div
             className={getWrapperStyles({
               shouldHide: shouldHideInitialMessage,
@@ -48,7 +48,7 @@ export const InitialMessage = CompoundSubComponent(
           >
             <div className={innerWrapperStyles}>
               <div>
-                <AssistantAvatar size={20} />
+                <AssistantAvatar size={AvatarSize.Large} />
                 <Body weight="semiBold" className={titleStyles}>
                   {INITIAL_MESSAGE_TITLE}
                 </Body>
