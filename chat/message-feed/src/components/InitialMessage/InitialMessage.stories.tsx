@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Message } from '@lg-chat/message';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import { StoryFn, StoryObj } from '@storybook/react';
+import { expect, userEvent, waitFor, within } from '@storybook/test';
 
+import { MessageFeed } from '../../MessageFeed';
 import { MessageFeedProvider } from '../../MessageFeedContext';
+import { baseMessages, MessageFields } from '../../utils/MessageFeed.testutils';
 
 import { InitialMessage, InitialMessageProps } from '.';
 
@@ -51,3 +55,75 @@ export const LiveExample = {
 };
 
 export const Generated = () => {};
+
+// const MessageFeed = () => {
+//   return (
+
+//   )
+// }
+
+export const InitialMessageWithMessage = ({ ...rest }: InitialMessageProps) => {
+  const [messages, setMessages] = useState<Array<any>>([]);
+
+  const handleButtonClick = () => {
+    setMessages([...messages, baseMessages[1]]);
+  };
+
+  return (
+    <div>
+      <MessageFeed style={{ width: 700, height: 400 }} {...rest}>
+        <MessageFeed.InitialMessage>
+          Filler content for initial message
+        </MessageFeed.InitialMessage>
+        {messages.map(message => {
+          const { id, messageBody, userName } = message as MessageFields;
+          return (
+            <Message
+              key={id}
+              sourceType="markdown"
+              isSender={!!userName}
+              messageBody={messageBody}
+            />
+          );
+        })}
+      </MessageFeed>
+      <button
+        data-testid="add-message-button"
+        onClick={() => handleButtonClick()}
+      >
+        Click me to add a message
+      </button>
+    </div>
+  );
+};
+
+export const TransitioningWithMessage: StoryObj<InitialMessageProps> = {
+  render: InitialMessageWithMessage,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    expect(
+      canvas.getByText('Filler content for initial message'),
+    ).toBeVisible();
+
+    // Click add message button
+    const addMessageButton = canvas.getByTestId('add-message-button');
+
+    // Click the message button to add a message
+    await userEvent.click(addMessageButton);
+
+    await waitFor(() =>
+      expect(
+        canvas.getByText('Filler content for initial message'),
+      ).not.toBeVisible(),
+    );
+    await waitFor(() =>
+      expect(canvas.getByText(baseMessages[1].messageBody)).toBeVisible(),
+    );
+  },
+  parameters: {
+    chromatic: {
+      delay: 300,
+    },
+  },
+};
