@@ -105,13 +105,6 @@ const htmlContent = `
 const meta: StoryMetaType<typeof UIResourceRenderer> = {
   title: 'MCP/UIResourceRenderer',
   component: UIResourceRenderer,
-  argTypes: {
-    darkMode: {
-      control: 'boolean',
-      description:
-        'Render data is only sent once on mount. Changing this requires remounting the component to take effect.',
-    },
-  },
   parameters: {
     default: 'LiveExample',
   },
@@ -128,8 +121,8 @@ const Template: StoryFn<UIResourceRendererProps> = args => (
 export const LiveExample = Template.bind({});
 LiveExample.args = {
   resource: createMockUIResource(htmlContent),
-  darkMode: false,
   iframeRenderData: {
+    darkMode: false,
     clusterName: 'my-cluster',
     databases: ['admin', 'local', 'config'],
   },
@@ -138,8 +131,8 @@ LiveExample.args = {
 export const DarkMode = Template.bind({});
 DarkMode.args = {
   resource: createMockUIResource(htmlContent),
-  darkMode: true,
   iframeRenderData: {
+    darkMode: true,
     clusterName: 'my-cluster',
     databases: ['admin', 'local', 'config'],
   },

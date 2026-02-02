@@ -29,7 +29,7 @@ describe('UIResourceRenderer', () => {
     render(
       <UIResourceRenderer
         resource={mockResource}
-        darkMode={true}
+        iframeRenderData={{ darkMode: true }}
         // @ts-expect-error - onActionResult is a valid prop from BaseUIResourceRendererProps
         onActionResult={onActionResult}
       />,
@@ -46,24 +46,15 @@ describe('UIResourceRenderer', () => {
     });
   });
 
-  test('should pass darkMode false to iframeRenderData', () => {
-    render(<UIResourceRenderer resource={mockResource} darkMode={false} />);
-
-    expect(mockUIResourceRenderer).toHaveBeenCalledWith(
-      expect.objectContaining({
-        htmlProps: expect.objectContaining({
-          iframeRenderData: { darkMode: false },
-        }),
-      }),
-    );
-  });
-
-  test('should merge iframeRenderData with darkMode', () => {
+  test('should pass iframeRenderData to base component', () => {
     render(
       <UIResourceRenderer
         resource={mockResource}
-        darkMode={true}
-        iframeRenderData={{ databases: ['db1', 'db2'], customProp: 'value' }}
+        iframeRenderData={{
+          darkMode: false,
+          databases: ['db1', 'db2'],
+          customProp: 'value',
+        }}
       />,
     );
 
@@ -71,28 +62,22 @@ describe('UIResourceRenderer', () => {
       expect.objectContaining({
         htmlProps: expect.objectContaining({
           iframeRenderData: {
+            darkMode: false,
             databases: ['db1', 'db2'],
             customProp: 'value',
-            darkMode: true,
           },
         }),
       }),
     );
   });
 
-  test('should not allow iframeRenderData to override darkMode prop', () => {
-    render(
-      <UIResourceRenderer
-        resource={mockResource}
-        darkMode={true}
-        iframeRenderData={{ darkMode: false }}
-      />,
-    );
+  test('should handle undefined iframeRenderData', () => {
+    render(<UIResourceRenderer resource={mockResource} />);
 
     expect(mockUIResourceRenderer).toHaveBeenCalledWith(
       expect.objectContaining({
         htmlProps: expect.objectContaining({
-          iframeRenderData: { darkMode: true },
+          iframeRenderData: undefined,
         }),
       }),
     );

@@ -24,7 +24,7 @@ npm install @lg-mcp/ui-resource-renderer
 
 ## Overview
 
-`@lg-mcp/ui-resource-renderer` provides a React component for rendering MCP (Model Context Protocol) UI resources. This component wraps `@mcp-ui/client`'s `UIResourceRenderer` with LeafyGreen-specific defaults, including automatic iframe resizing and dark mode support.
+`@lg-mcp/ui-resource-renderer` provides a React component for rendering MCP (Model Context Protocol) UI resources. This component wraps `@mcp-ui/client`'s `UIResourceRenderer` with LeafyGreen-specific defaults, including automatic iframe resizing.
 
 ## Components
 
@@ -47,8 +47,10 @@ function MyComponent() {
   return (
     <UIResourceRenderer
       resource={resource}
-      darkMode={false}
-      iframeRenderData={{ databases: ['db1', 'db2'] }}
+      iframeRenderData={{
+        darkMode: false,
+        databases: ['db1', 'db2'],
+      }}
       onActionResult={result => {
         console.log('Action result:', result);
       }}
@@ -59,13 +61,12 @@ function MyComponent() {
 
 #### Properties
 
-| Prop               | Type                               | Description                                                                                                | Default |
-| ------------------ | ---------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------- |
-| `resource`         | `UIResource`                       | The MCP UI resource to render. Required.                                                                   | -       |
-| `darkMode`         | `boolean`                          | Whether to render in dark mode. Passed to iframe via renderData.                                           | -       |
-| `iframeRenderData` | `Record<string, unknown>`          | Additional data to pass to the iframe via renderData. Merged with `darkMode` (which cannot be overridden). | `{}`    |
-| `onActionResult`   | `(result: UIActionResult) => void` | Callback invoked when the embedded UI performs an action.                                                  | -       |
-| `htmlProps`        | `object`                           | Additional props to pass to the underlying HTML iframe element.                                            | `{}`    |
+| Prop               | Type                               | Description                                                                                               | Default     |
+| ------------------ | ---------------------------------- | --------------------------------------------------------------------------------------------------------- | ----------- |
+| `resource`         | `UIResource`                       | The MCP UI resource to render. Required.                                                                  | -           |
+| `iframeRenderData` | `Record<string, unknown>`          | Data to pass to the iframe via renderData. Use this for any data needed in the iframe, including `darkMode`. | `undefined` |
+| `onActionResult`   | `(result: UIActionResult) => void` | Callback invoked when the embedded UI performs an action.                                                 | -           |
+| `htmlProps`        | `object`                           | Additional props to pass to the underlying HTML iframe element.                                           | `{}`        |
 
 #### Types
 
