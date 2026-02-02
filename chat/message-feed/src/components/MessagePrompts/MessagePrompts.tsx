@@ -3,7 +3,7 @@ import { MessagePrompts as LGMessagePrompts } from '@lg-chat/message-prompts';
 
 import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
 
-import { MessageFeedSubcomponentProperty } from '../../shared.types';
+import { InitialMessageSubcomponentProperty } from '../InitialMessage/InitialMessage.types';
 
 import { type MessagePromptsProps } from './MessagePrompts.types';
 
@@ -17,6 +17,6 @@ export const MessagePrompts = CompoundSubComponent(
   },
   {
     displayName: 'MessagePrompts',
-    key: MessageFeedSubcomponentProperty.MessagePrompts,
+    key: InitialMessageSubcomponentProperty.MessagePrompts,
   },
 );

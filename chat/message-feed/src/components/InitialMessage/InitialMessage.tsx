@@ -22,7 +22,10 @@ import {
   innerWrapperStyles,
   titleStyles,
 } from './InitialMessage.styles';
-import { type InitialMessageProps } from './InitialMessage.types';
+import {
+  type InitialMessageProps,
+  InitialMessageSubcomponentProperty,
+} from './InitialMessage.types';
 /**
  * Renders an initial message in the message feed.
  *
@@ -36,7 +39,7 @@ export const InitialMessage = CompoundSubComponent(
 
       const messagePrompts = findChild(
         children,
-        MessageFeedSubcomponentProperty.MessagePrompts,
+        InitialMessageSubcomponentProperty.MessagePrompts,
       );
 
       return (
