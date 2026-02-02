@@ -27,7 +27,9 @@ describe('packages/collection-toolbar', () => {
             <CollectionToolbar.Filters.TextInput aria-label="Filter" />
           </CollectionToolbar.Filters>
           <CollectionToolbar.Actions>
-            <CollectionToolbar.Actions.Button>Action</CollectionToolbar.Actions.Button>
+            <CollectionToolbar.Actions.Button>
+              Action
+            </CollectionToolbar.Actions.Button>
           </CollectionToolbar.Actions>
         </CollectionToolbar>,
       );
@@ -36,15 +38,14 @@ describe('packages/collection-toolbar', () => {
       const actions = utils.getActions();
       const filters = utils.getFilters();
 
-      // Both should be rendered
       expect(actions).toBeInTheDocument();
       expect(filters).toBeInTheDocument();
 
       // Actions should come before filters in DOM order
       // Using compareDocumentPosition: DOCUMENT_POSITION_FOLLOWING (4) means the node follows
-      expect(
-        actions?.compareDocumentPosition(filters!),
-      ).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+      expect(actions.compareDocumentPosition(filters)).toBe(
+        Node.DOCUMENT_POSITION_FOLLOWING,
+      );
     });
   });
 
@@ -56,7 +57,9 @@ describe('packages/collection-toolbar', () => {
             <CollectionToolbar.Filters.TextInput aria-label="Filter" />
           </CollectionToolbar.Filters>
           <CollectionToolbar.Actions>
-            <CollectionToolbar.Actions.Button>Action</CollectionToolbar.Actions.Button>
+            <CollectionToolbar.Actions.Button>
+              Action
+            </CollectionToolbar.Actions.Button>
           </CollectionToolbar.Actions>
         </CollectionToolbar>,
       );
@@ -65,14 +68,12 @@ describe('packages/collection-toolbar', () => {
       const actions = utils.getActions();
       const filters = utils.getFilters();
 
-      // Both should be rendered
       expect(actions).toBeInTheDocument();
       expect(filters).toBeInTheDocument();
 
-      // Filters should come before actions in DOM order
-      expect(
-        filters?.compareDocumentPosition(actions!),
-      ).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+      expect(filters.compareDocumentPosition(actions)).toBe(
+        Node.DOCUMENT_POSITION_FOLLOWING,
+      );
     });
   });
 
@@ -103,7 +104,9 @@ describe('packages/collection-toolbar', () => {
             <CollectionToolbar.Filters.TextInput aria-label="Filter" />
           </CollectionToolbar.Filters>
           <CollectionToolbar.Actions showToggleButton>
-            <CollectionToolbar.Actions.Button>Action</CollectionToolbar.Actions.Button>
+            <CollectionToolbar.Actions.Button>
+              Action
+            </CollectionToolbar.Actions.Button>
           </CollectionToolbar.Actions>
         </CollectionToolbar>,
       );
