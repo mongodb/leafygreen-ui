@@ -1,10 +1,12 @@
 import React, { createRef } from 'react';
 import { render, screen } from '@testing-library/react';
 
+import { consoleOnce } from '@leafygreen-ui/lib';
+
 import { CollectionToolbarProvider } from '../../Context/CollectionToolbarProvider';
 import { Size, Variant } from '../../shared.types';
 import { getTestUtils } from '../../testing/getTestUtils';
-import { getLgIds } from '../../utils';
+import { getLgIds, MAX_FILTER_COUNT } from '../../utils';
 
 import { Filters } from './Filters';
 
@@ -241,6 +243,96 @@ describe('packages/collection-toolbar/components/Filters', () => {
 
     test('exposes DatePicker as a static property', () => {
       expect(Filters.DatePicker).toBeDefined();
+    });
+  });
+
+  describe('filter count validation', () => {
+    test('logs error when Compact variant has more than 2 filters', () => {
+      renderFilters({
+        variant: Variant.Compact,
+        children: (
+          <>
+            <Filters.TextInput aria-label="Filter 1" />
+            <Filters.TextInput aria-label="Filter 2" />
+            <Filters.TextInput aria-label="Filter 3" />
+          </>
+        ),
+      });
+
+      expect(consoleOnce.error).toHaveBeenCalledWith(
+        `CollectionToolbarFilters with ${Variant.Compact} variant can only have up to ${MAX_FILTER_COUNT[Variant.Compact]} filters`,
+      );
+    });
+
+    test('does not log error when Compact variant has 2 or fewer filters', () => {
+      renderFilters({
+        variant: Variant.Compact,
+        children: (
+          <>
+            <Filters.TextInput aria-label="Filter 1" />
+            <Filters.TextInput aria-label="Filter 2" />
+          </>
+        ),
+      });
+
+      expect(consoleOnce.error).not.toHaveBeenCalled();
+    });
+
+    test('does not log error when Default variant has 5 filters', () => {
+      renderFilters({
+        variant: Variant.Default,
+        children: (
+          <>
+            <Filters.TextInput aria-label="Filter 1" />
+            <Filters.TextInput aria-label="Filter 2" />
+            <Filters.TextInput aria-label="Filter 3" />
+            <Filters.TextInput aria-label="Filter 4" />
+            <Filters.TextInput aria-label="Filter 5" />
+          </>
+        ),
+      });
+
+      expect(consoleOnce.error).not.toHaveBeenCalled();
+    });
+
+    test('logs error when Default variant has more than 5 filters', () => {
+      renderFilters({
+        variant: Variant.Default,
+        children: (
+          <>
+            <Filters.TextInput aria-label="Filter 1" />
+            <Filters.TextInput aria-label="Filter 2" />
+            <Filters.TextInput aria-label="Filter 3" />
+            <Filters.TextInput aria-label="Filter 4" />
+            <Filters.TextInput aria-label="Filter 5" />
+            <Filters.TextInput aria-label="Filter 6" />
+          </>
+        ),
+      });
+
+      expect(consoleOnce.error).toHaveBeenCalledWith(
+        `CollectionToolbarFilters with ${Variant.Default} variant can only have up to ${MAX_FILTER_COUNT[Variant.Default]} filters`,
+      );
+    });
+
+    test('logs error when Collapsible variant has more than 5 filters', () => {
+      renderFilters({
+        variant: Variant.Collapsible,
+        children: (
+          <>
+            <Filters.TextInput aria-label="Filter 1" />
+            <Filters.TextInput aria-label="Filter 2" />
+            <Filters.TextInput aria-label="Filter 3" />
+            <Filters.TextInput aria-label="Filter 4" />
+            <Filters.TextInput aria-label="Filter 5" />
+            <Filters.TextInput aria-label="Filter 6" />
+          </>
+        ),
+      });
+
+      expect(consoleOnce.error).toHaveBeenCalledWith(
+        `CollectionToolbarFilters with ${Variant.Collapsible} variant can only have up to ${MAX_FILTER_COUNT[Variant.Collapsible]} filters`,
+      );
     });
   });
 

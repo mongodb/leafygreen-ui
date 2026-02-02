@@ -19,6 +19,63 @@ describe('packages/collection-toolbar', () => {
     expect(utils.getCollectionToolbar()?.className).toContain('test-class');
   });
 
+  describe('variant: default', () => {
+    test('renders actions before filters', () => {
+      render(
+        <CollectionToolbar variant={Variant.Default}>
+          <CollectionToolbar.Filters>
+            <CollectionToolbar.Filters.TextInput aria-label="Filter" />
+          </CollectionToolbar.Filters>
+          <CollectionToolbar.Actions>
+            <CollectionToolbar.Actions.Button>Action</CollectionToolbar.Actions.Button>
+          </CollectionToolbar.Actions>
+        </CollectionToolbar>,
+      );
+
+      const utils = getTestUtils();
+      const actions = utils.getActions();
+      const filters = utils.getFilters();
+
+      // Both should be rendered
+      expect(actions).toBeInTheDocument();
+      expect(filters).toBeInTheDocument();
+
+      // Actions should come before filters in DOM order
+      // Using compareDocumentPosition: DOCUMENT_POSITION_FOLLOWING (4) means the node follows
+      expect(
+        actions?.compareDocumentPosition(filters!),
+      ).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+    });
+  });
+
+  describe('variant: compact', () => {
+    test('renders filters before actions', () => {
+      render(
+        <CollectionToolbar variant={Variant.Compact}>
+          <CollectionToolbar.Filters>
+            <CollectionToolbar.Filters.TextInput aria-label="Filter" />
+          </CollectionToolbar.Filters>
+          <CollectionToolbar.Actions>
+            <CollectionToolbar.Actions.Button>Action</CollectionToolbar.Actions.Button>
+          </CollectionToolbar.Actions>
+        </CollectionToolbar>,
+      );
+
+      const utils = getTestUtils();
+      const actions = utils.getActions();
+      const filters = utils.getFilters();
+
+      // Both should be rendered
+      expect(actions).toBeInTheDocument();
+      expect(filters).toBeInTheDocument();
+
+      // Filters should come before actions in DOM order
+      expect(
+        filters?.compareDocumentPosition(actions!),
+      ).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+    });
+  });
+
   describe('variant: collapsible', () => {
     test('renders title when variant is collapsible', () => {
       render(
@@ -36,6 +93,32 @@ describe('packages/collection-toolbar', () => {
         </CollectionToolbar>,
       );
       expect(screen.queryByText('Test Title')).not.toBeInTheDocument();
+    });
+
+    test('does not render filters in main row (only in collapsible content)', () => {
+      render(
+        <CollectionToolbar variant={Variant.Collapsible}>
+          <CollectionToolbar.Title>Test Title</CollectionToolbar.Title>
+          <CollectionToolbar.Filters>
+            <CollectionToolbar.Filters.TextInput aria-label="Filter" />
+          </CollectionToolbar.Filters>
+          <CollectionToolbar.Actions showToggleButton>
+            <CollectionToolbar.Actions.Button>Action</CollectionToolbar.Actions.Button>
+          </CollectionToolbar.Actions>
+        </CollectionToolbar>,
+      );
+
+      const utils = getTestUtils();
+      const actions = utils.getActions();
+      const filters = utils.getFilters();
+
+      // Both should be rendered
+      expect(actions).toBeInTheDocument();
+      expect(filters).toBeInTheDocument();
+
+      // Filters should be inside the collapsible content, not a sibling of actions
+      // Actions should NOT have filters as a direct following sibling
+      expect(actions?.nextElementSibling).not.toBe(filters);
     });
   });
 });
