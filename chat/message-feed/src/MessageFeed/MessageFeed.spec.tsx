@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 import {
   INITIAL_MESSAGE_DESCRIPTION,
   INITIAL_MESSAGE_TITLE,
-} from '../Components/InitialMessage/constants';
+} from '../components/InitialMessage/constants';
 
 import { MessageFeed } from './MessageFeed';
 

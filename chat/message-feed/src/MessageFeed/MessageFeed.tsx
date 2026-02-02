@@ -18,7 +18,7 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 
-import { InitialMessage } from '../Components/InitialMessage';
+import { InitialMessage } from '../components/InitialMessage';
 import { MessageFeedProvider } from '../MessageFeedContext';
 import { ScrollToLatestButton } from '../ScrollToLatestButton';
 import { MessageFeedSubcomponentProperty } from '../shared.types';
