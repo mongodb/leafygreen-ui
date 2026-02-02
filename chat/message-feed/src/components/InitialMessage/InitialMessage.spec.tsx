@@ -55,9 +55,9 @@ describe('InitialMessage', () => {
       shouldHideInitialMessage: true,
       children: (
         <InitialMessage.MessagePrompts>
-          <InitialMessage.MessagePrompt>
+          <InitialMessage.MessagePromptsItem>
             I heard you like MongoDB
-          </InitialMessage.MessagePrompt>
+          </InitialMessage.MessagePromptsItem>
         </InitialMessage.MessagePrompts>
       ),
     });
@@ -71,15 +71,15 @@ describe('InitialMessage', () => {
     renderInitialMessage({
       children: (
         <InitialMessage.MessagePrompts>
-          <InitialMessage.MessagePrompt>
+          <InitialMessage.MessagePromptsItem>
             What is MongoDB?
-          </InitialMessage.MessagePrompt>
-          <InitialMessage.MessagePrompt>
+          </InitialMessage.MessagePromptsItem>
+          <InitialMessage.MessagePromptsItem>
             How do I query MongoDB?
-          </InitialMessage.MessagePrompt>
-          <InitialMessage.MessagePrompt>
+          </InitialMessage.MessagePromptsItem>
+          <InitialMessage.MessagePromptsItem>
             What is blue but not heavy?
-          </InitialMessage.MessagePrompt>
+          </InitialMessage.MessagePromptsItem>
         </InitialMessage.MessagePrompts>
       ),
     });
@@ -93,15 +93,15 @@ describe('InitialMessage', () => {
     test('does not throw errors', () => {
       <InitialMessage>
         <InitialMessage.MessagePrompts label="hello">
-          <InitialMessage.MessagePrompt selected>
+          <InitialMessage.MessagePromptsItem selected>
             What is MongoDB?
-          </InitialMessage.MessagePrompt>
-          <InitialMessage.MessagePrompt disabled>
+          </InitialMessage.MessagePromptsItem>
+          <InitialMessage.MessagePromptsItem disabled>
             How do I query MongoDB?
-          </InitialMessage.MessagePrompt>
-          <InitialMessage.MessagePrompt onClick={() => {}}>
+          </InitialMessage.MessagePromptsItem>
+          <InitialMessage.MessagePromptsItem onClick={() => {}}>
             What is blue but not heavy?
-          </InitialMessage.MessagePrompt>
+          </InitialMessage.MessagePromptsItem>
         </InitialMessage.MessagePrompts>
       </InitialMessage>;
     });
@@ -110,15 +110,15 @@ describe('InitialMessage', () => {
       <InitialMessage>
         {/* @ts-expect-error - enableHideOnSelect is not a prop */}
         <InitialMessage.MessagePrompts enableHideOnSelect={false}>
-          <InitialMessage.MessagePrompt>
+          <InitialMessage.MessagePromptsItem>
             What is MongoDB?
-          </InitialMessage.MessagePrompt>
-          <InitialMessage.MessagePrompt>
+          </InitialMessage.MessagePromptsItem>
+          <InitialMessage.MessagePromptsItem>
             How do I query MongoDB?
-          </InitialMessage.MessagePrompt>
-          <InitialMessage.MessagePrompt>
+          </InitialMessage.MessagePromptsItem>
+          <InitialMessage.MessagePromptsItem>
             What is blue but not heavy?
-          </InitialMessage.MessagePrompt>
+          </InitialMessage.MessagePromptsItem>
         </InitialMessage.MessagePrompts>
       </InitialMessage>;
     });

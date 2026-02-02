@@ -321,14 +321,14 @@ const WithInitialMessageWithMessagePromptsComponent = ({
               }}
             >
               {prompts.map((prompt, promptIndex) => (
-                <MessageFeed.InitialMessage.MessagePrompt
+                <MessageFeed.InitialMessage.MessagePromptsItem
                   key={prompt}
                   selected={selectedPromptIndex === promptIndex}
                   onClick={() => handlePromptSelect(promptIndex)}
                   data-testid={`prompt-${promptIndex}`}
                 >
                   {prompt}
-                </MessageFeed.InitialMessage.MessagePrompt>
+                </MessageFeed.InitialMessage.MessagePromptsItem>
               ))}
             </MessageFeed.InitialMessage.MessagePrompts>
           </MessageFeed.InitialMessage>

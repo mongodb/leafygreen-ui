@@ -12,15 +12,15 @@ const messagePrompts = [
     onClickRefresh={() => {}}
     label="Suggested Prompts"
   >
-    <InitialMessage.MessagePrompt>
+    <InitialMessage.MessagePromptsItem>
       What is MongoDB?
-    </InitialMessage.MessagePrompt>
-    <InitialMessage.MessagePrompt>
+    </InitialMessage.MessagePromptsItem>
+    <InitialMessage.MessagePromptsItem>
       How do I query MongoDB?
-    </InitialMessage.MessagePrompt>
-    <InitialMessage.MessagePrompt>
+    </InitialMessage.MessagePromptsItem>
+    <InitialMessage.MessagePromptsItem>
       What is MongoDB&apos;s favorite color?
-    </InitialMessage.MessagePrompt>
+    </InitialMessage.MessagePromptsItem>
   </InitialMessage.MessagePrompts>,
 ];
 

@@ -66,9 +66,9 @@ describe('MessageFeed', () => {
       <MessageFeed>
         <MessageFeed.InitialMessage>
           <MessageFeed.InitialMessage.MessagePrompts>
-            <MessageFeed.InitialMessage.MessagePrompt>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
               I heard you like MongoDB
-            </MessageFeed.InitialMessage.MessagePrompt>
+            </MessageFeed.InitialMessage.MessagePromptsItem>
           </MessageFeed.InitialMessage.MessagePrompts>
         </MessageFeed.InitialMessage>
       </MessageFeed>,
@@ -78,26 +78,22 @@ describe('MessageFeed', () => {
     expect(screen.getByText('I heard you like MongoDB')).toBeInTheDocument();
   });
 
-  test('does not render the initial message if the initial message is a child and there are other children', () => {
+  test('hides the initial message if the initial message is a child and there are other children', () => {
     render(
       <MessageFeed>
         <MessageFeed.InitialMessage>
           <MessageFeed.InitialMessage.MessagePrompts>
-            <MessageFeed.InitialMessage.MessagePrompt>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
               I heard you like MongoDB
-            </MessageFeed.InitialMessage.MessagePrompt>
+            </MessageFeed.InitialMessage.MessagePromptsItem>
           </MessageFeed.InitialMessage.MessagePrompts>
         </MessageFeed.InitialMessage>
         <div>Hello, fellow message</div>
       </MessageFeed>,
     );
-    expect(screen.queryByText(INITIAL_MESSAGE_TITLE)).not.toBeInTheDocument();
-    expect(
-      screen.queryByText(INITIAL_MESSAGE_DESCRIPTION),
-    ).not.toBeInTheDocument();
-    expect(
-      screen.queryByText('I heard you like MongoDB'),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByText(INITIAL_MESSAGE_TITLE)).not.toBeVisible();
+    expect(screen.queryByText(INITIAL_MESSAGE_DESCRIPTION)).not.toBeVisible();
+    expect(screen.queryByText('I heard you like MongoDB')).not.toBeVisible();
     expect(screen.getByText('Hello, fellow message')).toBeInTheDocument();
   });
 
@@ -106,9 +102,9 @@ describe('MessageFeed', () => {
       <MessageFeed>
         <MessageFeed.InitialMessage>
           <MessageFeed.InitialMessage.MessagePrompts>
-            <MessageFeed.InitialMessage.MessagePrompt>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
               I heard you like MongoDB
-            </MessageFeed.InitialMessage.MessagePrompt>
+            </MessageFeed.InitialMessage.MessagePromptsItem>
           </MessageFeed.InitialMessage.MessagePrompts>
         </MessageFeed.InitialMessage>
       </MessageFeed>,
@@ -122,9 +118,9 @@ describe('MessageFeed', () => {
       <MessageFeed>
         <MessageFeed.InitialMessage>
           <MessageFeed.InitialMessage.MessagePrompts>
-            <MessageFeed.InitialMessage.MessagePrompt>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
               I heard you like MongoDB
-            </MessageFeed.InitialMessage.MessagePrompt>
+            </MessageFeed.InitialMessage.MessagePromptsItem>
           </MessageFeed.InitialMessage.MessagePrompts>
         </MessageFeed.InitialMessage>
         <div>Hello, how can I help you today?</div>
@@ -144,15 +140,15 @@ describe('MessageFeed', () => {
       <MessageFeed>
         <MessageFeed.InitialMessage>
           <MessageFeed.InitialMessage.MessagePrompts>
-            <MessageFeed.InitialMessage.MessagePrompt>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
               What is MongoDB?
-            </MessageFeed.InitialMessage.MessagePrompt>
-            <MessageFeed.InitialMessage.MessagePrompt>
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
               How do I query MongoDB?
-            </MessageFeed.InitialMessage.MessagePrompt>
-            <MessageFeed.InitialMessage.MessagePrompt>
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
               What is blue but not heavy?
-            </MessageFeed.InitialMessage.MessagePrompt>
+            </MessageFeed.InitialMessage.MessagePromptsItem>
           </MessageFeed.InitialMessage.MessagePrompts>
         </MessageFeed.InitialMessage>
       </MessageFeed>,

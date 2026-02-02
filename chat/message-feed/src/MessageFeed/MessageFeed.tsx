@@ -44,11 +44,6 @@ export const MessageFeed = CompoundComponent(
     ) => {
       const { darkMode, theme } = useDarkMode(darkModeProp);
 
-      const [shouldHideInitialMessage, setShouldHideInitialMessage] =
-        useState(false);
-      const [shouldRenderInitialMessage, setShouldRenderInitialMessage] =
-        useState(true);
-
       const scrollContainerRef = useRef<HTMLDivElement | null>(null);
       const scrollTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -136,23 +131,18 @@ export const MessageFeed = CompoundComponent(
       const remainingChildrenArray = React.Children.toArray(remainingChildren);
 
       /**
-       * If there are remaining children, we should not render the initial message
+       * If there are remaining children
        */
       useEffect(() => {
         if (remainingChildrenArray.length > 0) {
-          setShouldRenderInitialMessage(false);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-      }, []); // this useEffect should only run on initial render
-
-      /**
-       * If there are remaining children and the initial message is rendered, we should hide the initial message
-       */
-      useEffect(() => {
-        if (remainingChildrenArray.length > 0 && shouldRenderInitialMessage) {
           setShouldHideInitialMessage(true);
         }
-      }, [remainingChildrenArray, shouldRenderInitialMessage]);
+      }, [remainingChildrenArray]);
+
+      const hasMessages = React.Children.count(remainingChildren) > 0;
+
+      const [shouldHideInitialMessage, setShouldHideInitialMessage] =
+        useState(hasMessages);
 
       return (
         <LeafyGreenProvider darkMode={darkMode}>
@@ -172,7 +162,7 @@ export const MessageFeed = CompoundComponent(
               <div className={scrollContainerStyles} ref={scrollContainerRef}>
                 {/* Empty span element used to track if container can scroll up */}
                 <span className={interceptStyles} ref={topInterceptRef} />
-                {shouldRenderInitialMessage && initialMessage}
+                {initialMessage}
                 {remainingChildren}
                 {/* Empty span element used to track if container can scroll down */}
                 <span className={interceptStyles} ref={bottomInterceptRef} />

@@ -5,7 +5,7 @@ import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 
-import { MessageFeedSubcomponentProperty } from '../../shared.types';
+import { InitialMessageSubcomponentProperty } from '../InitialMessage/InitialMessage.types';
 
 import { getListStyles } from './ResourceList.styles';
 import { type ResourceListProps } from './ResourceList.types';
@@ -31,6 +31,6 @@ export const ResourceList = CompoundSubComponent(
   ),
   {
     displayName: 'ResourceList',
-    key: MessageFeedSubcomponentProperty.ResourceList,
+    key: InitialMessageSubcomponentProperty.ResourceList,
   },
 );

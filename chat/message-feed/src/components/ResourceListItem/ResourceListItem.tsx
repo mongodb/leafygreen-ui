@@ -5,7 +5,7 @@ import { Icon } from '@leafygreen-ui/icon';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { Body } from '@leafygreen-ui/typography';
 
-import { MessageFeedSubcomponentProperty } from '../../shared.types';
+import { InitialMessageSubcomponentProperty } from '../InitialMessage/InitialMessage.types';
 
 import {
   getIconStyles,
@@ -36,6 +36,6 @@ export const ResourceListItem = CompoundSubComponent(
   ),
   {
     displayName: 'ResourceListItem',
-    key: MessageFeedSubcomponentProperty.ResourceListItem,
+    key: InitialMessageSubcomponentProperty.ResourceListItem,
   },
 );

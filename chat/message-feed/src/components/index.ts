@@ -1,1 +1,1 @@
-export { InitialMessage } from './InitialMessage';
+export { InitialMessage, type InitialMessageProps } from './InitialMessage';
