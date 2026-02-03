@@ -1,89 +1,122 @@
 import { useEffect, useState } from 'react';
 
-/** Expected structure of the postMessage data from parent window */
-interface RenderDataMessage {
-  type: string;
-  payload?: {
-    renderData?: unknown;
-  };
-}
+import {
+  BaseRenderData,
+  RenderDataMessage,
+  UseRenderDataResult,
+  ValidationResult,
+} from './useRenderData.types';
 
-/** Return type for the useRenderData hook */
-interface UseRenderDataResult<T> {
-  data: T | null;
-  isLoading: boolean;
-  error: string | null;
+const MESSAGE_TYPE_RENDER_DATA = 'ui-lifecycle-iframe-render-data';
+const MESSAGE_TYPE_IFRAME_READY = 'ui-lifecycle-iframe-ready';
+
+/**
+ * Validates the render data from a message event.
+ * Returns either the validated data, an error message, or null if the message is not a render data message.
+ */
+function validateRenderData<T>(
+  event: MessageEvent<RenderDataMessage>,
+): ValidationResult<T> | null {
+  const isRenderDataMessage = event.data?.type === MESSAGE_TYPE_RENDER_DATA;
+
+  if (!isRenderDataMessage) {
+    return null;
+  }
+
+  const { payload } = event.data;
+  const isValidPayload = payload && typeof payload === 'object';
+
+  if (!isValidPayload) {
+    return { valid: false, error: 'Invalid payload structure received' };
+  }
+
+  const { renderData } = payload;
+  const hasData = renderData !== undefined && renderData !== null;
+
+  if (!hasData) {
+    return { valid: false, error: null };
+  }
+
+  if (typeof renderData !== 'object') {
+    return {
+      valid: false,
+      error: `Expected object but received ${typeof renderData}`,
+    };
+  }
+
+  return { valid: true, data: renderData as T & BaseRenderData };
 }
 
 /**
- * Hook for receiving render data from parent window via postMessage
- * This is used by iframe-based UI components that receive data from an MCP client
- *
- * @template T - The type of data expected in the renderData payload
- * @returns An object containing:
- *   - data: The received render data (or null if not yet received)
- *   - isLoading: Whether data is still being loaded
- *   - error: Error message if message validation failed
+ * Hook for receiving render data from parent window via postMessage.
+ * This is used by iframe-based UI components that receive data from an MCP client.
  *
  * @example
  * ```tsx
- * interface MyData {
- *   items: string[];
- * }
- *
  * function MyComponent() {
- *   const { data, isLoading, error } = useRenderData<MyData>();
+ *   const { data, darkMode, isLoading } = useRenderData<{ items: string[] }>();
  * }
  * ```
  */
 export function useRenderData<T = unknown>(): UseRenderDataResult<T> {
-  const [data, setData] = useState<T | null>(null);
+  const [data, setData] = useState<(T & BaseRenderData) | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [prefersDarkMode, setPrefersDarkMode] = useState<boolean>(
+    () =>
+      !!(
+        typeof window !== 'undefined' &&
+        window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+      ),
+  );
 
-  useEffect(() => {
+  useEffect(function setupDarkModeListener() {
+    if (typeof window === 'undefined' || !window.matchMedia) {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const handler = (event: MediaQueryListEvent) => {
+      setPrefersDarkMode(event.matches);
+    };
+
+    mediaQuery.addEventListener('change', handler);
+    return () => mediaQuery.removeEventListener('change', handler);
+  }, []);
+
+  useEffect(function handleMessages() {
     const handleMessage = (event: MessageEvent<RenderDataMessage>): void => {
-      if (event.data?.type !== 'ui-lifecycle-iframe-render-data') {
+      const result = validateRenderData<T>(event);
+
+      if (result === null) {
         return;
       }
 
-      if (!event.data.payload || typeof event.data.payload !== 'object') {
-        const errorMsg = 'Invalid payload structure received';
-        setError(errorMsg);
+      if (!result.valid) {
+        setError(result.error);
         setIsLoading(false);
         return;
       }
 
-      const renderData = event.data.payload.renderData;
-
-      if (renderData === undefined || renderData === null) {
-        setIsLoading(false);
-        return;
-      }
-
-      if (typeof renderData !== 'object') {
-        const errorMsg = `Expected object but received ${typeof renderData}`;
-        setError(errorMsg);
-        setIsLoading(false);
-        return;
-      }
-
-      setData(renderData as T);
-      setIsLoading(false);
+      setData(result.data);
       setError(null);
+      setIsLoading(false);
     };
 
     window.addEventListener('message', handleMessage);
-    window.parent.postMessage({ type: 'ui-lifecycle-iframe-ready' }, '*');
+    window.parent.postMessage({ type: MESSAGE_TYPE_IFRAME_READY }, '*');
 
-    return (): void => {
-      window.removeEventListener('message', handleMessage);
-    };
+    return () => window.removeEventListener('message', handleMessage);
   }, []);
+
+  const darkMode = data?.darkMode ?? prefersDarkMode;
 
   return {
     data,
     isLoading,
     error,
+    darkMode,
   };
 }
