@@ -19,10 +19,7 @@ import {
 import { MessageContext } from '../MessageContext';
 import { MessageSubcomponentProperty } from '../shared.types';
 
-import {
-  getContainerStyles,
-  getMessageContainerStyles,
-} from './Message.styles';
+import { getContainerStyles } from './Message.styles';
 import { type MessageProps } from './Message.types';
 import { MessageContent } from './MessageContent';
 
@@ -85,22 +82,15 @@ export const Message = CompoundComponent(
               ref={fwdRef}
               {...rest}
             >
-              <div
-                className={getMessageContainerStyles({
-                  isSender,
-                  theme,
-                })}
-              >
-                <MessageContent sourceType={sourceType} {...markdownProps}>
-                  {messageBody ?? ''}
-                </MessageContent>
-                {actionCard}
-                {promotion}
-                {actions}
-                {verifiedBanner}
-                {links}
-                {remainingChildren}
-              </div>
+              <MessageContent sourceType={sourceType} {...markdownProps}>
+                {messageBody ?? ''}
+              </MessageContent>
+              {actionCard}
+              {promotion}
+              {actions}
+              {verifiedBanner}
+              {links}
+              {remainingChildren}
             </div>
           </MessageContext.Provider>
         </LeafyGreenProvider>
