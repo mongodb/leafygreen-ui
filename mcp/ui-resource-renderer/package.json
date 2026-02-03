@@ -1,0 +1,44 @@
+{
+  "name": "@lg-mcp/ui-resource-renderer",
+  "version": "0.1.0",
+  "description": "lg-mcp UI Resource Renderer",
+  "main": "./dist/umd/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "lg-build bundle",
+    "tsc": "lg-build tsc",
+    "docs": "lg-build docs"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@mcp-ui/client": "^6.0.0"
+  },
+  "peerDependencies": {
+    "react": "^17.0.0 || ^18.0.0"
+  },
+  "devDependencies": {
+    "@leafygreen-ui/tokens": "workspace:^",
+    "@lg-tools/build": "workspace:^"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/LG/summary"
+  },
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/mcp/ui-resource-renderer",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "types@<=5.0": "./dist/types/ts4.9/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/umd/index.js"
+    }
+  },
+  "typesVersions": {}
+}

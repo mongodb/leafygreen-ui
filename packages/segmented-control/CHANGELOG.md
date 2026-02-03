@@ -1,5 +1,11 @@
 # @leafygreen-ui/segmented-control
 
+## 11.1.0
+
+### Minor Changes
+
+- 60edee7: Exported BaseSegmentedControlOptionProps from the package public API
+
 ## 11.0.13
 
 ### Patch Changes

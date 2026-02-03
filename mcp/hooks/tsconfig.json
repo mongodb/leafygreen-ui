@@ -1,0 +1,7 @@
+{
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
+  "compilerOptions": {},
+  "include": ["src/**/*"],
+  "exclude": ["**/*.stories.*"],
+  "references": []
+}
