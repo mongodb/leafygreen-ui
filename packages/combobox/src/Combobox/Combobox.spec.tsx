@@ -14,7 +14,6 @@ import flatten from 'lodash/flatten';
 import isUndefined from 'lodash/isUndefined';
 
 import { Badge } from '@leafygreen-ui/badge';
-import { Icon } from '@leafygreen-ui/icon';
 import { RenderMode } from '@leafygreen-ui/popover';
 import { eventContainingTargetValue } from '@leafygreen-ui/testing-lib';
 
@@ -309,7 +308,10 @@ describe('packages/combobox', () => {
 
         // Should render the string displayName
         expect(optionEl).toHaveTextContent('Legacy String Display Name');
-        expect(optionEl).toHaveAttribute('aria-label', 'Legacy String Display Name');
+        expect(optionEl).toHaveAttribute(
+          'aria-label',
+          'Legacy String Display Name',
+        );
       });
 
       test('New flow: customContent with Badge component renders correctly', () => {
@@ -330,7 +332,7 @@ describe('packages/combobox', () => {
           ),
         });
         const { optionElements } = openMenu();
-        const [optionEl] = Array.from(optionElements!) as Element[];
+        const [optionEl] = Array.from(optionElements!) as Array<Element>;
 
         // Should render the custom content with Badge
         expect(optionEl).toHaveTextContent('New Feature');
@@ -362,18 +364,19 @@ describe('packages/combobox', () => {
           ),
         });
         const { optionElements } = openMenu();
-        const [optionEl] = Array.from(optionElements!) as Element[];
+        const [optionEl] = Array.from(optionElements!) as Array<Element>;
 
         userEvent.click(optionEl as Element);
 
         if (select === 'single') {
           expect(onChange).toHaveBeenCalledWith('new-feature');
         } else {
-          expect(onChange).toHaveBeenCalledWith(['new-feature'], expect.anything());
+          expect(onChange).toHaveBeenCalledWith(
+            ['new-feature'],
+            expect.anything(),
+          );
         }
       });
-
-
 
       test('Option aria-label falls back to value when displayName is not provided', () => {
         const options = [{ value: 'fallback-value' }];
