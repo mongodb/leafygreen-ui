@@ -40,6 +40,14 @@ export interface CollectionToolbarContextProps extends DarkModeProps {
    * Function to toggle the collapsed state of the CollectionToolbar.
    */
   onToggleCollapsed?: MouseEventHandler<HTMLButtonElement>;
+  /**
+   * The ID of the title element.
+   */
+  titleId?: string;
+  /**
+   * The ID of the collapsible content element.
+   */
+  collapsibleContentId?: string;
 }
 
 export const CollectionToolbarContext =
@@ -64,6 +72,8 @@ export const CollectionToolbarProvider = ({
   lgIds,
   isCollapsed: isCollapsedProp = false,
   onToggleCollapsed: onToggleCollapsedProp,
+  titleId,
+  collapsibleContentId,
 }: PropsWithChildren<CollectionToolbarContextProps>) => {
   const [isCollapsed, setIsCollapsed] = useState(isCollapsedProp);
 
@@ -89,8 +99,19 @@ export const CollectionToolbarProvider = ({
       isCollapsed,
       onToggleCollapsed: handleToggleCollapsed,
       darkMode,
+      titleId,
+      collapsibleContentId,
     };
-  }, [size, variant, lgIds, isCollapsed, handleToggleCollapsed, darkMode]);
+  }, [
+    size,
+    variant,
+    lgIds,
+    isCollapsed,
+    handleToggleCollapsed,
+    darkMode,
+    titleId,
+    collapsibleContentId,
+  ]);
 
   return (
     <LeafyGreenProvider darkMode={darkMode}>

@@ -18,10 +18,11 @@ export const Title = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
   forwardRef<HTMLHeadingElement, TitleProps>(
     ({ className, children, ...rest }, fwdRef) => {
-      const { lgIds, variant } = useCollectionToolbarContext();
+      const { lgIds, variant, titleId } = useCollectionToolbarContext();
       return (
         <H3
           data-lgid={lgIds.title}
+          id={titleId}
           className={getTitleStyles({ className, variant })}
           {...rest}
           ref={fwdRef}

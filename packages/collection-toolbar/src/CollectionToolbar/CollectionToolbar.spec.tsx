@@ -96,7 +96,7 @@ describe('packages/collection-toolbar', () => {
       expect(screen.queryByText('Test Title')).not.toBeInTheDocument();
     });
 
-    test('does not render filters in main row (only in collapsible content)', () => {
+    test('renders filters inside collapsible content region', () => {
       render(
         <CollectionToolbar variant={Variant.Collapsible}>
           <CollectionToolbar.Title>Test Title</CollectionToolbar.Title>
@@ -119,9 +119,36 @@ describe('packages/collection-toolbar', () => {
       expect(actions).toBeInTheDocument();
       expect(filters).toBeInTheDocument();
 
-      // Filters should be inside the collapsible content, not a sibling of actions
+      // Filters should be inside the collapsible content region
+      const collapsibleRegion = screen.getByRole('region');
+      expect(collapsibleRegion).toBeInTheDocument();
+      expect(collapsibleRegion).toContainElement(filters);
+
       // Actions should NOT have filters as a direct following sibling
       expect(actions?.nextElementSibling).not.toBe(filters);
+    });
+
+    test('collapsible region is labelled by title', () => {
+      render(
+        <CollectionToolbar variant={Variant.Collapsible}>
+          <CollectionToolbar.Title>Test Title</CollectionToolbar.Title>
+          <CollectionToolbar.Filters>
+            <CollectionToolbar.Filters.TextInput aria-label="Filter" />
+          </CollectionToolbar.Filters>
+        </CollectionToolbar>,
+      );
+
+      const utils = getTestUtils();
+      const title = utils.getTitle();
+      const collapsibleRegion = screen.getByRole('region');
+
+      // Title should have an id
+      expect(title).toHaveAttribute('id');
+      const titleId = title.getAttribute('id');
+
+      // Collapsible region should have an id and be labelled by the title
+      expect(collapsibleRegion).toHaveAttribute('id');
+      expect(collapsibleRegion).toHaveAttribute('aria-labelledby', titleId);
     });
   });
 });

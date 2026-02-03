@@ -2,7 +2,10 @@ import React from 'react';
 
 import { useCollectionToolbarContext } from '../../Context/CollectionToolbarProvider';
 
-import { getCollapsibleContentStyles } from './CollapsibleContent.styles';
+import {
+  getCollapsibleContentStyles,
+  innerContentWrapperStyles,
+} from './CollapsibleContent.styles';
 import { CollapsibleContentProps } from './CollapsibleContent.types';
 
 /**
@@ -21,12 +24,20 @@ export const CollapsibleContent = ({
   searchInput,
   filters,
 }: CollapsibleContentProps) => {
-  const { isCollapsed } = useCollectionToolbarContext();
+  const { isCollapsed, collapsibleContentId, titleId } =
+    useCollectionToolbarContext();
 
   return (
-    <div className={getCollapsibleContentStyles({ isCollapsed })}>
-      {searchInput}
-      {filters}
+    <div
+      role="region"
+      id={collapsibleContentId}
+      aria-labelledby={titleId}
+      className={getCollapsibleContentStyles({ isCollapsed })}
+    >
+      <div className={innerContentWrapperStyles}>
+        {searchInput}
+        {filters}
+      </div>
     </div>
   );
 };

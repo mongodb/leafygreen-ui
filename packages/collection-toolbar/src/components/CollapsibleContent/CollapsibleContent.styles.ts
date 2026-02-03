@@ -3,18 +3,20 @@ import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
 
 export const collapsibleContentBaseStyles = css`
   display: grid;
-  transition-property: grid-template-rows, margin-bottom, opacity;
-  transition-duration: ${transitionDuration.default}ms;
+  width: -webkit-fill-available;
+  transition-property: height, grid-template-rows, opacity, visibility;
+  transition-duration: ${transitionDuration.slower}ms;
   transition-timing-function: ease-in-out;
+
   grid-template-rows: 1fr;
-  margin-bottom: 0;
   opacity: 1;
-  gap: ${spacing[200]}px;
+  visibility: visible;
 `;
 
-const collapsibleContentCollapsedStyles = css`
+const collapsedStyles = css`
   grid-template-rows: 0fr;
   opacity: 0;
+  visibility: hidden;
 `;
 
 export const getCollapsibleContentStyles = ({
@@ -23,5 +25,12 @@ export const getCollapsibleContentStyles = ({
   isCollapsed?: boolean;
 }) =>
   cx(collapsibleContentBaseStyles, {
-    [collapsibleContentCollapsedStyles]: isCollapsed,
+    [collapsedStyles]: isCollapsed,
   });
+
+export const innerContentWrapperStyles = css`
+  display: grid;
+  gap: ${spacing[200]}px;
+  overflow: hidden;
+  min-height: 0;
+`;

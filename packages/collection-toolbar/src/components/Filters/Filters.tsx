@@ -8,7 +8,6 @@ import { consoleOnce } from '@leafygreen-ui/lib';
 
 import { useCollectionToolbarContext } from '../../Context/CollectionToolbarProvider';
 import { CollectionToolbarSubComponentProperty } from '../../shared.types';
-import { getIsFilterCountValid, MAX_FILTER_COUNT } from '../../utils';
 
 import { Combobox } from './Combobox';
 import { ComboboxOption } from './ComboboxOption';
@@ -22,6 +21,7 @@ import { Select } from './Select';
 import { SelectOption } from './SelectOption';
 import { CollectionToolbarFiltersSubComponentProperty } from './share.types';
 import { TextInput } from './TextInput';
+import { getIsFilterCountValid, MAX_FILTER_COUNT } from './utils';
 
 /**
  * Filters component
@@ -54,7 +54,7 @@ export const Filters = CompoundSubComponent(
         [filterComponents.length, variant],
       );
 
-      if (!isFilterCountValid) {
+      if (process.env.NODE_ENV !== 'production' && !isFilterCountValid) {
         consoleOnce.error(
           `CollectionToolbarFilters with ${variant} variant can only have up to ${MAX_FILTER_COUNT[variant]} filters`,
         );
