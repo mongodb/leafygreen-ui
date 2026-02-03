@@ -13,6 +13,8 @@ export interface InitialMessageProps
 export const InitialMessageSubcomponentProperty = {
   MessagePrompts: 'isLGInitialMessageMessagePrompts',
   MessagePromptsItem: 'isLGInitialMessageMessagePromptsItem',
+  ResourceList: 'isLGInitialMessageResourceList',
+  ResourceListItem: 'isLGInitialMessageResourceListItem',
 } as const;
 
 /**

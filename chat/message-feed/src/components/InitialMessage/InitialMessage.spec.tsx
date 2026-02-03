@@ -88,9 +88,35 @@ describe('InitialMessage', () => {
     expect(screen.getByText('What is blue but not heavy?')).toBeInTheDocument();
   });
 
+  // renders the ResourceList subcomponent
+  test('renders the ResourceList subcomponent', () => {
+    renderInitialMessage({
+      children: (
+        <InitialMessage.ResourceList>
+          <InitialMessage.ResourceListItem glyph="QuestionMarkWithCircle">
+            Ask me technical questions
+          </InitialMessage.ResourceListItem>
+          <InitialMessage.ResourceListItem glyph="Bulb">
+            Learn best practices
+          </InitialMessage.ResourceListItem>
+          <InitialMessage.ResourceListItem glyph="InfoWithCircle">
+            Note: I won’t have access to any of your data unless you provide it
+          </InitialMessage.ResourceListItem>
+        </InitialMessage.ResourceList>
+      ),
+    });
+    expect(screen.getByText('Ask me technical questions')).toBeInTheDocument();
+    expect(screen.getByText('Learn best practices')).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        'Note: I won’t have access to any of your data unless you provide it',
+      ),
+    ).toBeInTheDocument();
+  });
+
   /* eslint-disable jest/no-disabled-tests */
   describe.skip('types behave as expected', () => {
-    test('does not throw errors', () => {
+    test('does not throw errors with MessagePrompts subcomponent', () => {
       <InitialMessage>
         <InitialMessage.MessagePrompts label="hello">
           <InitialMessage.MessagePromptsItem selected>
@@ -103,6 +129,16 @@ describe('InitialMessage', () => {
             What is blue but not heavy?
           </InitialMessage.MessagePromptsItem>
         </InitialMessage.MessagePrompts>
+      </InitialMessage>;
+    });
+
+    test('does not throw errors with ResourceList subcomponent', () => {
+      <InitialMessage>
+        <InitialMessage.ResourceList>
+          <InitialMessage.ResourceListItem glyph="QuestionMarkWithCircle">
+            Ask me technical questions
+          </InitialMessage.ResourceListItem>
+        </InitialMessage.ResourceList>
       </InitialMessage>;
     });
 

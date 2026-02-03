@@ -12,6 +12,8 @@ import { useMessageFeedContext } from '../../MessageFeedContext';
 import { MessageFeedSubcomponentProperty } from '../../shared.types';
 import { MessagePrompts } from '../MessagePrompts';
 import { MessagePromptsItem } from '../MessagePromptsItem';
+import { ResourceList } from '../ResourceList';
+import { ResourceListItem } from '../ResourceListItem';
 
 import {
   INITIAL_MESSAGE_DESCRIPTION,
@@ -42,6 +44,11 @@ export const InitialMessage = CompoundSubComponent(
         InitialMessageSubcomponentProperty.MessagePrompts,
       );
 
+      const resourceList = findChild(
+        children,
+        InitialMessageSubcomponentProperty.ResourceList,
+      );
+
       return (
         <Message isSender={false} ref={fwdRef} {...rest}>
           <div
@@ -58,6 +65,7 @@ export const InitialMessage = CompoundSubComponent(
                 <Body>{INITIAL_MESSAGE_DESCRIPTION}</Body>
               </div>
               {messagePrompts}
+              {resourceList}
             </div>
           </div>
         </Message>
@@ -69,5 +77,7 @@ export const InitialMessage = CompoundSubComponent(
     key: MessageFeedSubcomponentProperty.InitialMessage,
     MessagePrompts,
     MessagePromptsItem,
+    ResourceList,
+    ResourceListItem,
   },
 );

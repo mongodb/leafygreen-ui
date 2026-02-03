@@ -4,3 +4,8 @@ export {
   MessagePromptsItem,
   type MessagePromptsItemProps,
 } from './MessagePromptsItem';
+export { ResourceList, type ResourceListProps } from './ResourceList';
+export {
+  ResourceListItem,
+  type ResourceListItemProps,
+} from './ResourceListItem';
