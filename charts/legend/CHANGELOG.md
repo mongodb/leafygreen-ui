@@ -1,5 +1,11 @@
 # @lg-charts/legend
 
+## 1.1.2
+
+### Patch Changes
+
+- bb18968: Add a "default" export at the top level of package.json to improve compatibility with Jest module resolution in consumer projects, since Jest does not handle nested "exports" mappings well.
+
 ## 1.1.1
 
 ### Patch Changes
