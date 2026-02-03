@@ -4,4 +4,4 @@
 '@lg-chat/message-prompts': patch
 ---
 
-Update padding to reflect designs
+Update MessagePrompt padding to reflect designs
