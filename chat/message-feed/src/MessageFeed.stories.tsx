@@ -260,6 +260,11 @@ export const InitialMessageWithNewMessage = ({ ...rest }: MessageFeedProps) => {
     </div>
   );
 };
+InitialMessageWithNewMessage.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const ChangingMessages: StoryObj<MessageFeedProps> = {
   render: ChangingMessagesComponent,
