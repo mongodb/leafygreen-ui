@@ -30,6 +30,9 @@
       "path": "../message-rating"
     },
     {
+      "path": "../../packages/avatar"
+    },
+    {
       "path": "../../packages/button"
     },
     {
@@ -49,6 +52,9 @@
     },
     {
       "path": "../../packages/tokens"
+    },
+    {
+      "path": "../../packages/typography"
     },
     {
       "path": "../../packages/leafygreen-provider"

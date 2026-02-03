@@ -3,17 +3,25 @@ import React, {
   forwardRef,
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { CompoundComponent } from '@leafygreen-ui/compound-component';
+import {
+  CompoundComponent,
+  filterChildren,
+  findChild,
+} from '@leafygreen-ui/compound-component';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
 
+import { InitialMessage } from '../components/InitialMessage';
+import { MessageFeedProvider } from '../MessageFeedContext';
 import { ScrollToLatestButton } from '../ScrollToLatestButton';
+import { MessageFeedSubcomponentProperty } from '../shared.types';
 
 import {
   getWrapperStyles,
@@ -104,36 +112,59 @@ export const MessageFeed = CompoundComponent(
         }
       }, [children, showScrollButton, scrollToLatest]);
 
+      // Find the InitialMessage component
+      const initialMessage = findChild(
+        children,
+        MessageFeedSubcomponentProperty.InitialMessage,
+      );
+
+      // Filter out subcomponents from children
+      const remainingChildren = useMemo(
+        () =>
+          filterChildren(
+            children,
+            Object.values(MessageFeedSubcomponentProperty),
+          ),
+        [children],
+      );
+
+      // Checks if there are any remaining children
+      const hasRemainingChildren = React.Children.count(remainingChildren) > 0;
+
       return (
         <LeafyGreenProvider darkMode={darkMode}>
-          <div
-            {...rest}
-            className={getWrapperStyles({
-              className,
-              hasBottomShadow: !isBottomInView,
-              hasTopShadow: !isTopInView,
-              theme,
-            })}
-            ref={ref}
-          >
-            <div className={scrollContainerStyles} ref={scrollContainerRef}>
-              {/* Empty span element used to track if container can scroll up */}
-              <span className={interceptStyles} ref={topInterceptRef} />
-              {children}
-              {/* Empty span element used to track if container can scroll down */}
-              <span className={interceptStyles} ref={bottomInterceptRef} />
+          <MessageFeedProvider shouldHideInitialMessage={hasRemainingChildren}>
+            <div
+              {...rest}
+              className={getWrapperStyles({
+                className,
+                hasBottomShadow: !isBottomInView,
+                hasTopShadow: !isTopInView,
+                theme,
+              })}
+              ref={ref}
+            >
+              <div className={scrollContainerStyles} ref={scrollContainerRef}>
+                {/* Empty span element used to track if container can scroll up */}
+                <span className={interceptStyles} ref={topInterceptRef} />
+                {initialMessage}
+                {remainingChildren}
+                {/* Empty span element used to track if container can scroll down */}
+                <span className={interceptStyles} ref={bottomInterceptRef} />
+              </div>
+              <ScrollToLatestButton
+                darkMode={darkMode}
+                onClick={scrollToLatest}
+                visible={showScrollButton}
+              />
             </div>
-            <ScrollToLatestButton
-              darkMode={darkMode}
-              onClick={scrollToLatest}
-              visible={showScrollButton}
-            />
-          </div>
+          </MessageFeedProvider>
         </LeafyGreenProvider>
       );
     },
   ),
   {
     displayName: 'MessageFeed',
+    InitialMessage,
   },
 );

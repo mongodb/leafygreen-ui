@@ -14,6 +14,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@leafygreen-ui/avatar": "workspace:^",
     "@leafygreen-ui/button": "workspace:^",
     "@leafygreen-ui/compound-component": "workspace:^",
     "@leafygreen-ui/emotion": "workspace:^",
@@ -21,6 +22,7 @@
     "@leafygreen-ui/lib": "workspace:^",
     "@leafygreen-ui/palette": "workspace:^",
     "@leafygreen-ui/tokens": "workspace:^",
+    "@leafygreen-ui/typography": "workspace:^",
     "@lg-chat/message": "workspace:^",
     "@lg-chat/message-rating": "workspace:^",
     "react-intersection-observer": "^8.25.1",

@@ -215,7 +215,6 @@ const WithMessagePromptsComponent = ({
     <LeafyGreenChatProvider assistantName={assistantName}>
       <ChatWindow {...props}>
         <MessageFeed>
-          <div style={{ flex: 1 }} aria-hidden="true" />
           {messages.map((messageFields, index) => (
             <Message
               key={messageFields.id}
@@ -262,6 +261,103 @@ export const WithMessagePrompts: StoryObj<ChatWindowStoryProps> = {
     },
   },
 };
+
+const WithInitialMessageWithMessagePromptsComponent = ({
+  assistantName,
+  ...props
+}: ChatWindowStoryProps) => {
+  const [messages, setMessages] = useState<Array<any>>([]);
+  const [selectedPromptIndex, setSelectedPromptIndex] = useState<
+    number | undefined
+  >();
+
+  const prompts = [
+    'What is MongoDB?',
+    'How do I create a database?',
+    'Can you explain indexes?',
+  ];
+
+  const handlePromptSelect = (index: number) => {
+    setSelectedPromptIndex(index);
+    const selectedPrompt = prompts[index];
+
+    // Add user message with selected prompt
+    const userMessage = {
+      id: messages.length,
+      messageBody: selectedPrompt,
+      isSender: true,
+    };
+
+    // Add assistant response
+    const assistantMessage = {
+      id: messages.length + 1,
+      messageBody: `Great question! Let me explain about "${selectedPrompt}"...`,
+      isSender: false,
+    };
+
+    setMessages(prev => [...prev, userMessage, assistantMessage]);
+  };
+
+  const handleMessageSend = (messageBody: string) => {
+    const newMessage = {
+      id: messages.length,
+      messageBody,
+      isSender: true,
+    };
+    setMessages(prev => [...prev, newMessage]);
+  };
+
+  return (
+    <LeafyGreenChatProvider assistantName={assistantName}>
+      <ChatWindow {...props}>
+        <MessageFeed>
+          <MessageFeed.InitialMessage>
+            {/* TODO: will replace with MessageFeed.MessagePrompts in next PR */}
+            <MessagePrompts
+              label="Suggested Prompts"
+              onClickRefresh={() => {
+                // eslint-disable-next-line no-console
+                console.log('Refresh prompts');
+                setSelectedPromptIndex(undefined);
+              }}
+              enableHideOnSelect={false}
+            >
+              {prompts.map((prompt, promptIndex) => (
+                <MessagePrompt
+                  key={prompt}
+                  selected={selectedPromptIndex === promptIndex}
+                  onClick={() => handlePromptSelect(promptIndex)}
+                  data-testid={`prompt-${promptIndex}`}
+                >
+                  {prompt}
+                </MessagePrompt>
+              ))}
+            </MessagePrompts>
+          </MessageFeed.InitialMessage>
+          {messages.map(messageFields => (
+            <Message
+              key={messageFields.id}
+              sourceType="markdown"
+              isSender={messageFields.isSender}
+              messageBody={messageFields.messageBody}
+            />
+          ))}
+        </MessageFeed>
+        <InputBar onMessageSend={handleMessageSend} />
+      </ChatWindow>
+    </LeafyGreenChatProvider>
+  );
+};
+
+export const WithInitialMessageWithMessagePrompts: StoryObj<ChatWindowStoryProps> =
+  {
+    render: WithInitialMessageWithMessagePromptsComponent,
+    parameters: {
+      chromatic: {
+        disableSnapshot: true,
+      },
+    },
+  };
 
 const ChatDrawerContent = ({ assistantName }: { assistantName?: string }) => {
   const [messages, setMessages] = useState<Array<any>>(baseMessages);
