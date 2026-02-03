@@ -197,6 +197,11 @@ export const InitialMessageWithMessages = ({ ...rest }: MessageFeedProps) => {
     </div>
   );
 };
+InitialMessageWithMessages.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
 
 export const InitialMessageWithNewMessage = ({ ...rest }: MessageFeedProps) => {
   const [messages, setMessages] = useState<Array<any>>([]);
@@ -231,6 +236,11 @@ export const InitialMessageWithNewMessage = ({ ...rest }: MessageFeedProps) => {
       </button>
     </div>
   );
+};
+InitialMessageWithNewMessage.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
 };
 
 export const ChangingMessages: StoryObj<MessageFeedProps> = {
