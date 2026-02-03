@@ -65,7 +65,11 @@ describe('MessageFeed', () => {
     render(
       <MessageFeed>
         <MessageFeed.InitialMessage>
-          <div>I heard you like MongoDB</div>
+          <MessageFeed.InitialMessage.MessagePrompts>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
+              I heard you like MongoDB
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+          </MessageFeed.InitialMessage.MessagePrompts>
         </MessageFeed.InitialMessage>
       </MessageFeed>,
     );
@@ -78,7 +82,11 @@ describe('MessageFeed', () => {
     render(
       <MessageFeed>
         <MessageFeed.InitialMessage>
-          <div>I heard you like MongoDB</div>
+          <MessageFeed.InitialMessage.MessagePrompts>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
+              I heard you like MongoDB
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+          </MessageFeed.InitialMessage.MessagePrompts>
         </MessageFeed.InitialMessage>
         <div>Hello, fellow message</div>
       </MessageFeed>,
@@ -93,7 +101,11 @@ describe('MessageFeed', () => {
     const { rerender } = render(
       <MessageFeed>
         <MessageFeed.InitialMessage>
-          <div>I heard you like MongoDB</div>
+          <MessageFeed.InitialMessage.MessagePrompts>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
+              I heard you like MongoDB
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+          </MessageFeed.InitialMessage.MessagePrompts>
         </MessageFeed.InitialMessage>
       </MessageFeed>,
     );
@@ -105,7 +117,11 @@ describe('MessageFeed', () => {
     rerender(
       <MessageFeed>
         <MessageFeed.InitialMessage>
-          <div>I heard you like MongoDB</div>
+          <MessageFeed.InitialMessage.MessagePrompts>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
+              I heard you like MongoDB
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+          </MessageFeed.InitialMessage.MessagePrompts>
         </MessageFeed.InitialMessage>
         <div>Hello, how can I help you today?</div>
       </MessageFeed>,
@@ -117,5 +133,28 @@ describe('MessageFeed', () => {
     expect(
       screen.getByText('Hello, how can I help you today?'),
     ).toBeInTheDocument();
+  });
+
+  test('renders the MessagePrompts component', () => {
+    render(
+      <MessageFeed>
+        <MessageFeed.InitialMessage>
+          <MessageFeed.InitialMessage.MessagePrompts>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
+              What is MongoDB?
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
+              How do I query MongoDB?
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
+              What is blue but not heavy?
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+          </MessageFeed.InitialMessage.MessagePrompts>
+        </MessageFeed.InitialMessage>
+      </MessageFeed>,
+    );
+    expect(screen.getByText('What is MongoDB?')).toBeInTheDocument();
+    expect(screen.getByText('How do I query MongoDB?')).toBeInTheDocument();
+    expect(screen.getByText('What is blue but not heavy?')).toBeInTheDocument();
   });
 });

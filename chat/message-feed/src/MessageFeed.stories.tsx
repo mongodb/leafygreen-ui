@@ -163,12 +163,27 @@ const ChangingMessagesComponent = ({ darkMode, ...rest }: MessageFeedProps) => {
   );
 };
 
-export const InitialMessage = ({ ...rest }: MessageFeedProps) => {
+export const InitialMessageWithMessagePrompts = ({
+  ...rest
+}: MessageFeedProps) => {
   return (
     <div>
       <MessageFeed style={{ width: 700, height: 400 }} {...rest}>
         <MessageFeed.InitialMessage>
-          Filler content for initial message
+          <MessageFeed.InitialMessage.MessagePrompts
+            onClickRefresh={() => {}}
+            label="Suggested Prompts"
+          >
+            <MessageFeed.InitialMessage.MessagePromptsItem>
+              What is MongoDB?
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
+              How do I query MongoDB?
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
+              What is MongoDB&apos;s astrology sign?
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+          </MessageFeed.InitialMessage.MessagePrompts>
         </MessageFeed.InitialMessage>
       </MessageFeed>
     </div>
@@ -197,11 +212,6 @@ export const InitialMessageWithMessages = ({ ...rest }: MessageFeedProps) => {
     </div>
   );
 };
-InitialMessageWithMessages.parameters = {
-  chromatic: {
-    disableSnapshot: true,
-  },
-};
 
 export const InitialMessageWithNewMessage = ({ ...rest }: MessageFeedProps) => {
   const [messages, setMessages] = useState<Array<any>>([]);
@@ -214,7 +224,20 @@ export const InitialMessageWithNewMessage = ({ ...rest }: MessageFeedProps) => {
     <div>
       <MessageFeed style={{ width: 700, height: 400 }} {...rest}>
         <MessageFeed.InitialMessage>
-          Filler content for initial message
+          <MessageFeed.InitialMessage.MessagePrompts
+            onClickRefresh={() => {}}
+            label="Suggested Prompts"
+          >
+            <MessageFeed.InitialMessage.MessagePromptsItem>
+              What is MongoDB?
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
+              How do I query MongoDB?
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
+              What is MongoDB&apos;s astrology sign?
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+          </MessageFeed.InitialMessage.MessagePrompts>
         </MessageFeed.InitialMessage>
         {messages.map(message => {
           const { id, messageBody, userName } = message as MessageFields;
@@ -252,9 +275,7 @@ export const InitialMessageTransition: StoryObj<InitialMessageProps> = {
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
 
-    expect(
-      canvas.getByText('Filler content for initial message'),
-    ).toBeVisible();
+    expect(canvas.getByText('Hello! How can I help you?')).toBeVisible();
 
     // Click add message button
     const addMessageButton = canvas.getByTestId('add-message-button');
@@ -263,9 +284,7 @@ export const InitialMessageTransition: StoryObj<InitialMessageProps> = {
     await userEvent.click(addMessageButton);
 
     await waitFor(() =>
-      expect(
-        canvas.getByText('Filler content for initial message'),
-      ).not.toBeVisible(),
+      expect(canvas.getByText('Hello! How can I help you?')).not.toBeVisible(),
     );
     await waitFor(() =>
       expect(canvas.getByText(baseMessages[1].messageBody)).toBeVisible(),

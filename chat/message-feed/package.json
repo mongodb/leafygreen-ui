@@ -24,12 +24,12 @@
     "@leafygreen-ui/tokens": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
     "@lg-chat/message": "workspace:^",
+    "@lg-chat/message-prompts": "workspace:^",
     "@lg-chat/message-rating": "workspace:^",
     "react-intersection-observer": "^8.25.1",
     "react-keyed-flatten-children": "^2.2.1"
   },
   "devDependencies": {
-    "@lg-chat/message-prompts": "workspace:^",
     "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {

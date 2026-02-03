@@ -27,6 +27,9 @@
       "path": "../message"
     },
     {
+      "path": "../message-prompts"
+    },
+    {
       "path": "../message-rating"
     },
     {

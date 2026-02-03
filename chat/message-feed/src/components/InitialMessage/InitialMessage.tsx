@@ -2,11 +2,16 @@ import React, { forwardRef } from 'react';
 import { Message } from '@lg-chat/message';
 
 import { AssistantAvatar, AvatarSize } from '@leafygreen-ui/avatar';
-import { CompoundSubComponent } from '@leafygreen-ui/compound-component';
+import {
+  CompoundSubComponent,
+  findChild,
+} from '@leafygreen-ui/compound-component';
 import { Body } from '@leafygreen-ui/typography';
 
 import { useMessageFeedContext } from '../../MessageFeedContext';
 import { MessageFeedSubcomponentProperty } from '../../shared.types';
+import { MessagePrompts } from '../MessagePrompts';
+import { MessagePromptsItem } from '../MessagePromptsItem';
 
 import {
   INITIAL_MESSAGE_DESCRIPTION,
@@ -17,7 +22,10 @@ import {
   innerWrapperStyles,
   titleStyles,
 } from './InitialMessage.styles';
-import { type InitialMessageProps } from './InitialMessage.types';
+import {
+  type InitialMessageProps,
+  InitialMessageSubcomponentProperty,
+} from './InitialMessage.types';
 /**
  * Renders an initial message in the message feed.
  *
@@ -28,6 +36,11 @@ export const InitialMessage = CompoundSubComponent(
   forwardRef<HTMLDivElement, InitialMessageProps>(
     ({ children, ...rest }, fwdRef) => {
       const { shouldHideInitialMessage } = useMessageFeedContext();
+
+      const messagePrompts = findChild(
+        children,
+        InitialMessageSubcomponentProperty.MessagePrompts,
+      );
 
       return (
         <Message isSender={false} ref={fwdRef} {...rest}>
@@ -44,7 +57,7 @@ export const InitialMessage = CompoundSubComponent(
                 </Body>
                 <Body>{INITIAL_MESSAGE_DESCRIPTION}</Body>
               </div>
-              {children}
+              {messagePrompts}
             </div>
           </div>
         </Message>
@@ -54,5 +67,7 @@ export const InitialMessage = CompoundSubComponent(
   {
     displayName: 'InitialMessage',
     key: MessageFeedSubcomponentProperty.InitialMessage,
+    MessagePrompts,
+    MessagePromptsItem,
   },
 );
