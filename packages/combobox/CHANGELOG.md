@@ -26,7 +26,7 @@
 
 ### Minor Changes
 
-- aac0fd8: `ComboboxOption` now accepts a `ReactNode` for the `displayName` prop, enabling custom content like badges. Also refactored internal styles for better organization.
+- aac0fd8: `ComboboxOption` now accepts a `customContent` prop (ReactNode) for rendering custom option content, while `displayName` remains a string for filtering, chips, and internal logic. Also refactored internal styles for better organization.
 
 ## 12.3.0
 

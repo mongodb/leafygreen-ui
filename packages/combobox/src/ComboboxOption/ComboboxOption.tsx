@@ -30,6 +30,7 @@ export const InternalComboboxOption = React.forwardRef<
       glyph,
       isSelected,
       displayName,
+      customContent,
       isFocused,
       setSelected,
       className,
@@ -101,7 +102,7 @@ export const InternalComboboxOption = React.forwardRef<
         ref={optionRef}
         highlighted={isFocused}
         disabled={disabled}
-        aria-label={ariaLabel || getNodeTextContent(displayName) || value}
+        aria-label={ariaLabel || displayName || value}
         darkMode={darkMode}
         className={getInputOptionStyles({
           size,
@@ -117,12 +118,12 @@ export const InternalComboboxOption = React.forwardRef<
           rightGlyph={rightGlyph}
           description={description}
         >
-          {typeof displayName === 'string' ? (
-            <span id={optionTextId}>
-              {wrapJSX(displayName, inputValue, 'strong')}
-            </span>
+          {customContent ? (
+            customContent
           ) : (
-            displayName
+            <span id={optionTextId}>
+              {wrapJSX(displayName ?? '', inputValue, 'strong')}
+            </span>
           )}
         </InputOptionContent>
       </InputOption>
