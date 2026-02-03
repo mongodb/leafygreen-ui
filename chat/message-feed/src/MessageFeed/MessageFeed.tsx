@@ -128,27 +128,12 @@ export const MessageFeed = CompoundComponent(
         [children],
       );
 
-      const remainingChildrenArray = React.Children.toArray(remainingChildren);
-
-      /**
-       * If there are remaining children
-       */
-      useEffect(() => {
-        if (remainingChildrenArray.length > 0) {
-          setShouldHideInitialMessage(true);
-        }
-      }, [remainingChildrenArray]);
-
-      const hasMessages = React.Children.count(remainingChildren) > 0;
-
-      const [shouldHideInitialMessage, setShouldHideInitialMessage] =
-        useState(hasMessages);
+      // Checks if there are any remaining children
+      const hasRemainingChildren = React.Children.count(remainingChildren) > 0;
 
       return (
         <LeafyGreenProvider darkMode={darkMode}>
-          <MessageFeedProvider
-            shouldHideInitialMessage={shouldHideInitialMessage}
-          >
+          <MessageFeedProvider shouldHideInitialMessage={hasRemainingChildren}>
             <div
               {...rest}
               className={getWrapperStyles({

@@ -1,5 +1,11 @@
 # @leafygreen-ui/date-utils
 
+## 0.3.5
+
+### Patch Changes
+
+- 39e5319: Removed Pacific/Kiritimati from test timezones
+
 ## 0.3.4
 
 ### Patch Changes

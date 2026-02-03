@@ -13,7 +13,6 @@ import { axe } from 'jest-axe';
 import flatten from 'lodash/flatten';
 import isUndefined from 'lodash/isUndefined';
 
-import { Badge } from '@leafygreen-ui/badge';
 import { RenderMode } from '@leafygreen-ui/popover';
 import { eventContainingTargetValue } from '@leafygreen-ui/testing-lib';
 
