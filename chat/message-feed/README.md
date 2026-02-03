@@ -52,7 +52,7 @@ import React from `react`
 import { Message } from `@lg-chat/message`;
 import { MessageFeed } from `@lg-chat/message-feed`;
 
-const [messages, setMessages] = useState([];)
+const [messages, setMessages] = useState([]);
 
 ...
 
@@ -86,7 +86,7 @@ import React from `react`
 import { Message } from `@lg-chat/message`;
 import { MessageFeed } from `@lg-chat/message-feed`;
 
-const [messages, setMessages] = useState([];)
+const [messages, setMessages] = useState([]);
 
 ...
 
@@ -126,11 +126,11 @@ return (
 
 ### MessageFeed.InitialMessage.MessagePrompts
 
-`MessageFeed.InitialMessage.MessagePrompts` is a wrapper around [MessagePrompts](https://github.com/mongodb/leafygreen-ui/blob/main/chat/message-prompts/README.md#messageprompts-properties) from `@lg-chat/message-prompts` and accepts the same props except for `enableHideOnSelect`,
+`MessageFeed.InitialMessage.MessagePrompts` is a wrapper around [MessagePrompts](https://github.com/mongodb/leafygreen-ui/blob/main/chat/message-prompts/README.md#messageprompts-properties) from `@lg-chat/message-prompts` and accepts the same props except for `enableHideOnSelect`.
 
-### MessageFeed.InitialMessage.MessagePrompts.MessagePromptsItem
+### MessageFeed.InitialMessage.MessagePromptsItem
 
-`MessageFeed.InitialMessage.MessagePrompts` is a wrapper around [MessagePrompt](https://github.com/mongodb/leafygreen-ui/blob/main/chat/message-prompts/README.md#messageprompt-properties) from `@lg-chat/message-prompts` and accepts the same props.
+`MessageFeed.InitialMessage.MessagePromptsItem` is a wrapper around [MessagePrompt](https://github.com/mongodb/leafygreen-ui/blob/main/chat/message-prompts/README.md#messageprompt-properties) from `@lg-chat/message-prompts` and accepts the same props.
 
 ### MessageFeed.InitialMessage.ResourceList
 
