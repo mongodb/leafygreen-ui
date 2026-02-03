@@ -121,7 +121,7 @@ export const InternalComboboxOption = React.forwardRef<
             customContent
           ) : (
             <span id={optionTextId}>
-              {wrapJSX(displayName ?? '', inputValue, 'strong')}
+              {wrapJSX(displayName, inputValue, 'strong')}
             </span>
           )}
         </InputOptionContent>
