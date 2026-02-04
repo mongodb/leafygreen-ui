@@ -28,6 +28,22 @@ import { Message } from '@lg-chat/message';
 
 return (
   <MessageFeed darkMode={darkMode} {...rest}>
+    <MessageFeed.InitialMessage>
+      <MessageFeed.InitialMessage.MessagePrompts
+        onClickRefresh={() => {}}
+        label="Suggested Prompts"
+      >
+        <MessageFeed.InitialMessage.MessagePromptsItem onClick={() => {}}>
+          What is MongoDB?
+        </MessageFeed.InitialMessage.MessagePromptsItem>
+        <MessageFeed.InitialMessage.MessagePromptsItem onClick={() => {}}>
+          How do I query MongoDB?
+        </MessageFeed.InitialMessage.MessagePromptsItem>
+        <MessageFeed.InitialMessage.MessagePromptsItem onClick={() => {}}>
+          What is MongoDB&apos;s astrology sign?
+        </MessageFeed.InitialMessage.MessagePromptsItem>
+      </MessageFeed.InitialMessage.MessagePrompts>
+    </MessageFeed.InitialMessage>
     {messages.map(({ id, messageBody, userName }) => (
       <Message key={id} isSender={!!userName} messageBody={messageBody} />
     ))}
@@ -44,8 +60,6 @@ The `MessageFeed` component uses a compound component pattern. `MessageFeed.Init
 Additionally, `MessageFeed.InitialMessage` only renders its subcomponents. All other children will be ignored.
 
 #### MessageFeed.InitialMessage.MessagePrompts and MessageFeed.InitialMessage.MessagePromptsItem
-
-**Note:** `MessageFeed.InitialMessage.MessagePrompts` is a wrapper around [MessagePrompts](https://github.com/mongodb/leafygreen-ui/tree/main/chat/message-prompts#readme) from `@lg-chat/message-prompts` and accepts the same props except for `enableHideOnSelect`
 
 ```tsx
 import React from `react`
@@ -74,7 +88,9 @@ return (
         </MessageFeed.InitialMessage.MessagePromptsItem>
       </MessageFeed.InitialMessage.MessagePrompts>
     </MessageFeed.InitialMessage>
-    {message.map((message) => <Message>...</Message>)}
+    {messages.map(({ id, messageBody, userName }) => (
+      <Message key={id} isSender={!!userName} messageBody={messageBody} />
+    ))}
   </MessageFeed>
 );
 ```
@@ -106,7 +122,9 @@ return (
         </MessageFeed.InitialMessage.ResourceListItem>
       </MessageFeed.InitialMessage.ResourceList>
     </MessageFeed.InitialMessage>
-    {message.map((message) => <Message>...</Message>)}
+    {messages.map(({ id, messageBody, userName }) => (
+      <Message key={id} isSender={!!userName} messageBody={messageBody} />
+    ))}
   </MessageFeed>
 );
 ```
