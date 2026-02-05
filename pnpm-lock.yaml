@@ -641,9 +641,15 @@ importers:
 
   chat/message-feed:
     dependencies:
+      '@leafygreen-ui/avatar':
+        specifier: workspace:^
+        version: link:../../packages/avatar
       '@leafygreen-ui/button':
         specifier: workspace:^
         version: link:../../packages/button
+      '@leafygreen-ui/compound-component':
+        specifier: workspace:^
+        version: link:../../packages/compound-component
       '@leafygreen-ui/emotion':
         specifier: workspace:^
         version: link:../../packages/emotion
@@ -662,12 +668,18 @@ importers:
       '@leafygreen-ui/tokens':
         specifier: workspace:^
         version: link:../../packages/tokens
+      '@leafygreen-ui/typography':
+        specifier: workspace:^
+        version: link:../../packages/typography
       '@lg-chat/leafygreen-chat-provider':
         specifier: workspace:^6.0.0
         version: link:../leafygreen-chat-provider
       '@lg-chat/message':
         specifier: workspace:^
         version: link:../message
+      '@lg-chat/message-prompts':
+        specifier: workspace:^
+        version: link:../message-prompts
       '@lg-chat/message-rating':
         specifier: workspace:^
         version: link:../message-rating
@@ -678,9 +690,6 @@ importers:
         specifier: ^2.2.1
         version: 2.2.1(react@18.3.1)
     devDependencies:
-      '@lg-chat/message-prompts':
-        specifier: workspace:^
-        version: link:../message-prompts
       '@lg-tools/build':
         specifier: workspace:^
         version: link:../../tools/build
