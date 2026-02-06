@@ -25,15 +25,6 @@ const meta: StoryMetaType<typeof CollectionToolbar> = {
         darkMode: [false, true],
         size: Object.values(Size),
       },
-      decorator: (_, context) => {
-        const args = context?.args ?? {};
-
-        if (args.variant === Variant.Compact) {
-          return <CompactTemplate {...args} />;
-        }
-
-        return <Template {...args} />;
-      },
     },
     docs: {
       description: {
@@ -52,13 +43,16 @@ const meta: StoryMetaType<typeof CollectionToolbar> = {
       control: 'select',
       options: Object.values(Variant),
     },
+    children: {
+      control: 'none',
+    },
   },
 };
 
 export default meta;
 
-const Template: StoryFn<typeof CollectionToolbar> = props => (
-  <CollectionToolbar {...props}>
+const renderDefaultChildren = () => (
+  <>
     <CollectionToolbar.Title>Collection Title</CollectionToolbar.Title>
     <CollectionToolbar.SearchInput
       placeholder="Search for a collection"
@@ -137,11 +131,11 @@ const Template: StoryFn<typeof CollectionToolbar> = props => (
       </CollectionToolbar.Actions.Menu>
     </CollectionToolbar.Actions>
     <CollectionToolbar.Filters />
-  </CollectionToolbar>
+  </>
 );
 
-const CompactTemplate: StoryFn<typeof CollectionToolbar> = props => (
-  <CollectionToolbar {...props}>
+const renderCompactChildren = () => (
+  <>
     <CollectionToolbar.Title>Collection Title</CollectionToolbar.Title>
     <CollectionToolbar.SearchInput
       placeholder="Search for a collection"
@@ -197,6 +191,12 @@ const CompactTemplate: StoryFn<typeof CollectionToolbar> = props => (
       </CollectionToolbar.Actions.Menu>
     </CollectionToolbar.Actions>
     <CollectionToolbar.Filters />
+  </>
+);
+
+const Template: StoryFn<typeof CollectionToolbar> = props => (
+  <CollectionToolbar {...props}>
+    {props.children ?? renderDefaultChildren()}
   </CollectionToolbar>
 );
 
@@ -211,6 +211,10 @@ export const LiveExample: StoryObj<typeof CollectionToolbar> = {
 
 export const Default: StoryObj<typeof CollectionToolbar> = {
   render: Template,
+  args: {
+    variant: Variant.Default,
+    children: renderDefaultChildren(),
+  },
   parameters: {
     chromatic: {
       disableSnapshot: false,
@@ -219,9 +223,10 @@ export const Default: StoryObj<typeof CollectionToolbar> = {
 };
 
 export const Compact: StoryObj<typeof CollectionToolbar> = {
-  render: CompactTemplate,
+  render: Template,
   args: {
     variant: Variant.Compact,
+    children: renderCompactChildren(),
   },
   parameters: {
     chromatic: {
@@ -234,6 +239,7 @@ export const Collapsible: StoryObj<typeof CollectionToolbar> = {
   render: Template,
   args: {
     variant: Variant.Collapsible,
+    children: renderDefaultChildren(),
   },
   parameters: {
     title: 'Variant: Collapsible',
