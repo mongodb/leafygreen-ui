@@ -24,9 +24,10 @@ export function ChartTooltip({
 }: ChartTooltipProps) {
   const {
     chart: {
-      enableGroupTooltipSync,
+      enableTooltipSync,
       id: chartId,
       isChartHovered,
+      isSomeChartHovered,
       ready,
       setTooltipMounted,
       tooltipPinned,
@@ -128,14 +129,28 @@ export function ChartTooltip({
     /** Track that we ran the effect while pinned (for cleanup logic) */
     wasPinnedRef.current = tooltipPinned;
 
+    /**
+     * Tooltip visibility logic:
+     * - `alwaysShowContent`: keeps tooltip present while any grouped chart
+     *   is hovered, so tooltips persist on non-hovered charts.
+     * - `showContent`: controls whether tooltip content (vs axis pointer only)
+     *   is shown. With `enableTooltipSync`, all charts show content when any is
+     *   hovered. Without it, only the hovered chart shows content.
+     */
+    const alwaysShowContent =
+      (enableTooltipSync && isSomeChartHovered) || tooltipPinned;
+    const showContent = enableTooltipSync
+      ? isSomeChartHovered || tooltipPinned
+      : isChartHovered || tooltipPinned;
+
     updateOptions({
       tooltip: {
         /* LOGIC PROPERTIES */
-        alwaysShowContent: enableGroupTooltipSync || tooltipPinned,
+        alwaysShowContent,
         confine: true,
         enterable: tooltipPinned,
         renderMode: 'html',
-        showContent: enableGroupTooltipSync || isChartHovered || tooltipPinned,
+        showContent,
         trigger: 'axis',
         triggerOn: tooltipPinned ? 'none' : 'mousemove',
 
@@ -178,10 +193,11 @@ export function ChartTooltip({
       updateOptions({ ...DEFAULT_TOOLTIP_OPTIONS });
     };
   }, [
-    enableGroupTooltipSync,
+    enableTooltipSync,
     formatPinnedTooltip,
     formatTooltip,
     isChartHovered,
+    isSomeChartHovered,
     ready,
     theme,
     tooltipPinned,

@@ -11,7 +11,8 @@ const createMockChartInstance = (
 ): ChartInstance => ({
   id: 'test-chart',
   ref: jest.fn(),
-  enableGroupTooltipSync: false,
+  enableTooltipSync: false,
+  isSomeChartHovered: false,
   state: undefined,
   isChartHovered: false,
   setTooltipMounted: jest.fn(),
