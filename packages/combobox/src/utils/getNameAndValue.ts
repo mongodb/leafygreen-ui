@@ -1,7 +1,5 @@
 import kebabCase from 'lodash/kebabCase';
 
-import { getNodeTextContent } from '@leafygreen-ui/lib';
-
 import { ComboboxOptionProps } from '../ComboboxOption';
 
 /**
@@ -20,10 +18,11 @@ export const getNameAndValue = ({
   value: string;
   displayName: string;
 } => {
-  const displayNameProps = getNodeTextContent(nameProp);
+  // displayName is now always a string, so we can use it directly
+  const displayNameStr = nameProp ?? '';
 
   return {
-    value: valProp ?? kebabCase(displayNameProps),
-    displayName: displayNameProps || valProp || '', // TODO consider adding a prop to customize displayName => startCase(valProp),
+    value: valProp ?? kebabCase(displayNameStr),
+    displayName: displayNameStr || valProp || '',
   };
 };

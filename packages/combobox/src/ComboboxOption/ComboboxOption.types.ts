@@ -19,7 +19,13 @@ interface SharedComboboxOptionProps {
    * The display value of the option. Used as the rendered string within the menu and chips.
    * When undefined, this is set to `value`
    */
-  displayName?: ReactNode;
+  displayName?: string;
+
+  /**
+   * Optional custom content to render for the option.
+   * When provided, this ReactNode will be rendered in the option menu
+   */
+  customContent?: ReactNode;
 
   /**
    * The icon to display to the left of the option in the menu.
