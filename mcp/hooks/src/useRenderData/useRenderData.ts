@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import {
   BaseRenderData,
   RenderDataMessage,
+  UseRenderDataOptions,
   UseRenderDataResult,
   ValidationResult,
 } from './useRenderData.types';
@@ -16,7 +17,12 @@ const MESSAGE_TYPE_IFRAME_READY = 'ui-lifecycle-iframe-ready';
  */
 function validateRenderData<T>(
   event: MessageEvent<RenderDataMessage>,
+  options?: UseRenderDataOptions,
 ): ValidationResult<T> | null {
+  if (options?.allowedOrigins && !options.allowedOrigins.includes(event.origin)) {
+    return null;
+  }
+
   const isRenderDataMessage = event.data?.type === MESSAGE_TYPE_RENDER_DATA;
 
   if (!isRenderDataMessage) {
@@ -54,11 +60,15 @@ function validateRenderData<T>(
  * @example
  * ```tsx
  * function MyComponent() {
- *   const { data, darkMode, isLoading } = useRenderData<{ items: string[] }>();
+ *   const { data, darkMode, isLoading } = useRenderData<{ items: string[] }>({
+ *     allowedOrigins: ['https://mongodb.com']
+ *   });
  * }
  * ```
  */
-export function useRenderData<T = unknown>(): UseRenderDataResult<T> {
+export function useRenderData<T = unknown>(
+  options?: UseRenderDataOptions,
+): UseRenderDataResult<T> {
   const [data, setData] = useState<(T & BaseRenderData) | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -88,7 +98,7 @@ export function useRenderData<T = unknown>(): UseRenderDataResult<T> {
 
   useEffect(function handleMessages() {
     const handleMessage = (event: MessageEvent<RenderDataMessage>): void => {
-      const result = validateRenderData<T>(event);
+      const result = validateRenderData<T>(event, options);
 
       if (result === null) {
         return;
@@ -109,7 +119,7 @@ export function useRenderData<T = unknown>(): UseRenderDataResult<T> {
     window.parent.postMessage({ type: MESSAGE_TYPE_IFRAME_READY }, '*');
 
     return () => window.removeEventListener('message', handleMessage);
-  }, []);
+  }, [options]);
 
   const darkMode = data?.darkMode ?? prefersDarkMode;
 
