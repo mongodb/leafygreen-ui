@@ -21,12 +21,18 @@ const meta: StoryMetaType<typeof CollectionToolbar> = {
     default: 'LiveExample',
     generate: {
       storyNames: ['Default', 'Compact', 'Collapsible'],
-      args: {
-        variant: Variant.Default,
-      },
       combineArgs: {
         darkMode: [false, true],
         size: Object.values(Size),
+      },
+      decorator: (_, context) => {
+        const args = context?.args ?? {};
+
+        if (args.variant === Variant.Compact) {
+          return <CompactTemplate {...args} />;
+        }
+
+        return <Template {...args} />;
       },
     },
     docs: {
@@ -134,6 +140,66 @@ const Template: StoryFn<typeof CollectionToolbar> = props => (
   </CollectionToolbar>
 );
 
+const CompactTemplate: StoryFn<typeof CollectionToolbar> = props => (
+  <CollectionToolbar {...props}>
+    <CollectionToolbar.Title>Collection Title</CollectionToolbar.Title>
+    <CollectionToolbar.SearchInput
+      placeholder="Search for a collection"
+      aria-label="Search for a collection"
+    />
+    <CollectionToolbar.Filters>
+      <CollectionToolbar.Filters.TextInput
+        value="Text Input"
+        aria-label="Text Input"
+      />
+      <CollectionToolbar.Filters.NumberInput
+        value={'10'}
+        aria-label="Number Input"
+      />
+      <CollectionToolbar.Filters.Select
+        aria-label="Select"
+        className={css`
+          width: 100%;
+          max-width: 160px !important;
+        `}
+      >
+        <CollectionToolbar.Filters.SelectOption value="option-1">
+          Select Option 1
+        </CollectionToolbar.Filters.SelectOption>
+        <CollectionToolbar.Filters.SelectOption value="option-2">
+          Select Option 2
+        </CollectionToolbar.Filters.SelectOption>
+      </CollectionToolbar.Filters.Select>
+    </CollectionToolbar.Filters>
+    <CollectionToolbar.Actions showToggleButton>
+      <CollectionToolbar.Actions.Button variant={ButtonVariant.Default}>
+        Action
+      </CollectionToolbar.Actions.Button>
+      <CollectionToolbar.Actions.Button variant={ButtonVariant.Primary}>
+        Action
+      </CollectionToolbar.Actions.Button>
+      <CollectionToolbar.Actions.Pagination
+        onBackArrowClick={() => {}}
+        onForwardArrowClick={() => {}}
+        itemsPerPage={10}
+        numTotalItems={100}
+      />
+      <CollectionToolbar.Actions.Menu>
+        <CollectionToolbar.Actions.MenuItem>
+          Menu Item
+        </CollectionToolbar.Actions.MenuItem>
+        <CollectionToolbar.Actions.MenuItem>
+          Menu Item
+        </CollectionToolbar.Actions.MenuItem>
+        <CollectionToolbar.Actions.MenuItem>
+          Menu Item
+        </CollectionToolbar.Actions.MenuItem>
+      </CollectionToolbar.Actions.Menu>
+    </CollectionToolbar.Actions>
+    <CollectionToolbar.Filters />
+  </CollectionToolbar>
+);
+
 export const LiveExample: StoryObj<typeof CollectionToolbar> = {
   render: Template,
   parameters: {
@@ -153,45 +219,7 @@ export const Default: StoryObj<typeof CollectionToolbar> = {
 };
 
 export const Compact: StoryObj<typeof CollectionToolbar> = {
-  render: props => (
-    <CollectionToolbar {...props}>
-      <CollectionToolbar.Title>Collection Title</CollectionToolbar.Title>
-      <CollectionToolbar.SearchInput
-        placeholder="Search for a collection"
-        aria-label="Search for a collection"
-      />
-      <CollectionToolbar.Filters>
-        <CollectionToolbar.Filters.TextInput
-          value="Text Input"
-          aria-label="Text Input"
-        />
-        <CollectionToolbar.Filters.Select aria-label="Select" value="Select">
-          <CollectionToolbar.Filters.SelectOption value="option-1">
-            Select Option 1
-          </CollectionToolbar.Filters.SelectOption>
-          <CollectionToolbar.Filters.SelectOption value="option-2">
-            Select Option 2
-          </CollectionToolbar.Filters.SelectOption>
-        </CollectionToolbar.Filters.Select>
-      </CollectionToolbar.Filters>
-      <CollectionToolbar.Actions>
-        <CollectionToolbar.Actions.Button variant={ButtonVariant.Default}>
-          Action
-        </CollectionToolbar.Actions.Button>
-        <CollectionToolbar.Actions.Button variant={ButtonVariant.Primary}>
-          Action
-        </CollectionToolbar.Actions.Button>
-        <CollectionToolbar.Actions.Menu>
-          <CollectionToolbar.Actions.MenuItem>
-            Menu Item
-          </CollectionToolbar.Actions.MenuItem>
-          <CollectionToolbar.Actions.MenuItem>
-            Menu Item
-          </CollectionToolbar.Actions.MenuItem>
-        </CollectionToolbar.Actions.Menu>
-      </CollectionToolbar.Actions>
-    </CollectionToolbar>
-  ),
+  render: CompactTemplate,
   args: {
     variant: Variant.Compact,
   },
@@ -203,11 +231,7 @@ export const Compact: StoryObj<typeof CollectionToolbar> = {
 };
 
 export const Collapsible: StoryObj<typeof CollectionToolbar> = {
-  render: props => (
-    <CollectionToolbar {...props}>
-      <CollectionToolbar.Title>Collection Title</CollectionToolbar.Title>
-    </CollectionToolbar>
-  ),
+  render: Template,
   args: {
     variant: Variant.Collapsible,
   },

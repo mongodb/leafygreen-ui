@@ -1,5 +1,11 @@
 import { css, cx } from '@leafygreen-ui/emotion';
-import { spacing, transitionDuration } from '@leafygreen-ui/tokens';
+import {
+  breakpoints,
+  spacing,
+  transitionDuration,
+} from '@leafygreen-ui/tokens';
+
+import { Variant } from '../../shared.types';
 
 export const baseStyles = css`
   display: flex;
@@ -7,6 +13,10 @@ export const baseStyles = css`
   align-items: center;
   gap: ${spacing[100]}px;
   margin-left: ${spacing[1800]}px;
+
+  @media only screen and (max-width: ${breakpoints.Tablet}px) {
+    margin-left: 0;
+  }
 `;
 
 const iconBaseStyles = css`
@@ -22,5 +32,23 @@ export const getIconStyles = ({ isExpanded }: { isExpanded: boolean }) =>
     [iconExpandedStyles]: isExpanded,
   });
 
-export const getActionStyles = ({ className }: { className?: string }) =>
-  cx(baseStyles, className);
+const compactStyles = css`
+  @media only screen and (max-width: ${breakpoints.Tablet}px) {
+    margin-left: 0;
+  }
+`;
+
+export const getActionStyles = ({
+  className,
+  variant,
+}: {
+  className?: string;
+  variant?: Variant;
+}) =>
+  cx(
+    baseStyles,
+    {
+      [compactStyles]: variant === Variant.Compact,
+    },
+    className,
+  );

@@ -71,7 +71,7 @@ export const Actions = CompoundSubComponent(
 
       return (
         <div
-          className={getActionStyles({ className })}
+          className={getActionStyles({ className, variant })}
           ref={fwdRef}
           {...rest}
           data-lgid={lgIds.actions}

@@ -1,5 +1,5 @@
 import { css, cx } from '@leafygreen-ui/emotion';
-import { spacing } from '@leafygreen-ui/tokens';
+import { breakpoints, spacing } from '@leafygreen-ui/tokens';
 
 import { Variant } from '../../shared.types';
 
@@ -13,6 +13,10 @@ export const baseStyles = css`
 
 const compactStyles = css`
   flex: 1;
+
+  @media only screen and (max-width: ${breakpoints.Tablet}px) {
+    flex: 100%;
+  }
 `;
 
 export const getFiltersStyles = ({
