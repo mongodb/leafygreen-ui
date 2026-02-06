@@ -6,6 +6,7 @@ import {
 } from '@leafygreen-ui/tokens';
 
 import { Variant } from '../../shared.types';
+import { CUSTOM_BREAKPOINT } from '../constants';
 
 export const baseStyles = css`
   display: flex;
@@ -14,7 +15,7 @@ export const baseStyles = css`
   gap: ${spacing[100]}px;
   margin-left: ${spacing[1800]}px;
 
-  @media only screen and (max-width: ${breakpoints.Tablet}px) {
+  @media only screen and (max-width: ${CUSTOM_BREAKPOINT}px) {
     margin-left: 0;
   }
 `;
@@ -33,7 +34,7 @@ export const getIconStyles = ({ isExpanded }: { isExpanded: boolean }) =>
   });
 
 const compactStyles = css`
-  @media only screen and (max-width: ${breakpoints.Tablet}px) {
+  @media only screen and (max-width: ${breakpoints.Desktop}px) {
     margin-left: 0;
   }
 `;

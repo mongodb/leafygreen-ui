@@ -13,14 +13,14 @@ export const SearchInput = CompoundSubComponent(
   // eslint-disable-next-line react/display-name
   forwardRef<HTMLInputElement, SearchInputProps>(
     ({ className, ...props }, fwdRef) => {
-      const { size, darkMode, lgIds } = useCollectionToolbarContext();
+      const { size, darkMode, lgIds, variant } = useCollectionToolbarContext();
 
       return (
         <LGSearchInput
           size={size}
           darkMode={darkMode}
           ref={fwdRef}
-          className={getSearchInputStyles({ className })}
+          className={getSearchInputStyles({ className, variant })}
           {...props}
           data-lgid={lgIds.searchInput}
         />
