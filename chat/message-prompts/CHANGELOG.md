@@ -1,5 +1,11 @@
 # @lg-chat/message-prompts
 
+## 4.2.2
+
+### Patch Changes
+
+- 9296806: Update MessagePrompt padding to reflect designs
+
 ## 4.2.1
 
 ### Patch Changes
