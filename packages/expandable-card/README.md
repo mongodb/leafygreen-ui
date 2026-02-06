@@ -54,3 +54,116 @@ import ExpandableCard from '@leafygreen-ui/expandable-card';
 | id               | `string`                                | Unique id for the card                                                                  |             |
 | className        | `string`                                | Styling prop                                                                            |             |
 | contentClassName | `string`                                | Styling prop for children                                                               |             |
+
+## Test Harnesses
+
+### `getTestUtils`
+
+`getTestUtils()` is a util that allows consumers to reliably interact with LG `ExpandableCard` in a product test suite. If the `ExpandableCard` instance cannot be found, an error will be thrown.
+
+### Usage
+
+```tsx
+import { getTestUtils } from '@leafygreen-ui/expandable-card/testing';
+
+const utils = getTestUtils(lgId?: `lg-${string}`); // lgId refers to the custom `data-lgid` attribute passed to `ExpandableCard`. It defaults to 'lg-expandable_card' if left empty.
+```
+
+#### Single `ExpandableCard` component
+
+```tsx
+import { render } from '@testing-library/react';
+import { ExpandableCard } from '@leafygreen-ui/expandable-card';
+import { getTestUtils } from '@leafygreen-ui/expandable-card/testing';
+
+test('expandable card', () => {
+  render(
+    <ExpandableCard
+      title="Lorem Ipsum"
+      description="Im leafy"
+      flagText="optional"
+      darkMode={false}
+    >
+      <p>We are all leafy</p>
+    </ExpandableCard>,
+  );
+  const { getExpandableCard, isExpanded, getTitle, getDescription } =
+    getTestUtils();
+
+  expect(getExpandableCard()).toBeInTheDocument();
+  expect(getTitle()).toHaveTextContent('Lorem Ipsum');
+  expect(getDescription()).toHaveTextContent('Im leafy');
+  expect(isExpanded()).toBeFalsy();
+});
+```
+
+#### Multiple `ExpandableCard` components
+
+When testing multiple `ExpandableCard` components it is recommended to add the custom `data-lgid` attribute to each `ExpandableCard`.
+
+```tsx
+import { render } from '@testing-library/react';
+import { ExpandableCard } from '@leafygreen-ui/expandable-card';
+import { getTestUtils } from '@leafygreen-ui/expandable-card/testing';
+
+...
+
+test('multiple expandable cards', () => {
+  render(
+    <>
+      <ExpandableCard data-lgid="lg-expandable_card-1" title="Card 1 Title" description="Im leafy" flagText="optional" darkMode={false} >
+        <p>We are all leafy</p>
+      </ExpandableCard>
+      <ExpandableCard data-lgid="lg-expandable_card-2" title="Card 2 Title" description="Im not leafy" flagText="optional" darkMode={false} >
+        <p>We are all not leafy</p>
+      </ExpandableCard>
+    </>
+  );
+  const utilsOne = getTestUtils('lg-expandable_card-1');
+  const utilsTwo = getTestUtils('lg-expandable_card-2');
+
+  expect(utilsOne.getTitle()).toHaveTextContent('Card 1 Title');
+  expect(utilsTwo.getTitle()).toHaveTextContent('Card 2 Title');
+```
+
+### Test Utils
+
+```tsx
+const {
+  findExpandableCard,
+  getExpandableCard,
+  queryExpandableCard,
+  getToggle,
+  findToggle,
+  queryToggle,
+  isExpanded,
+  getTitle,
+  findTitle,
+  queryTitle,
+  getDescription,
+  findDescription,
+  queryDescription,
+  getFlagText,
+  findFlagText,
+  queryFlagText,
+} = getTestUtils();
+```
+
+| Util                  | Description                                                                                                        | Returns                        |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------------ |
+| `findExpandableCard`  | Returns a promise that resolves to the component's root element.                                                   | `Promise<HTMLDivElement>`      |
+| `getExpandableCard`   | Returns the component's root element. Will throw if no elements match or if more than one match is found.          | `HTMLDivElement`               |
+| `queryExpandableCard` | Returns the component's root element or `null` if not found.                                                       | `HTMLDivElement` \| `null`     |
+| `getToggle`           | Returns the component's toggle button element. Will throw if no elements match or if more than one match is found. | `HTMLDivElement`               |
+| `findToggle`          | Returns a promise that resolves to the component's toggle button element.                                          | `Promise<HTMLDivElement>`      |
+| `queryToggle`         | Returns the component's toggle button element or `null` if not found.                                              | `HTMLDivElement` \| `null`     |
+| `isExpanded`          | Returns a boolean indicating whether the card is expanded.                                                         | `boolean`                      |
+| `getTitle`            | Returns the component's title element. Will throw if no elements match or if more than one match is found.         | `HTMLHeadingElement`           |
+| `findTitle`           | Returns a promise that resolves to the component's title element.                                                  | `Promise<HTMLHeadingElement>`  |
+| `queryTitle`          | Returns the component's title element or `null` if not found.                                                      | `HTMLHeadingElement` \| `null` |
+| `getDescription`      | Returns the component's description element. Will throw if no elements match or if more than one match is found.   | `HTMLDivElement`               |
+| `findDescription`     | Returns a promise that resolves to the component's description element.                                            | `Promise<HTMLDivElement>`      |
+| `queryDescription`    | Returns the component's description element or `null` if not found.                                                | `HTMLDivElement` \| `null`     |
+| `getFlagText`         | Returns the component's flag text element. Will throw if no elements match or if more than one match is found.     | `HTMLSpanElement`              |
+| `findFlagText`        | Returns a promise that resolves to the component's flag text element.                                              | `Promise<HTMLSpanElement>`     |
+| `queryFlagText`       | Returns the component's flag text element or `null` if not found.                                                  | `HTMLSpanElement` \| `null`    |
