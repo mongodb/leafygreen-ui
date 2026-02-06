@@ -39,7 +39,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
     });
 
     const { rerender } = renderHook(() =>
-      useChart({ enableGroupTooltipSync: true, theme: 'dark', onChartReady }),
+      useChart({ theme: 'dark', onChartReady }),
     );
 
     expect(onChartReady).not.toHaveBeenCalled();
@@ -75,9 +75,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
       yAxis: false,
     };
 
-    renderHook(() =>
-      useChart({ enableGroupTooltipSync: true, theme: 'dark', zoomSelect }),
-    );
+    renderHook(() => useChart({ theme: 'dark', zoomSelect }));
 
     expect(setupZoomSelect).toHaveBeenCalledWith({
       xAxis: true,
@@ -98,9 +96,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
       on,
     });
 
-    renderHook(() =>
-      useChart({ enableGroupTooltipSync: true, theme: 'dark', onZoomSelect }),
-    );
+    renderHook(() => useChart({ theme: 'dark', onZoomSelect }));
 
     expect(on).toHaveBeenCalledWith(
       EChartEventsMock.ZoomSelect,
@@ -136,7 +132,6 @@ describe('@lg-echarts/core/hooks/useChart', () => {
     const { result } = renderHook(() =>
       useChart({
         chartId: 'test-chart-id',
-        enableGroupTooltipSync: true,
         groupId,
         theme: 'dark',
       }),
@@ -144,7 +139,6 @@ describe('@lg-echarts/core/hooks/useChart', () => {
 
     expect(result.current).toEqual({
       ...mockEchartInstance,
-      enableGroupTooltipSync: true,
       id: 'test-chart-id',
       isChartHovered: false,
       ref: expect.any(Function),
@@ -168,9 +162,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
 
     const groupId = 'test-group';
 
-    renderHook(() =>
-      useChart({ enableGroupTooltipSync: true, theme: 'dark', groupId }),
-    );
+    renderHook(() => useChart({ theme: 'dark', groupId }));
 
     expect(addToGroup).toHaveBeenCalledWith(groupId);
   });
@@ -189,9 +181,7 @@ describe('@lg-echarts/core/hooks/useChart', () => {
 
     const groupId = 'test-group';
 
-    const { unmount } = renderHook(() =>
-      useChart({ enableGroupTooltipSync: true, theme: 'dark', groupId }),
-    );
+    const { unmount } = renderHook(() => useChart({ theme: 'dark', groupId }));
 
     unmount();
 

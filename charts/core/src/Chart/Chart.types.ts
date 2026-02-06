@@ -31,18 +31,6 @@ export type ChartProps = React.ComponentPropsWithoutRef<'div'> &
     dragId?: string | number;
 
     /**
-     * Enables tooltip synchronization across charts with the same groupId.
-     * groupId must be set for this to work.
-     * @default true
-     */
-    enableGroupTooltipSync?: boolean;
-
-    /**
-     * Charts with same groupID will have their tooltips synchronized.
-     */
-    groupId?: string;
-
-    /**
      * Callback to be called when chart is finished rendering.
      */
     onChartReady?: () => void;
