@@ -4,7 +4,7 @@ import { spacing } from '@leafygreen-ui/tokens';
 export const baseStyles = css`
   display: flex;
   flex-flow: row wrap;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: ${spacing[200]}px;
   padding: ${spacing[200]}px ${spacing[600]}px;

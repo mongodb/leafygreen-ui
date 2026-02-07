@@ -1,11 +1,13 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, useMemo } from 'react';
 
 import {
   CompoundComponent,
   findChild,
 } from '@leafygreen-ui/compound-component';
+import { useIdAllocator } from '@leafygreen-ui/hooks';
 
 import { Actions, Filters, SearchInput, Title } from '../components';
+import { CollapsibleContent } from '../components/CollapsibleContent';
 import { CollectionToolbarProvider } from '../Context/CollectionToolbarProvider';
 import {
   CollectionToolbarSubComponentProperty,
@@ -15,7 +17,6 @@ import {
 import { getLgIds } from '../utils';
 
 import { getCollectionToolbarStyles } from './CollectionToolbar.styles';
-import { collapsibleContentStyles } from './CollectionToolbar.styles';
 import { CollectionToolbarProps } from './CollectionToolbar.types';
 
 export const CollectionToolbar = CompoundComponent(
@@ -34,6 +35,10 @@ export const CollectionToolbar = CompoundComponent(
       fwdRef,
     ) => {
       const lgIds = getLgIds(dataLgId);
+      const titleId = useIdAllocator({ prefix: 'collection-toolbar-title' });
+      const collapsibleContentId = useIdAllocator({
+        prefix: 'collection-toolbar-collapsible-content',
+      });
 
       const title = findChild(
         children,
@@ -55,6 +60,37 @@ export const CollectionToolbar = CompoundComponent(
       );
 
       const isCollapsible = variant === Variant.Collapsible;
+      const isCompact = variant === Variant.Compact;
+
+      const content = useMemo(() => {
+        if (isCompact) {
+          return (
+            <>
+              {searchInput}
+              {filters}
+              {actions}
+            </>
+          );
+        }
+
+        if (isCollapsible) {
+          return (
+            <>
+              {title}
+              {actions}
+              <CollapsibleContent searchInput={searchInput} filters={filters} />
+            </>
+          );
+        }
+
+        return (
+          <>
+            {searchInput}
+            {actions}
+            {filters}
+          </>
+        );
+      }, [isCompact, isCollapsible, title, searchInput, filters, actions]);
 
       return (
         <CollectionToolbarProvider
@@ -62,23 +98,16 @@ export const CollectionToolbar = CompoundComponent(
           size={size}
           variant={variant}
           lgIds={lgIds}
+          titleId={titleId}
+          collapsibleContentId={collapsibleContentId}
         >
           <div
             data-lgid={lgIds.root}
-            // TODO: Compact and Collapsible styles in LG-5845
             className={getCollectionToolbarStyles({ className })}
             ref={fwdRef}
             {...rest}
           >
-            {isCollapsible ? title : searchInput}
-            {actions}
-            {!isCollapsible && filters}
-            {isCollapsible && (
-              <div className={collapsibleContentStyles}>
-                {searchInput}
-                {filters}
-              </div>
-            )}
+            {content}
           </div>
         </CollectionToolbarProvider>
       );

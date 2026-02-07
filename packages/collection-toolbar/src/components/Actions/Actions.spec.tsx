@@ -219,6 +219,31 @@ describe('packages/collection-toolbar/components/Actions', () => {
       expect(toggleButton).toHaveAttribute('aria-expanded', 'true');
     });
 
+    test('icon has rotation transform when expanded (isCollapsed is false)', () => {
+      renderActions({
+        variant: Variant.Collapsible,
+        showToggleButton: true,
+        isCollapsed: false,
+      });
+      const toggleButton = screen.getByLabelText('Toggle collapse');
+      const icon = toggleButton.querySelector('svg');
+      expect(icon).toBeInTheDocument();
+      expect(icon).toHaveStyle({ transform: 'rotate(180deg)' });
+    });
+
+    test('icon does not have rotation transform when collapsed (isCollapsed is true)', () => {
+      renderActions({
+        variant: Variant.Collapsible,
+        showToggleButton: true,
+        isCollapsed: true,
+      });
+      const toggleButton = screen.getByLabelText('Toggle collapse');
+      const icon = toggleButton.querySelector('svg');
+      expect(icon).toBeInTheDocument();
+      // When collapsed, the icon should not have the rotation transform
+      expect(icon).not.toHaveStyle({ transform: 'rotate(180deg)' });
+    });
+
     test('does not render toggle IconButton when variant is "compact"', () => {
       renderActions({ variant: Variant.Compact });
       expect(

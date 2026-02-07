@@ -20,10 +20,10 @@ const meta: StoryMetaType<typeof CollectionToolbar> = {
   parameters: {
     default: 'LiveExample',
     generate: {
+      storyNames: ['Default', 'Compact', 'Collapsible'],
       combineArgs: {
         darkMode: [false, true],
         size: Object.values(Size),
-        variant: Object.values(Variant),
       },
     },
     docs: {
@@ -43,13 +43,16 @@ const meta: StoryMetaType<typeof CollectionToolbar> = {
       control: 'select',
       options: Object.values(Variant),
     },
+    children: {
+      control: 'none',
+    },
   },
 };
 
 export default meta;
 
-export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
-  <CollectionToolbar {...props}>
+const renderDefaultChildren = () => (
+  <>
     <CollectionToolbar.Title>Collection Title</CollectionToolbar.Title>
     <CollectionToolbar.SearchInput
       placeholder="Search for a collection"
@@ -128,8 +131,123 @@ export const LiveExample: StoryFn<typeof CollectionToolbar> = props => (
       </CollectionToolbar.Actions.Menu>
     </CollectionToolbar.Actions>
     <CollectionToolbar.Filters />
+  </>
+);
+
+const renderCompactChildren = () => (
+  <>
+    <CollectionToolbar.Title>Collection Title</CollectionToolbar.Title>
+    <CollectionToolbar.SearchInput
+      placeholder="Search for a collection"
+      aria-label="Search for a collection"
+    />
+    <CollectionToolbar.Filters>
+      <CollectionToolbar.Filters.TextInput
+        value="Text Input"
+        aria-label="Text Input"
+      />
+      <CollectionToolbar.Filters.NumberInput
+        value={'10'}
+        aria-label="Number Input"
+      />
+      <CollectionToolbar.Filters.Select
+        aria-label="Select"
+        className={css`
+          width: 100%;
+          max-width: 160px !important;
+        `}
+      >
+        <CollectionToolbar.Filters.SelectOption value="option-1">
+          Select Option 1
+        </CollectionToolbar.Filters.SelectOption>
+        <CollectionToolbar.Filters.SelectOption value="option-2">
+          Select Option 2
+        </CollectionToolbar.Filters.SelectOption>
+      </CollectionToolbar.Filters.Select>
+    </CollectionToolbar.Filters>
+    <CollectionToolbar.Actions showToggleButton>
+      <CollectionToolbar.Actions.Button variant={ButtonVariant.Default}>
+        Action
+      </CollectionToolbar.Actions.Button>
+      <CollectionToolbar.Actions.Button variant={ButtonVariant.Primary}>
+        Action
+      </CollectionToolbar.Actions.Button>
+      <CollectionToolbar.Actions.Pagination
+        onBackArrowClick={() => {}}
+        onForwardArrowClick={() => {}}
+        itemsPerPage={10}
+        numTotalItems={100}
+      />
+      <CollectionToolbar.Actions.Menu>
+        <CollectionToolbar.Actions.MenuItem>
+          Menu Item
+        </CollectionToolbar.Actions.MenuItem>
+        <CollectionToolbar.Actions.MenuItem>
+          Menu Item
+        </CollectionToolbar.Actions.MenuItem>
+        <CollectionToolbar.Actions.MenuItem>
+          Menu Item
+        </CollectionToolbar.Actions.MenuItem>
+      </CollectionToolbar.Actions.Menu>
+    </CollectionToolbar.Actions>
+    <CollectionToolbar.Filters />
+  </>
+);
+
+const Template: StoryFn<typeof CollectionToolbar> = props => (
+  <CollectionToolbar {...props}>
+    {props.children ?? renderDefaultChildren()}
   </CollectionToolbar>
 );
+
+export const LiveExample: StoryObj<typeof CollectionToolbar> = {
+  render: Template,
+  parameters: {
+    chromatic: {
+      disableSnapshot: false,
+    },
+  },
+};
+
+export const Default: StoryObj<typeof CollectionToolbar> = {
+  render: Template,
+  args: {
+    variant: Variant.Default,
+    children: renderDefaultChildren(),
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: false,
+    },
+  },
+};
+
+export const Compact: StoryObj<typeof CollectionToolbar> = {
+  render: Template,
+  args: {
+    variant: Variant.Compact,
+    children: renderCompactChildren(),
+  },
+  parameters: {
+    chromatic: {
+      disableSnapshot: false,
+    },
+  },
+};
+
+export const Collapsible: StoryObj<typeof CollectionToolbar> = {
+  render: Template,
+  args: {
+    variant: Variant.Collapsible,
+    children: renderDefaultChildren(),
+  },
+  parameters: {
+    title: 'Variant: Collapsible',
+    chromatic: {
+      disableSnapshot: false,
+    },
+  },
+};
 
 export const SearchInput: StoryFn<typeof CollectionToolbar.SearchInput> = ({
   placeholder,
@@ -168,11 +286,8 @@ Title.args = {
   variant: Variant.Collapsible,
 };
 
-export const Actions: StoryFn<typeof CollectionToolbar.Actions> = ({
-  showToggleButton,
-  ...props
-}) => {
-  return (
+export const Actions: StoryObj<typeof CollectionToolbar.Actions> = {
+  render: ({ showToggleButton, ...props }) => (
     <CollectionToolbar {...props}>
       <CollectionToolbar.Title>Collection Title</CollectionToolbar.Title>
       <CollectionToolbar.Actions showToggleButton={showToggleButton}>
@@ -198,15 +313,24 @@ export const Actions: StoryFn<typeof CollectionToolbar.Actions> = ({
         </CollectionToolbar.Actions.Menu>
       </CollectionToolbar.Actions>
     </CollectionToolbar>
-  );
-};
-
-Actions.argTypes = {
-  showToggleButton: {
-    description:
-      'Shows the toggle button. Only shows if the variant is collapsible.',
-    control: 'boolean',
-    defaultValue: false,
+  ),
+  argTypes: {
+    showToggleButton: {
+      description:
+        'Shows the toggle button. Only shows if the variant is collapsible.',
+      control: 'boolean',
+      defaultValue: false,
+    },
+  },
+  parameters: {
+    generate: {
+      combineArgs: {
+        darkMode: [false, true],
+        size: Object.values(Size),
+        variant: Object.values(Variant),
+        showToggleButton: [true, false],
+      },
+    },
   },
 };
 
@@ -240,13 +364,11 @@ export const Filters: StoryObj<typeof CollectionToolbar.Filters> = {
         />
         <CollectionToolbar.Filters.NumberInput
           value={'10'}
-          label="Number Input"
+          aria-label="Number Input"
         />
         <CollectionToolbar.Filters.Combobox
           value="Combobox"
-          label="Combobox"
-          description="Combobox description"
-          placeholder="Combobox"
+          aria-label="Combobox"
         >
           <CollectionToolbar.Filters.ComboboxOption
             value="Combobox Option 1"
@@ -271,11 +393,11 @@ export const Filters: StoryObj<typeof CollectionToolbar.Filters> = {
         </CollectionToolbar.Filters.Combobox>
         <CollectionToolbar.Filters.DatePicker
           value={new Date()}
-          label="Date Picker"
+          aria-label="Date Picker"
         />
         <CollectionToolbar.Filters.Select
           value="Select"
-          label="Select"
+          aria-label="Select"
           className={css`
             width: 100%;
             max-width: 160px !important;
