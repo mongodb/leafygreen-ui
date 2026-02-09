@@ -27,10 +27,19 @@
       "path": "../message"
     },
     {
+      "path": "../message-prompts"
+    },
+    {
       "path": "../message-rating"
     },
     {
+      "path": "../../packages/avatar"
+    },
+    {
       "path": "../../packages/button"
+    },
+    {
+      "path": "../../packages/compound-component"
     },
     {
       "path": "../../packages/emotion"
@@ -46,6 +55,9 @@
     },
     {
       "path": "../../packages/tokens"
+    },
+    {
+      "path": "../../packages/typography"
     },
     {
       "path": "../../packages/leafygreen-provider"

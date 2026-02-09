@@ -40,6 +40,9 @@ jobs:
             chat/*/dist/*
             chat/*/tsdoc.json
             chat/*/stories.js
+            mcp/*/dist/*
+            mcp/*/tsdoc.json
+            mcp/*/stories.js
             packages/*/dist/*
             packages/*/tsdoc.json
             packages/*/stories.js
@@ -80,6 +83,9 @@ jobs:
             chat/*/dist/*
             chat/*/tsdoc.json
             chat/*/stories.js
+            mcp/*/dist/*
+            mcp/*/tsdoc.json
+            mcp/*/stories.js
             packages/*/dist/*
             packages/*/tsdoc.json
             packages/*/stories.js
@@ -123,6 +129,9 @@ jobs:
             chat/*/dist/*
             chat/*/tsdoc.json
             chat/*/stories.js
+            mcp/*/dist/*
+            mcp/*/tsdoc.json
+            mcp/*/stories.js
             packages/*/dist/*
             packages/*/tsdoc.json
             packages/*/stories.js
@@ -179,6 +188,9 @@ jobs:
             chat/*/dist/*
             chat/*/tsdoc.json
             chat/*/stories.js
+            mcp/*/dist/*
+            mcp/*/tsdoc.json
+            mcp/*/stories.js
             packages/*/dist/*
             packages/*/tsdoc.json
             packages/*/stories.js
@@ -232,6 +244,9 @@ jobs:
             chat/*/dist/*
             chat/*/tsdoc.json
             chat/*/stories.js
+            mcp/*/dist/*
+            mcp/*/tsdoc.json
+            mcp/*/stories.js
             packages/*/dist/*
             packages/*/tsdoc.json
             packages/*/stories.js
@@ -284,6 +299,9 @@ jobs:
             chat/*/dist/*
             chat/*/tsdoc.json
             chat/*/stories.js
+            mcp/*/dist/*
+            mcp/*/tsdoc.json
+            mcp/*/stories.js
             packages/*/dist/*
             packages/*/tsdoc.json
             packages/*/stories.js

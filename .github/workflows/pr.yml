@@ -28,10 +28,11 @@ jobs:
         name: Check for build cache
         id: build-cache
         with:
-          # Note: `path` doesn't like complex glob patterns (i.e. `+(charts|chat|packages|tools)`)
+          # Note: `path` doesn't like complex glob patterns (i.e. `+(charts|chat|mcp|packages|tools)`)
           path: |
             charts/*/dist/*
             chat/*/dist/*
+            mcp/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{ runner.os }}-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
@@ -73,6 +74,7 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
+            mcp/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{ steps.build-cache.outputs.cache-primary-key }}
@@ -111,6 +113,7 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
+            mcp/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{needs.build.outputs.cache-primary-key}}
@@ -150,6 +153,7 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
+            mcp/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{needs.build.outputs.cache-primary-key}}
@@ -201,6 +205,7 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
+            mcp/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{needs.build.outputs.cache-primary-key}}
@@ -247,6 +252,7 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
+            mcp/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{needs.build.outputs.cache-primary-key}}

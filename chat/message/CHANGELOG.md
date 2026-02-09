@@ -1,5 +1,11 @@
 # @lg-chat/message
 
+## 12.0.0
+
+### Major Changes
+
+- 5849e0f: [LG-5926](https://jira.mongodb.org/browse/LG-5926): remove assistant avatar and name from `Message`
+
 ## 11.0.1
 
 ### Patch Changes

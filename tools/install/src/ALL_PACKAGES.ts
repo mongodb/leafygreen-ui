@@ -119,4 +119,7 @@ export const ALL_PACKAGES = [
   '@lg-tools/test-harnesses',
   '@lg-tools/update',
   '@lg-tools/validate',
+  '@lg-mcp/embeddable-uis',
+  '@lg-mcp/hooks',
+  '@lg-mcp/ui-resource-renderer',
 ] as const;
