@@ -11,10 +11,12 @@ import { useTooltipVisibility } from './useTooltipVisibility';
 
 export function useChart({
   chartId,
-  enableGroupTooltipSync,
+  enableTooltipSync,
   groupId,
+  isSomeChartHovered,
   onChartReady = () => {},
   onZoomSelect,
+  setIsSomeChartHovered,
   state,
   theme,
   zoomSelect,
@@ -62,6 +64,7 @@ export function useChart({
       container,
       echart,
       groupId,
+      setIsSomeChartHovered,
     });
 
   useEffect(() => {
@@ -143,9 +146,10 @@ export function useChart({
 
   return {
     ...echart,
-    enableGroupTooltipSync: !!groupId && enableGroupTooltipSync,
+    enableTooltipSync,
     id,
     isChartHovered,
+    isSomeChartHovered,
     ref: setContainer,
     setTooltipMounted,
     state,

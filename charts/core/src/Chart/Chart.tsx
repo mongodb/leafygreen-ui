@@ -16,6 +16,7 @@ import { BaseFontSize } from '@leafygreen-ui/tokens';
 import { Body } from '@leafygreen-ui/typography';
 
 import { ChartProvider } from '../ChartContext';
+import { useChartGroupContext } from '../ChartGroup';
 
 import {
   chartStyles,
@@ -33,8 +34,6 @@ export function Chart({
   className,
   darkMode: darkModeProp,
   dragId = '',
-  enableGroupTooltipSync = true,
-  groupId,
   id: idProp,
   onChartReady,
   onZoomSelect,
@@ -43,15 +42,16 @@ export function Chart({
   ...rest
 }: ChartProps) {
   const { theme } = useDarkMode(darkModeProp);
+  const chartGroupContext = useChartGroupContext();
+
   const chart = useChart({
     chartId: idProp,
-    enableGroupTooltipSync,
-    groupId,
     onChartReady,
     onZoomSelect,
     state,
     theme,
     zoomSelect,
+    ...chartGroupContext,
   });
   const { attributes, listeners, setNodeRef, transform, transition, items } =
     useSortable({ id: dragId });

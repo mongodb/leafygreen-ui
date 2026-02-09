@@ -12,16 +12,20 @@ import {
 // @ts-ignore
 import { EChartsOption, getInstanceByDom, SeriesOption } from 'echarts';
 
+import { css } from '@leafygreen-ui/emotion';
+
 import { ChartProps } from './Chart/Chart.types';
 import { ChartHeaderProps } from './ChartHeader/ChartHeader.types';
 import { ChartTooltipProps } from './ChartTooltip/ChartTooltip.types';
 import { ContinuousAxisProps } from './Axis';
+import { type ChartGroupProps } from './ChartGroup';
 import { LineProps } from './Series';
 import { makeSeriesData } from './testUtils';
 import { ThresholdLineProps } from './ThresholdLine';
 import {
   Chart,
   ChartGrid,
+  ChartGroup,
   ChartHeader,
   ChartTooltip,
   EventMarkerLine,
@@ -56,7 +60,7 @@ interface LiveExampleProps {
   zoomSelect: ChartProps['zoomSelect'];
   onZoomSelect: ChartProps['onZoomSelect'];
   onChartReady: ChartProps['onChartReady'];
-  groupId: ChartProps['groupId'];
+  groupId: ChartGroupProps['groupId'];
   verticalGridLines: boolean;
   horizontalGridLines: boolean;
   renderGrid: boolean;
@@ -1389,36 +1393,39 @@ export const WithZoomAndTooltip: StoryObj<{}> = {
   },
 };
 
+const chartGroupStyles = css`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+`;
+
 export const SyncedByGroupIDWithTooltipSync: StoryObj<{}> = {
   render: () => {
     return (
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr',
-          width: '100%',
-          gap: '8px',
-        }}
+      <ChartGroup
+        groupId="group1"
+        enableTooltipSync
+        className={chartGroupStyles}
       >
-        <Chart groupId="group1" enableGroupTooltipSync>
+        <Chart>
           <ChartTooltip />
           {seriesData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
-        <Chart groupId="group1" enableGroupTooltipSync>
+        <Chart>
           <ChartTooltip />
           {seriesData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
-        <Chart groupId="group1" enableGroupTooltipSync>
+        <Chart>
           <ChartTooltip />
           {seriesData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
-      </div>
+      </ChartGroup>
     );
   },
   parameters: {
@@ -1431,33 +1438,30 @@ export const SyncedByGroupIDWithTooltipSync: StoryObj<{}> = {
 export const SyncedByGroupIDWithoutTooltipSync: StoryObj<{}> = {
   render: () => {
     return (
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr',
-          width: '100%',
-          gap: '8px',
-        }}
+      <ChartGroup
+        groupId="group1"
+        enableTooltipSync={false}
+        className={chartGroupStyles}
       >
-        <Chart groupId="group1" enableGroupTooltipSync={false}>
+        <Chart>
           <ChartTooltip />
           {seriesData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
-        <Chart groupId="group1" enableGroupTooltipSync={false}>
+        <Chart>
           <ChartTooltip />
           {seriesData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
-        <Chart groupId="group1" enableGroupTooltipSync={false}>
+        <Chart>
           <ChartTooltip />
           {seriesData.map(({ name, data }) => (
             <Line name={name} data={data} key={name} />
           ))}
         </Chart>
-      </div>
+      </ChartGroup>
     );
   },
   parameters: {

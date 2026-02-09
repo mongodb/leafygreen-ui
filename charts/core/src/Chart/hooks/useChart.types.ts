@@ -2,6 +2,7 @@ import { RefCallback } from 'react';
 
 import { Theme } from '@leafygreen-ui/lib';
 
+import { ChartGroupContextType } from '../../ChartGroup/ChartGroupContext.types';
 import type { EChartsInstance, EChartZoomSelectionEvent } from '../../Echart';
 import { ChartStates } from '../Chart.types';
 
@@ -18,22 +19,11 @@ export type ZoomSelect =
     }
   | undefined;
 
-export interface ChartHookProps {
+export interface ChartHookProps extends Partial<ChartGroupContextType> {
   /**
    * The id of the chart.
    */
   chartId?: string;
-
-  /**
-   * Enables tooltip synchronization across charts with the same `groupId`.
-   * `groupId` must be set for this to work.
-   */
-  enableGroupTooltipSync: boolean;
-
-  /**
-   * Charts with the same `groupId` will have their tooltips synced across charts.
-   */
-  groupId?: string;
 
   /**
    * Callback to be called when chart is finished rendering.
@@ -60,7 +50,7 @@ export interface ChartHookProps {
 
 export interface ChartInstance
   extends EChartsInstance,
-    Pick<ChartHookProps, 'enableGroupTooltipSync' | 'state'>,
+    Pick<ChartHookProps, 'enableTooltipSync' | 'isSomeChartHovered' | 'state'>,
     Pick<
       UseTooltipVisibilityReturnObj,
       'isChartHovered' | 'setTooltipMounted' | 'tooltipPinned'

@@ -5,6 +5,7 @@ import { isDefined } from '@leafygreen-ui/lib';
 import { CHART_TOOLTIP_CLASSNAME } from '../../constants';
 import { EChartEvents, EChartsInstance } from '../../Echart';
 
+import { ChartHookProps } from './useChart.types';
 import { UseTooltipVisibilityReturnObj } from './useTooltipVisibility.types';
 
 /**
@@ -15,11 +16,13 @@ export const useTooltipVisibility = ({
   container,
   echart,
   groupId,
+  setIsSomeChartHovered,
 }: {
   chartId: string;
   container: HTMLDivElement | null;
   echart: EChartsInstance;
-  groupId?: string;
+  groupId?: ChartHookProps['groupId'];
+  setIsSomeChartHovered?: ChartHookProps['setIsSomeChartHovered'];
 }): UseTooltipVisibilityReturnObj => {
   // if groupId is not provided, this state will always be true
   const [isChartHovered, setIsChartHovered] = useState(!groupId);
@@ -225,16 +228,24 @@ export const useTooltipVisibility = ({
       return;
     }
 
-    container.addEventListener('mouseenter', () => toggleChartHover(true));
-    container.addEventListener('mouseleave', () => toggleChartHover(false));
+    const handleMouseEnter = () => {
+      toggleChartHover(true);
+      setIsSomeChartHovered?.(true);
+    };
+
+    const handleMouseLeave = () => {
+      toggleChartHover(false);
+      setIsSomeChartHovered?.(false);
+    };
+
+    container.addEventListener('mouseenter', handleMouseEnter);
+    container.addEventListener('mouseleave', handleMouseLeave);
 
     return () => {
-      container.removeEventListener('mouseenter', () => toggleChartHover(true));
-      container.removeEventListener('mouseleave', () =>
-        toggleChartHover(false),
-      );
+      container.removeEventListener('mouseenter', handleMouseEnter);
+      container.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [container, groupId, toggleChartHover]);
+  }, [container, groupId, toggleChartHover, setIsSomeChartHovered]);
 
   /**
    * Effect to turn on the tooltip event listeners when the chart is ready and tooltip
