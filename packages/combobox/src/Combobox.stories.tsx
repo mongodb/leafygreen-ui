@@ -8,6 +8,7 @@ import {
 import { StoryContext, StoryFn } from '@storybook/react';
 import { userEvent, within } from '@storybook/test';
 
+import { Badge } from '@leafygreen-ui/badge';
 import { Button } from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 
@@ -234,6 +235,57 @@ export const ExternalFilter = () => {
   );
 };
 ExternalFilter.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+
+/**
+ * Example showing the `customContent` prop for rendering custom components in dropdown options.
+ * The `customContent` prop accepts any ReactNode, allowing you to add badges, icons, or other
+ * custom components to your options. The `displayName` is still used for filtering and chips.
+ */
+export const WithCustomContent = () => {
+  return (
+    <Combobox
+      label="Choose a feature"
+      description="Some features are new!"
+      placeholder="Select a feature"
+      multiselect={false}
+    >
+      <ComboboxOption
+        value="feature-a"
+        displayName="Feature A"
+        customContent={
+          <>
+            <span>Feature A</span>
+            <Badge variant="blue">New</Badge>
+          </>
+        }
+      />
+      <ComboboxOption
+        value="feature-b"
+        displayName="Feature B"
+        customContent={
+          <>
+            <span>Feature B</span>
+            <Badge variant="green">Beta</Badge>
+          </>
+        }
+      />
+      <ComboboxOption value="feature-c" displayName="Feature C" />
+      <ComboboxOption
+        value="feature-d"
+        displayName="Feature D"
+        customContent={
+          <>
+            <span>Feature D</span>
+            <Badge variant="red">Deprecated</Badge>
+          </>
+        }
+      />
+    </Combobox>
+  );
+};
+WithCustomContent.parameters = {
   chromatic: { disableSnapshot: true },
 };
 

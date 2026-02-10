@@ -121,6 +121,7 @@ export const getComboboxJSX = (props?: renderComboboxProps) => {
 
   const label = props?.label ?? 'Some label';
   const options = props?.options ?? defaultOptions;
+  const children = props?.children;
   return (
     <LeafyGreenProvider>
       <Combobox
@@ -129,7 +130,7 @@ export const getComboboxJSX = (props?: renderComboboxProps) => {
         multiselect={props?.multiselect ?? false}
         {...props}
       >
-        {options.map(renderOption)}
+        {children ?? options.map(renderOption)}
       </Combobox>
     </LeafyGreenProvider>
   );
