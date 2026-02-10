@@ -20,6 +20,21 @@ jest.mock('../../Echart', () => ({
   EChartEvents: EChartEventsMock,
 }));
 
+// Mock useTooltipVisibility
+jest.mock('./useTooltipVisibility', () => ({
+  useTooltipVisibility: jest.fn(() => ({
+    isChartHovered: false,
+    setTooltipMounted: jest.fn(),
+    tooltipPinned: false,
+    unpinTooltip: jest.fn(),
+  })),
+}));
+
+// Mock useChartGroupStableContext
+jest.mock('../../ChartGroupContext', () => ({
+  useChartGroupStableContext: jest.fn(() => undefined),
+}));
+
 describe('@lg-echarts/core/hooks/useChart', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -127,12 +142,9 @@ describe('@lg-echarts/core/hooks/useChart', () => {
 
     (useEchart as jest.Mock).mockReturnValue(mockEchartInstance);
 
-    const groupId = 'test-group';
-
     const { result } = renderHook(() =>
       useChart({
         chartId: 'test-chart-id',
-        groupId,
         theme: 'dark',
       }),
     );
@@ -150,7 +162,9 @@ describe('@lg-echarts/core/hooks/useChart', () => {
 
   test('should call `addToGroup` when `groupId` is present', async () => {
     const { useEchart } = require('../../Echart');
+    const { useChartGroupStableContext } = require('../../ChartGroupContext');
     const addToGroup = jest.fn();
+    const groupId = 'test-group';
 
     (useEchart as jest.Mock).mockReturnValue({
       ready: true,
@@ -160,16 +174,22 @@ describe('@lg-echarts/core/hooks/useChart', () => {
       on: jest.fn(),
     });
 
-    const groupId = 'test-group';
+    (useChartGroupStableContext as jest.Mock).mockReturnValue({
+      groupId,
+      enableTooltipSync: true,
+      setIsSomeChartHovered: jest.fn(),
+    });
 
-    renderHook(() => useChart({ theme: 'dark', groupId }));
+    renderHook(() => useChart({ theme: 'dark' }));
 
     expect(addToGroup).toHaveBeenCalledWith(groupId);
   });
 
   test('should call `removeFromGroup` on unmount if `groupId` is present', async () => {
     const { useEchart } = require('../../Echart');
+    const { useChartGroupStableContext } = require('../../ChartGroupContext');
     const removeFromGroup = jest.fn();
+    const groupId = 'test-group';
 
     (useEchart as jest.Mock).mockReturnValue({
       ready: true,
@@ -179,9 +199,13 @@ describe('@lg-echarts/core/hooks/useChart', () => {
       on: jest.fn(),
     });
 
-    const groupId = 'test-group';
+    (useChartGroupStableContext as jest.Mock).mockReturnValue({
+      groupId,
+      enableTooltipSync: true,
+      setIsSomeChartHovered: jest.fn(),
+    });
 
-    const { unmount } = renderHook(() => useChart({ theme: 'dark', groupId }));
+    const { unmount } = renderHook(() => useChart({ theme: 'dark' }));
 
     unmount();
 

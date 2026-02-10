@@ -5,6 +5,10 @@ import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { useChartContext } from '../ChartContext';
+import {
+  useChartGroupHoverContext,
+  useChartGroupStableContext,
+} from '../ChartGroupContext';
 import { CHART_TOOLTIP_CLASSNAME, DEFAULT_TOOLTIP_OPTIONS } from '../constants';
 
 import { getRootStylesText } from './ChartTooltip.styles';
@@ -22,12 +26,12 @@ export function ChartTooltip({
   axisPointer = 'line',
   className,
 }: ChartTooltipProps) {
+  const { isSomeChartHovered } = useChartGroupHoverContext() || {};
+  const { enableTooltipSync } = useChartGroupStableContext() || {};
   const {
     chart: {
-      enableTooltipSync,
       id: chartId,
       isChartHovered,
-      isSomeChartHovered,
       ready,
       setTooltipMounted,
       tooltipPinned,

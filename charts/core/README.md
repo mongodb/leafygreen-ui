@@ -79,35 +79,36 @@ import { Chart, ChartGrid, ChartHeader, Line, XAxis, YAxis, type ChartStates } f
 ### Grouped Charts
 
 ```tsx
-import { Chart, ChartGroup, ChartTooltip, Line } from '@lg-charts/core';
+import { Chart, ChartGroupProvider, ChartTooltip, Line } from '@lg-charts/core';
 
-<ChartGroup groupId="my-group" enableTooltipSync>
-  <Chart>
-    <ChartTooltip />
-    <Line name="Series 1" data={data1} />
-  </Chart>
-  <Chart>
-    <ChartTooltip />
-    <Line name="Series 2" data={data2} />
-  </Chart>
-</ChartGroup>;
+<ChartGroupProvider groupId="my-group" enableTooltipSync>
+  <div>
+    <Chart>
+      <ChartTooltip />
+      <Line name="Series 1" data={data1} />
+    </Chart>
+    <Chart>
+      <ChartTooltip />
+      <Line name="Series 2" data={data2} />
+    </Chart>
+  </div>
+</ChartGroupProvider>;
 ```
 
 ## Parent Components
 
-### `ChartGroup`
+### `ChartGroupProvider`
 
-Optional unstyled container component for synchronizing tooltips and axis pointers across multiple charts. Charts placed inside a `ChartGroup` will have their axis pointers linked, and optionally their tooltip content synchronized.
+Context provider for synchronizing tooltips and axis pointers across multiple charts. Charts placed inside a `ChartGroupProvider` will have their axis pointers linked, and optionally their tooltip content synchronized.
+
+**Note:** This is a pure context provider and does not render any DOM elements. You must provide your own container div for layout and styling.
 
 #### Props
 
 | Name                             | Description                                                                                                                                                                    | Type      | Default |
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- | ------- |
-| `className` _(optional)_         | Additional CSS class name to style the container div.                                                                                                                          | `string`  |         |
 | `enableTooltipSync` _(optional)_ | Whether tooltip content is synchronized across all charts. When `true`, hovering any chart shows tooltip content on all grouped charts. When `false`, only axis pointers sync. | `boolean` | `true`  |
 | `groupId`                        | Unique identifier for the chart group. Used internally by ECharts to synchronize axis pointers.                                                                                | `string`  |         |
-
-Also accepts a `ref` (via `forwardRef`) and all native `<div>` HTML attributes.
 
 ### `Chart`
 

@@ -1,5 +1,3 @@
-import { ComponentPropsWithRef } from 'react';
-
 export interface BaseChartGroupProps {
   /**
    * Unique identifier for the chart group. Used by ECharts `connect` to
@@ -16,7 +14,3 @@ export interface BaseChartGroupProps {
    */
   enableTooltipSync?: boolean;
 }
-
-export interface ChartGroupProps
-  extends ComponentPropsWithRef<'div'>,
-    BaseChartGroupProps {}

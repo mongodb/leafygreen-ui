@@ -18,14 +18,14 @@ import { ChartProps } from './Chart/Chart.types';
 import { ChartHeaderProps } from './ChartHeader/ChartHeader.types';
 import { ChartTooltipProps } from './ChartTooltip/ChartTooltip.types';
 import { ContinuousAxisProps } from './Axis';
-import { type ChartGroupProps } from './ChartGroup';
+import { type ChartGroupProviderProps } from './ChartGroupContext';
 import { LineProps } from './Series';
 import { makeSeriesData } from './testUtils';
 import { ThresholdLineProps } from './ThresholdLine';
 import {
   Chart,
   ChartGrid,
-  ChartGroup,
+  ChartGroupProvider,
   ChartHeader,
   ChartTooltip,
   EventMarkerLine,
@@ -60,7 +60,7 @@ interface LiveExampleProps {
   zoomSelect: ChartProps['zoomSelect'];
   onZoomSelect: ChartProps['onZoomSelect'];
   onChartReady: ChartProps['onChartReady'];
-  groupId: ChartGroupProps['groupId'];
+  groupId: ChartGroupProviderProps['groupId'];
   verticalGridLines: boolean;
   horizontalGridLines: boolean;
   renderGrid: boolean;
@@ -1402,30 +1402,28 @@ const chartGroupStyles = css`
 export const SyncedByGroupIDWithTooltipSync: StoryObj<{}> = {
   render: () => {
     return (
-      <ChartGroup
-        groupId="group1"
-        enableTooltipSync
-        className={chartGroupStyles}
-      >
-        <Chart>
-          <ChartTooltip />
-          {seriesData.map(({ name, data }) => (
-            <Line name={name} data={data} key={name} />
-          ))}
-        </Chart>
-        <Chart>
-          <ChartTooltip />
-          {seriesData.map(({ name, data }) => (
-            <Line name={name} data={data} key={name} />
-          ))}
-        </Chart>
-        <Chart>
-          <ChartTooltip />
-          {seriesData.map(({ name, data }) => (
-            <Line name={name} data={data} key={name} />
-          ))}
-        </Chart>
-      </ChartGroup>
+      <ChartGroupProvider groupId="group1" enableTooltipSync>
+        <div className={chartGroupStyles}>
+          <Chart>
+            <ChartTooltip />
+            {seriesData.map(({ name, data }) => (
+              <Line name={name} data={data} key={name} />
+            ))}
+          </Chart>
+          <Chart>
+            <ChartTooltip />
+            {seriesData.map(({ name, data }) => (
+              <Line name={name} data={data} key={name} />
+            ))}
+          </Chart>
+          <Chart>
+            <ChartTooltip />
+            {seriesData.map(({ name, data }) => (
+              <Line name={name} data={data} key={name} />
+            ))}
+          </Chart>
+        </div>
+      </ChartGroupProvider>
     );
   },
   parameters: {
@@ -1438,30 +1436,28 @@ export const SyncedByGroupIDWithTooltipSync: StoryObj<{}> = {
 export const SyncedByGroupIDWithoutTooltipSync: StoryObj<{}> = {
   render: () => {
     return (
-      <ChartGroup
-        groupId="group1"
-        enableTooltipSync={false}
-        className={chartGroupStyles}
-      >
-        <Chart>
-          <ChartTooltip />
-          {seriesData.map(({ name, data }) => (
-            <Line name={name} data={data} key={name} />
-          ))}
-        </Chart>
-        <Chart>
-          <ChartTooltip />
-          {seriesData.map(({ name, data }) => (
-            <Line name={name} data={data} key={name} />
-          ))}
-        </Chart>
-        <Chart>
-          <ChartTooltip />
-          {seriesData.map(({ name, data }) => (
-            <Line name={name} data={data} key={name} />
-          ))}
-        </Chart>
-      </ChartGroup>
+      <ChartGroupProvider groupId="group1" enableTooltipSync={false}>
+        <div className={chartGroupStyles}>
+          <Chart>
+            <ChartTooltip />
+            {seriesData.map(({ name, data }) => (
+              <Line name={name} data={data} key={name} />
+            ))}
+          </Chart>
+          <Chart>
+            <ChartTooltip />
+            {seriesData.map(({ name, data }) => (
+              <Line name={name} data={data} key={name} />
+            ))}
+          </Chart>
+          <Chart>
+            <ChartTooltip />
+            {seriesData.map(({ name, data }) => (
+              <Line name={name} data={data} key={name} />
+            ))}
+          </Chart>
+        </div>
+      </ChartGroupProvider>
     );
   },
   parameters: {

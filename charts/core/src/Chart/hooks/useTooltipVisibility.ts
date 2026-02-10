@@ -2,10 +2,10 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { isDefined } from '@leafygreen-ui/lib';
 
+import { useChartGroupStableContext } from '../../ChartGroupContext';
 import { CHART_TOOLTIP_CLASSNAME } from '../../constants';
 import { EChartEvents, EChartsInstance } from '../../Echart';
 
-import { ChartHookProps } from './useChart.types';
 import { UseTooltipVisibilityReturnObj } from './useTooltipVisibility.types';
 
 /**
@@ -15,15 +15,13 @@ export const useTooltipVisibility = ({
   chartId,
   container,
   echart,
-  groupId,
-  setIsSomeChartHovered,
 }: {
   chartId: string;
   container: HTMLDivElement | null;
   echart: EChartsInstance;
-  groupId?: ChartHookProps['groupId'];
-  setIsSomeChartHovered?: ChartHookProps['setIsSomeChartHovered'];
 }): UseTooltipVisibilityReturnObj => {
+  const { groupId, setIsSomeChartHovered } = useChartGroupStableContext() || {};
+
   // if groupId is not provided, this state will always be true
   const [isChartHovered, setIsChartHovered] = useState(!groupId);
   const [pinState, setPinState] = useState<{ x: number; y: number }>();

@@ -52,7 +52,6 @@ describe('@lg-echarts/core/hooks/useTooltipVisibility', () => {
         chartId: 'test-chart',
         container: null,
         echart,
-        setIsSomeChartHovered: jest.fn(),
       }),
     );
 
