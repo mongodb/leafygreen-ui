@@ -1,0 +1,79 @@
+{
+  "extends": "@lg-tools/build/config/package.tsconfig.json",
+   "compilerOptions": {
+    "paths": {
+      "@leafygreen-ui/icon/dist/*": ["../icon/src/generated/*"],
+      "@leafygreen-ui/*": ["../*/src"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["**/*.spec.*", "**/*.stories.*"],
+  "references": [
+    {
+      "path": "../a11y"
+    },
+    {
+      "path": "../button"
+    },
+    {
+      "path": "../combobox"
+    },
+    {
+      "path": "../compound-component"
+    },
+    {
+      "path": "../date-picker"
+    },
+    {
+      "path": "../emotion"
+    },
+    {
+      "path": "../icon"
+    },
+    {
+      "path": "../icon-button"
+    },
+    {
+      "path": "../hooks"
+    },
+    {
+      "path": "../leafygreen-provider"
+    },
+    {
+      "path": "../lib"
+    },
+    {
+      "path": "../menu"
+    },
+    {
+      "path": "../number-input"
+    },
+    {
+      "path": "../tokens"
+    },
+    {
+      "path": "../pagination"
+    },
+    {
+      "path": "../search-input"
+    },
+    {
+      "path": "../segmented-control"
+    },
+    {
+      "path": "../select"
+    },
+    {
+      "path": "../text-input"
+    },
+    {
+      "path": "../tooltip"
+    },
+    {
+      "path": "../typography"
+    },
+    {
+      "path": "../../tools/test-harnesses"
+    }
+  ]
+}

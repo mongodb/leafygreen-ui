@@ -1483,6 +1483,75 @@ importers:
         specifier: workspace:^
         version: link:../../tools/build
 
+  packages/collection-toolbar:
+    dependencies:
+      '@leafygreen-ui/a11y':
+        specifier: workspace:^
+        version: link:../a11y
+      '@leafygreen-ui/button':
+        specifier: workspace:^
+        version: link:../button
+      '@leafygreen-ui/combobox':
+        specifier: workspace:^
+        version: link:../combobox
+      '@leafygreen-ui/compound-component':
+        specifier: workspace:^
+        version: link:../compound-component
+      '@leafygreen-ui/date-picker':
+        specifier: workspace:^
+        version: link:../date-picker
+      '@leafygreen-ui/emotion':
+        specifier: workspace:^
+        version: link:../emotion
+      '@leafygreen-ui/hooks':
+        specifier: workspace:^
+        version: link:../hooks
+      '@leafygreen-ui/icon':
+        specifier: workspace:^
+        version: link:../icon
+      '@leafygreen-ui/icon-button':
+        specifier: workspace:^
+        version: link:../icon-button
+      '@leafygreen-ui/leafygreen-provider':
+        specifier: workspace:^5.0.0 || ^4.0.0 || ^3.2.0
+        version: link:../leafygreen-provider
+      '@leafygreen-ui/lib':
+        specifier: workspace:^
+        version: link:../lib
+      '@leafygreen-ui/menu':
+        specifier: workspace:^
+        version: link:../menu
+      '@leafygreen-ui/number-input':
+        specifier: workspace:^
+        version: link:../number-input
+      '@leafygreen-ui/pagination':
+        specifier: workspace:^
+        version: link:../pagination
+      '@leafygreen-ui/search-input':
+        specifier: workspace:^
+        version: link:../search-input
+      '@leafygreen-ui/segmented-control':
+        specifier: workspace:^
+        version: link:../segmented-control
+      '@leafygreen-ui/select':
+        specifier: workspace:^
+        version: link:../select
+      '@leafygreen-ui/text-input':
+        specifier: workspace:^
+        version: link:../text-input
+      '@leafygreen-ui/tokens':
+        specifier: workspace:^
+        version: link:../tokens
+      '@leafygreen-ui/tooltip':
+        specifier: workspace:^
+        version: link:../tooltip
+      '@leafygreen-ui/typography':
+        specifier: workspace:^
+        version: link:../typography
+      '@lg-tools/test-harnesses':
+        specifier: workspace:^
+        version: link:../../tools/test-harnesses
+
   packages/combobox:
     dependencies:
       '@leafygreen-ui/checkbox':
