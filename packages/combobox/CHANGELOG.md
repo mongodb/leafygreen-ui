@@ -1,5 +1,12 @@
 # @leafygreen-ui/combobox
 
+## 12.5.0
+
+### Minor Changes
+
+- a7d2799: Added a customContent prop to render a custom component in combobox option
+- 2d36a0d: Exported out InternalComboboxOptionProps from ComboBoxOption
+
 ## 12.4.2
 
 ### Patch Changes
