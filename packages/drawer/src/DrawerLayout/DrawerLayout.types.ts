@@ -5,7 +5,7 @@ import { DarkModeProps } from '@leafygreen-ui/lib';
 import { DrawerProps } from '../Drawer/Drawer.types';
 import { DrawerToolbarLayoutProps } from '../DrawerToolbarLayout';
 
-type PickedDrawerProps = Pick<DrawerProps, 'onClose' | 'size'>;
+type PickedDrawerProps = Pick<DrawerProps, 'onClose' | 'size' | 'initialFocus'>;
 
 export interface BaseDrawerLayoutPropsWithoutDisplayMode
   extends ComponentPropsWithoutRef<'div'>,

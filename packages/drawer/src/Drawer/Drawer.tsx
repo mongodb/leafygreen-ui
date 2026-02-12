@@ -1,6 +1,7 @@
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
+import { VisuallyHidden } from '@leafygreen-ui/a11y';
 import {
   useIdAllocator,
   useIsomorphicLayoutEffect,
@@ -32,7 +33,12 @@ import {
   titleStyles,
 } from './Drawer.styles';
 import { DisplayMode, DrawerProps } from './Drawer.types';
-import { getResolvedDrawerSizes, useResolvedDrawerProps } from './Drawer.utils';
+import {
+  getResolvedDrawerSizes,
+  setEmbeddedDrawerFocus,
+  setOverlayDrawerFocus,
+  useResolvedDrawerProps,
+} from './Drawer.utils';
 
 /**
  * A drawer is a panel that slides in from the right side of the screen (not customizable). Because the user can use the Drawer without navigating away from the current page, tasks can be completed more efficiently while not changing page context.
@@ -51,6 +57,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       scrollable = true,
       size: sizeProp,
       title,
+      initialFocus: initialFocusProp,
       ...rest
     },
     fwdRef,
@@ -68,22 +75,26 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       setDrawerWidth,
       drawerWidth,
       size: sizeContextProp,
+      initialFocus: initialFocusContextProp,
     } = useDrawerLayoutContext();
     const [shouldAnimate, setShouldAnimate] = useState(false);
     const ref = useRef<HTMLDialogElement | HTMLDivElement>(null);
     const [previousWidth, setPreviousWidth] = useState(0);
 
     // Returns the resolved displayMode, open state, and onClose function based on the component and context props.
-    const { displayMode, open, onClose, size } = useResolvedDrawerProps({
-      componentDisplayMode: displayModeProp,
-      contextDisplayMode: displayModeContextProp,
-      componentOpen: openProp,
-      contextOpen: isDrawerOpen,
-      componentOnClose: onCloseProp,
-      contextOnClose: onCloseContextProp,
-      componentSize: sizeProp,
-      contextSize: sizeContextProp,
-    });
+    const { displayMode, open, onClose, size, initialFocus } =
+      useResolvedDrawerProps({
+        componentDisplayMode: displayModeProp,
+        contextDisplayMode: displayModeContextProp,
+        componentOpen: openProp,
+        contextOpen: isDrawerOpen,
+        componentOnClose: onCloseProp,
+        contextOnClose: onCloseContextProp,
+        componentSize: sizeProp,
+        contextSize: sizeContextProp,
+        componentInitialFocus: initialFocusProp,
+        contextInitialFocus: initialFocusContextProp,
+      });
 
     // Returns the resolved drawer sizes based on whether a toolbar is present.
     const { initialSize, resizableMinWidth, resizableMaxWidth } =
@@ -110,6 +121,11 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     // This will use the default value of 0 if not wrapped in a DrawerStackProvider. If using a Drawer + Toolbar, the DrawerStackProvider will not be necessary.
     const drawerIndex = getDrawerIndex(id);
 
+    /**
+     * Opens and closes the dialog element.
+     *
+     * If the initialFocus is not 'auto', we focus the appropriate element.
+     */
     useIsomorphicLayoutEffect(() => {
       const drawerElement = ref.current;
 
@@ -117,13 +133,14 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
         return;
       }
 
-      if (open) {
+      if (open && !drawerElement.open) {
         drawerElement.show();
         setShouldAnimate(true);
-      } else {
+        setOverlayDrawerFocus(drawerElement, initialFocus);
+      } else if (!open) {
         drawerElement.close();
       }
-    }, [ref, open]);
+    }, [ref, open, initialFocus]);
 
     useEffect(() => {
       if (open) {
@@ -133,27 +150,34 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     }, [id, open, registerDrawer, unregisterDrawer]);
 
-    /**
-     * Focuses the first focusable element in the drawer when the animation ends. We have to manually handle this because we are hiding the drawer with visibility: hidden, which breaks the default focus behavior of dialog element.
-     *
-     */
-    const handleAnimationEnd = () => {
-      const drawerElement = ref.current;
+    const previouslyFocusedRef = useRef<HTMLElement | null>(null);
+    const hasHandledFocusRef = useRef<boolean>(false);
 
-      // Check if the drawerElement is null or is a div, which means it is not a dialog element.
-      if (!drawerElement || drawerElement instanceof HTMLDivElement) {
+    /**
+     * Handles focus for embedded drawers.
+     *
+     * We mimic the native focus behavior of the dialog element and if the initialFocus is not 'auto', we focus the appropriate element.
+     */
+    useIsomorphicLayoutEffect(() => {
+      // If the drawer element is not found, we can't focus anything.
+      if (ref.current === null) {
         return;
       }
 
-      if (open) {
-        const firstFocusable = drawerElement.querySelector(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+      if (isEmbedded) {
+        setEmbeddedDrawerFocus(
+          open,
+          ref.current as HTMLDivElement,
+          initialFocus,
+          previouslyFocusedRef,
+          hasHandledFocusRef,
         );
-        (firstFocusable as HTMLElement)?.focus();
       }
-    };
+    }, [open, initialFocus, isEmbedded]);
 
-    // Enables resizable functionality if the drawer is resizable, embedded and open.
+    /**
+     * Enables resizable functionality if the drawer is resizable, embedded and open.
+     */
     const {
       resizableRef,
       size: drawerSize,
@@ -217,6 +241,12 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 
     return (
       <LeafyGreenProvider darkMode={darkMode}>
+        {/* Live region for announcing drawer state changes to screen readers */}
+        {open && (
+          <VisuallyHidden aria-live="polite" aria-atomic="true">
+            {`${title} drawer`}
+          </VisuallyHidden>
+        )}
         <Component
           aria-hidden={!open}
           aria-labelledby={titleId}
@@ -234,7 +264,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
           data-testid={lgIds.root}
           id={id}
           ref={drawerRef}
-          onAnimationEnd={handleAnimationEnd}
           inert={!open ? 'inert' : undefined}
           {...rest}
         >
@@ -245,6 +274,8 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                 resizerClassName: resizerProps?.className,
                 hasToolbar,
               })}
+              data-lgid={lgIds.resizer}
+              data-testid={lgIds.resizer}
             />
           )}
           <div className={getDrawerShadowStyles({ theme, displayMode })}>

@@ -8,4 +8,5 @@ export const getLgIds = (root: LgIdString = DEFAULT_LGID_ROOT) =>
     closeButton: `${root}-close_button`,
     scrollContainer: `${root}-scroll_container`,
     toolbar: `${root}-toolbar`,
+    resizer: `${root}-resizer`,
   } as const);

@@ -30,6 +30,11 @@ export interface DrawerLayoutProviderProps {
    * The size of the drawer.
    */
   size?: DrawerProps['size'];
+
+  /**
+   * The initial focus of the drawer.
+   */
+  initialFocus?: DrawerProps['initialFocus'];
 }
 
 export interface DrawerLayoutContextType extends DrawerLayoutProviderProps {
