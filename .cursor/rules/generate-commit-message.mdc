@@ -1,0 +1,106 @@
+---
+description: This rule can be used to generate a git commit message. This rule depends on staged changes being available in the context to generate better commit messages.
+alwaysApply: false
+---
+
+Act as an expert software engineer preparing a git commit. Your task is to generate a clear, concise commit message based on the staged changes in the current git repository.
+
+## Commit Message Format
+
+The commit message _must_ be a single line following the Conventional Commits standard:
+
+```
+type(scope): subject
+```
+
+**Maximum length: 50 characters total**
+
+### Rules
+
+1. **Format**: `type(scope): subject`
+
+2. **Type**: Choose the most appropriate type from:
+
+   - `feat`: A new feature
+   - `fix`: A bug fix
+   - `refactor`: Code change that neither fixes a bug nor adds a feature
+   - `perf`: Performance improvement
+   - `style`: Formatting changes
+   - `test`: Adding or updating tests
+   - `docs`: Documentation only changes
+   - `build`: Build system or dependency changes
+   - `ci`: CI configuration changes
+   - `chore`: Other changes
+
+3. **Scope**: The primary package or area affected:
+
+   - Single package: use the package name (e.g., `button`, `form-field`, `typography`)
+   - Tools: use the tool name (e.g., `build`, `cli`, `test`)
+   - Charts: use the chart component name (e.g., `chart-card`, `legend`)
+   - Chat: use the chat component name (e.g., `message`, `input-bar`)
+   - Multiple packages: use `*` or general scope (e.g., `deps`, `config`)
+   - Repository-level: use `repo`, `ci`, `docs`, etc.
+
+4. **Subject**: A concise description that:
+   - Uses lowercase (no capital first letter)
+   - Uses imperative mood ("add" not "added")
+   - Doesn't end with a period
+   - Is extremely concise to fit the 50 character limit
+   - Clearly states what the commit does
+
+---
+
+## Examples
+
+**Good examples:**
+
+- `feat(button): add loading state`
+- `fix(text-input): prevent cursor jump`
+- `refactor(hooks): simplify useIdAllocator`
+- `test(table): add sorting tests`
+- `docs(button): update API examples`
+- `chore(deps): upgrade typescript`
+- `feat(*): add dark mode support`
+- `fix(combobox): handle rapid filtering`
+
+**Bad examples:**
+
+- `feat(button): Added loading state` (uses past tense)
+- `fix: bug fix` (too vague, missing scope)
+- `Update button component` (missing type and scope)
+- `feat(button): Add loading state.` (has period)
+- `feat(button): Added a new loading state feature with spinner icon and animation support` (too long)
+
+---
+
+## Instructions
+
+1. **Analyze the staged changes**: Review all staged files and their diffs to understand:
+
+   - What packages or areas are affected
+   - What functionality is being added, changed, or removed
+   - Whether this is a bug fix, new feature, refactor, etc.
+
+2. **Determine the scope**:
+
+   - If changes are in a single package, use that package name
+   - If changes span multiple packages, use `*` or an appropriate general scope
+   - For tooling/config changes, use appropriate scope like `build`, `ci`, `test`
+
+3. **Write the commit message**:
+   - Choose the correct type
+   - Add the scope in parentheses
+   - Write a concise description
+   - Ensure the total length is **50 characters or less**
+   - Be specific but brief
+
+---
+
+## Tips
+
+- Each commit should represent one logical change
+- Be specific but concise due to 50 char limit
+- Use abbreviations when necessary (e.g., "config" not "configuration")
+- Use present tense imperative: "add", "fix", "update", "remove"
+- Prioritize clarity within the character constraint
+- If you can't fit the message in 50 chars, simplify the description
