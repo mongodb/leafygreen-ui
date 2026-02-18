@@ -34,6 +34,24 @@ describe('packages/expandable-card/getTestUtils', () => {
       });
     });
 
+    describe('findToggle', () => {
+      test('finds the toggle element asynchronously', async () => {
+        renderExpandableCard();
+        const utils = getTestUtils();
+        const toggle = await utils.findToggle();
+        expect(toggle).toBeInTheDocument();
+      });
+    });
+
+    describe('queryToggle', () => {
+      test('returns the toggle element or null', () => {
+        renderExpandableCard();
+        const utils = getTestUtils();
+        const toggle = utils.queryToggle();
+        expect(toggle).toBeInTheDocument();
+      });
+    });
+
     describe('isExpanded', () => {
       test('returns false when card is collapsed', () => {
         renderExpandableCard();
@@ -81,6 +99,95 @@ describe('packages/expandable-card/getTestUtils', () => {
         expect(card).toBeInTheDocument();
       });
     });
+
+    describe('getTitle', () => {
+      test('returns the title element', () => {
+        renderExpandableCard();
+        const utils = getTestUtils();
+        const title = utils.getTitle();
+        expect(title).toBeInTheDocument();
+        expect(title).toHaveTextContent(defaultProps.title);
+      });
+    });
+
+    describe('findTitle', () => {
+      test('finds the title element asynchronously', async () => {
+        renderExpandableCard();
+        const utils = getTestUtils();
+        const title = await utils.findTitle();
+        expect(title).toBeInTheDocument();
+        expect(title).toHaveTextContent(defaultProps.title);
+      });
+    });
+
+    describe('queryTitle', () => {
+      test('returns the title element or null', () => {
+        renderExpandableCard();
+        const utils = getTestUtils();
+        const title = utils.queryTitle();
+        expect(title).toBeInTheDocument();
+        expect(title).toHaveTextContent(defaultProps.title);
+      });
+    });
+    describe('getDescription', () => {
+      test('returns the description element', () => {
+        renderExpandableCard();
+        const utils = getTestUtils();
+        const description = utils.getDescription();
+        expect(description).toBeInTheDocument();
+        expect(description).toHaveTextContent(defaultProps.description);
+      });
+    });
+
+    describe('findDescription', () => {
+      test('finds the description element asynchronously', async () => {
+        renderExpandableCard();
+        const utils = getTestUtils();
+        const description = await utils.findDescription();
+        expect(description).toBeInTheDocument();
+        expect(description).toHaveTextContent(defaultProps.description);
+      });
+    });
+
+    describe('queryDescription', () => {
+      test('returns the description element or null', () => {
+        renderExpandableCard();
+        const utils = getTestUtils();
+        const description = utils.queryDescription();
+        expect(description).toBeInTheDocument();
+        expect(description).toHaveTextContent(defaultProps.description);
+      });
+    });
+
+    describe('getFlagText', () => {
+      test('returns the flag text element', () => {
+        renderExpandableCard();
+        const utils = getTestUtils();
+        const flagText = utils.getFlagText();
+        expect(flagText).toBeInTheDocument();
+        expect(flagText).toHaveTextContent('optional');
+      });
+    });
+
+    describe('findFlagText', () => {
+      test('finds the flag text element asynchronously', async () => {
+        renderExpandableCard();
+        const utils = getTestUtils();
+        const flagText = await utils.findFlagText();
+        expect(flagText).toBeInTheDocument();
+        expect(flagText).toHaveTextContent('optional');
+      });
+    });
+
+    describe('queryFlagText', () => {
+      test('returns the flag text element or null', () => {
+        renderExpandableCard();
+        const utils = getTestUtils();
+        const flagText = utils.queryFlagText();
+        expect(flagText).toBeInTheDocument();
+        expect(flagText).toHaveTextContent('optional');
+      });
+    });
   });
 
   describe('multiple expandable cards', () => {
@@ -92,10 +199,16 @@ describe('packages/expandable-card/getTestUtils', () => {
       // First card should be collapsed by default
       expect(utils1.isExpanded()).toBeFalsy();
       expect(utils1.getToggle()).toHaveTextContent('Card Title');
+      expect(utils1.getTitle()).toHaveTextContent('Card Title');
+      expect(utils1.getDescription()).toHaveTextContent('Card Description');
+      expect(utils1.getFlagText()).toHaveTextContent('optional');
 
       // Second card was rendered with defaultOpen={true}
       expect(utils2.isExpanded()).toBeTruthy();
       expect(utils2.getToggle()).toHaveTextContent('Card 2 Title');
+      expect(utils2.getTitle()).toHaveTextContent('Card 2 Title');
+      expect(utils2.getDescription()).toHaveTextContent('Card Description');
+      expect(utils2.getFlagText()).toHaveTextContent('optional');
     });
 
     test('can toggle cards independently', () => {
