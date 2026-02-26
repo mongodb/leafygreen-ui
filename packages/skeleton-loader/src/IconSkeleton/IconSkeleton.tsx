@@ -4,6 +4,8 @@ import { cx } from '@leafygreen-ui/emotion';
 import { Size, sizeMap } from '@leafygreen-ui/icon';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
+import { getLgIds } from '../utils/getLgIds';
+
 import { getIconSkeletonBaseStyles } from './IconSkeleton.styles';
 import { IconSkeletonProps } from './IconSkeleton.types';
 
@@ -12,12 +14,15 @@ export function IconSkeleton({
   enableAnimations = false,
   size = Size.Default,
   className,
+  'data-lgid': dataLgId,
   ...rest
 }: IconSkeletonProps) {
   const { theme } = useDarkMode(darkModeProp);
+  const lgIds = getLgIds(dataLgId);
   const renderedSize = typeof size === 'number' ? size : sizeMap[size];
   return (
     <div
+      data-lgid={lgIds.root}
       {...rest}
       aria-hidden
       className={cx(

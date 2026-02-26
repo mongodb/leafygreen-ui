@@ -40,6 +40,9 @@
     },
     {
       "path": "../typography"
+    },
+    {
+      "path": "../../tools/test-harnesses"
     }
   ]
 }

@@ -3390,6 +3390,9 @@ importers:
       '@leafygreen-ui/typography':
         specifier: workspace:^
         version: link:../typography
+      '@lg-tools/test-harnesses':
+        specifier: workspace:^
+        version: link:../../tools/test-harnesses
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
