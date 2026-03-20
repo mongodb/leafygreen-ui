@@ -1,7 +1,10 @@
 import React from 'react';
 import kebabCase from 'lodash/kebabCase';
+import mapValues from 'lodash/mapValues';
 
+import { createGlyphComponent } from './createGlyphComponent';
 import { Size } from './glyphCommon';
+import { isComponentGlyph } from './isComponentGlyph';
 import { LGGlyph } from './types';
 
 // We omit size here because we map string values for size to numbers in this component.
@@ -27,8 +30,18 @@ type GlyphObject = Record<string, LGGlyph.Component>;
 export function createIconComponent<G extends GlyphObject = GlyphObject>(
   glyphs: G,
 ) {
+  const allGlyphsAreComponents = Object.values(glyphs).every(isComponentGlyph);
+  const glyphDict = allGlyphsAreComponents
+    ? glyphs
+    : mapValues(glyphs, (val, key) => {
+        // We do not currently check for valid SVG files. TODO: LG-5827
+        if (isComponentGlyph(val)) return val;
+
+        return createGlyphComponent(key, val);
+      });
+
   const Icon = ({ glyph, ...rest }: IconProps) => {
-    const SVGComponent = glyphs[glyph];
+    const SVGComponent = glyphDict[glyph];
 
     if (SVGComponent) {
       return <SVGComponent {...rest} />;

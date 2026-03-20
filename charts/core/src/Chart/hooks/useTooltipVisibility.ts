@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { isDefined } from '@leafygreen-ui/lib';
 
+import { useChartGroupStableContext } from '../../ChartGroupContext';
 import { CHART_TOOLTIP_CLASSNAME } from '../../constants';
 import { EChartEvents, EChartsInstance } from '../../Echart';
 
@@ -14,13 +15,13 @@ export const useTooltipVisibility = ({
   chartId,
   container,
   echart,
-  groupId,
 }: {
   chartId: string;
   container: HTMLDivElement | null;
   echart: EChartsInstance;
-  groupId?: string;
 }): UseTooltipVisibilityReturnObj => {
+  const { groupId, setIsSomeChartHovered } = useChartGroupStableContext() || {};
+
   // if groupId is not provided, this state will always be true
   const [isChartHovered, setIsChartHovered] = useState(!groupId);
   const [pinState, setPinState] = useState<{ x: number; y: number }>();
@@ -225,16 +226,24 @@ export const useTooltipVisibility = ({
       return;
     }
 
-    container.addEventListener('mouseenter', () => toggleChartHover(true));
-    container.addEventListener('mouseleave', () => toggleChartHover(false));
+    const handleMouseEnter = () => {
+      toggleChartHover(true);
+      setIsSomeChartHovered?.(true);
+    };
+
+    const handleMouseLeave = () => {
+      toggleChartHover(false);
+      setIsSomeChartHovered?.(false);
+    };
+
+    container.addEventListener('mouseenter', handleMouseEnter);
+    container.addEventListener('mouseleave', handleMouseLeave);
 
     return () => {
-      container.removeEventListener('mouseenter', () => toggleChartHover(true));
-      container.removeEventListener('mouseleave', () =>
-        toggleChartHover(false),
-      );
+      container.removeEventListener('mouseenter', handleMouseEnter);
+      container.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, [container, groupId, toggleChartHover]);
+  }, [container, groupId, toggleChartHover, setIsSomeChartHovered]);
 
   /**
    * Effect to turn on the tooltip event listeners when the chart is ready and tooltip

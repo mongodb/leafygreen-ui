@@ -4,6 +4,7 @@ export {
   chipInlineDefinitionClassName,
   type ChipProps,
   chipTextClassName,
+  TooltipAlign,
   TruncationLocation,
   Variant,
 } from './Chip';

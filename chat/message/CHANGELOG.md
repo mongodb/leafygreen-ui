@@ -1,5 +1,101 @@
 # @lg-chat/message
 
+## 12.0.0
+
+### Major Changes
+
+- 5849e0f: [LG-5926](https://jira.mongodb.org/browse/LG-5926): remove assistant avatar and name from `Message`
+
+## 11.0.1
+
+### Patch Changes
+
+- ea892da: [LG-5920](https://jira.mongodb.org/browse/LG-5920): Update to latest `AssistantAvatar` from `@leafygreen-ui/avatar`
+- Updated dependencies [7153907]
+- Updated dependencies [b80eade]
+  - @leafygreen-ui/compound-component@0.3.0
+  - @leafygreen-ui/avatar@3.3.0
+
+## 11.0.0
+
+### Major Changes
+
+- 0f65282: [LG-5868](https://jira.mongodb.org/browse/LG-5868): rename `Message.ToolCard` to `Message.ActionCard`
+- 0f65282: [LG-5862](https://jira.mongodb.org/browse/LG-5862): Remove `Message.ActionCard.Actions` and replace with `Message.ActionCard.Button`
+
+### Minor Changes
+
+- 0f65282: [LG-5869](https://jira.mongodb.org/browse/LG-5869): add optional `description` prop to `Message.ActionCard`
+
+### Patch Changes
+
+- 1c0c03a: Updates the focus ring token to use the base blue color in light mode. [LG-5847](https://jira.mongodb.org/browse/LG-5847)
+- 0f65282: [LG-5870](https://jira.mongodb.org/browse/LG-5870): update text colors in `Message.ActionCard` depending on `state` prop value
+- Updated dependencies [1c0c03a]
+  - @leafygreen-ui/avatar@3.2.1
+  - @leafygreen-ui/badge@10.2.4
+  - @leafygreen-ui/banner@10.2.5
+  - @leafygreen-ui/button@25.2.1
+  - @leafygreen-ui/chip@4.2.1
+  - @leafygreen-ui/hooks@9.3.1
+  - @leafygreen-ui/icon-button@17.1.5
+  - @leafygreen-ui/loading-indicator@5.1.1
+  - @leafygreen-ui/tokens@4.2.2
+  - @leafygreen-ui/tooltip@14.3.1
+  - @leafygreen-ui/typography@22.2.4
+  - @lg-chat/lg-markdown@5.0.3
+  - @lg-chat/message-feedback@9.0.2
+  - @lg-chat/message-rating@7.1.2
+  - @lg-chat/rich-links@4.0.8
+
+## 10.2.2
+
+### Patch Changes
+
+- 8502a46: [internal] Refactor `Message` subcomponents
+- 201459f: [LG-5861](https://jira.mongodb.org/browse/LG-5861): adds max-height to code blocks in `ToolCard.ExpandableContent`
+- 323395e: [LG-5857](https://jira.mongodb.org/browse/LG-5857): truncate `Chip` instances in `Message.ToolCard` if label exceeds 25 characters. Also, pass through `formatTooltip` prop for `Chip` instances to allow formatting tooltip content.
+- Updated dependencies [323395e]
+  - @leafygreen-ui/chip@4.2.0
+
+## 10.2.1
+
+### Patch Changes
+
+- dca5ddb: [LG-5853](https://jira.mongodb.org/browse/LG-5853): use `"white"` variant for `Chip` instances
+- a94c874: [LG-5856](https://jira.mongodb.org/browse/LG-5856): update selected state styles for thumbs up and thumbs down buttons
+- Updated dependencies [a94c874]
+- Updated dependencies [dca5ddb]
+  - @lg-chat/message-rating@7.1.1
+  - @leafygreen-ui/chip@4.1.0
+
+## 10.2.0
+
+### Minor Changes
+
+- b686f2d: [LG-5574](https://jira.mongodb.org/browse/LG-5574): Add `Message.ToolCard`, `Message.ToolCard.Actions`, and `Message.ToolCard.ExpandableContent` as subcomponents for tool-calling workflows. Also exports the following types:
+  - `ToolCardActionProps`
+  - `ToolCardChipProps`
+  - `ToolCardExpandableContentProps`
+  - `ToolCardProps`
+  - `ToolCardState` enum
+
+## 10.1.4
+
+### Patch Changes
+
+- b30e37e: Move `Message` sub-component property from internal `MessageBanner` to `MessageVerifiedBanner`
+
+## 10.1.3
+
+### Patch Changes
+
+- 7b80cd4: Refactor to use compound component utils from `@leafygreen-ui/compound-component`
+- Updated dependencies [117d242]
+- Updated dependencies [75e6998]
+  - @leafygreen-ui/compound-component@0.2.0
+  - @leafygreen-ui/icon@14.8.0
+
 ## 10.1.2
 
 ### Patch Changes

@@ -10,7 +10,6 @@ import { ChartContext, ChartProvider, useChartContext } from './ChartContext';
 const mockChartInstance: ChartInstance = {
   id: 'test-chart',
   ref: jest.fn(),
-  enableGroupTooltipSync: false,
   state: undefined,
   isChartHovered: false,
   setTooltipMounted: jest.fn(),
@@ -64,7 +63,6 @@ describe('lg-chart/core/ChartContext', () => {
       const { chart } = result.current;
       expect(chart).toBe(mockChartInstance);
       expect(chart.id).toBe('test-chart');
-      expect(chart.enableGroupTooltipSync).toBe(false);
     });
   });
 });

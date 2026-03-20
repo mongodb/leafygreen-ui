@@ -1,5 +1,20 @@
 # @leafygreen-ui/avatar
 
+## 3.3.0
+
+### Minor Changes
+
+- b80eade: [LG-5920](https://jira.mongodb.org/browse/LG-5920): conditionally render animation in `AssistantAvatar` instead of relying on opacity transition
+
+## 3.2.1
+
+### Patch Changes
+
+- 1c0c03a: Updates the focus ring token to use the base blue color in light mode. [LG-5847](https://jira.mongodb.org/browse/LG-5847)
+- Updated dependencies [1c0c03a]
+  - @leafygreen-ui/hooks@9.3.1
+  - @leafygreen-ui/tokens@4.2.2
+
 ## 3.2.0
 
 ### Minor Changes

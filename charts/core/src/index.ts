@@ -13,6 +13,10 @@ export {
   chartWrapperClassName,
 } from './Chart';
 export { ChartGrid, type ChartGridProps } from './ChartGrid';
+export {
+  ChartGroupProvider,
+  type ChartGroupProviderProps,
+} from './ChartGroupContext';
 export { ChartHeader, type ChartHeaderProps } from './ChartHeader';
 export {
   ChartTooltip,

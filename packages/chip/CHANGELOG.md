@@ -1,5 +1,31 @@
 # @leafygreen-ui/chip
 
+## 4.2.1
+
+### Patch Changes
+
+- 1c0c03a: Updates the focus ring token to use the base blue color in light mode. [LG-5847](https://jira.mongodb.org/browse/LG-5847)
+- Updated dependencies [1c0c03a]
+  - @leafygreen-ui/inline-definition@9.2.1
+  - @leafygreen-ui/tokens@4.2.2
+
+## 4.2.0
+
+### Minor Changes
+
+- 323395e: [LG-5857](https://jira.mongodb.org/browse/LG-5857): add `enableAlwaysShowTooltip`, `formatTooltip`, and `tooltipAlign` props to `Chip`
+
+### Patch Changes
+
+- Updated dependencies [323395e]
+  - @leafygreen-ui/inline-definition@9.2.0
+
+## 4.1.0
+
+### Minor Changes
+
+- dca5ddb: [LG-5853](https://jira.mongodb.org/browse/LG-5853): add `"white"` variant
+
 ## 4.0.10
 
 ### Patch Changes

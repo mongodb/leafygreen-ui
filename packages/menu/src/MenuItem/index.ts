@@ -1,3 +1,7 @@
 export { MenuItem } from './MenuItem';
 export { menuItemClassName } from './MenuItem.styles';
-export { type MenuItemProps, Variant } from './MenuItem.types';
+export {
+  type InternalMenuItemProps,
+  type MenuItemProps,
+  Variant,
+} from './MenuItem.types';

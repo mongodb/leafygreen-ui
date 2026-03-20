@@ -110,6 +110,22 @@ export const variantColor: Record<
       hoverFocusColor: palette.yellow.dark3,
     },
   },
+  [Variant.White]: {
+    [Theme.Dark]: {
+      color: palette.gray.light1,
+      focusBgColor:
+        chipVariantColor[Variant.White][Theme.Dark].background.focus,
+      hoverBgColor: palette.gray.base,
+      hoverFocusColor: palette.gray.light3,
+    },
+    [Theme.Light]: {
+      color: palette.gray.dark2,
+      focusBgColor:
+        chipVariantColor[Variant.White][Theme.Light].background.focus,
+      hoverBgColor: palette.gray.light2,
+      hoverFocusColor: palette.black,
+    },
+  },
 };
 
 export const dismissButtonBaseStyle = css`

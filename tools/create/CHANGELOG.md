@@ -1,5 +1,11 @@
 # @lg-tools/create
 
+## 0.6.0
+
+### Minor Changes
+
+- 92f3b5a: Updated default exported component interface to extend LgIdProps, as well as the readme template to dynamically use the scope instead of the previously hard-coded value.
+
 ## 0.5.2
 
 ### Patch Changes

@@ -6,7 +6,7 @@ This document provides comprehensive guidance for coding agents working on the L
 
 LeafyGreen UI is MongoDB's React component library and design system consisting of:
 
-- **100+ workspace packages** across 4 scopes: `@leafygreen-ui`, `@lg-charts`, `@lg-chat`, and `@lg-tools`
+- **100+ workspace packages** across 5 scopes: `@leafygreen-ui`, `@lg-charts`, `@lg-chat`, `@lg-mcp`, and `@lg-tools`
 - **Languages/Frameworks**: TypeScript, React 18, Emotion (CSS-in-JS), Storybook
 - **Build System**: Turbo monorepo with pnpm workspaces
 
@@ -17,6 +17,7 @@ leafygreen-ui/
 ├── packages/        # @leafygreen-ui core components (button, modal, etc.)
 ├── charts/          # @lg-charts data visualization components
 ├── chat/            # @lg-chat conversational UI components
+├── mcp/             # @lg-mcp MCP (Model Context Protocol) components and hooks
 ├── tools/           # @lg-tools build system, CLI, linting, etc.
 ├── stories/         # Storybook files unrelated to a specific component
 └── scripts/         # Repository maintenance scripts

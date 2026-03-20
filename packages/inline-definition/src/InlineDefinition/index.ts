@@ -1,2 +1,2 @@
 export { default } from './InlineDefinition';
-export { type InlineDefinitionProps } from './InlineDefinition.types';
+export { Align, type InlineDefinitionProps } from './InlineDefinition.types';

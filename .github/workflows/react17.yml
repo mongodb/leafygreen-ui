@@ -21,17 +21,18 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.18.3
+          version: 10.26.0
           cache: false
 
       - uses: actions/cache/restore@v4
         name: Check for build cache
         id: build-cache
         with:
-          # Note: `path` doesn't like complex glob patterns (i.e. `+(charts|chat|packages|tools)`)
+          # Note: `path` doesn't like complex glob patterns (i.e. `+(charts|chat|mcp|packages|tools)`)
           path: |
             charts/*/dist/*
             chat/*/dist/*
+            mcp/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{ runner.os }}-REACT17-build-cache-${{ hashFiles('package.json', 'pnpm-lock.yaml', '**/src/') }}
@@ -60,6 +61,7 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
+            mcp/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{ steps.build-cache.outputs.cache-primary-key }}
@@ -75,7 +77,7 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.18.3
+          version: 10.26.0
           cache: false
 
       - uses: actions/cache/restore@v4
@@ -85,6 +87,7 @@ jobs:
           path: |
             charts/*/dist/*
             chat/*/dist/*
+            mcp/*/dist/*
             packages/*/dist/*
             tools/*/dist/*
           key: ${{needs.build.outputs.cache-primary-key}}

@@ -86,7 +86,8 @@ Either `label` or `aria-labelledby` must be provided a string, or there will be 
 ### Usage
 
 ```tsx
-import TextInput, { getTestUtils } from '@leafygreen-ui/text-input';
+import TextInput from '@leafygreen-ui/text-input';
+import { getTestUtils } from '@leafygreen-ui/text-input/testing';
 
 const utils = getTestUtils(lgId?: string); // lgId refers to the custom `data-lgid` attribute passed to `TextInput`. It defaults to 'lg-text_input' if left empty.
 ```
@@ -95,7 +96,8 @@ const utils = getTestUtils(lgId?: string); // lgId refers to the custom `data-lg
 
 ```tsx
 import { render } from '@testing-library/react';
-import TextInput, { getTestUtils } from '@leafygreen-ui/text-input';
+import TextInput from '@leafygreen-ui/text-input';
+import { getTestUtils } from '@leafygreen-ui/text-input/testing';
 
 ...
 
@@ -114,7 +116,8 @@ When testing multiple `TextInput`'s it is recommended to add the custom `data-lg
 
 ```tsx
 import { render } from '@testing-library/react';
-import TextInput, { getTestUtils } from '@leafygreen-ui/text-input';
+import TextInput from '@leafygreen-ui/text-input';
+import { getTestUtils } from '@leafygreen-ui/text-input/testing';
 
 ...
 
@@ -142,9 +145,12 @@ test('text-input', () => {
 
 ```tsx
 import { render } from '@testing-library/react';
-import Toggle, { getTestUtils as getToggleTestUtils } from '@leafygreen-ui/toggle';
-import TextInput, { getTestUtils as getTextInputTestUtils } from '@leafygreen-ui/text-input';
-import TextArea, { getTestUtils as getTextAreaTestUtils } from '@leafygreen-ui/text-area';
+import Toggle from '@leafygreen-ui/toggle';
+import { getTestUtils as getToggleTestUtils } from '@leafygreen-ui/toggle/testing';
+import TextInput from '@leafygreen-ui/text-input';
+import { getTestUtils as getTextInputTestUtils } from '@leafygreen-ui/text-input/testing';
+import TextArea from '@leafygreen-ui/text-area';
+import { getTestUtils as getTextAreaTestUtils } from '@leafygreen-ui/text-area/testing';
 
 ...
 

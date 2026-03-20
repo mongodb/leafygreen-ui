@@ -23,6 +23,7 @@ export default {
         disabled: [true, false],
         'data-hover': [false, true],
         'data-focus': [false, true],
+        glyph: ['Assistant', 'Code'],
       },
       decorator: (Story, ctx) => {
         return (
@@ -47,6 +48,7 @@ export default {
     active: false,
     disabled: false,
     darkMode: false,
+    label: 'Code',
   },
   argTypes: {
     glyph: {

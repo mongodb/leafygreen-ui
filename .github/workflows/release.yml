@@ -23,7 +23,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.18.3
+          version: 10.26.0
 
       # Needed following Github's transition from Node 16 to 20
       - name: Install node-gyp
@@ -40,6 +40,9 @@ jobs:
             chat/*/dist/*
             chat/*/tsdoc.json
             chat/*/stories.js
+            mcp/*/dist/*
+            mcp/*/tsdoc.json
+            mcp/*/stories.js
             packages/*/dist/*
             packages/*/tsdoc.json
             packages/*/stories.js
@@ -80,6 +83,9 @@ jobs:
             chat/*/dist/*
             chat/*/tsdoc.json
             chat/*/stories.js
+            mcp/*/dist/*
+            mcp/*/tsdoc.json
+            mcp/*/stories.js
             packages/*/dist/*
             packages/*/tsdoc.json
             packages/*/stories.js
@@ -100,7 +106,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.18.3
+          version: 10.26.0
 
       - name: Use Node 22
         uses: actions/setup-node@v4
@@ -123,6 +129,9 @@ jobs:
             chat/*/dist/*
             chat/*/tsdoc.json
             chat/*/stories.js
+            mcp/*/dist/*
+            mcp/*/tsdoc.json
+            mcp/*/stories.js
             packages/*/dist/*
             packages/*/tsdoc.json
             packages/*/stories.js
@@ -153,7 +162,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.18.3
+          version: 10.26.0
 
       - name: Use Node 22
         uses: actions/setup-node@v4
@@ -161,6 +170,9 @@ jobs:
           node-version: 22
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
+
+      - name: Upgrade npm for OIDC support
+        run: npm install -g npm@11.7.0
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile --prefer-offline
@@ -176,6 +188,9 @@ jobs:
             chat/*/dist/*
             chat/*/tsdoc.json
             chat/*/stories.js
+            mcp/*/dist/*
+            mcp/*/tsdoc.json
+            mcp/*/stories.js
             packages/*/dist/*
             packages/*/tsdoc.json
             packages/*/stories.js
@@ -206,7 +221,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.18.3
+          version: 10.26.0
 
       - name: Use Node 22
         uses: actions/setup-node@v4
@@ -229,6 +244,9 @@ jobs:
             chat/*/dist/*
             chat/*/tsdoc.json
             chat/*/stories.js
+            mcp/*/dist/*
+            mcp/*/tsdoc.json
+            mcp/*/stories.js
             packages/*/dist/*
             packages/*/tsdoc.json
             packages/*/stories.js
@@ -261,7 +279,7 @@ jobs:
       - name: pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10.18.3
+          version: 10.26.0
 
       # Needed following Github's transition from Node 16 to 20
       - name: Install node-gyp
@@ -281,6 +299,9 @@ jobs:
             chat/*/dist/*
             chat/*/tsdoc.json
             chat/*/stories.js
+            mcp/*/dist/*
+            mcp/*/tsdoc.json
+            mcp/*/stories.js
             packages/*/dist/*
             packages/*/tsdoc.json
             packages/*/stories.js

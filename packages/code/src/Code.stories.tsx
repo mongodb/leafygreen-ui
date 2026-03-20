@@ -305,6 +305,7 @@ WithPanel.parameters = {
       darkMode: [false, true],
       expandable: [true, false],
       showLineNumbers: [false, true],
+      highlightLines: [[], [2]],
       language: ['js', languageOptions[0].displayName],
       panel: [
         <Panel key={1} />,
@@ -357,6 +358,7 @@ WithoutPanel.parameters = {
       'data-hover': [false, true],
       darkMode: [false, true],
       expandable: [true, false],
+      highlightLines: [[], [2]],
       copyButtonAppearance: [
         CopyButtonAppearance.Hover,
         CopyButtonAppearance.Persist,

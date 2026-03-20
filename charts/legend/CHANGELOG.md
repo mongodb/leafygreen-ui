@@ -1,5 +1,20 @@
 # @lg-charts/legend
 
+## 1.1.2
+
+### Patch Changes
+
+- bb18968: Add a "default" export at the top level of package.json to improve compatibility with Jest module resolution in consumer projects, since Jest does not handle nested "exports" mappings well.
+
+## 1.1.1
+
+### Patch Changes
+
+- 1c0c03a: Updates the focus ring token to use the base blue color in light mode. [LG-5847](https://jira.mongodb.org/browse/LG-5847)
+- Updated dependencies [1c0c03a]
+  - @leafygreen-ui/checkbox@18.1.5
+  - @leafygreen-ui/tokens@4.2.2
+
 ## 1.1.0
 
 ### Minor Changes

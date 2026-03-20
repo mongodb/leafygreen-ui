@@ -1,0 +1,1 @@
+export const SHIMMER_TRANSITION_DURATION = 2000;

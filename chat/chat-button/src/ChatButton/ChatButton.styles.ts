@@ -7,12 +7,13 @@ import {
   Variant as ColorVariant,
 } from '@leafygreen-ui/tokens';
 
+import { SHIMMER_TRANSITION_DURATION } from '../shared.styles';
+
 import { Variant } from './ChatButton.types';
 
 /** non-palette blue used for Chat branding */
 const ALT_BLUE_COLOR = '#00D2FF';
 const GRADIENT_BORDER_WIDTH = 1;
-export const SHIMMER_TRANSITION_DURATION = 2000;
 
 /**
  * Shimmer animation that moves from left to right continuously.

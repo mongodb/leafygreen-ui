@@ -4,9 +4,11 @@ import { MessagePrompt, MessagePrompts } from '@lg-chat/message-prompts';
 import { MessageRating } from '@lg-chat/message-rating';
 import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
+import { expect, userEvent, waitFor, within } from '@storybook/test';
 
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
+import { InitialMessageProps } from './components/InitialMessage/InitialMessage.types';
 import {
   baseMessages,
   type MessageFields,
@@ -161,6 +163,161 @@ const ChangingMessagesComponent = ({ darkMode, ...rest }: MessageFeedProps) => {
   );
 };
 
+export const InitialMessageWithResourceList = ({
+  ...rest
+}: MessageFeedProps) => {
+  return (
+    <div>
+      <MessageFeed style={{ width: 400, height: 400 }} {...rest}>
+        <MessageFeed.InitialMessage>
+          <MessageFeed.InitialMessage.ResourceList>
+            <MessageFeed.InitialMessage.ResourceListItem glyph="QuestionMarkWithCircle">
+              Ask me technical questions
+            </MessageFeed.InitialMessage.ResourceListItem>
+            <MessageFeed.InitialMessage.ResourceListItem glyph="Bulb">
+              Learn best practices
+            </MessageFeed.InitialMessage.ResourceListItem>
+            <MessageFeed.InitialMessage.ResourceListItem glyph="InfoWithCircle">
+              Note: I won’t have access to any of your data unless you provide
+              it
+            </MessageFeed.InitialMessage.ResourceListItem>
+          </MessageFeed.InitialMessage.ResourceList>
+        </MessageFeed.InitialMessage>
+      </MessageFeed>
+    </div>
+  );
+};
+
+export const InitialMessageWithMessagePrompts = ({
+  ...rest
+}: MessageFeedProps) => {
+  return (
+    <div>
+      <MessageFeed style={{ width: 700, height: 400 }} {...rest}>
+        <MessageFeed.InitialMessage>
+          <MessageFeed.InitialMessage.MessagePrompts
+            onClickRefresh={() => {}}
+            label="Suggested Prompts"
+          >
+            <MessageFeed.InitialMessage.MessagePromptsItem>
+              What is MongoDB?
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
+              How do I query MongoDB?
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
+              What is MongoDB&apos;s astrology sign?
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+          </MessageFeed.InitialMessage.MessagePrompts>
+        </MessageFeed.InitialMessage>
+      </MessageFeed>
+    </div>
+  );
+};
+
+export const InitialMessageWithMessages = ({ ...rest }: MessageFeedProps) => {
+  return (
+    <div>
+      <MessageFeed style={{ width: 700, height: 400 }} {...rest}>
+        <MessageFeed.InitialMessage>
+          Filler content for initial message
+        </MessageFeed.InitialMessage>
+        {baseMessages.slice(0, 2).map(message => {
+          const { id, messageBody, userName } = message as MessageFields;
+          return (
+            <Message
+              key={id}
+              sourceType="markdown"
+              isSender={!!userName}
+              messageBody={messageBody}
+            />
+          );
+        })}
+      </MessageFeed>
+    </div>
+  );
+};
+
+export const InitialMessageWithNewMessage = ({ ...rest }: MessageFeedProps) => {
+  const [messages, setMessages] = useState<Array<any>>([]);
+
+  const handleButtonClick = () => {
+    setMessages([...messages, baseMessages[1]]);
+  };
+
+  return (
+    <div>
+      <MessageFeed style={{ width: 700, height: 400 }} {...rest}>
+        <MessageFeed.InitialMessage>
+          <MessageFeed.InitialMessage.MessagePrompts
+            onClickRefresh={() => {}}
+            label="Suggested Prompts"
+          >
+            <MessageFeed.InitialMessage.MessagePromptsItem>
+              What is MongoDB?
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
+              How do I query MongoDB?
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+            <MessageFeed.InitialMessage.MessagePromptsItem>
+              What is MongoDB&apos;s astrology sign?
+            </MessageFeed.InitialMessage.MessagePromptsItem>
+          </MessageFeed.InitialMessage.MessagePrompts>
+        </MessageFeed.InitialMessage>
+        {messages.map(message => {
+          const { id, messageBody, userName } = message as MessageFields;
+          return (
+            <Message
+              key={id}
+              sourceType="markdown"
+              isSender={!!userName}
+              messageBody={messageBody}
+            />
+          );
+        })}
+      </MessageFeed>
+      <button
+        data-testid="add-message-button"
+        onClick={() => handleButtonClick()}
+      >
+        Click me to add a message
+      </button>
+    </div>
+  );
+};
+InitialMessageWithNewMessage.parameters = {
+  chromatic: {
+    disableSnapshot: true,
+  },
+};
+
 export const ChangingMessages: StoryObj<MessageFeedProps> = {
   render: ChangingMessagesComponent,
+};
+
+export const InitialMessageTransition: StoryObj<InitialMessageProps> = {
+  render: InitialMessageWithNewMessage,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+
+    expect(canvas.getByText('Hello! How can I help you?')).toBeVisible();
+
+    // Click add message button
+    const addMessageButton = canvas.getByTestId('add-message-button');
+
+    // Click the message button to add a message
+    await userEvent.click(addMessageButton);
+
+    await waitFor(() =>
+      expect(canvas.getByText('Hello! How can I help you?')).not.toBeVisible(),
+    );
+    await waitFor(() =>
+      expect(canvas.getByText(baseMessages[1].messageBody)).toBeVisible(),
+    );
+  },
+  parameters: {
+    chromatic: {
+      delay: 300,
+    },
+  },
 };

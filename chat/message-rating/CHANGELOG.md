@@ -1,5 +1,22 @@
 # @lg-chat/message-rating
 
+## 7.1.2
+
+### Patch Changes
+
+- 1c0c03a: Updates the focus ring token to use the base blue color in light mode. [LG-5847](https://jira.mongodb.org/browse/LG-5847)
+- Updated dependencies [1c0c03a]
+  - @leafygreen-ui/hooks@9.3.1
+  - @leafygreen-ui/icon-button@17.1.5
+  - @leafygreen-ui/tokens@4.2.2
+  - @leafygreen-ui/tooltip@14.3.1
+
+## 7.1.1
+
+### Patch Changes
+
+- a94c874: [LG-5856](https://jira.mongodb.org/browse/LG-5856): update selected state styles for thumbs up and thumbs down buttons
+
 ## 7.1.0
 
 ### Minor Changes

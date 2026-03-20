@@ -1,5 +1,21 @@
 # @leafygreen-ui/tokens
 
+## 4.2.2
+
+### Patch Changes
+
+- 1c0c03a: Updates the focus ring token to use the base blue color in light mode. [LG-5847](https://jira.mongodb.org/browse/LG-5847)
+
+## 4.2.1
+
+### Patch Changes
+
+- d97bab7: Updated color tokens:
+  - Adds border info, onInfo, warning, and onWarning tokens
+  - Adds text info, onInfo, warning, and onWarning tokens
+- Updated dependencies [54d2f83]
+  - @leafygreen-ui/emotion@5.2.0
+
 ## 4.2.0
 
 ### Minor Changes

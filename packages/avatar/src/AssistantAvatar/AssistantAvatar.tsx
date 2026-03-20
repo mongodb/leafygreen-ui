@@ -58,23 +58,32 @@ export const AssistantAvatar: React.ComponentType<AssistantAvatarProps> =
                 <stop offset="1" stopColor={gradientEndColor} />
               </linearGradient>
 
-              <linearGradient id={shimmerId} x1="-100%" y1="0%" x2="0%" y2="0%">
-                <stop offset="0%" stopColor="transparent" />
-                <stop offset="50%" stopColor="rgba(255, 255, 255, 0.8)" />
-                <stop offset="100%" stopColor="transparent" />
-                <animate
-                  attributeName="x1"
-                  values="-100%;200%"
-                  dur="2s"
-                  repeatCount="indefinite"
-                />
-                <animate
-                  attributeName="x2"
-                  values="0%;300%"
-                  dur="2s"
-                  repeatCount="indefinite"
-                />
-              </linearGradient>
+              {/* Shimmer gradient with animation */}
+              {showAnimation && (
+                <linearGradient
+                  id={shimmerId}
+                  x1="-100%"
+                  y1="0%"
+                  x2="0%"
+                  y2="0%"
+                >
+                  <stop offset="0%" stopColor="transparent" />
+                  <stop offset="50%" stopColor="rgba(255, 255, 255, 0.8)" />
+                  <stop offset="100%" stopColor="transparent" />
+                  <animate
+                    attributeName="x1"
+                    values="-100%;200%"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                  <animate
+                    attributeName="x2"
+                    values="0%;300%"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                </linearGradient>
+              )}
             </defs>
           )}
 
@@ -93,11 +102,10 @@ export const AssistantAvatar: React.ComponentType<AssistantAvatarProps> =
           />
 
           {/* Shimmer paths */}
-          {!disabled && (
+          {!disabled && showAnimation && (
             <g
               style={{
                 mixBlendMode: 'screen',
-                opacity: showAnimation ? 1 : 0,
                 pointerEvents: 'none',
               }}
             >

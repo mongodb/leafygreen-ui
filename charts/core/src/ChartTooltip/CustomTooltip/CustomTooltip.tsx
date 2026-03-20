@@ -6,6 +6,8 @@ import { IconButton } from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isDefined } from '@leafygreen-ui/lib';
 
+import { getDataArray } from '../ChartTooltip.types';
+
 import {
   closeButtonStyles,
   getHeaderStyles,
@@ -43,7 +45,10 @@ export function CustomTooltip({
 }: CustomTooltipProps) {
   const { theme } = useDarkMode(darkMode);
 
-  if (seriesData.length === 0 || !isDefined(seriesData[0].data[0])) {
+  // Extract data array from either format (array or object with value property)
+  const firstDataArray = getDataArray(seriesData[0]?.data);
+
+  if (seriesData.length === 0 || !isDefined(firstDataArray?.[0])) {
     return null;
   }
 

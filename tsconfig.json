@@ -12,6 +12,7 @@
       "@leafygreen-ui/*": ["packages/*/src"],
       "@lg-charts/*": ["charts/*/src"],
       "@lg-chat/*": ["chat/*/src"],
+      "@lg-mcp/*": ["mcp/*/src"],
       "@lg-tools/*": ["tools/*/src"]
     }
   },

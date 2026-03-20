@@ -26,6 +26,8 @@ npm install @lg-chat/chat-button
 
 ## Example
 
+### ChatButton
+
 ```tsx
 import { ChatButton, Variant } from '@lg-chat/chat-button';
 
@@ -42,7 +44,27 @@ import { ChatButton, Variant } from '@lg-chat/chat-button';
 </ChatButton>
 ```
 
+### ChatIconButton
+
+```tsx
+import { ChatIconButton } from '@lg-chat/chat-button';
+
+<ChatIconButton aria-label="MongoDB Assistant" />
+
+<ChatIconButton
+  aria-label="MongoDB Assistant"
+  size="large"
+/>
+
+<ChatIconButton
+  aria-label="MongoDB Assistant"
+  disabled
+/>
+```
+
 ## Properties
+
+### ChatButton
 
 | Prop                            | Type                                                   | Description                                                                                                                         | Default     |
 | ------------------------------- | ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- | ----------- |
@@ -58,3 +80,17 @@ import { ChatButton, Variant } from '@lg-chat/chat-button';
 | `size` _(optional)_             | `'xsmall'`, `'small'`, `'default'`, `'large'`          | Sets the size variant of the button.                                                                                                | `'default'` |
 | `variant` _(optional)_          | `'default'`, `'primary'`, `'baseGreen'`                | Sets the variant for the ChatButton. Default variant shows AssistantAvatar with shimmer animation. Other variants show SparkleIcon. | `'default'` |
 | ... _(optional)_                | native button attributes                               | Any other properties will be spread on the root button element.                                                                     |             |
+
+### ChatIconButton
+
+| Prop                     | Type                                                   | Description                                                                                                                          | Default     |
+| ------------------------ | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ | ----------- |
+| `active` _(optional)_    | `boolean`                                              | Determines whether the button will be rendered with active styles.                                                                   | `false`     |
+| `aria-label`             | `string`                                               | Defines a string value that labels the button element. Either `aria-label` or `aria-labelledby` is required for accessibility.       |             |
+| `aria-labelledby`        | `string`                                               | Identifies the element (or elements) that labels the button. Either `aria-label` or `aria-labelledby` is required for accessibility. |             |
+| `className` _(optional)_ | `string`                                               | Adds a className to the class attribute.                                                                                             |             |
+| `darkMode` _(optional)_  | `boolean`                                              | Determines if the component renders in dark mode. Can also be set via LeafyGreenProvider.                                            | `false`     |
+| `disabled` _(optional)_  | `boolean`                                              | Disables the icon button. When disabled, the shimmer animation is not shown.                                                         | `false`     |
+| `onClick` _(optional)_   | `(event: React.MouseEvent<HTMLButtonElement>) => void` | Callback fired when the button is clicked.                                                                                           |             |
+| `size` _(optional)_      | `'default'`, `'large'`, `'xlarge'`                     | Sets the size of the icon button.                                                                                                    | `'default'` |
+| ... _(optional)_         | native button attributes                               | Any other properties will be spread on the root button element.                                                                      |             |

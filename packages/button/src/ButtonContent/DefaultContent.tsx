@@ -7,7 +7,6 @@ import ButtonIcon from '../ButtonIcon/ButtonIcon';
 import {
   buttonContentSizeStyle,
   buttonContentStyle,
-  darkModeRightGlyphStyles,
   leftGlyphStyles,
   rightGlyphStyles,
 } from './ButtonContent.styles';
@@ -34,9 +33,6 @@ const DefaultContent = ({
       className={cx(
         buttonContentStyle,
         buttonContentSizeStyle[size],
-        {
-          [darkModeRightGlyphStyles]: !!rightGlyph && darkMode,
-        },
         className,
       )}
     >

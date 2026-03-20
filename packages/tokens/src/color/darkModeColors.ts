@@ -7,7 +7,7 @@ import {
   type VariantColorRecord,
 } from './color.types';
 
-const { black, blue, gray, green, red, white, yellow } = palette;
+const { black, blue, gray, green, red, yellow } = palette;
 
 const darkModeBackgroundColors = {
   [Variant.Primary]: {

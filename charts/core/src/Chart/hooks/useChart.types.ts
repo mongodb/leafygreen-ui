@@ -25,17 +25,6 @@ export interface ChartHookProps {
   chartId?: string;
 
   /**
-   * Enables tooltip synchronization across charts with the same `groupId`.
-   * `groupId` must be set for this to work.
-   */
-  enableGroupTooltipSync: boolean;
-
-  /**
-   * Charts with the same `groupId` will have their tooltips synced across charts.
-   */
-  groupId?: string;
-
-  /**
    * Callback to be called when chart is finished rendering.
    */
   onChartReady?: () => void;
@@ -60,7 +49,7 @@ export interface ChartHookProps {
 
 export interface ChartInstance
   extends EChartsInstance,
-    Pick<ChartHookProps, 'enableGroupTooltipSync' | 'state'>,
+    Pick<ChartHookProps, 'state'>,
     Pick<
       UseTooltipVisibilityReturnObj,
       'isChartHovered' | 'setTooltipMounted' | 'tooltipPinned'

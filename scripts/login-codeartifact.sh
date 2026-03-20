@@ -10,7 +10,8 @@ REPOSITORY="leafygreen-ui"
 SCOPES=(
   "@leafygreen-ui"
   "@lg-charts"
-  "@lg-chat" 
+  "@lg-chat"
+  "@lg-mcp"
   "@lg-tools"
 )
 

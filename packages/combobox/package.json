@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/combobox",
-  "version": "12.3.0",
+  "version": "12.5.1",
   "description": "leafyGreen UI Kit Combobox",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -36,6 +36,7 @@
     "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"
   },
   "devDependencies": {
+    "@leafygreen-ui/badge": "workspace:^",
     "@leafygreen-ui/button": "workspace:^",
     "@lg-tools/build": "workspace:^"
   },

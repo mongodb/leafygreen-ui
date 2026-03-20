@@ -1,3 +1,4 @@
+export { type AdditionalActionsProps } from './components';
 export {
   InputBar,
   type InputBarProps,

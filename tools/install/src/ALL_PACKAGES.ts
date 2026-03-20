@@ -14,6 +14,7 @@ export const ALL_PACKAGES = [
   '@leafygreen-ui/chip',
   '@leafygreen-ui/code',
   '@leafygreen-ui/code-editor',
+  '@leafygreen-ui/collection-toolbar',
   '@leafygreen-ui/combobox',
   '@leafygreen-ui/compound-component',
   '@leafygreen-ui/confirmation-modal',
@@ -118,4 +119,7 @@ export const ALL_PACKAGES = [
   '@lg-tools/test-harnesses',
   '@lg-tools/update',
   '@lg-tools/validate',
+  '@lg-mcp/embeddable-uis',
+  '@lg-mcp/hooks',
+  '@lg-mcp/ui-resource-renderer',
 ] as const;

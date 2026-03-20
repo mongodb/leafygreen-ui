@@ -237,5 +237,68 @@ describe('packages/compound-component', () => {
       const { getByTestId: getSecondTestId } = render(<TestComponent.Second />);
       expect(getSecondTestId('second-sub')).toBeInTheDocument();
     });
+
+    test('hierarchical compound components - SubComponent with nested sub-components', () => {
+      // Create the deepest level sub-components
+      const BazComponent = CompoundSubComponent(
+        () => <div data-testid="baz">Baz Component</div>,
+        {
+          displayName: 'BazComponent',
+          key: 'isBaz',
+        },
+      );
+
+      const QuxComponent = CompoundSubComponent(
+        () => <div data-testid="qux">Qux Component</div>,
+        {
+          displayName: 'QuxComponent',
+          key: 'isQux',
+        },
+      );
+
+      // BarComponent has its own sub-components (Baz and Qux)
+      // No need to wrap with CompoundComponent!
+      const BarComponent = CompoundSubComponent(
+        () => <div data-testid="bar">Bar Component</div>,
+        {
+          displayName: 'BarComponent',
+          key: 'isBar',
+          // Attach nested sub-components directly
+          Baz: BazComponent,
+          Qux: QuxComponent,
+        },
+      );
+
+      // FooComponent is the parent compound component
+      const FooComponent = CompoundComponent(
+        () => <div data-testid="foo">Foo Component</div>,
+        {
+          displayName: 'FooComponent',
+          Bar: BarComponent,
+        },
+      );
+
+      // Test that parent renders
+      const { getByTestId } = render(<FooComponent />);
+      expect(getByTestId('foo')).toBeInTheDocument();
+
+      // Test that Bar is attached and has the marker property
+      expect(FooComponent.Bar).toBe(BarComponent);
+      expect(FooComponent.Bar.isBar).toBe(true);
+
+      // Test that nested sub-components are attached to Bar
+      expect(FooComponent.Bar.Baz).toBe(BazComponent);
+      expect(FooComponent.Bar.Qux).toBe(QuxComponent);
+
+      // Test that all components render independently
+      const { getByTestId: getBarTestId } = render(<FooComponent.Bar />);
+      expect(getBarTestId('bar')).toBeInTheDocument();
+
+      const { getByTestId: getBazTestId } = render(<FooComponent.Bar.Baz />);
+      expect(getBazTestId('baz')).toBeInTheDocument();
+
+      const { getByTestId: getQuxTestId } = render(<FooComponent.Bar.Qux />);
+      expect(getQuxTestId('qux')).toBeInTheDocument();
+    });
   });
 });

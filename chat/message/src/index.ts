@@ -1,10 +1,16 @@
-export { Message, type MessageProps } from './Message';
-export { type MessageActionsProps } from './MessageActions';
-export { type MessageVerifiedBannerProps } from './MessageBanner';
-export { MessageSourceType } from './MessageContent';
+export {
+  type ActionCardButtonProps,
+  type ActionCardChipProps,
+  type ActionCardExpandableContentProps,
+  type ActionCardProps,
+  ActionCardState,
+  type ActionsProps as MessageActionsProps,
+  type LinksProps as MessageLinksProps,
+  type PromotionProps as MessagePromotionProps,
+  type VerifiedBannerProps as MessageVerifiedBannerProps,
+} from './components';
+export { Message, type MessageProps, MessageSourceType } from './Message';
 export {
   MessageContext,
   useMessageContext,
 } from './MessageContext/MessageContext';
-export { type MessageLinksProps } from './MessageLinks';
-export { type MessagePromotionProps } from './MessagePromotion';

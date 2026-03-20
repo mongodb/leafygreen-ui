@@ -33,8 +33,6 @@ export function Chart({
   className,
   darkMode: darkModeProp,
   dragId = '',
-  enableGroupTooltipSync = true,
-  groupId,
   id: idProp,
   onChartReady,
   onZoomSelect,
@@ -43,10 +41,9 @@ export function Chart({
   ...rest
 }: ChartProps) {
   const { theme } = useDarkMode(darkModeProp);
+
   const chart = useChart({
     chartId: idProp,
-    enableGroupTooltipSync,
-    groupId,
     onChartReady,
     onZoomSelect,
     state,

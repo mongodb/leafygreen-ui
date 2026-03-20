@@ -36,6 +36,11 @@ interface AxisPropsBase {
    * Type of the axis.
    */
   type: AxisType;
+
+  /**
+   * Number of segments that the axis is split into. Note that this number serves only as a recommendation, and the true segments may be adjusted based on readability.
+   */
+  splitNumber?: number;
 }
 
 export interface ContinuousAxisProps extends AxisPropsBase {

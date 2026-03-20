@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useIdAllocator } from '@leafygreen-ui/hooks';
 
+import { useChartGroupStableContext } from '../../ChartGroupContext';
 import { useEchart } from '../../Echart';
 import { EChartEvents } from '../../Echart';
 import { getDefaultChartOptions } from '../config';
@@ -11,8 +12,6 @@ import { useTooltipVisibility } from './useTooltipVisibility';
 
 export function useChart({
   chartId,
-  enableGroupTooltipSync,
-  groupId,
   onChartReady = () => {},
   onZoomSelect,
   state,
@@ -20,6 +19,7 @@ export function useChart({
   zoomSelect,
 }: ChartHookProps): ChartInstance {
   const initialOptions = useMemo(() => getDefaultChartOptions(theme), [theme]);
+  const { groupId } = useChartGroupStableContext() || {};
 
   /**
    * It is necessary for `useEchart` to know when the container exists
@@ -61,7 +61,6 @@ export function useChart({
       chartId: id,
       container,
       echart,
-      groupId,
     });
 
   useEffect(() => {
@@ -143,7 +142,6 @@ export function useChart({
 
   return {
     ...echart,
-    enableGroupTooltipSync: !!groupId && enableGroupTooltipSync,
     id,
     isChartHovered,
     ref: setContainer,

@@ -1,12 +1,34 @@
-import React, { ForwardRefExoticComponent } from 'react';
+import React from 'react';
+import { LGMarkdownProps } from '@lg-chat/lg-markdown';
 
 import { type DarkModeProps } from '@leafygreen-ui/lib';
 
-import { type MessageActionsProps } from '../MessageActions';
-import { type MessageVerifiedBannerProps } from '../MessageBanner';
-import { type MessageContentProps } from '../MessageContent';
-import { type MessageLinksProps } from '../MessageLinks';
-import { type MessagePromotionProps } from '../MessagePromotion';
+export const MessageSourceType = {
+  Markdown: 'markdown',
+  Text: 'text',
+} as const;
+
+export type MessageSourceType =
+  (typeof MessageSourceType)[keyof typeof MessageSourceType];
+
+export interface MessageContentProps
+  extends Omit<React.ComponentPropsWithoutRef<'div'>, 'children'> {
+  /**
+   * Rendered children; only string children are supported.
+   */
+  children: string;
+
+  /**
+   * Props passed to the internal ReactMarkdown instance
+   */
+  markdownProps?: Omit<LGMarkdownProps, 'children'>;
+
+  /**
+   * Determines the rendering method of the message
+   * @default MessageSourceType.Text
+   */
+  sourceType?: MessageSourceType;
+}
 
 export interface MessageProps
   extends Omit<MessageContentProps, 'children'>,
@@ -27,37 +49,3 @@ export interface MessageProps
    */
   messageBody?: string;
 }
-
-/**
- * Static property names used to identify Message compound components.
- * These are implementation details for the compound component pattern and should not be exported.
- */
-export const MessageSubcomponentProperty = {
-  Actions: 'isLGMessageActions',
-  VerifiedBanner: 'isLGMessageVerifiedBanner',
-  Links: 'isLGMessageLinks',
-  Promotion: 'isPromotion',
-} as const;
-
-/**
- * Type representing the possible static property names for Message subcomponents.
- */
-export type MessageSubcomponentProperty =
-  (typeof MessageSubcomponentProperty)[keyof typeof MessageSubcomponentProperty];
-
-export type ActionsType = ForwardRefExoticComponent<MessageActionsProps> & {
-  [MessageSubcomponentProperty.Actions]?: boolean;
-};
-
-export type LinksType = ForwardRefExoticComponent<MessageLinksProps> & {
-  [MessageSubcomponentProperty.Links]?: boolean;
-};
-
-export type VerifiedBannerType =
-  ForwardRefExoticComponent<MessageVerifiedBannerProps> & {
-    [MessageSubcomponentProperty.VerifiedBanner]?: boolean;
-  };
-
-export type PromotionType = ForwardRefExoticComponent<MessagePromotionProps> & {
-  [MessageSubcomponentProperty.Promotion]?: boolean;
-};

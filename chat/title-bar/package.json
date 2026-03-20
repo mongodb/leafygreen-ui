@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/title-bar",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "lg-chat Title Bar",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -35,5 +35,13 @@
       "require": "./dist/umd/index.js"
     }
   },
-  "typesVersions": {}
+  "typesVersions": {},
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/chat/title-bar",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/LG/summary"
+  }
 }

@@ -1,20 +1,14 @@
 import React, { useCallback, useContext, useMemo } from 'react';
 
-import { cx } from '@leafygreen-ui/emotion';
 import { useForwardedRef, useIdAllocator } from '@leafygreen-ui/hooks';
 import { InputOption, InputOptionContent } from '@leafygreen-ui/input-option';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
+import { getNodeTextContent } from '@leafygreen-ui/lib';
 
 import { ComboboxContext } from '../ComboboxContext';
-import { ComboboxSize } from '../types';
 import { wrapJSX } from '../utils';
 
-import {
-  displayNameStyle,
-  largeStyles,
-  multiselectIconLargePosition,
-  multiselectIconPosition,
-} from './ComboboxOption.styles';
+import { getInputOptionStyles } from './ComboboxOption.styles';
 import {
   ComboboxOptionProps,
   InternalComboboxOptionProps,
@@ -36,6 +30,7 @@ export const InternalComboboxOption = React.forwardRef<
       glyph,
       isSelected,
       displayName,
+      customContent,
       isFocused,
       setSelected,
       className,
@@ -43,6 +38,7 @@ export const InternalComboboxOption = React.forwardRef<
       value,
       onClick,
       disabled = false,
+      'aria-label': ariaLabel,
       ...rest
     }: InternalComboboxOptionProps,
     forwardedRef,
@@ -99,6 +95,9 @@ export const InternalComboboxOption = React.forwardRef<
     // When multiselect and withoutIcons the Checkbox is aligned to the top instead of centered.
     const multiSelectWithoutIcons = multiselect && !withIcons;
 
+    // Convert displayName ReactNode to string for aria-label and wrapJSX
+    const displayNameStr = getNodeTextContent(displayName);
+
     return (
       <InputOption
         {...rest}
@@ -106,17 +105,14 @@ export const InternalComboboxOption = React.forwardRef<
         ref={optionRef}
         highlighted={isFocused}
         disabled={disabled}
-        aria-label={displayName}
+        aria-label={ariaLabel || displayNameStr || value}
         darkMode={darkMode}
-        className={cx(
-          {
-            [largeStyles]: size === ComboboxSize.Large,
-            [multiselectIconPosition]: multiSelectWithoutIcons,
-            [multiselectIconLargePosition]:
-              multiSelectWithoutIcons && size === ComboboxSize.Large,
-          },
+        className={getInputOptionStyles({
+          size,
+          isSelected,
+          isMultiselectWithoutIcons: multiSelectWithoutIcons,
           className,
-        )}
+        })}
         onClick={handleOptionClick}
         onKeyDown={handleOptionClick}
       >
@@ -125,9 +121,13 @@ export const InternalComboboxOption = React.forwardRef<
           rightGlyph={rightGlyph}
           description={description}
         >
-          <span id={optionTextId} className={displayNameStyle(isSelected)}>
-            {wrapJSX(displayName, inputValue, 'strong')}
-          </span>
+          {customContent ? (
+            customContent
+          ) : (
+            <span id={optionTextId}>
+              {wrapJSX(displayNameStr, inputValue, 'strong')}
+            </span>
+          )}
         </InputOptionContent>
       </InputOption>
     );
