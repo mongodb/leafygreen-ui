@@ -133,6 +133,50 @@ describe('mcp/hooks/useRenderData', () => {
     removeEventListenerSpy.mockRestore();
   });
 
+  test('ignores messages from disallowed origins', () => {
+    const { result } = renderHook(() =>
+      useRenderData({ allowedOrigins: ['https://mongodb.com'] }),
+    );
+
+    act(() => {
+      window.dispatchEvent(
+        new MessageEvent('message', {
+          data: {
+            type: 'ui-lifecycle-iframe-render-data',
+            payload: { renderData: { name: 'attacker' } },
+          },
+          origin: 'https://attacker.com',
+        }),
+      );
+    });
+
+    expect(result.current.isLoading).toBe(true);
+    expect(result.current.data).toBe(null);
+  });
+
+  test('accepts messages from allowed origins', async () => {
+    const { result } = renderHook(() =>
+      useRenderData({ allowedOrigins: ['https://mongodb.com'] }),
+    );
+
+    act(() => {
+      window.dispatchEvent(
+        new MessageEvent('message', {
+          data: {
+            type: 'ui-lifecycle-iframe-render-data',
+            payload: { renderData: { name: 'trusted' } },
+          },
+          origin: 'https://mongodb.com',
+        }),
+      );
+    });
+
+    await waitFor(() => {
+      expect(result.current.isLoading).toBe(false);
+      expect(result.current.data).toEqual({ name: 'trusted' });
+    });
+  });
+
   describe('darkMode', () => {
     test('uses darkMode from render data when provided', async () => {
       const { result } = renderHook(() => useRenderData());
