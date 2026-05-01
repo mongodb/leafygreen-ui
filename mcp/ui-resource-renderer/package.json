@@ -15,7 +15,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@mcp-ui/client": "^6.0.0"
+    "@mcp-ui/client": "6.0.0"
   },
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0"

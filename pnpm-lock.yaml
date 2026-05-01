@@ -942,7 +942,7 @@ importers:
   mcp/ui-resource-renderer:
     dependencies:
       '@mcp-ui/client':
-        specifier: ^6.0.0
+        specifier: 6.0.0
         version: 6.0.0(@preact/signals-core@1.12.2)(hono@4.11.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react:
         specifier: ^17.0.0 || ^18.0.0
