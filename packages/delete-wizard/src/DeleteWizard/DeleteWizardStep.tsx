@@ -42,7 +42,7 @@ export const DeleteWizardStep = CompoundSubComponent(
     ]);
 
     return (
-      <Wizard.Step requiresAcknowledgement={requiresAcknowledgement}>
+      <Wizard.Step requiresAcknowledgement={requiresAcknowledgement} {...rest}>
         <div
           className={cx(
             css`
