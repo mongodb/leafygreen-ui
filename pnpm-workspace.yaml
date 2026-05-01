@@ -1,7 +1,8 @@
 packages:
-  # all packages in direct subdirectories of apps/, charts/, chat/, packages/, & tools/
+  # all packages in direct subdirectories of apps/, charts/, chat/, mcp/, packages/, & tools/
   - 'apps/*'
   - 'charts/*'
   - 'chat/*'
+  - 'mcp/*'
   - 'packages/*'
   - 'tools/*'

@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
-import { MergedRollupOptions, rollup } from 'rollup';
+import { InputPluginOption, rollup, type RollupOptions } from 'rollup';
 
 import { GENERATED_DIR } from './constants';
 
 async function getBatchBuildOptions(
   batch: Array<string>,
-): Promise<Array<MergedRollupOptions>> {
+): Promise<Array<RollupOptions>> {
   const { constructUMDGlobalName } = await import(
     '@lg-tools/build/config/utils/constructUMDGlobalName.mjs'
   );
@@ -21,11 +21,11 @@ async function getBatchBuildOptions(
     {
       ...esmConfig,
       input: batch.map(icon => `${GENERATED_DIR}/${icon}.tsx`),
-      output: [esmConfig.output],
+      output: esmConfig.output,
       plugins: [
         // Ensure @emotion packages are externalized (not bundled into icons)
         nodeExternals({ deps: true, include: [/@emotion/] }),
-        ...esmConfig.plugins,
+        ...(esmConfig.plugins as Array<InputPluginOption>),
       ],
     },
     // UMD builds need a single input file
@@ -43,7 +43,7 @@ async function getBatchBuildOptions(
         plugins: [
           // Ensure @emotion packages are externalized (not bundled into icons)
           nodeExternals({ deps: true, include: [/@emotion/] }),
-          ...umdConfig.plugins,
+          ...(umdConfig.plugins as Array<InputPluginOption>),
         ],
       };
     }),
@@ -64,7 +64,14 @@ export async function buildBatch(
     for (const config of rollupConfigs) {
       const bundle = await rollup(config);
 
-      await Promise.all(config.output.map(bundle.write));
+      if (config.output) {
+        const outputs = Array.isArray(config.output)
+          ? config.output
+          : [config.output];
+
+        await Promise.all(outputs.map(bundle.write));
+      }
+
       await bundle.close();
     }
   } catch (e) {

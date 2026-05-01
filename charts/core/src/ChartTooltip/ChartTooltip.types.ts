@@ -8,6 +8,41 @@ import { type CallbackDataParams } from 'echarts/types/dist/shared';
  */
 export type OptionDataValue = string | number | Date;
 
+/**
+ * Data can be in array format [x, y] or object format { value: [x, y], itemStyle: {...} }
+ * when individual data points have custom styling (e.g., zero values with reduced opacity).
+ */
+export type SeriesDataItem =
+  | Array<OptionDataValue>
+  | { value: Array<OptionDataValue>; itemStyle?: Record<string, unknown> };
+
+/**
+ * Helper function to extract the data array from either format.
+ * ECharts passes data differently depending on whether it's a simple array or an object with itemStyle.
+ */
+export function getDataArray(
+  data: SeriesDataItem | undefined,
+): Array<OptionDataValue> | undefined {
+  if (!data) return undefined;
+
+  // Check if data is an object with a 'value' property (object format)
+  if (
+    typeof data === 'object' &&
+    !Array.isArray(data) &&
+    'value' in data &&
+    Array.isArray(data.value)
+  ) {
+    return data.value;
+  }
+
+  // Otherwise, assume it's already an array
+  if (Array.isArray(data)) {
+    return data;
+  }
+
+  return undefined;
+}
+
 export const AxisPointerType = {
   None: 'none',
   Line: 'line',
@@ -53,7 +88,11 @@ export interface CallbackSeriesDataPoint extends CallbackDataParams {
   axisType: string;
   axisValue: string | number;
   axisValueLabel: string | number;
-  data: Array<OptionDataValue>;
+  /**
+   * Data can be in array format [x, y] or object format { value: [x, y], itemStyle: {...} }
+   * Use getDataArray() helper to extract the array from either format.
+   */
+  data: SeriesDataItem;
   /**
    * Echarts returns a custom color type which doesn't map to string but is one
    */

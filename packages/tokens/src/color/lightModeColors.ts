@@ -93,6 +93,26 @@ const lightModeBorderColors = {
     [InteractionState.Hover]: red.light2,
     [InteractionState.Focus]: red.light2,
   },
+  [Variant.Info]: {
+    [InteractionState.Default]: blue.base,
+    [InteractionState.Hover]: blue.base,
+    [InteractionState.Focus]: blue.base,
+  },
+  [Variant.OnInfo]: {
+    [InteractionState.Default]: blue.light2,
+    [InteractionState.Hover]: blue.light2,
+    [InteractionState.Focus]: blue.light2,
+  },
+  [Variant.Warning]: {
+    [InteractionState.Default]: yellow.base,
+    [InteractionState.Hover]: yellow.base,
+    [InteractionState.Focus]: yellow.base,
+  },
+  [Variant.OnWarning]: {
+    [InteractionState.Default]: yellow.light2,
+    [InteractionState.Hover]: yellow.light2,
+    [InteractionState.Focus]: yellow.light2,
+  },
 } as const satisfies VariantColorRecord;
 
 const lightModeIconColors = {
@@ -198,6 +218,26 @@ const lightModeTextColors = {
     [InteractionState.Default]: blue.base,
     [InteractionState.Hover]: blue.base,
     [InteractionState.Focus]: blue.base,
+  },
+  [Variant.Info]: {
+    [InteractionState.Default]: blue.dark1,
+    [InteractionState.Hover]: blue.dark1,
+    [InteractionState.Focus]: blue.dark1,
+  },
+  [Variant.OnInfo]: {
+    [InteractionState.Default]: blue.dark2,
+    [InteractionState.Hover]: blue.dark2,
+    [InteractionState.Focus]: blue.dark2,
+  },
+  [Variant.Warning]: {
+    [InteractionState.Default]: yellow.dark2,
+    [InteractionState.Hover]: yellow.dark2,
+    [InteractionState.Focus]: yellow.dark2,
+  },
+  [Variant.OnWarning]: {
+    [InteractionState.Default]: yellow.dark2,
+    [InteractionState.Hover]: yellow.dark2,
+    [InteractionState.Focus]: yellow.dark2,
   },
 } as const satisfies VariantColorRecord;
 

@@ -80,6 +80,18 @@ describe('packages/combobox', () => {
           }
         });
 
+        test('selects the filtered option after typing', () => {
+          const { inputEl, openMenu, queryChipsByName } =
+            renderCombobox(select);
+          openMenu();
+          userEvent.type(inputEl!, 'car{enter}');
+          if (select === 'multiple') {
+            expect(queryChipsByName('Carrot')).toBeInTheDocument();
+          } else {
+            expect(inputEl).toHaveValue('Carrot');
+          }
+        });
+
         test('fires onChange handler with payload', () => {
           const onChange = jest.fn();
           const { inputEl, openMenu } = renderCombobox(select, { onChange });

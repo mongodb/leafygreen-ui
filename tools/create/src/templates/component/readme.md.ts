@@ -1,12 +1,16 @@
 import { TemplateParameters } from '../../create.types';
 
 export const readMe = ({
+  scope,
   packageNameTitle,
   packageNameKebab,
-}: Pick<TemplateParameters, 'packageNameTitle' | 'packageNameKebab'>) => `
+}: Pick<
+  TemplateParameters,
+  'scope' | 'packageNameTitle' | 'packageNameKebab'
+>) => `
 # ${packageNameTitle}
 
-![npm (scoped)](https://img.shields.io/npm/v/@leafygreen-ui/${packageNameKebab}.svg)
+![npm (scoped)](https://img.shields.io/npm/v/${scope}/${packageNameKebab}.svg)
 #### [View on MongoDB.design](https://www.mongodb.design/component/${packageNameKebab}/live-example/)
 
 ## Installation
@@ -14,19 +18,19 @@ export const readMe = ({
 ### PNPM
 
 \`\`\`shell
-pnpm add @leafygreen-ui/${packageNameKebab}
+pnpm add ${scope}/${packageNameKebab}
 \`\`\`
 
 ### Yarn
 
 \`\`\`shell
-yarn add @leafygreen-ui/${packageNameKebab}
+yarn add ${scope}/${packageNameKebab}
 \`\`\`
 
 ### NPM
 
 \`\`\`shell
-npm install @leafygreen-ui/${packageNameKebab}
+npm install ${scope}/${packageNameKebab}
 \`\`\`
 
 `;

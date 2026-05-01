@@ -1,5 +1,50 @@
 # @lg-chat/input-bar
 
+## 12.2.2
+
+### Patch Changes
+
+- ea892da: [LG-5920](https://jira.mongodb.org/browse/LG-5920): Update to latest `AssistantAvatar` from `@leafygreen-ui/avatar`
+- Updated dependencies [7153907]
+- Updated dependencies [b80eade]
+  - @leafygreen-ui/compound-component@0.3.0
+  - @leafygreen-ui/avatar@3.3.0
+
+## 12.2.1
+
+### Patch Changes
+
+- 1c0c03a: Updates the focus ring token to use the base blue color in light mode. [LG-5847](https://jira.mongodb.org/browse/LG-5847)
+- Updated dependencies [1c0c03a]
+  - @leafygreen-ui/avatar@3.2.1
+  - @leafygreen-ui/banner@10.2.5
+  - @leafygreen-ui/button@25.2.1
+  - @leafygreen-ui/hooks@9.3.1
+  - @leafygreen-ui/icon-button@17.1.5
+  - @leafygreen-ui/input-option@4.1.5
+  - @leafygreen-ui/popover@14.3.2
+  - @leafygreen-ui/search-input@6.1.3
+  - @leafygreen-ui/tokens@4.2.2
+  - @leafygreen-ui/typography@22.2.4
+
+## 12.2.0
+
+### Minor Changes
+
+- 710404e: [LG-5846](https://jira.mongodb.org/browse/LG-5846): add `InputBar.AdditionalActions` as subcomponent for dynamic extension of `InputBar` capabilities
+
+## 12.1.1
+
+### Patch Changes
+
+- dc4ff1f: [LG-5648](https://jira.mongodb.org/browse/LG-5648): Clicking visible input container now correctly focuses `textarea` element
+- Updated dependencies [60080b8]
+- Updated dependencies [7d81983]
+- Updated dependencies [76d5a8f]
+- Updated dependencies [c763ad6]
+  - @leafygreen-ui/tokens@4.2.0
+  - @leafygreen-ui/avatar@3.2.0
+
 ## 12.1.0
 
 ### Minor Changes

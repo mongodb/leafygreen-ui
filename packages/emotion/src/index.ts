@@ -1,3 +1,4 @@
+import { CacheProvider } from '@emotion/react';
 import createEmotionServer from '@emotion/server/create-instance';
 
 import emotion from './emotion';
@@ -14,6 +15,8 @@ export const {
   sheet,
   cache,
 } = emotion;
+
+export { CacheProvider };
 
 export const {
   extractCritical,

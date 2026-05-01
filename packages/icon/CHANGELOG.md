@@ -1,5 +1,17 @@
 # @leafygreen-ui/icon
 
+## 14.8.0
+
+### Minor Changes
+
+- 75e6998: [LG-5833](https://jira.mongodb.org/browse/LG-5833): Adds `ExpandVertical` and `CollapseVertical` icons
+
+## 14.7.2
+
+### Patch Changes
+
+- 0e37854: Fixed an issue where icons generated through `createIconComponent` were not passing in fill value correctly
+
 ## 14.7.1
 
 ### Patch Changes

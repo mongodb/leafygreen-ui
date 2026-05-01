@@ -34,6 +34,8 @@ export function createGlyphComponent(
       color: ${fill};
     `;
 
+    // Note: We do not currently support title prop for custom glyphs. TODO: LG-5828
+
     const renderedSize = typeof size === 'number' ? size : sizeMap[size];
 
     if (!(role === 'img' || role === 'presentation')) {
@@ -60,7 +62,7 @@ export function createGlyphComponent(
           ['aria-labelledby']: ariaLabelledby,
         })}
         {...rest}
-      />
+      ></Glyph>
     );
   };
 

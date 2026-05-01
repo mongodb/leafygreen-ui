@@ -8,4 +8,9 @@ export {
   WizardProvider,
 } from './WizardContext';
 export { type WizardFooterProps } from './WizardFooter';
-export { useWizardStepContext, type WizardStepProps } from './WizardStep';
+export {
+  useWizardStepContext,
+  type WizardStepContext,
+  type WizardStepContextData,
+  type WizardStepProps,
+} from './WizardStep';

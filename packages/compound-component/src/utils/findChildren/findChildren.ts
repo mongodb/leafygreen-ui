@@ -31,6 +31,12 @@ import { unwrapRootFragment } from '../unwrapRootFragment';
  *   </>
  * ), 'isFoo') // [<Foo />, <Foo />]
  *
+ * // ✅ Will find: Multiple static properties (array)
+ * findChildren([
+ *   <Foo />,
+ *   <Bar />
+ * ], ['isFoo', 'isBar']) // [<Foo />, <Bar />]
+ *
  * // ❌ Will NOT find: Deeply nested fragments
  * findChildren((
  *   <>
@@ -45,12 +51,12 @@ import { unwrapRootFragment } from '../unwrapRootFragment';
  * ```
  *
  * @param children Any React children
- * @param staticProperty The static property name to check for
+ * @param staticProperty The static property name (or array of names) to check for
  * @returns All matching ReactElements (or empty array if not found)
  */
 export const findChildren = (
   children: ReactNode,
-  staticProperty: string,
+  staticProperty: string | Array<string>,
 ): Array<ReactElement> => {
   const allChildren = unwrapRootFragment(children);
 
@@ -58,7 +64,7 @@ export const findChildren = (
 
   return allChildren
     .flat()
-    .filter(child =>
+    .filter((child): child is ReactElement =>
       isChildWithProperty(child, staticProperty),
-    ) as Array<ReactElement>;
+    );
 };

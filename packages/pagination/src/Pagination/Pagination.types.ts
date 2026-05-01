@@ -1,11 +1,12 @@
 import React from 'react';
 
 import { AccessibleIconButtonProps } from '@leafygreen-ui/icon-button';
-import { DarkModeProps } from '@leafygreen-ui/lib';
+import { DarkModeProps, LgIdProps } from '@leafygreen-ui/lib';
 import { SelectProps } from '@leafygreen-ui/select';
 
 interface PaginationProps<T extends number = number>
   extends React.ComponentProps<'div'>,
+    LgIdProps,
     DarkModeProps {
   /**
    * Number of items visible on the current page.

@@ -7,7 +7,6 @@ export const testTimeZones = [
   { tz: 'Europe/London', UTCOffset: +0 },
   { tz: 'Asia/Istanbul', UTCOffset: +3 },
   { tz: 'Asia/Seoul', UTCOffset: +9 },
-  { tz: 'Pacific/Kiritimati', UTCOffset: +14 },
 ] as const;
 
 export const undefinedTZ = {

@@ -1,10 +1,14 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { renderToString } from 'react-dom/server';
 
 import { cx } from '@leafygreen-ui/emotion';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 
 import { useChartContext } from '../ChartContext';
+import {
+  useChartGroupHoverContext,
+  useChartGroupStableContext,
+} from '../ChartGroupContext';
 import { CHART_TOOLTIP_CLASSNAME, DEFAULT_TOOLTIP_OPTIONS } from '../constants';
 
 import { getRootStylesText } from './ChartTooltip.styles';
@@ -22,9 +26,10 @@ export function ChartTooltip({
   axisPointer = 'line',
   className,
 }: ChartTooltipProps) {
+  const { isSomeChartHovered } = useChartGroupHoverContext() || {};
+  const { enableTooltipSync } = useChartGroupStableContext() || {};
   const {
     chart: {
-      enableGroupTooltipSync,
       id: chartId,
       isChartHovered,
       ready,
@@ -34,6 +39,14 @@ export function ChartTooltip({
     },
   } = useChartContext();
   const { darkMode, theme } = useDarkMode();
+
+  /**
+   * Refs to track previous pinned state.
+   * Used to prevent unnecessary effect runs when tooltip stays pinned,
+   * which would cause ECharts to recreate the tooltip DOM.
+   */
+  const prevPinnedRef = useRef(false);
+  const wasPinnedRef = useRef(false);
 
   const formatTooltip = useCallback(
     (seriesData: Array<CallbackSeriesDataPoint>) => {
@@ -105,14 +118,43 @@ export function ChartTooltip({
   useEffect(() => {
     if (!ready) return;
 
+    /**
+     * Skip effect when tooltip stays pinned (both previous and current are true).
+     * This prevents ECharts from recreating the tooltip DOM element during
+     * parent re-renders, which would make the tooltip disappear.
+     */
+    const staysPinned = prevPinnedRef.current && tooltipPinned;
+    prevPinnedRef.current = tooltipPinned;
+
+    if (staysPinned) {
+      return;
+    }
+
+    /** Track that we ran the effect while pinned (for cleanup logic) */
+    wasPinnedRef.current = tooltipPinned;
+
+    /**
+     * Tooltip visibility logic:
+     * - `alwaysShowContent`: keeps tooltip present while any grouped chart
+     *   is hovered, so tooltips persist on non-hovered charts.
+     * - `showContent`: controls whether tooltip content (vs axis pointer only)
+     *   is shown. With `enableTooltipSync`, all charts show content when any is
+     *   hovered. Without it, only the hovered chart shows content.
+     */
+    const alwaysShowContent =
+      (enableTooltipSync && isSomeChartHovered) || tooltipPinned;
+    const showContent = enableTooltipSync
+      ? isSomeChartHovered || tooltipPinned
+      : isChartHovered || tooltipPinned;
+
     updateOptions({
       tooltip: {
         /* LOGIC PROPERTIES */
-        alwaysShowContent: enableGroupTooltipSync || tooltipPinned,
+        alwaysShowContent,
         confine: true,
         enterable: tooltipPinned,
         renderMode: 'html',
-        showContent: enableGroupTooltipSync || isChartHovered || tooltipPinned,
+        showContent,
         trigger: 'axis',
         triggerOn: tooltipPinned ? 'none' : 'mousemove',
 
@@ -145,13 +187,21 @@ export function ChartTooltip({
     });
 
     return () => {
+      /**
+       * Skip cleanup when tooltip is pinned to prevent ECharts from
+       * resetting the tooltip DOM during re-renders.
+       */
+      if (wasPinnedRef.current) {
+        return;
+      }
       updateOptions({ ...DEFAULT_TOOLTIP_OPTIONS });
     };
   }, [
-    enableGroupTooltipSync,
+    enableTooltipSync,
     formatPinnedTooltip,
     formatTooltip,
     isChartHovered,
+    isSomeChartHovered,
     ready,
     theme,
     tooltipPinned,

@@ -35,7 +35,7 @@ return (
 
 ### Compound Components
 
-The `Message` component uses a compound component pattern, allowing you to compose different parts of a message using subcomponents like `Message.Actions`, `Message.Links`, `Message.Promotion`, and `Message.VerifiedBanner`.
+The `Message` component uses a compound component pattern, allowing you to compose different parts of a message using subcomponents like `Message.Actions`, `Message.Links`, `Message.Promotion`, `Message.ActionCard`, and `Message.VerifiedBanner`.
 
 **Note:** The layout and order of compound components are enforced by the `Message` component itself. Even if you change the order of subcomponents in your JSX, they will be rendered in the correct, intended order within the message bubble. This ensures consistent UI and accessibility regardless of how you compose your message children.
 
@@ -137,6 +137,52 @@ const MessageWithPromotion = () => {
 };
 ```
 
+### Message.ActionCard
+
+```tsx
+import React from 'react';
+import { Message, ActionCardState } from '@lg-chat/message';
+import DatabaseIcon from '@leafygreen-ui/icon/dist/Database';
+
+const MessageWithActionCard = () => {
+  const handleCancel = () => console.log('Cancel clicked');
+  const handleRun = () => console.log('Run clicked');
+  const handleToggleExpanded = (isOpen: boolean) => {
+    console.log('Expanded state:', isOpen);
+  };
+
+  return (
+    <Message isSender={false} messageBody="Test message">
+      <Message.ActionCard
+        chips={[{ label: 'MongoDB', glyph: <DatabaseIcon /> }]}
+        initialIsExpanded={false}
+        onToggleExpanded={handleToggleExpanded}
+        showExpandButton={true}
+        state={ActionCardState.Idle}
+        title="Run list-databases?"
+      >
+        <Message.ActionCard.ExpandableContent>
+          {`# Tool Execution Result
+
+This is a markdown content example showing tool execution results.
+
+\`\`\`javascript
+const result = await tool.execute();
+console.log(result);
+\`\`\``}
+        </Message.ActionCard.ExpandableContent>
+        <Message.ActionCard.Button onClick={handleCancel}>
+          Cancel
+        </Message.ActionCard.Button>
+        <Message.ActionCard.Button onClick={handleRun} variant="primary">
+          Run
+        </Message.ActionCard.Button>
+      </Message.ActionCard>
+    </Message>
+  );
+};
+```
+
 ### Message.VerifiedBanner
 
 ```tsx
@@ -160,7 +206,7 @@ const MessageWithVerifiedBanner = () => {
 
 ```tsx
 import React from 'react';
-import { Message } from '@lg-chat/message';
+import { Message, ActionCardState } from '@lg-chat/message';
 import { MessageRatingValue } from '@lg-chat/message-rating';
 
 const Example = () => {
@@ -197,8 +243,27 @@ const Example = () => {
   const handleLinkClick = () => console.log('Link clicked');
   const handlePromotionClick = () => console.log('Promotion clicked');
 
+  const handleCancel = () => console.log('Cancel clicked');
+  const handleRun = () => console.log('Run clicked');
+
   return (
     <Message isSender={false} messageBody="Test message">
+      <Message.ActionCard
+        title="Run list-databases?"
+        state={ActionCardState.Idle}
+      >
+        <Message.ActionCard.ExpandableContent>
+          {`# Tool Execution Result
+
+This is a markdown content example showing tool execution results.`}
+        </Message.ActionCard.ExpandableContent>
+        <Message.ActionCard.Button onClick={handleCancel}>
+          Cancel
+        </Message.ActionCard.Button>
+        <Message.ActionCard.Button onClick={handleRun} variant="primary">
+          Run
+        </Message.ActionCard.Button>
+      </Message.ActionCard>
       <Message.Promotion
         promotionText="Go learn more about this skill!"
         promotionUrl="https://learn.mongodb.com/skills"
@@ -264,6 +329,31 @@ const Example = () => {
 | `onPromotionLinkClick` _(optional)_ | `() => void`              | Promotion onClick callback handler.      |         |
 | `...`                               | `HTMLElementProps<'div'>` | Props spread on the root element         |         |
 
+### Message.ActionCard
+
+| Prop                             | Type                                                                                              | Description                                                                                                                                                                                                                | Default |
+| -------------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `chips` _(optional)_             | `Array<{ label: ReactNode; glyph?: ReactNode; formatTooltip?: (label: ReactNode) => ReactNode }>` | Metadata chips displayed in the header. Each chip supports `label`, optional `glyph` icon, and optional `formatTooltip` function to customize tooltip content. Tooltips are always shown on hover for chips in ActionCard. | `[]`    |
+| `darkMode` _(optional)_          | `boolean`                                                                                         | Determines if the component will render in dark mode                                                                                                                                                                       | `false` |
+| `description` _(optional)_       | `ReactNode`                                                                                       | Optional description text displayed below the title row in the Header.                                                                                                                                                     |         |
+| `initialIsExpanded` _(optional)_ | `boolean`                                                                                         | Initial state of the expandable section. Ignored when `showExpandButton` is `false`.                                                                                                                                       | `false` |
+| `onToggleExpanded` _(optional)_  | `(isOpen: boolean) => void`                                                                       | Callback fired when the expansion toggle is clicked. Receives the new open state as a parameter.                                                                                                                           |         |
+| `showExpandButton` _(optional)_  | `boolean`                                                                                         | Whether the toggle button is visible.                                                                                                                                                                                      | `true`  |
+| `state`                          | `'idle' \| 'running' \| 'success' \| 'error' \| 'canceled'`                                       | The current lifecycle state of the interaction. Can use string literals or import `ActionCardState` enum from `@lg-chat/message`.                                                                                          |         |
+| `title`                          | `ReactNode`                                                                                       | Primary label displayed in the Header.                                                                                                                                                                                     |         |
+| `...`                            | `HTMLElementProps<'div'>`                                                                         | Props spread on the container div element                                                                                                                                                                                  |         |
+
+#### Message.ActionCard.Button
+
+`Message.ActionCard.Button` accepts all props from [`@leafygreen-ui/button`](../../packages/button/README.md#properties), except for the `size` prop which cannot be configured and is always set to `'small'`.
+
+#### Message.ActionCard.ExpandableContent
+
+| Prop       | Type                      | Description                                                                  | Default |
+| ---------- | ------------------------- | ---------------------------------------------------------------------------- | ------- |
+| `children` | `string`                  | Markdown content to render in the expandable content area. Must be a string. |         |
+| `...`      | `HTMLElementProps<'div'>` | Props spread on the container div element                                    |         |
+
 ### Message.VerifiedBanner
 
 | Prop                        | Type     | Description                                       | Default |
@@ -276,7 +366,7 @@ const Example = () => {
 
 ### Message.Actions
 
-The `MessageActions` component provides a comprehensive set of actions for chat messages.
+The `Message.Actions` component provides a comprehensive set of actions for chat messages.
 
 #### Rendering Behavior
 
@@ -316,7 +406,7 @@ Form state is reset when the feedback form is closed or when a new rating is sel
 
 ### Message.Links
 
-The `MessageLinks` component provides an expandable/collapsible section for displaying related links.
+The `Message.Links` component provides an expandable/collapsible section for displaying related links.
 
 #### Rendering Behavior
 
@@ -340,11 +430,27 @@ The component manages its own internal state for:
 
 ### Message.Promotion
 
-The `MessagePromotion` component displays promotional content with an award icon and "Learn More" link.
+The `Message.Promotion` component displays promotional content with an award icon and "Learn More" link.
+
+### Message.ActionCard
+
+The `Message.ActionCard` component displays actionable, stateful cards with expandable content and buttons.
+
+#### Rendering Behavior
+
+- Buttons only render when `state="idle"`
+- Multiple `Message.ActionCard.Button` components can be used to render buttons
+
+#### State Management
+
+The component manages its own internal state for:
+
+- Expansion state: Controls whether the expandable content section is expanded or collapsed
+- The expansion state can be configured via `initialIsExpanded` and `onToggleExpanded` props
 
 ### Message.VerifiedBanner
 
-The `VerifiedBanner` component displays verification information for messages.
+The `Message.VerifiedBanner` component displays verification information for messages.
 
 #### Rendering Behavior
 

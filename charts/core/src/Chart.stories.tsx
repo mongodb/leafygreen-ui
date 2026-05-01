@@ -12,16 +12,20 @@ import {
 // @ts-ignore
 import { EChartsOption, getInstanceByDom, SeriesOption } from 'echarts';
 
+import { css } from '@leafygreen-ui/emotion';
+
 import { ChartProps } from './Chart/Chart.types';
 import { ChartHeaderProps } from './ChartHeader/ChartHeader.types';
 import { ChartTooltipProps } from './ChartTooltip/ChartTooltip.types';
 import { ContinuousAxisProps } from './Axis';
+import { type ChartGroupProviderProps } from './ChartGroupContext';
 import { LineProps } from './Series';
 import { makeSeriesData } from './testUtils';
 import { ThresholdLineProps } from './ThresholdLine';
 import {
   Chart,
   ChartGrid,
+  ChartGroupProvider,
   ChartHeader,
   ChartTooltip,
   EventMarkerLine,
@@ -56,7 +60,7 @@ interface LiveExampleProps {
   zoomSelect: ChartProps['zoomSelect'];
   onZoomSelect: ChartProps['onZoomSelect'];
   onChartReady: ChartProps['onChartReady'];
-  groupId: ChartProps['groupId'];
+  groupId: ChartGroupProviderProps['groupId'];
   verticalGridLines: boolean;
   horizontalGridLines: boolean;
   renderGrid: boolean;
@@ -66,12 +70,14 @@ interface LiveExampleProps {
   xAxisLabel: XAxisProps['label'];
   xAxisMin?: ContinuousAxisProps['min'];
   xAxisMax?: ContinuousAxisProps['max'];
+  xAxisSplitNumber?: ContinuousAxisProps['splitNumber'];
   renderYAxis: boolean;
   yAxisType: YAxisProps['type'];
   yAxisFormatter: ContinuousAxisProps['formatter'];
   yAxisLabel: YAxisProps['label'];
   yAxisMin?: ContinuousAxisProps['min'];
   yAxisMax?: ContinuousAxisProps['max'];
+  yAxisSplitNumber?: ContinuousAxisProps['splitNumber'];
   renderTooltip: boolean;
   tooltipSeriesValueFormatter: ChartTooltipProps['seriesValueFormatter'];
   renderHeader: boolean;
@@ -144,11 +150,13 @@ export const LiveExample: StoryObj<LiveExampleProps> = {
     xAxisLabel: 'X-Axis Label',
     xAxisMin,
     xAxisMax,
+    xAxisSplitNumber: undefined,
     renderYAxis: true,
     yAxisType: 'value',
     yAxisLabel: 'Y-Axis Label',
     yAxisMin,
     yAxisMax,
+    yAxisSplitNumber: undefined,
     renderTooltip: true,
     renderHeader: true,
     headerTitle: 'LeafyGreen Chart Header',
@@ -259,6 +267,16 @@ export const LiveExample: StoryObj<LiveExampleProps> = {
         category: 'XAxis',
       },
     },
+    xAxisSplitNumber: {
+      control: 'number',
+      type: { name: 'number' },
+      description:
+        'Number of segments that the axis is split into. Note that this number serves only as a recommendation, and the true segments may be adjusted based on readability.',
+      name: 'SplitNumber',
+      table: {
+        category: 'XAxis',
+      },
+    },
     renderYAxis: {
       control: 'boolean',
       description: 'Render Y-axis',
@@ -303,6 +321,16 @@ export const LiveExample: StoryObj<LiveExampleProps> = {
       control: 'number',
       description: 'Maximum value of y-axis',
       name: 'Max',
+      table: {
+        category: 'YAxis',
+      },
+    },
+    yAxisSplitNumber: {
+      control: 'number',
+      type: { name: 'number' },
+      description:
+        'Number of segments that the axis is split into. Note that this number serves only as a recommendation, and the true segments may be adjusted based on readability.',
+      name: 'SplitNumber',
       table: {
         category: 'YAxis',
       },
@@ -514,10 +542,12 @@ export const LiveExample: StoryObj<LiveExampleProps> = {
     xAxisFormatter,
     xAxisMin,
     xAxisMax,
+    xAxisSplitNumber,
     yAxisType,
     yAxisFormatter,
     yAxisMin,
     yAxisMax,
+    yAxisSplitNumber,
     xAxisLabel,
     yAxisLabel,
     renderTooltip,
@@ -543,7 +573,7 @@ export const LiveExample: StoryObj<LiveExampleProps> = {
     thresholdLineLabel,
     thresholdLineValue,
     thresholdLinePosition,
-  }) => {
+  }: LiveExampleProps) => {
     return (
       <Chart
         zoomSelect={{
@@ -587,6 +617,7 @@ export const LiveExample: StoryObj<LiveExampleProps> = {
             label={xAxisLabel}
             min={xAxisMin}
             max={xAxisMax}
+            splitNumber={xAxisSplitNumber}
           />
         )}
         {renderYAxis && (
@@ -596,6 +627,7 @@ export const LiveExample: StoryObj<LiveExampleProps> = {
             label={yAxisLabel}
             min={yAxisMin}
             max={yAxisMax}
+            splitNumber={yAxisSplitNumber}
           />
         )}
         {data.map(({ name, data }) => (
@@ -1361,36 +1393,37 @@ export const WithZoomAndTooltip: StoryObj<{}> = {
   },
 };
 
+const chartGroupStyles = css`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+`;
+
 export const SyncedByGroupIDWithTooltipSync: StoryObj<{}> = {
   render: () => {
     return (
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr',
-          width: '100%',
-          gap: '8px',
-        }}
-      >
-        <Chart groupId="group1" enableGroupTooltipSync>
-          <ChartTooltip />
-          {seriesData.map(({ name, data }) => (
-            <Line name={name} data={data} key={name} />
-          ))}
-        </Chart>
-        <Chart groupId="group1" enableGroupTooltipSync>
-          <ChartTooltip />
-          {seriesData.map(({ name, data }) => (
-            <Line name={name} data={data} key={name} />
-          ))}
-        </Chart>
-        <Chart groupId="group1" enableGroupTooltipSync>
-          <ChartTooltip />
-          {seriesData.map(({ name, data }) => (
-            <Line name={name} data={data} key={name} />
-          ))}
-        </Chart>
-      </div>
+      <ChartGroupProvider groupId="group1" enableTooltipSync>
+        <div className={chartGroupStyles}>
+          <Chart>
+            <ChartTooltip />
+            {seriesData.map(({ name, data }) => (
+              <Line name={name} data={data} key={name} />
+            ))}
+          </Chart>
+          <Chart>
+            <ChartTooltip />
+            {seriesData.map(({ name, data }) => (
+              <Line name={name} data={data} key={name} />
+            ))}
+          </Chart>
+          <Chart>
+            <ChartTooltip />
+            {seriesData.map(({ name, data }) => (
+              <Line name={name} data={data} key={name} />
+            ))}
+          </Chart>
+        </div>
+      </ChartGroupProvider>
     );
   },
   parameters: {
@@ -1403,33 +1436,28 @@ export const SyncedByGroupIDWithTooltipSync: StoryObj<{}> = {
 export const SyncedByGroupIDWithoutTooltipSync: StoryObj<{}> = {
   render: () => {
     return (
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr',
-          width: '100%',
-          gap: '8px',
-        }}
-      >
-        <Chart groupId="group1" enableGroupTooltipSync={false}>
-          <ChartTooltip />
-          {seriesData.map(({ name, data }) => (
-            <Line name={name} data={data} key={name} />
-          ))}
-        </Chart>
-        <Chart groupId="group1" enableGroupTooltipSync={false}>
-          <ChartTooltip />
-          {seriesData.map(({ name, data }) => (
-            <Line name={name} data={data} key={name} />
-          ))}
-        </Chart>
-        <Chart groupId="group1" enableGroupTooltipSync={false}>
-          <ChartTooltip />
-          {seriesData.map(({ name, data }) => (
-            <Line name={name} data={data} key={name} />
-          ))}
-        </Chart>
-      </div>
+      <ChartGroupProvider groupId="group1" enableTooltipSync={false}>
+        <div className={chartGroupStyles}>
+          <Chart>
+            <ChartTooltip />
+            {seriesData.map(({ name, data }) => (
+              <Line name={name} data={data} key={name} />
+            ))}
+          </Chart>
+          <Chart>
+            <ChartTooltip />
+            {seriesData.map(({ name, data }) => (
+              <Line name={name} data={data} key={name} />
+            ))}
+          </Chart>
+          <Chart>
+            <ChartTooltip />
+            {seriesData.map(({ name, data }) => (
+              <Line name={name} data={data} key={name} />
+            ))}
+          </Chart>
+        </div>
+      </ChartGroupProvider>
     );
   },
   parameters: {

@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/lg-markdown",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "description": "lg-chat LGMarkdown",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -36,5 +36,13 @@
       "require": "./dist/umd/index.js"
     }
   },
-  "typesVersions": {}
+  "typesVersions": {},
+  "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/chat/lg-markdown",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mongodb/leafygreen-ui"
+  },
+  "bugs": {
+    "url": "https://jira.mongodb.org/projects/LG/summary"
+  }
 }

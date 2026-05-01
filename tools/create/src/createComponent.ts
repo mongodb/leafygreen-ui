@@ -75,7 +75,7 @@ export function createComponent({
     },
     {
       name: 'README.md',
-      contents: readMe({ packageNameKebab, packageNameTitle }),
+      contents: readMe({ packageNameKebab, packageNameTitle, scope }),
     },
     {
       name: 'src/index.ts',

@@ -2,6 +2,7 @@ import React from 'react';
 
 import {
   CompoundComponent,
+  CompoundComponentType,
   findChild,
 } from '@leafygreen-ui/compound-component';
 import { cx } from '@leafygreen-ui/emotion';
@@ -17,11 +18,22 @@ import { DeleteWizardFooter } from './DeleteWizardFooter';
 import { DeleteWizardHeader } from './DeleteWizardHeader';
 import { DeleteWizardStep } from './DeleteWizardStep';
 
+// Defining an explicit type for TS 5.0
+type DeleteWizardComponentType = CompoundComponentType<
+  DeleteWizardProps,
+  {
+    displayName: 'DeleteWizard';
+    Header: typeof DeleteWizardHeader;
+    Step: typeof DeleteWizardStep;
+    Footer: typeof DeleteWizardFooter;
+  }
+>;
+
 /**
  * The parent DeleteWizard component.
  * Pass a `DeleteWizard.Header` and any number of `DeleteWizard.Step`s as children
  */
-export const DeleteWizard = CompoundComponent(
+export const DeleteWizard: DeleteWizardComponentType = CompoundComponent(
   ({
     activeStep,
     children,

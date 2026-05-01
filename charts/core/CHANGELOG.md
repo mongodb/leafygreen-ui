@@ -1,5 +1,78 @@
 # @lg-charts/core
 
+## 3.0.0
+
+### Major Changes
+
+- 92c02fe: Fixes existing `ChartTooltip` bug: when unhovering a grouped chart instance with synced tooltips, tooltips continued to render
+
+  #### Breaking Changes
+
+  - Replaced `groupId`/`enableGroupTooltipSync` props on `Chart` component with new `ChartGroupProvider` context provider
+  - `ChartGroupProvider` is a pure context provider without any rendered DOM elements (you must provide your own container)
+  - Renamed `enableGroupTooltipSync` prop to `enableTooltipSync`
+
+  #### Migration Guide
+
+  ##### Grouped charts
+
+  ```diff
+  - import { Chart, ChartTooltip, Line } from '@lg-charts/core';
+  + import { Chart, ChartGroupProvider, ChartTooltip, Line } from '@lg-charts/core';
+
+  - <Chart groupId="group1" enableGroupTooltipSync>
+  -   <ChartTooltip />
+  -   <Line ... />
+  - </Chart>
+  - <Chart groupId="group1" enableGroupTooltipSync>
+  -   <ChartTooltip />
+  -   <Line ... />
+  - </Chart>
+
+  + <ChartGroupProvider groupId="group1" enableTooltipSync>
+  +   <div className="my-charts-container">
+  +     <Chart>
+  +       <ChartTooltip />
+  +       <Line ... />
+  +     </Chart>
+  +     <Chart>
+  +       <ChartTooltip />
+  +       <Line ... />
+  +     </Chart>
+  +   </div>
+  + </ChartGroupProvider>
+  ```
+
+  ##### Ungrouped charts
+
+  No changes required. `Chart` without a `ChartGroupProvider` container continues to work as before.
+
+## 2.5.2
+
+### Patch Changes
+
+- 1c0c03a: Updates the focus ring token to use the base blue color in light mode. [LG-5847](https://jira.mongodb.org/browse/LG-5847)
+- Updated dependencies [1c0c03a]
+  - @leafygreen-ui/hooks@9.3.1
+  - @leafygreen-ui/icon-button@17.1.5
+  - @leafygreen-ui/tokens@4.2.2
+  - @leafygreen-ui/typography@22.2.4
+  - @lg-charts/chart-card@1.1.5
+  - @lg-charts/colors@1.0.7
+
+## 2.5.1
+
+### Patch Changes
+
+- 9a3668d: Fix bug where pinned chart tooltips would disappear on parent component re-renders
+
+## 2.5.0
+
+### Minor Changes
+
+- 956b54c: Small values including zero will show at least a thin bar (1px line minimum) on Bar charts for visibility. Bars with zero values are rendered with 30% opacity to visually differentiate them from bars with small non-zero values.
+- 62b46a3: Exposes `splitNumber` props on axis components
+
 ## 2.4.2
 
 ### Patch Changes

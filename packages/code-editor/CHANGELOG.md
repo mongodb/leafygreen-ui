@@ -1,5 +1,36 @@
 # @leafygreen-ui/code-editor
 
+## 1.0.6
+
+### Patch Changes
+
+- 1c0c03a: Updates the focus ring token to use the base blue color in light mode. [LG-5847](https://jira.mongodb.org/browse/LG-5847)
+- Updated dependencies [1c0c03a]
+  - @leafygreen-ui/badge@10.2.4
+  - @leafygreen-ui/button@25.2.1
+  - @leafygreen-ui/checkbox@18.1.5
+  - @leafygreen-ui/hooks@9.3.1
+  - @leafygreen-ui/icon-button@17.1.5
+  - @leafygreen-ui/input-option@4.1.5
+  - @leafygreen-ui/menu@33.2.1
+  - @leafygreen-ui/modal@22.0.1
+  - @leafygreen-ui/text-input@16.2.3
+  - @leafygreen-ui/tokens@4.2.2
+  - @leafygreen-ui/tooltip@14.3.1
+  - @leafygreen-ui/typography@22.2.4
+
+## 1.0.5
+
+### Patch Changes
+
+- Updated dependencies [5c9da14]
+- Updated dependencies [1800b48]
+- Updated dependencies [cc7b513]
+- Updated dependencies [39e43fb]
+  - @leafygreen-ui/modal@22.0.0
+  - @leafygreen-ui/button@25.2.0
+  - @leafygreen-ui/menu@33.2.0
+
 ## 1.0.4
 
 ### Patch Changes

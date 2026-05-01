@@ -1,5 +1,46 @@
 # @leafygreen-ui/combobox
 
+## 12.5.1
+
+### Patch Changes
+
+- fdfc88e: [LG-5326](https://jira.mongodb.org/browse/LG-5326): Fixes a regression where filtering combobox options by typing did not update the highlighted option. Previously, pressing Enter after filtering would select the first option in the unfiltered list instead of the first matching option.
+
+## 12.5.0
+
+### Minor Changes
+
+- a7d2799: Added a customContent prop to render a custom component in combobox option
+- 2d36a0d: Exported out InternalComboboxOptionProps from ComboBoxOption
+
+## 12.4.2
+
+### Patch Changes
+
+- cc59a2d: Fix selection initialization
+
+## 12.4.1
+
+### Patch Changes
+
+- 1c0c03a: Updates the focus ring token to use the base blue color in light mode. [LG-5847](https://jira.mongodb.org/browse/LG-5847)
+- Updated dependencies [1c0c03a]
+  - @leafygreen-ui/checkbox@18.1.5
+  - @leafygreen-ui/chip@4.2.1
+  - @leafygreen-ui/form-field@4.0.9
+  - @leafygreen-ui/hooks@9.3.1
+  - @leafygreen-ui/icon-button@17.1.5
+  - @leafygreen-ui/input-option@4.1.5
+  - @leafygreen-ui/popover@14.3.2
+  - @leafygreen-ui/tokens@4.2.2
+  - @leafygreen-ui/typography@22.2.4
+
+## 12.4.0
+
+### Minor Changes
+
+- aac0fd8: `ComboboxOption` now accepts a `ReactNode` for the `displayName` prop, enabling custom content like badges. Also refactored internal styles for better organization.
+
 ## 12.3.0
 
 ### Minor Changes

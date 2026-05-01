@@ -1,0 +1,2 @@
+export const DEFAULT_ITEMS_PER_PAGE_OPTIONS = [10, 25, 50];
+export const DEFAULT_CURRENT_PAGE = 1;

@@ -4,9 +4,13 @@ import { storybookArgTypes, StoryMetaType } from '@lg-tools/storybook-utils';
 import { StoryFn, StoryObj } from '@storybook/react';
 import { userEvent, within } from '@storybook/test';
 
+import DatabaseIcon from '@leafygreen-ui/icon/dist/Database';
+import ReturnIcon from '@leafygreen-ui/icon/dist/Return';
 import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { Message, MessageProps, MessageSourceType } from '..';
+
+import { ActionCardState } from './components';
 
 const MARKDOWN_TEXT = `
 # Heading 1
@@ -151,6 +155,42 @@ const getPromotionChild = () => (
   />
 );
 
+const getActionCardChild = () => (
+  <Message.ActionCard
+    chips={[
+      { label: 'docdb-elastic.amazonaws.com:27017', glyph: <DatabaseIcon /> },
+    ]}
+    state={ActionCardState.Idle}
+    title="Run list-databases?"
+  >
+    <Message.ActionCard.ExpandableContent>
+      {`#### ARGUMENTS
+
+\`\`\`javascript
+{}
+\`\`\``}
+    </Message.ActionCard.ExpandableContent>
+    <Message.ActionCard.Button
+      onClick={() => {
+        // eslint-disable-next-line no-console
+        console.log('Cancel clicked');
+      }}
+    >
+      Cancel
+    </Message.ActionCard.Button>
+    <Message.ActionCard.Button
+      onClick={() => {
+        // eslint-disable-next-line no-console
+        console.log('Run clicked');
+      }}
+      rightGlyph={<ReturnIcon />}
+      variant="primary"
+    >
+      Run
+    </Message.ActionCard.Button>
+  </Message.ActionCard>
+);
+
 const meta: StoryMetaType<typeof Message> = {
   title: 'Composition/Chat/Message',
   component: Message,
@@ -160,7 +200,6 @@ const meta: StoryMetaType<typeof Message> = {
   argTypes: {
     darkMode: storybookArgTypes.darkMode,
     isSender: { control: 'boolean' },
-    avatar: { control: 'none' },
     components: { control: 'none' },
     markdownProps: { control: 'none' },
   },
@@ -304,6 +343,15 @@ export const WithPromotion: StoryObj<MessageProps> = {
   },
 };
 
+export const WithActionCard: StoryObj<MessageProps> = {
+  render: Template,
+  args: {
+    children: getActionCardChild(),
+    isSender: false,
+    messageBody: ASSISTANT_TEXT,
+  },
+};
+
 export const WithAllSubComponents: StoryObj<MessageProps> = {
   render: Template,
   args: {
@@ -312,6 +360,7 @@ export const WithAllSubComponents: StoryObj<MessageProps> = {
         {getActionsChild()}
         {getLinksChild()}
         {getPromotionChild()}
+        {getActionCardChild()}
         {getVerifiedBannerChild()}
       </>
     ),

@@ -1,5 +1,41 @@
 # @leafygreen-ui/loading-indicator
 
+## 5.1.1
+
+### Patch Changes
+
+- 1c0c03a: Updates the focus ring token to use the base blue color in light mode. [LG-5847](https://jira.mongodb.org/browse/LG-5847)
+- Updated dependencies [1c0c03a]
+  - @leafygreen-ui/tokens@4.2.2
+  - @leafygreen-ui/typography@22.2.4
+
+## 5.1.0
+
+### Minor Changes
+
+- 12ac0b5: Adds `description` and `direction` props to the `Spinner` component to support text rendering alongside the spinner.
+
+  - `description`: Optional text to display alongside the spinner
+  - `direction`: Controls the layout of the spinner and description (`vertical` or `horizontal`)
+  - `baseFontSize`: Controls the font size of the description text
+  - `svgProps`: Pass-through props for the SVG element
+
+  ```tsx
+  <Spinner
+    size="large"
+    direction="horizontal"
+    description="Loading..."
+    className=""
+    svgProps={{...}}
+  />
+  ```
+
+### Patch Changes
+
+- Updated dependencies [60080b8]
+- Updated dependencies [76d5a8f]
+  - @leafygreen-ui/tokens@4.2.0
+
 ## 5.0.3
 
 ### Patch Changes

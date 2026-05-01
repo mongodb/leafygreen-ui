@@ -1,5 +1,33 @@
 # @leafygreen-ui/avatar
 
+## 3.3.0
+
+### Minor Changes
+
+- b80eade: [LG-5920](https://jira.mongodb.org/browse/LG-5920): conditionally render animation in `AssistantAvatar` instead of relying on opacity transition
+
+## 3.2.1
+
+### Patch Changes
+
+- 1c0c03a: Updates the focus ring token to use the base blue color in light mode. [LG-5847](https://jira.mongodb.org/browse/LG-5847)
+- Updated dependencies [1c0c03a]
+  - @leafygreen-ui/hooks@9.3.1
+  - @leafygreen-ui/tokens@4.2.2
+
+## 3.2.0
+
+### Minor Changes
+
+- c763ad6: [LG-5744](https://jira.mongodb.org/browse/LG-5744): add `showAnimation` prop to `AssistantAvatar` to enable shimmer animation
+
+### Patch Changes
+
+- 7d81983: [LG-5686](https://jira.mongodb.org/browse/LG-5686): update `AssistantAvatar` gradients
+- Updated dependencies [60080b8]
+- Updated dependencies [76d5a8f]
+  - @leafygreen-ui/tokens@4.2.0
+
 ## 3.1.6
 
 ### Patch Changes

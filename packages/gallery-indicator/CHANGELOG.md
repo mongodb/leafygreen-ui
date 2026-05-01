@@ -1,5 +1,19 @@
 # @leafygreen-ui/gallery-indicator
 
+## 3.1.4
+
+### Patch Changes
+
+- 1c0c03a: Updates the focus ring token to use the base blue color in light mode. [LG-5847](https://jira.mongodb.org/browse/LG-5847)
+- Updated dependencies [1c0c03a]
+  - @leafygreen-ui/tokens@4.2.2
+
+## 3.1.3
+
+### Patch Changes
+
+- 251eb7a: Update inactive color to have 3:1 color contrast ratio
+
 ## 3.1.2
 
 ### Patch Changes

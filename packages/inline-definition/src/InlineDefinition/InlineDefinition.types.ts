@@ -1,4 +1,6 @@
-import { TooltipProps } from '@leafygreen-ui/tooltip';
+import { Align, TooltipProps } from '@leafygreen-ui/tooltip';
+
+export { Align };
 
 export interface InlineDefinitionProps
   extends Partial<

@@ -7,7 +7,17 @@ import {
 } from '@lg-tools/storybook-utils';
 import { StoryFn } from '@storybook/react';
 
-import Pagination, { PaginationProps } from '.';
+import PageSize from './Pagination/PageSize';
+import {
+  NavigationProps,
+  type PageSizeProps,
+  Pagination,
+  PaginationNavigation,
+  PaginationPageSize,
+  type PaginationProps,
+  PaginationSummary,
+  type SummaryProps,
+} from '.';
 
 const fn = () => {};
 
@@ -175,4 +185,93 @@ VariableItemsPerPage.parameters = {
       onItemsPerPageOptionChange: fn,
     },
   },
+};
+
+export const PaginationItemsPerPageLiveExample: StoryFn<
+  PageSizeProps
+> = args => {
+  const [itemsPerPage, setItemsPerPage] = useState<number>(
+    args.itemsPerPageOptions ? args.itemsPerPageOptions[0] : 10,
+  );
+
+  const handleItemsPerPageOptionChange: PageSizeProps['onItemsPerPageOptionChange'] =
+    (value, _) => {
+      setItemsPerPage(Number(value));
+    };
+
+  return (
+    <PageSize
+      {...args}
+      itemsPerPage={itemsPerPage}
+      onItemsPerPageOptionChange={handleItemsPerPageOptionChange}
+    />
+  );
+};
+PaginationItemsPerPageLiveExample.args = {
+  itemsPerPageOptions: [10, 25, 50],
+  itemsPerPage: 10,
+  onItemsPerPageOptionChange: fn,
+};
+
+export const PaginationSummaryLiveExample: StoryFn<SummaryProps> = args => {
+  return <PaginationSummary {...args} />;
+};
+PaginationSummaryLiveExample.args = {
+  itemsPerPage: 10,
+  currentPage: 1,
+  numTotalItems: 100,
+};
+
+export const PaginationNavigationLiveExample: StoryFn<
+  NavigationProps
+> = args => {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const handleCurrentPageOptionChange: NavigationProps['onCurrentPageOptionChange'] =
+    (value, _) => {
+      setCurrentPage(Number(value));
+    };
+
+  const handleBackArrowClick = () => {
+    setCurrentPage(cp => Math.max(cp - 1, 1));
+  };
+
+  const handleForwardArrowClick = () => {
+    setCurrentPage(cp => cp + 1);
+  };
+
+  return (
+    <PaginationNavigation
+      {...args}
+      currentPage={currentPage}
+      onCurrentPageOptionChange={handleCurrentPageOptionChange}
+      onBackArrowClick={handleBackArrowClick}
+      onForwardArrowClick={handleForwardArrowClick}
+    />
+  );
+};
+
+PaginationNavigationLiveExample.args = {
+  currentPage: 1,
+  numTotalItems: 100,
+  itemsPerPage: 10,
+  onCurrentPageOptionChange: fn,
+};
+
+PaginationNavigationLiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+
+export const PaginationPageSizeLiveExample: StoryFn<PageSizeProps> = args => {
+  return <PaginationPageSize {...args} />;
+};
+
+PaginationPageSizeLiveExample.args = {
+  itemsPerPageOptions: [10, 25, 50],
+  itemsPerPage: 10,
+  onItemsPerPageOptionChange: fn,
+};
+
+PaginationPageSizeLiveExample.parameters = {
+  chromatic: { disableSnapshot: true },
 };

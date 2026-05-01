@@ -37,6 +37,43 @@ describe('isChildWithProperty', () => {
     });
   });
 
+  describe('array of properties', () => {
+    test('should return true when child has any of the specified static properties', () => {
+      const fooElement = <Foo text="test" />;
+      const barElement = <Bar text="test" />;
+
+      expect(isChildWithProperty(fooElement, ['isFoo', 'isBar'])).toBe(true);
+      expect(isChildWithProperty(barElement, ['isFoo', 'isBar'])).toBe(true);
+    });
+
+    test('should return false when child has none of the specified static properties', () => {
+      const bazElement = <Baz text="test" />;
+
+      expect(isChildWithProperty(bazElement, ['isFoo', 'isBar'])).toBe(false);
+    });
+
+    test('should return true when child has at least one property from the array', () => {
+      const fooElement = <Foo text="test" />;
+
+      expect(isChildWithProperty(fooElement, ['isFoo', 'isBar', 'isBaz'])).toBe(
+        true,
+      );
+    });
+
+    test('should handle empty array', () => {
+      const fooElement = <Foo text="test" />;
+
+      expect(isChildWithProperty(fooElement, [])).toBe(false);
+    });
+
+    test('should handle single-element array same as string', () => {
+      const fooElement = <Foo text="test" />;
+
+      expect(isChildWithProperty(fooElement, ['isFoo'])).toBe(true);
+      expect(isChildWithProperty(fooElement, ['isBar'])).toBe(false);
+    });
+  });
+
   describe('non-React element handling', () => {
     test('should return false for non-React elements', () => {
       expect(isChildWithProperty('string' as any, 'isFoo')).toBe(false);

@@ -48,6 +48,9 @@
       "path": "../tooltip"
     },
     {
+      "path": "../../chat/chat-button"
+    },
+    {
       "path": "../../tools/test-harnesses"
     }
   ]

@@ -1,5 +1,18 @@
 # @lg-tools/codemods
 
+## 0.7.1
+
+### Patch Changes
+
+- Updated dependencies [26a0c2a]
+  - @lg-tools/build@0.9.0
+
+## 0.7.0
+
+### Minor Changes
+
+- 12ac0b5: Updates `loading-spinner-v5` codemod to convert `displayOption` prop to `size` and `direction` props. The codemod now keeps the `description` and `baseFontSize` props instead of removing them.
+
 ## 0.6.0
 
 ### Minor Changes

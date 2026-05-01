@@ -10,9 +10,45 @@ export const getCurrentRangeString = (
 };
 
 export const getRangeMaxString = (numTotalItems?: number) => {
-  return numTotalItems ? `${numTotalItems} items` : 'many';
+  if (!numTotalItems) return 'many';
+
+  return numTotalItems === 1 ? '1 item' : `${numTotalItems} items`;
 };
 
-export const getTotalNumPages = (numItems: number, itemsPerPage: number) => {
-  return Math.ceil(numItems / itemsPerPage);
+export const getTotalNumPages = (
+  numTotalItems: number,
+  itemsPerPage: number,
+) => {
+  return Math.ceil(numTotalItems / itemsPerPage);
+};
+
+export const isCurrentPageValid = <T extends number>({
+  currentPage,
+  numTotalItems,
+  itemsPerPage,
+}: {
+  currentPage: number;
+  numTotalItems?: number;
+  itemsPerPage: T;
+}) => {
+  if (currentPage < 1) return false;
+
+  if (
+    numTotalItems &&
+    getTotalNumPages(numTotalItems, itemsPerPage) < currentPage
+  ) {
+    return false;
+  }
+
+  return true;
+};
+
+export const areItemsPerPageValid = <T extends number>({
+  itemsPerPage,
+  itemsPerPageOptions,
+}: {
+  itemsPerPage: T;
+  itemsPerPageOptions: Array<T>;
+}) => {
+  return itemsPerPageOptions.includes(itemsPerPage);
 };

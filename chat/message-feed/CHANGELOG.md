@@ -1,5 +1,38 @@
 # @lg-chat/message-feed
 
+## 9.1.0
+
+### Minor Changes
+
+- 9296806: - [LG-5932](https://jira.mongodb.org/browse/LG-5932): Refactor to use `CompoundComponent` pattern
+  - [LG-5934](https://jira.mongodb.org/browse/LG-5934): add `MessageFeedProvider` and `useMessageFeedContext`
+  - [LG-5935](https://jira.mongodb.org/browse/LG-5935): add `MessageFeed.InitialMessage` component
+  - [LG-5933](https://jira.mongodb.org/browse/LG-5933): add `MessageFeed.InitialMessage.MessagePrompts` and `MessageFeed.InitialMessage.MessagePrompt` components.
+  - [LG-5936](https://jira.mongodb.org/browse/LG-5936): add `MessageFeed.InitialMessage.ResourceList` and `MessageFeed.InitialMessage.ResourceListItem` components.
+
+### Patch Changes
+
+- 9296806: Update MessagePrompt padding to reflect designs
+- Updated dependencies [9296806]
+- Updated dependencies [5849e0f]
+  - @lg-chat/message-prompts@4.2.2
+  - @lg-chat/message@12.0.0
+
+## 9.0.2
+
+### Patch Changes
+
+- 1c0c03a: Updates the focus ring token to use the base blue color in light mode. [LG-5847](https://jira.mongodb.org/browse/LG-5847)
+- Updated dependencies [0f65282]
+- Updated dependencies [1c0c03a]
+- Updated dependencies [0f65282]
+- Updated dependencies [0f65282]
+- Updated dependencies [0f65282]
+  - @lg-chat/message@11.0.0
+  - @leafygreen-ui/button@25.2.1
+  - @leafygreen-ui/tokens@4.2.2
+  - @lg-chat/message-rating@7.1.2
+
 ## 9.0.1
 
 ### Patch Changes

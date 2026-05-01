@@ -6,6 +6,7 @@ export {
 export {
   BaseFontSize,
   type ChipProps,
+  TooltipAlign,
   TruncationLocation,
   Variant,
 } from './Chip.types';

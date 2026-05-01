@@ -109,7 +109,6 @@ export const getContentWrapperStyles = ({
 
 const getBaseTextAreaStyles = ({ theme }: { theme: Theme }) => css`
   min-width: ${TEXT_AREA_MIN_WIDTH}px;
-  width: 100%;
   font-size: ${BaseFontSize.Body1}px;
   font-family: ${fontFamilies.default};
   font-weight: ${fontWeights.regular};
@@ -156,10 +155,13 @@ export const getTextAreaStyles = ({
   theme: Theme;
 }) => cx(getBaseTextAreaStyles({ theme }), className);
 
-export const actionContainerStyles = css`
+export const getActionContainerStyles = ({
+  hasAdditionalActions,
+}: {
+  hasAdditionalActions: boolean;
+}) => css`
   display: flex;
-  align-items: flex-end;
-  align-self: flex-end;
+  justify-content: ${hasAdditionalActions ? 'space-between' : 'flex-end'};
   gap: ${spacing[200]}px;
   padding: ${spacing[100]}px;
 `;

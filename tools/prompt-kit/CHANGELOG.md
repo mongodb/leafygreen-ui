@@ -1,5 +1,12 @@
 # @lg-tools/prompt-kit
 
+## 0.3.3
+
+### Patch Changes
+
+- Updated dependencies [26a0c2a]
+  - @lg-tools/build@0.9.0
+
 ## 0.3.2
 
 ### Patch Changes

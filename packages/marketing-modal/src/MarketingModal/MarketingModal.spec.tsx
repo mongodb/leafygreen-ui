@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { act, render, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
 
@@ -167,5 +167,43 @@ describe('packages/marketing-modal', () => {
     });
 
     expect(getByTestId('svg-blob')).toBeVisible();
+  });
+
+  describe('initial focus', () => {
+    test('focuses button when modal opens', async () => {
+      renderModal({ open: true });
+      const button = screen.getByRole('button', { name: 'Button action' });
+
+      await waitFor(() => {
+        expect(button).toHaveFocus();
+      });
+    });
+
+    test('can be customized with initialFocus prop', async () => {
+      const customFocusRef = React.createRef<HTMLButtonElement>();
+
+      renderModal({
+        open: true,
+        initialFocus: customFocusRef,
+        children: (
+          <>
+            Content text
+            <button ref={customFocusRef}>Custom action</button>
+          </>
+        ),
+      });
+
+      const customButton = screen.getByRole('button', {
+        name: 'Custom action',
+      });
+      const defaultButton = screen.getByRole('button', {
+        name: 'Button action',
+      });
+
+      await waitFor(() => {
+        expect(customButton).toHaveFocus();
+        expect(defaultButton).not.toHaveFocus();
+      });
+    });
   });
 });

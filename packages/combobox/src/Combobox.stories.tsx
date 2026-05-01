@@ -5,9 +5,10 @@ import {
   type StoryMetaType,
   StoryType,
 } from '@lg-tools/storybook-utils';
-import { StoryFn } from '@storybook/react';
+import { StoryContext, StoryFn } from '@storybook/react';
 import { userEvent, within } from '@storybook/test';
 
+import { Badge } from '@leafygreen-ui/badge';
 import { Button } from '@leafygreen-ui/button';
 import { css } from '@leafygreen-ui/emotion';
 
@@ -150,15 +151,15 @@ const meta: StoryMetaType<typeof Combobox> = {
 
 export default meta;
 
-export const LiveExample: StoryFn<ComboboxProps<boolean>> = (
-  args: ComboboxProps<boolean>,
-) => {
+export const LiveExample: StoryFn<ComboboxProps<boolean>> = args => {
   return (
     <>
       {/* Since Combobox doesn't fully refresh when `multiselect` changes, we need to explicitly render a different instance */}
       {args.multiselect ? (
+        // @ts-ignore - multiselect check ensures props match ComboboxProps<true>
         <Combobox key="multi" {...args} multiselect={true} />
       ) : (
+        // @ts-ignore - multiselect check ensures props match ComboboxProps<false>
         <Combobox key="single" {...args} multiselect={false} />
       )}
     </>
@@ -237,6 +238,57 @@ ExternalFilter.parameters = {
   chromatic: { disableSnapshot: true },
 };
 
+/**
+ * Example showing the `customContent` prop for rendering custom components in dropdown options.
+ * The `customContent` prop accepts any ReactNode, allowing you to add badges, icons, or other
+ * custom components to your options. The `displayName` is still used for filtering and chips.
+ */
+export const WithCustomContent = () => {
+  return (
+    <Combobox
+      label="Choose a feature"
+      description="Some features are new!"
+      placeholder="Select a feature"
+      multiselect={false}
+    >
+      <ComboboxOption
+        value="feature-a"
+        displayName="Feature A"
+        customContent={
+          <>
+            <span>Feature A</span>
+            <Badge variant="blue">New</Badge>
+          </>
+        }
+      />
+      <ComboboxOption
+        value="feature-b"
+        displayName="Feature B"
+        customContent={
+          <>
+            <span>Feature B</span>
+            <Badge variant="green">Beta</Badge>
+          </>
+        }
+      />
+      <ComboboxOption value="feature-c" displayName="Feature C" />
+      <ComboboxOption
+        value="feature-d"
+        displayName="Feature D"
+        customContent={
+          <>
+            <span>Feature D</span>
+            <Badge variant="red">Deprecated</Badge>
+          </>
+        }
+      />
+    </Combobox>
+  );
+};
+WithCustomContent.parameters = {
+  chromatic: { disableSnapshot: true },
+};
+
 export const SingleSelect: StoryType<typeof Combobox> = () => <></>;
 SingleSelect.args = {
   multiselect: false,
@@ -265,6 +317,7 @@ export const MultiSelectNoIcons: StoryFn<ComboboxProps<boolean>> = (
   args: ComboboxProps<boolean>,
 ) => {
   return (
+    // @ts-expect-error - args will have multiselect=true from storybook controls
     <Combobox {...args} multiselect={true}>
       {getComboboxOptions(false)}
     </Combobox>
@@ -299,20 +352,20 @@ export const InitialLongComboboxOpen = {
       </Combobox>
     );
   },
-  play: async ctx => {
+  play: async (ctx: StoryContext) => {
     const { findByRole } = within(ctx.canvasElement.parentElement!);
     const trigger = await findByRole('combobox');
     userEvent.click(trigger);
   },
   decorators: [
-    (StoryFn, _ctx) => (
+    (Story: StoryFn, _ctx: StoryContext) => (
       <div
         className={css`
           height: 100vh;
           padding: 0;
         `}
       >
-        <StoryFn />
+        <Story />
       </div>
     ),
   ],

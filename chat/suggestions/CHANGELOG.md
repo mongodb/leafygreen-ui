@@ -1,5 +1,16 @@
 # @lg-chat/suggestions
 
+## 0.2.9
+
+### Patch Changes
+
+- 1c0c03a: Updates the focus ring token to use the base blue color in light mode. [LG-5847](https://jira.mongodb.org/browse/LG-5847)
+- Updated dependencies [1c0c03a]
+  - @leafygreen-ui/banner@10.2.5
+  - @leafygreen-ui/button@25.2.1
+  - @leafygreen-ui/tokens@4.2.2
+  - @leafygreen-ui/typography@22.2.4
+
 ## 0.2.8
 
 ### Patch Changes

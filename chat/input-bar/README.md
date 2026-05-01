@@ -52,7 +52,39 @@ const Example = () => {
 };
 ```
 
+### Compound Components
+
+#### InputBar.AdditionalActions
+
+```tsx
+import { useState } from 'react';
+import { InputBar, State } from '@lg-chat/input-bar';
+import { Button } from '@leafygreen-ui/button';
+
+const Example = () => {
+  const [state, setState] = useState<State>(State.Unset);
+
+  const handleMessageSend = (messageBody: string) => {
+    console.log('Sending:', messageBody);
+    setState(State.Loading);
+    // Simulate API call
+  };
+
+  return (
+    <InputBar onMessageSend={handleMessageSend}>
+      <InputBar.AdditionalActions>
+        <Button onClick={() => console.log('Attach clicked')}>
+          Attach file
+        </Button>
+      </InputBar.AdditionalActions>
+    </InputBar>
+  );
+};
+```
+
 ## Properties
+
+### InputBar
 
 | Prop                | Type                                           | Description                                                                                                | Default |
 | ------------------- | ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------- |
@@ -67,7 +99,14 @@ const Example = () => {
 | `state`             | `'unset' \| 'error' \| 'loading'`              | The current state of the InputBar.                                                                         |         |
 | `...`               | `HTMLElementProps<'form'>`                     | Props spread on the root element                                                                           |         |
 
-## TextareaAutosizeProps
+### InputBar.AdditionalActions
+
+| Prop       | Type                      | Description                                                                                     | Default |
+| ---------- | ------------------------- | ----------------------------------------------------------------------------------------------- | ------- |
+| `children` | `ReactNode`               | Content to render in the additional actions container. Appears to the left of send/stop button. |         |
+| `...`      | `HTMLElementProps<'div'>` | Props spread on the container div element                                                       |         |
+
+### TextareaAutosizeProps
 
 | Prop      | Type     | Description                       | Default |
 | --------- | -------- | --------------------------------- | ------- |
