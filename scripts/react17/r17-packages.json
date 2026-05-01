@@ -35,6 +35,7 @@
       "react": "$react",
       "react-dom": "$react-dom",
       "react-is": "17.0.2",
+      "rollup-plugin-stats": "1.4.0",
       "typescript": "5.0.4"
     },
     "peerDependencyRules": {
