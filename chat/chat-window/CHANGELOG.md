@@ -1,5 +1,11 @@
 # @lg-chat/chat-window
 
+## 6.0.2
+
+### Patch Changes
+
+- 9296806: Update MessagePrompt padding to reflect designs
+
 ## 6.0.1
 
 ### Patch Changes

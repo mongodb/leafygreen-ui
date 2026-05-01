@@ -1,5 +1,11 @@
 # @leafygreen-ui/wizard
 
+## 0.1.5
+
+### Patch Changes
+
+- e5c39d6: Exports `WizardStepContext` & `WizardStepContextData` types
+
 ## 0.1.4
 
 ### Patch Changes

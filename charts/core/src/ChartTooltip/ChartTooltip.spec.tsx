@@ -3,6 +3,7 @@ import { render } from '@testing-library/react';
 
 import { ChartInstance } from '../Chart/hooks/useChart.types';
 import { ChartContext } from '../ChartContext/ChartContext';
+import { ChartGroupProvider } from '../ChartGroupContext';
 
 import { ChartTooltip } from './ChartTooltip';
 
@@ -11,7 +12,6 @@ const createMockChartInstance = (
 ): ChartInstance => ({
   id: 'test-chart',
   ref: jest.fn(),
-  enableGroupTooltipSync: false,
   state: undefined,
   isChartHovered: false,
   setTooltipMounted: jest.fn(),
@@ -37,9 +37,11 @@ const createMockChartInstance = (
 
 const createWrapper = (chartInstance: ChartInstance) => {
   const Wrapper = ({ children }: PropsWithChildren<{}>) => (
-    <ChartContext.Provider value={{ chart: chartInstance }}>
-      {children}
-    </ChartContext.Provider>
+    <ChartGroupProvider groupId="test-group" enableTooltipSync={false}>
+      <ChartContext.Provider value={{ chart: chartInstance }}>
+        {children}
+      </ChartContext.Provider>
+    </ChartGroupProvider>
   );
   Wrapper.displayName = 'ChartContextWrapper';
   return Wrapper;

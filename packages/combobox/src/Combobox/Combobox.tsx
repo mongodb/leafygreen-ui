@@ -631,12 +631,11 @@ export function Combobox<M extends boolean>({
     ],
   );
 
-  // Reset the highlighted option when the menu closes so that it opens to the first option
+  // Reset highlighted option to the first visible option when the menu
+  // opens/closes, or when visible options change (e.g. due to filtering)
   useEffect(() => {
-    if (!isOpen) {
-      updateHighlightedOption('first');
-    }
-  }, [isOpen, updateHighlightedOption]);
+    setHighlightedOption(visibleOptions[0]?.value ?? null);
+  }, [isOpen, visibleOptions]);
 
   // When the focused option changes, update the menu scroll if necessary
   useAutoScroll(

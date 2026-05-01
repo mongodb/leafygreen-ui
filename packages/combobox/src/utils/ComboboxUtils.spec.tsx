@@ -202,21 +202,16 @@ describe('packages/combobox/utils', () => {
       expect(result).toBe('test');
     });
 
-    test('Returns React node displayName when option has node displayName', () => {
-      const nodeDisplayName = (
-        <span>
-          <strong>Bold</strong> text
-        </span>
-      );
-      const optionsWithNode = [
+    test('Returns string displayName when option has string displayName', () => {
+      const optionsWithString = [
         {
-          value: 'node-option',
-          displayName: nodeDisplayName,
+          value: 'string-option',
+          displayName: 'Bold text',
           isDisabled: false,
         },
       ];
-      const result = getDisplayNameForValue('node-option', optionsWithNode);
-      expect(result).toBe(nodeDisplayName);
+      const result = getDisplayNameForValue('string-option', optionsWithString);
+      expect(result).toBe('Bold text');
     });
   });
 
@@ -280,12 +275,13 @@ describe('packages/combobox/utils', () => {
       ]);
     });
 
-    test('flattens options with node displayName', () => {
+    test('flattens options with customContent', () => {
       const children = [
         <ComboboxOption
           key="test"
           value="test"
-          displayName={
+          displayName="Testing New"
+          customContent={
             <div>
               <span>Testing</span>
               <span>New</span>

@@ -10,7 +10,7 @@ import {
 
 const baseStyles = css`
   display: block;
-  padding: ${spacing[2]}px ${spacing[3]}px;
+  padding: ${spacing[200]}px ${spacing[300]}px;
   border: 1px solid ${palette.green.dark2};
   border-radius: 12px;
   transition: all ${transitionDuration.slower}ms ease;

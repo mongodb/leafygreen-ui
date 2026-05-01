@@ -55,16 +55,14 @@ Before contributing, ensure you have these tools installed:
 
 ## Getting Started
 
-### 1. Fork and Clone
+### 1. Clone the Repository
 
 ```bash
-# Fork the repository on GitHub, then clone your fork
-git clone https://github.com/<your-username>/leafygreen-ui.git
+git clone https://github.com/mongodb/leafygreen-ui.git
 cd leafygreen-ui
-
-# Add the upstream remote
-git remote add upstream https://github.com/mongodb/leafygreen-ui.git
 ```
+
+> **Note**: PRs from forked repositories cannot be merged. Please clone the repository directly and push your branch to the main repo.
 
 ### 2. Install Dependencies
 
@@ -333,6 +331,8 @@ git push origin <your-branch-name>
 - Ensure all CI checks pass (linting, tests, Chromatic visual regression)
 
 The team will review your PR and may request changes.
+
+> **Code Review SLA**: We aim to provide initial review feedback within 24 hours of PR submission.
 
 ### 6. Squash and Merge
 

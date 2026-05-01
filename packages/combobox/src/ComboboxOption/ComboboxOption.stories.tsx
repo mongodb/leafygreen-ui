@@ -81,7 +81,8 @@ export const WithIconsAndCustomDisplayName: StoryType<
 WithIconsAndCustomDisplayName.parameters = {
   generate: {
     args: {
-      displayName: (
+      displayName: 'Option',
+      customContent: (
         <div
           className={css`
             display: flex;

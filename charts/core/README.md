@@ -24,9 +24,11 @@ yarn add @lg-charts/core
 npm install @lg-charts/core
 ```
 
-## Basic Chart Example
+## Examples
 
-```js
+### Basic Chart
+
+```tsx
 import { Chart, ChartGrid, ChartHeader, Line, XAxis, YAxis, type ChartStates } from '@lg-charts/core';
 
 <Chart onZoomSelect={handleZoom} state={ChartStates.Unset}>
@@ -74,7 +76,39 @@ import { Chart, ChartGrid, ChartHeader, Line, XAxis, YAxis, type ChartStates } f
 </Chart>;
 ```
 
+### Grouped Charts
+
+```tsx
+import { Chart, ChartGroupProvider, ChartTooltip, Line } from '@lg-charts/core';
+
+<ChartGroupProvider groupId="my-group" enableTooltipSync>
+  <div>
+    <Chart>
+      <ChartTooltip />
+      <Line name="Series 1" data={data1} />
+    </Chart>
+    <Chart>
+      <ChartTooltip />
+      <Line name="Series 2" data={data2} />
+    </Chart>
+  </div>
+</ChartGroupProvider>;
+```
+
 ## Parent Components
+
+### `ChartGroupProvider`
+
+Context provider for synchronizing tooltips and axis pointers across multiple charts. Charts placed inside a `ChartGroupProvider` will have their axis pointers linked, and optionally their tooltip content synchronized.
+
+**Note:** This is a pure context provider and does not render any DOM elements. You must provide your own container div for layout and styling.
+
+#### Props
+
+| Name                             | Description                                                                                                                                                                    | Type      | Default |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- | ------- |
+| `enableTooltipSync` _(optional)_ | Whether tooltip content is synchronized across all charts. When `true`, hovering any chart shows tooltip content on all grouped charts. When `false`, only axis pointers sync. | `boolean` | `true`  |
+| `groupId`                        | Unique identifier for the chart group. Used internally by ECharts to synchronize axis pointers.                                                                                | `string`  |         |
 
 ### `Chart`
 
@@ -85,7 +119,6 @@ Chart container component.
 | Name                        | Description                                                                     | Type                                   | Default                          |
 | --------------------------- | ------------------------------------------------------------------------------- | -------------------------------------- | -------------------------------- |
 | `state` _(optional)_        | The state of the chart.                                                         | `ChartStates ('unset \| 'loading')`    | `'unset'`                        |
-| `groupId` _(optional)_      | Charts with the same `groupId` will have their tooltips synced across charts.   | `string`                               |                                  |
 | `onChartReady` _(optional)_ | Callback to be called when chart is finished rendering.                         | `() => void`                           |                                  |
 | `onZoomSelect` _(optional)_ | Callback to be called when a zoom selection is made if `zoomSelect` is enabled. | `(e: ZoomSelectionEvent) => void`      |                                  |
 | `zoomSelect` _(optional)_   | Enable zoom select (click and drag area selection) for either axis.             | `{ xAxis?: boolean; yAxis?: boolean }` | `{ xAxis: false, yAxis: false }` |

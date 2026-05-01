@@ -13,6 +13,7 @@ import { axe } from 'jest-axe';
 import flatten from 'lodash/flatten';
 import isUndefined from 'lodash/isUndefined';
 
+import { Badge } from '@leafygreen-ui/badge';
 import { RenderMode } from '@leafygreen-ui/popover';
 import { eventContainingTargetValue } from '@leafygreen-ui/testing-lib';
 
@@ -279,15 +280,11 @@ describe('packages/combobox', () => {
         expect(optionEl).toHaveTextContent('abc-def');
       });
 
-      test('Option aria-label falls back to displayName text content', () => {
+      test('Option aria-label falls back to displayName', () => {
         const options: Array<OptionObject> = [
           {
             value: 'react-node-option',
-            displayName: (
-              <span>
-                <strong>Bold</strong> and <em>italic</em> text
-              </span>
-            ),
+            displayName: 'Bold and italic text',
             isDisabled: false,
           },
         ];
@@ -295,6 +292,100 @@ describe('packages/combobox', () => {
         const { optionElements } = openMenu();
         const [optionEl] = Array.from(optionElements!);
         expect(optionEl).toHaveAttribute('aria-label', 'Bold and italic text');
+      });
+
+      test('displayName renders correctly', () => {
+        const options: Array<OptionObject> = [
+          {
+            value: 'legacy-option',
+            displayName: 'Legacy String Display Name',
+            isDisabled: false,
+          },
+        ];
+        const { openMenu } = renderCombobox(select, { options });
+        const { optionElements } = openMenu();
+        const [optionEl] = Array.from(optionElements!);
+
+        // Should render the string displayName
+        expect(optionEl).toHaveTextContent('Legacy String Display Name');
+        expect(optionEl).toHaveAttribute(
+          'aria-label',
+          'Legacy String Display Name',
+        );
+      });
+
+      test('customContent with Badge component renders correctly', () => {
+        const { openMenu } = renderCombobox(select, {
+          children: (
+            <ComboboxOption
+              value="new-feature"
+              displayName="New Feature"
+              customContent={
+                <>
+                  Custom Content Component
+                  <Badge variant="blue" data-testid="custom-badge">
+                    New
+                  </Badge>
+                </>
+              }
+            />
+          ),
+        });
+        const { optionElements } = openMenu();
+        const [optionEl] = Array.from(optionElements!) as Array<Element>;
+
+        // Should render the custom content with Badge (not the displayName)
+        expect(optionEl).toHaveTextContent('Custom Content Component');
+        expect(optionEl).not.toHaveTextContent('New Feature');
+
+        // Should render the Badge component
+        const badgeEl = optionEl.querySelector('[data-testid="custom-badge"]');
+        expect(badgeEl).toBeInTheDocument();
+
+        // aria-label should still use the string displayName
+        expect(optionEl).toHaveAttribute('aria-label', 'New Feature');
+      });
+
+      test('option with customContent can be selected', async () => {
+        const onChange = jest.fn();
+        const { openMenu, inputEl, queryByTestId } = renderCombobox(select, {
+          onChange,
+          children: (
+            <ComboboxOption
+              value="new-feature"
+              displayName="New Feature"
+              customContent={
+                <>
+                  Custom Content
+                  <Badge variant="blue">New</Badge>
+                </>
+              }
+            />
+          ),
+        });
+        const { optionElements } = openMenu();
+        const [optionEl] = Array.from(optionElements!) as Array<Element>;
+
+        userEvent.click(optionEl as Element);
+
+        if (select === 'single') {
+          expect(onChange).toHaveBeenCalledWith('new-feature');
+          // Only displayName should be rendered in the input, not customContent
+          expect(inputEl).toHaveValue('New Feature');
+          expect(inputEl).not.toHaveValue('Custom Content');
+        } else {
+          expect(onChange).toHaveBeenCalledWith(
+            ['new-feature'],
+            expect.anything(),
+          );
+          // Only displayName should be rendered in the chip, not customContent
+          await waitFor(() => {
+            const chip = queryByTestId('lg-combobox-chip');
+            expect(chip).toBeInTheDocument();
+            expect(chip).toHaveTextContent('New Feature');
+            expect(chip).not.toHaveTextContent('Custom Content');
+          });
+        }
       });
 
       test('Option aria-label falls back to value when displayName is not provided', () => {

@@ -10,15 +10,23 @@ import {
 } from '@leafygreen-ui/tokens';
 
 const getBaseContainerStyles = (theme: Theme) => css`
+  position: relative;
+  max-width: 100%;
+  width: 100%;
+  white-space: pre-line;
+  overflow-wrap: break-word;
   display: flex;
   flex-direction: column;
-  gap: ${spacing[150]}px;
-  align-items: flex-start;
+  gap: ${spacing[200]}px;
   color: ${color[theme].text[Variant.Primary][InteractionState.Default]};
 `;
 
-const senderStyles = css`
-  align-items: flex-end;
+const getSenderContainerStyles = (theme: Theme) => css`
+  width: auto;
+  border-radius: ${borderRadius[300]}px ${borderRadius[300]}px 0;
+  background-color: ${palette.gray[theme === Theme.Dark ? 'dark2' : 'light2']};
+  padding: ${spacing[300]}px;
+  align-self: flex-end;
 `;
 
 export const getContainerStyles = ({
@@ -33,39 +41,7 @@ export const getContainerStyles = ({
   cx(
     getBaseContainerStyles(theme),
     {
-      [senderStyles]: isSender,
+      [getSenderContainerStyles(theme)]: isSender,
     },
     className,
   );
-
-export const avatarContainerStyles = css`
-  display: flex;
-  gap: ${spacing[150]}px;
-`;
-
-const baseMessageContainerStyles = css`
-  position: relative;
-  max-width: 100%;
-  white-space: pre-line;
-  overflow-wrap: break-word;
-  display: flex;
-  flex-direction: column;
-  gap: ${spacing[200]}px;
-`;
-
-const getSenderMessageContainerStyles = (theme: Theme) => css`
-  border-radius: ${borderRadius[300]}px ${borderRadius[300]}px 0;
-  background-color: ${palette.gray[theme === Theme.Dark ? 'dark2' : 'light2']};
-  padding: ${spacing[300]}px;
-`;
-
-export const getMessageContainerStyles = ({
-  isSender,
-  theme,
-}: {
-  isSender: boolean;
-  theme: Theme;
-}) =>
-  cx(baseMessageContainerStyles, {
-    [getSenderMessageContainerStyles(theme)]: isSender,
-  });

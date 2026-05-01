@@ -22,6 +22,12 @@ interface SharedComboboxOptionProps {
   displayName?: ReactNode;
 
   /**
+   * Optional custom content to render for the option.
+   * When provided, this ReactNode will be rendered in the option menu
+   */
+  customContent?: ReactNode;
+
+  /**
    * The icon to display to the left of the option in the menu.
    */
   glyph?: ReactElement;
