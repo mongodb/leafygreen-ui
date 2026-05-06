@@ -62,12 +62,15 @@ export async function buildPackage({
 
     // Log the bundle stats in verbose mode
     if (verbose) {
+      // Cast to `any`: rollup-plugin-stats@2.1.1 (bundleStats dep) ships stale
+      // OutputBundle types that don't include properties added in rollup@4.16.1
+      // (OutputAsset.names / originalFileName / originalFileNames).
       config.plugins.push(
         bundleStats({
           html: false,
           json: false,
           compare: false,
-        }),
+        }) as any,
       );
     }
 
