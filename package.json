@@ -86,6 +86,7 @@
       "@testing-library/user-event": "13.5.0",
       "caniuse-lite": "^1.0.30001585",
       "jackspeak": "2.1.1",
+      "rollup-plugin-stats": "2.1.2",
       "typescript": "$typescript"
     },
     "onlyBuiltDependencies": [
