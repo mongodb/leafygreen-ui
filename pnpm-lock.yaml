@@ -4141,8 +4141,8 @@ importers:
         specifier: 4.16.1
         version: 4.16.1
       rollup-plugin-bundle-stats:
-        specifier: ^4.18.2
-        version: 4.21.0(core-js@3.44.0)(rollup@4.16.1)
+        specifier: 4.18.2
+        version: 4.18.2(core-js@3.44.0)(rollup@4.16.1)
       rollup-plugin-node-externals:
         specifier: 7.1.1
         version: 7.1.1(rollup@4.16.1)
@@ -11282,17 +11282,11 @@ packages:
   ripemd160@2.0.2:
     resolution: {integrity: sha512-ii4iagi25WusVoiC4B4lq7pbXfAp3D9v5CwfkY33vffw2+pkDjY1D8GaN7spsxvCSx8dkPqOZCEZyfxcmJG2IA==}
 
-  rollup-plugin-bundle-stats@4.21.0:
-    resolution: {integrity: sha512-cbT9uJf5FqBbDvFT3FmiiMuIfSshfFRBkiz6zXELb0wrUFPYAiL7rt4UJMUjJpovSVZeUbvYBaKyvgv9fInZow==}
+  rollup-plugin-bundle-stats@4.18.2:
+    resolution: {integrity: sha512-P07u6pncUY7DoA+CapDgubEFmyIUDQxaPcWlxopXf6RYkWMvwO9y8I29yqqmyvk8DXlUUgFM9Vc0UJ7FoMZC7w==}
     engines: {node: '>= 16.0'}
     peerDependencies:
       rollup: ^3.0.0 || ^4.0.0
-      vite: ^5.0.0 || ^6.0.0 || ^7.0.0
-    peerDependenciesMeta:
-      rollup:
-        optional: true
-      vite:
-        optional: true
 
   rollup-plugin-node-externals@7.1.1:
     resolution: {integrity: sha512-rnIUt0zYdV05muRetoxOiFiKxrrfiyXuM/CgI+akv6NExBTaIiPkH2rCSE9JUCsjta1MXzQVAldpe5tJEszlwQ==}
@@ -11320,17 +11314,11 @@ packages:
       vite:
         optional: true
 
-  rollup-plugin-webpack-stats@2.1.0:
-    resolution: {integrity: sha512-7cxCelMRPkqZvjQa4NuHSkdJ6nshLDuDYyPAky8YOjcaz+qEocg0DRcJoSd4r2mKSupz0uZpoav5vqpDm7bSxg==}
+  rollup-plugin-webpack-stats@2.0.1:
+    resolution: {integrity: sha512-1JALgjz4RDe14SowXJxAsQqJxGnj6JF4TIRo0FistxspFr3TyYIWCpO8B5qaes7vfdKxSNTowJtuQTOlZOobMA==}
     engines: {node: '>=18'}
     peerDependencies:
       rollup: ^3.0.0 || ^4.0.0
-      vite: ^5.0.0 || ^6.0.0 || ^7.0.0
-    peerDependenciesMeta:
-      rollup:
-        optional: true
-      vite:
-        optional: true
 
   rollup@4.16.1:
     resolution: {integrity: sha512-5CaD3MPDlPKfhqzRvWXK96G6ELJfPZNb3LHiZxTHgDdC6jvwfGz2E8nY+9g1ONk4ttHsK1WaFP19Js4PSr1E3g==}
@@ -21573,16 +21561,15 @@ snapshots:
       hash-base: 3.0.5
       inherits: 2.0.4
 
-  rollup-plugin-bundle-stats@4.21.0(core-js@3.44.0)(rollup@4.16.1):
+  rollup-plugin-bundle-stats@4.18.2(core-js@3.44.0)(rollup@4.16.1):
     dependencies:
       '@bundle-stats/cli-utils': 4.21.0(core-js@3.44.0)
-      rollup-plugin-webpack-stats: 2.1.0(rollup@4.16.1)
-      tslib: 2.8.1
-    optionalDependencies:
       rollup: 4.16.1
+      rollup-plugin-webpack-stats: 2.0.1(rollup@4.16.1)
     transitivePeerDependencies:
       - core-js
       - rolldown
+      - vite
 
   rollup-plugin-node-externals@7.1.1(rollup@4.16.1):
     dependencies:
@@ -21597,13 +21584,13 @@ snapshots:
     optionalDependencies:
       rollup: 4.16.1
 
-  rollup-plugin-webpack-stats@2.1.0(rollup@4.16.1):
+  rollup-plugin-webpack-stats@2.0.1(rollup@4.16.1):
     dependencies:
-      rollup-plugin-stats: 2.1.2(rollup@4.16.1)
-    optionalDependencies:
       rollup: 4.16.1
+      rollup-plugin-stats: 2.1.2(rollup@4.16.1)
     transitivePeerDependencies:
       - rolldown
+      - vite
 
   rollup@4.16.1:
     dependencies:
