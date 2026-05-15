@@ -1,5 +1,11 @@
 # @leafygreen-ui/icon
 
+## 14.9.0
+
+### Minor Changes
+
+- 7167cce: Adds `SearchNode` glyph
+
 ## 14.8.0
 
 ### Minor Changes
