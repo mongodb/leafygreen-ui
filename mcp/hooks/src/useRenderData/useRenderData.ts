@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import {
   BaseRenderData,
@@ -19,14 +19,19 @@ function validateRenderData<T>(
   event: MessageEvent<RenderDataMessage>,
   options?: UseRenderDataOptions,
 ): ValidationResult<T> | null {
-  if (options?.allowedOrigins && !options.allowedOrigins.includes(event.origin)) {
-    return null;
-  }
-
   const isRenderDataMessage = event.data?.type === MESSAGE_TYPE_RENDER_DATA;
 
   if (!isRenderDataMessage) {
     return null;
+  }
+
+  if (options?.allowedOrigins && options.allowedOrigins.length > 0) {
+    if (!options.allowedOrigins.includes(event.origin)) {
+      console.warn(
+        `useRenderData: Message from unauthorized origin "${event.origin}" was blocked.`,
+      );
+      return null;
+    }
   }
 
   const { payload } = event.data;
@@ -96,9 +101,11 @@ export function useRenderData<T = unknown>(
     return () => mediaQuery.removeEventListener('change', handler);
   }, []);
 
+  const stableOptions = useMemo(() => options, [JSON.stringify(options)]);
+
   useEffect(function handleMessages() {
     const handleMessage = (event: MessageEvent<RenderDataMessage>): void => {
-      const result = validateRenderData<T>(event, options);
+      const result = validateRenderData<T>(event, stableOptions);
 
       if (result === null) {
         return;
@@ -116,10 +123,16 @@ export function useRenderData<T = unknown>(
     };
 
     window.addEventListener('message', handleMessage);
-    window.parent.postMessage({ type: MESSAGE_TYPE_IFRAME_READY }, '*');
+
+    const targetOrigin =
+      stableOptions?.allowedOrigins && stableOptions.allowedOrigins.length > 0
+        ? stableOptions.allowedOrigins[0]
+        : '*';
+
+    window.parent.postMessage({ type: MESSAGE_TYPE_IFRAME_READY }, targetOrigin);
 
     return () => window.removeEventListener('message', handleMessage);
-  }, [options]);
+  }, [stableOptions]);
 
   const darkMode = data?.darkMode ?? prefersDarkMode;
 

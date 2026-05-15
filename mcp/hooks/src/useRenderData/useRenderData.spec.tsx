@@ -133,7 +133,57 @@ describe('mcp/hooks/useRenderData', () => {
     removeEventListenerSpy.mockRestore();
   });
 
-  test('ignores messages from disallowed origins', () => {
+  test('restricts targetOrigin to the first allowed origin', () => {
+    renderHook(() =>
+      useRenderData({ allowedOrigins: ['https://mongodb.com'] }),
+    );
+    expect(postMessageSpy).toHaveBeenCalledWith(
+      { type: 'ui-lifecycle-iframe-ready' },
+      'https://mongodb.com',
+    );
+  });
+
+  test('allows all origins when allowedOrigins is an empty array', async () => {
+    const { result } = renderHook(() =>
+      useRenderData({ allowedOrigins: [] }),
+    );
+
+    act(() => {
+      window.dispatchEvent(
+        new MessageEvent('message', {
+          data: {
+            type: 'ui-lifecycle-iframe-render-data',
+            payload: { renderData: { name: 'trusted' } },
+          },
+          origin: 'https://any-origin.com',
+        }),
+      );
+    });
+
+    await waitFor(() => {
+      expect(result.current.isLoading).toBe(false);
+      expect(result.current.data).toEqual({ name: 'trusted' });
+    });
+  });
+
+  test('does not re-send ready message when component re-renders with same options', () => {
+    const { rerender } = renderHook(
+      ({ options }) => useRenderData(options),
+      {
+        initialProps: { options: { allowedOrigins: ['https://mongodb.com'] } },
+      },
+    );
+
+    expect(postMessageSpy).toHaveBeenCalledTimes(1);
+
+    // Re-render with new object literal but same content
+    rerender({ options: { allowedOrigins: ['https://mongodb.com'] } });
+
+    expect(postMessageSpy).toHaveBeenCalledTimes(1);
+  });
+
+  test('ignores messages from disallowed origins and logs warning', () => {
+    const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
     const { result } = renderHook(() =>
       useRenderData({ allowedOrigins: ['https://mongodb.com'] }),
     );
@@ -151,7 +201,10 @@ describe('mcp/hooks/useRenderData', () => {
     });
 
     expect(result.current.isLoading).toBe(true);
-    expect(result.current.data).toBe(null);
+    expect(warnSpy).toHaveBeenCalledWith(
+      expect.stringContaining('blocked'),
+    );
+    warnSpy.mockRestore();
   });
 
   test('accepts messages from allowed origins', async () => {
