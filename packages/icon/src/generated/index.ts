@@ -143,6 +143,7 @@ export { default as Revert } from './Revert';
 export { default as Router } from './Router';
 export { default as Save } from './Save';
 export { default as SearchIndex } from './SearchIndex';
+export { default as SearchNode } from './SearchNode';
 export { default as Secondary } from './Secondary';
 export { default as Serverless } from './Serverless';
 export { default as Settings } from './Settings';

@@ -138,6 +138,7 @@ import Revert from './Revert.svg';
 import Router from './Router.svg';
 import Save from './Save.svg';
 import SearchIndex from './SearchIndex.svg';
+import SearchNode from './SearchNode.svg';
 import Secondary from './Secondary.svg';
 import Serverless from './Serverless.svg';
 import Settings from './Settings.svg';
@@ -325,6 +326,7 @@ export const glyphs = {
   SMS,
   Save,
   SearchIndex,
+  SearchNode,
   Secondary,
   Serverless,
   Settings,
