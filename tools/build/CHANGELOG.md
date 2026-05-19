@@ -1,5 +1,11 @@
 # @lg-tools/build
 
+## 0.9.1
+
+### Patch Changes
+
+- afbf9fa: Upgrades `glob` dependency from 10.3.12 to 13.0.6
+
 ## 0.9.0
 
 ### Minor Changes
