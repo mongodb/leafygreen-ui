@@ -50,6 +50,23 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 </Select>;
 ```
 
+### Typed Values
+
+`Select` accepts an optional type parameter (defaulting to `string`) to narrow the type of `value`, `defaultValue`, and the `onChange` callback value:
+
+```tsx
+type Pet = 'dog' | 'cat' | '';
+
+const [value, setValue] = useState<Pet>('');
+
+<Select<Pet> label="Pet" value={value} onChange={setValue}>
+  <Option value="dog">Dog</Option>
+  <Option value="cat">Cat</Option>
+</Select>;
+```
+
+Note: when `allowDeselect` is enabled (default), deselecting calls `onChange` with `''` — include `''` in the union (as above) or set `allowDeselect={false}`.
+
 ### Controlled Open State
 
 ```js

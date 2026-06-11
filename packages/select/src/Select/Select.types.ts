@@ -138,7 +138,7 @@ export interface LabelProp {
   'aria-label': string;
 }
 
-export type SelectProps = BaseSelectProps &
+export type SelectProps<T extends string = string> = BaseSelectProps &
   Either<LabelProp, 'label' | 'aria-labelledby' | 'aria-label'> &
   (
     | // Uncontrolled
@@ -146,7 +146,7 @@ export type SelectProps = BaseSelectProps &
         /**
          * `value` makes the component a controlled component and using `defaultValue` makes it uncontrolled.
          */
-        defaultValue?: string;
+        defaultValue?: T;
         /**
          * `value` makes the component a controlled component and using `defaultValue` makes it uncontrolled.
          */
@@ -155,24 +155,42 @@ export type SelectProps = BaseSelectProps &
          * A function that takes in the value of the selected option, and the event that was used to select the value (i.e. React.MouseEvent | KeyboardEvent | React.KeyboardEvent).
          *
          * Note: This API is different from the native HTML `<select>` element's `onChange` prop given the current technical design of this component.
+         *
+         * Note: When `allowDeselect` is enabled (default), deselecting calls `onChange` with the empty string `''`. If narrowing the value type, include `''` in the union or set `allowDeselect={false}`.
          */
         onChange?: (
-          value: string,
+          value: T,
           event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
         ) => void;
       }
     // Controlled
     | {
-        value: string;
+        value: T;
         defaultValue?: undefined;
         /**
          * A function that takes in the value of the selected option, and the event that was used to select the value (i.e. React.MouseEvent | KeyboardEvent | React.KeyboardEvent).
          *
          * Note: This API is different from the native HTML `<select>` element's `onChange` prop given the current technical design of this component.
+         *
+         * Note: When `allowDeselect` is enabled (default), deselecting calls `onChange` with the empty string `''`. If narrowing the value type, include `''` in the union or set `allowDeselect={false}`.
          */
         onChange?: (
-          value: string,
+          value: T,
           event: React.MouseEvent | KeyboardEvent | React.KeyboardEvent,
         ) => void;
       }
   );
+
+/**
+ * The generic call signature of the `Select` component.
+ *
+ * Allows narrowing `value`, `defaultValue`, and the `onChange` value to a
+ * subtype of `string`: `<Select<'a' | 'b'> value={v} onChange={v => ...}>`
+ */
+export interface SelectComponentType {
+  <T extends string = string>(
+    props: React.PropsWithoutRef<SelectProps<T>> &
+      React.RefAttributes<HTMLDivElement>,
+  ): React.ReactElement | null;
+  displayName?: string;
+}
