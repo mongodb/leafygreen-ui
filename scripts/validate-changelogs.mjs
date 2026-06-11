@@ -27,10 +27,15 @@ const git = args =>
 /** Ref whose file contents represent the "old" state */
 const oldRef = base ? git(['merge-base', base, 'HEAD']).trim() : 'HEAD';
 
+// In default mode, include untracked files: a package's first-ever CHANGELOG.md
+// is newly created by `changeset version` and not yet staged, so it wouldn't
+// otherwise appear in `git diff HEAD`.
 const changedFiles = new Set(
   (base
-    ? git(['diff', '--name-only', `${oldRef}...HEAD`])
-    : git(['diff', '--name-only', 'HEAD'])
+    ? git(['diff', '--name-only', `${oldRef}..HEAD`])
+    : git(['diff', '--name-only', 'HEAD']) +
+      '\n' +
+      git(['ls-files', '--others', '--exclude-standard'])
   )
     .split('\n')
     .filter(Boolean),
@@ -53,14 +58,17 @@ function readJsonCurrent(file) {
 const missingChangelogs = [];
 
 for (const file of changedFiles) {
-  if (path.basename(file) !== 'package.json' || file === 'package.json') continue;
+  if (!file.endsWith('/package.json')) continue;
 
   const oldPkg = readJsonAtRef(oldRef, file);
   const newPkg = readJsonCurrent(file);
 
-  // deleted package, private package, or no version bump
+  // deleted package, private package, or no version
   if (!newPkg || newPkg.private || !newPkg.version) continue;
-  if (oldPkg && oldPkg.version === newPkg.version) continue;
+  // new package: didn't exist in the old ref, so it has no changelog to update yet
+  if (!oldPkg) continue;
+  // no version bump
+  if (oldPkg.version === newPkg.version) continue;
 
   const changelog = path.posix.join(path.posix.dirname(file), 'CHANGELOG.md');
   if (!changedFiles.has(changelog)) {
