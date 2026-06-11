@@ -22,7 +22,10 @@ if (baseArgIndex > -1 && !base) {
 }
 
 const git = args =>
-  execFileSync('git', args, { encoding: 'utf-8', stdio: ['ignore', 'pipe', 'pipe'] });
+  execFileSync('git', args, {
+    encoding: 'utf-8',
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
 
 /** Ref whose file contents represent the "old" state */
 const oldRef = base ? git(['merge-base', base, 'HEAD']).trim() : 'HEAD';
@@ -52,7 +55,9 @@ function readJsonAtRef(ref, file) {
 
 function readJsonCurrent(file) {
   if (base) return readJsonAtRef('HEAD', file);
-  return fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf-8')) : null;
+  return fs.existsSync(file)
+    ? JSON.parse(fs.readFileSync(file, 'utf-8'))
+    : null;
 }
 
 const missingChangelogs = [];
