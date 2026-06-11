@@ -223,6 +223,20 @@ jobs:
           delete-old-comments: true
           filter-changed-files: true
 
+  validate-changelogs:
+    name: Validate changelogs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Fail if any package version was bumped without a CHANGELOG.md update (LG-5521)
+      - name: Validate changelogs accompany version bumps
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.merge_group.base_sha }}
+        run: node ./scripts/validate-changelogs.mjs --base "$BASE_SHA"
+
   validate-builds:
     name: Validate builds & dependencies
     runs-on: ubuntu-latest
