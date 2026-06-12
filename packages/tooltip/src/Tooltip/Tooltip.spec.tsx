@@ -2,6 +2,7 @@ import React, { createRef, ReactElement } from 'react';
 import {
   act,
   render,
+  RenderOptions,
   screen,
   waitFor,
   waitForElementToBeRemoved,
@@ -66,6 +67,7 @@ function renderTooltip(
       { renderMode?: 'portal'; portalClassName?: string },
       { renderMode: 'inline' | 'top-layer' }
     > = {},
+  options?: Pick<RenderOptions, 'wrapper'>,
 ) {
   const utils = render(
     <>
@@ -78,6 +80,7 @@ function renderTooltip(
         <div>Tooltip Contents!</div>
       </Tooltip>
     </>,
+    options,
   );
 
   const button = utils.getByText(buttonText);
@@ -159,29 +162,15 @@ describe('packages/tooltip', () => {
     });
 
     describe('when "triggerEvent" is "hover", focusing the trigger (LG-5488)', () => {
-      const renderTooltipWithProvider = () => {
-        const utils = render(
-          <LeafyGreenProvider>
-            <div data-testid="backdrop" />
-            <Tooltip
-              trigger={<button>{buttonText}</button>}
-              data-testid={tooltipTestId}
-              triggerEvent="hover"
-            >
-              <div>Tooltip Contents!</div>
-            </Tooltip>
-          </LeafyGreenProvider>,
+      // LeafyGreenProvider is required for keyboard detection
+      const renderTooltipWithProvider = () =>
+        renderTooltip(
+          { triggerEvent: 'hover' },
+          { wrapper: LeafyGreenProvider },
         );
 
-        const button = utils.getByText(buttonText);
-        const backdrop = utils.getByTestId('backdrop');
-
-        return { ...utils, button, backdrop };
-      };
-
       test('does not open the tooltip when focus follows mouse usage', async () => {
-        const { queryByTestId, button, backdrop } =
-          renderTooltipWithProvider();
+        const { queryByTestId, button, backdrop } = renderTooltipWithProvider();
 
         // Mouse usage sets usingKeyboard to false
         await userEvent.click(backdrop);
