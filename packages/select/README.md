@@ -67,6 +67,8 @@ const [value, setValue] = useState<Pet>('');
 
 Note: when `allowDeselect` is enabled (default), deselecting calls `onChange` with `''` — include `''` in the union (as above) or set `allowDeselect={false}`.
 
+Note: the type parameter narrows `value`, `defaultValue`, and `onChange` only — `Option` values are not checked against it (`<Option value="hamster">` above would still compile).
+
 ### Controlled Open State
 
 ```js

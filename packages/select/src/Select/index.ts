@@ -4,6 +4,7 @@ export {
   DropdownWidthBasis,
   RenderMode,
   type SelectComponentType,
+  type SelectOnChange,
   type SelectProps,
   Size,
   State,

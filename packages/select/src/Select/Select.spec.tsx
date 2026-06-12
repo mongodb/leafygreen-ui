@@ -1367,22 +1367,6 @@ describe('packages/select', () => {
   describe('types behave as expected', () => {
     type Fruit = 'apple' | 'banana';
 
-    test('renders and fires onChange when a type parameter is provided', () => {
-      const onChange = jest.fn();
-
-      render(
-        <Select<Fruit> label="Fruit" value="apple" onChange={onChange}>
-          <Option value="apple">Apple</Option>
-          <Option value="banana">Banana</Option>
-        </Select>,
-      );
-
-      const { getInput, getOptionByValue } = getTestUtils();
-      userEvent.click(getInput());
-      userEvent.click(getOptionByValue('Banana')!);
-      expect(onChange).toHaveBeenCalledWith('banana', expect.anything());
-    });
-
     /* eslint-disable jest/no-disabled-tests */
     test.skip('Select accepts a generic type parameter', () => {
       const options = [

@@ -8,6 +8,7 @@ export {
   RenderMode,
   Select,
   type SelectComponentType,
+  type SelectOnChange,
   type SelectProps,
   Size,
   State,
