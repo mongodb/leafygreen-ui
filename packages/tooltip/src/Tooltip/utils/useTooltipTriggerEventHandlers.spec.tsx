@@ -1,5 +1,7 @@
 import React from 'react';
-import { renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react-hooks';
+
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { TriggerEvent } from '../Tooltip.types';
 import { CALLBACK_DEBOUNCE, DEFAULT_HOVER_DELAY } from '../tooltipConstants';
@@ -10,6 +12,10 @@ import { useTooltipTriggerEventHandlers } from './useTooltipTriggerEventHandlers
 const mockMouseEvent = {
   target: document.createElement('div'),
 } as unknown as React.MouseEvent<HTMLElement>;
+
+const mockFocusEvent = {
+  target: document.createElement('div'),
+} as unknown as React.FocusEvent<HTMLElement>;
 
 describe('packages/tooltip/useTooltipTriggerEventHandlers', () => {
   // Common test setup
@@ -113,6 +119,59 @@ describe('packages/tooltip/useTooltipTriggerEventHandlers', () => {
 
     // Handlers should be the same objects (memoized)
     expect(result.current).toBe(initialHandlers);
+  });
+
+  describe('usingKeyboard', () => {
+    test('onFocus opens tooltip when usingKeyboard is true (default)', () => {
+      const onFocus = jest.fn();
+      const hoverArgs: UseTooltipEventsArgs<typeof TriggerEvent.Hover> = {
+        setState,
+        triggerEvent: TriggerEvent.Hover,
+        onFocus,
+      };
+
+      const { result } = renderHook(() =>
+        useTooltipTriggerEventHandlers(hoverArgs),
+      );
+
+      result.current.onFocus(mockFocusEvent);
+
+      expect(onFocus).toHaveBeenCalled();
+      expect(setState).toHaveBeenCalledWith(true);
+    });
+
+    test('onFocus does not open tooltip after mouse usage', () => {
+      const onFocus = jest.fn();
+      const hoverArgs: UseTooltipEventsArgs<typeof TriggerEvent.Hover> = {
+        setState,
+        triggerEvent: TriggerEvent.Hover,
+        onFocus,
+      };
+
+      const { result } = renderHook(
+        () => useTooltipTriggerEventHandlers(hoverArgs),
+        {
+          wrapper: ({ children }: React.PropsWithChildren<unknown>) => (
+            <LeafyGreenProvider>{children}</LeafyGreenProvider>
+          ),
+        },
+      );
+
+      // Mouse usage sets usingKeyboard to false
+      act(() => {
+        document.dispatchEvent(new MouseEvent('mousedown'));
+      });
+
+      result.current.onFocus(mockFocusEvent);
+
+      // Consumer's onFocus handler still fires, but the tooltip does not open
+      expect(onFocus).toHaveBeenCalled();
+      expect(setState).not.toHaveBeenCalled();
+
+      // Blur still closes the tooltip
+      result.current.onBlur(mockFocusEvent);
+      expect(setState).toHaveBeenCalledWith(false);
+    });
   });
 
   test('only changes identity when args change', () => {

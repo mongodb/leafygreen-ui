@@ -80,6 +80,9 @@ function CopyButton({ onCopy, contents, className, ...rest }: CopyProps) {
     e.preventDefault();
     onCopy?.();
     setCopied(true);
+    // Explicitly open the tooltip to show the copied confirmation,
+    // since focus alone no longer opens the tooltip
+    openTooltip();
   };
 
   /**

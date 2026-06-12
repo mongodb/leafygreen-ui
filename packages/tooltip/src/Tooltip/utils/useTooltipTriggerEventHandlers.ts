@@ -9,6 +9,8 @@ import {
 import { flushSync } from 'react-dom';
 import debounce from 'lodash/debounce';
 
+import { useUsingKeyboardContext } from '@leafygreen-ui/leafygreen-provider';
+
 import { TriggerEvent } from '../Tooltip.types';
 import { CALLBACK_DEBOUNCE, DEFAULT_HOVER_DELAY } from '../tooltipConstants';
 
@@ -28,6 +30,8 @@ export function useTooltipTriggerEventHandlers<Trigger extends TriggerEvent>(
   args: UseTooltipEventsArgs<Trigger>,
 ): TooltipEventHandlers<Trigger> {
   const { setState, triggerEvent, tooltipRef, isEnabled = true } = args;
+
+  const { usingKeyboard } = useUsingKeyboardContext();
 
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -66,7 +70,13 @@ export function useTooltipTriggerEventHandlers<Trigger extends TriggerEvent>(
       const onFocus: FocusEventHandler = (e: FocusEvent<HTMLElement>) => {
         if (isEnabled) {
           args.onFocus?.(e);
-          setState(true);
+
+          // Only open the tooltip on keyboard-driven focus.
+          // Prevents the tooltip from appearing when focus is set
+          // programmatically (e.g. focus restored after closing a modal)
+          if (usingKeyboard) {
+            setState(true);
+          }
         }
       };
 
@@ -98,5 +108,5 @@ export function useTooltipTriggerEventHandlers<Trigger extends TriggerEvent>(
         onClick,
       } as TooltipEventHandlers<Trigger>;
     }
-  }, [args, isEnabled, setState, tooltipRef, triggerEvent]);
+  }, [args, isEnabled, setState, tooltipRef, triggerEvent, usingKeyboard]);
 }

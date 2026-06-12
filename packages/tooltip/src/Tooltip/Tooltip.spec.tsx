@@ -11,6 +11,7 @@ import { axe } from 'jest-axe';
 
 import { Icon } from '@leafygreen-ui/icon';
 import CloudIcon from '@leafygreen-ui/icon/dist/Cloud';
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 import { HTMLElementProps, OneOf } from '@leafygreen-ui/lib';
 import { RenderMode } from '@leafygreen-ui/popover';
 import { transitionDuration } from '@leafygreen-ui/tokens';
@@ -155,6 +156,59 @@ describe('packages/tooltip', () => {
       await waitForElementToBeRemoved(getByTestId(tooltipTestId));
 
       expect(queryByTestId(tooltipTestId)).not.toBeInTheDocument();
+    });
+
+    describe('when "triggerEvent" is "hover", focusing the trigger (LG-5488)', () => {
+      const renderTooltipWithProvider = () => {
+        const utils = render(
+          <LeafyGreenProvider>
+            <div data-testid="backdrop" />
+            <Tooltip
+              trigger={<button>{buttonText}</button>}
+              data-testid={tooltipTestId}
+              triggerEvent="hover"
+            >
+              <div>Tooltip Contents!</div>
+            </Tooltip>
+          </LeafyGreenProvider>,
+        );
+
+        const button = utils.getByText(buttonText);
+        const backdrop = utils.getByTestId('backdrop');
+
+        return { ...utils, button, backdrop };
+      };
+
+      test('does not open the tooltip when focus follows mouse usage', async () => {
+        const { queryByTestId, button, backdrop } =
+          renderTooltipWithProvider();
+
+        // Mouse usage sets usingKeyboard to false
+        await userEvent.click(backdrop);
+
+        // Programmatic focus, e.g. focus restored after closing a modal
+        await act(async () => {
+          button.focus();
+          await waitForTimeout(200);
+        });
+
+        expect(button).toHaveFocus();
+        expect(queryByTestId(tooltipTestId)).not.toBeInTheDocument();
+      });
+
+      test('opens the tooltip when focus comes from keyboard navigation', async () => {
+        const { getByTestId, button, backdrop } = renderTooltipWithProvider();
+
+        // Mouse usage sets usingKeyboard to false
+        await userEvent.click(backdrop);
+
+        // Tabbing to the trigger sets usingKeyboard back to true
+        await userEvent.tab();
+
+        expect(button).toHaveFocus();
+        await waitFor(() => getByTestId(tooltipTestId));
+        expect(getByTestId(tooltipTestId)).toBeInTheDocument();
+      });
     });
 
     async function testTriggerEventWhenDisabled(
