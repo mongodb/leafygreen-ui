@@ -104,6 +104,9 @@ export function CodeEditorCopyButton({
     await copyToClipboard();
     onCopy?.();
     setCopied(true);
+    // Explicitly open the tooltip to show the copied confirmation,
+    // since focus alone no longer opens the tooltip
+    openTooltip();
 
     setTimeout(() => {
       setCopied(false);
