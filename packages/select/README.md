@@ -50,6 +50,25 @@ import { Option, OptionGroup, Select, Size } from '@leafygreen-ui/select';
 </Select>;
 ```
 
+### Typed Values
+
+`Select` accepts an optional type parameter (defaulting to `string`) to narrow the type of `value`, `defaultValue`, and the `onChange` callback value:
+
+```tsx
+type Pet = 'dog' | 'cat' | '';
+
+const [value, setValue] = useState<Pet>('');
+
+<Select<Pet> label="Pet" value={value} onChange={setValue}>
+  <Option value="dog">Dog</Option>
+  <Option value="cat">Cat</Option>
+</Select>;
+```
+
+Note: when `allowDeselect` is enabled (default), deselecting calls `onChange` with `''` — include `''` in the union (as above) or set `allowDeselect={false}`.
+
+Note: the type parameter narrows `value`, `defaultValue`, and `onChange` only — `Option` values are not checked against it (`<Option value="hamster">` above would still compile).
+
 ### Controlled Open State
 
 ```js
@@ -94,9 +113,9 @@ function ControlledSelect() {
 | `description`        | `React.ReactNode`                                   | Text that gives more detail about the requirements for the input.                                                                                                                                                                                                                                                                                                                     |                                     |
 | `placeholder`        | `string`                                            | The placeholder text shown in the input element when an option is not selected.                                                                                                                                                                                                                                                                                                       | `'Select'`                          |
 | `disabled`           | `boolean`                                           | Disables the component from being edited.                                                                                                                                                                                                                                                                                                                                             | `false`                             |
-| `value`              | `string`                                            | Sets the `<Option />` that will appear selected and makes the component a controlled component.                                                                                                                                                                                                                                                                                       | `''`                                |
-| `defaultValue`       | `string`                                            | Sets the `<Option />` that will appear selected on page load when the component is uncontrolled.                                                                                                                                                                                                                                                                                      | `''`                                |
-| `onChange`           | `function`                                          | A function that gets called when the selected value changes. Receives the value string as the first argument.                                                                                                                                                                                                                                                                         | `() => {}`                          |
+| `value`              | `T` (defaults to `string`)                          | Sets the `<Option />` that will appear selected and makes the component a controlled component. See [Typed Values](#typed-values).                                                                                                                                                                                                                                                    | `''`                                |
+| `defaultValue`       | `T` (defaults to `string`)                          | Sets the `<Option />` that will appear selected on page load when the component is uncontrolled. See [Typed Values](#typed-values).                                                                                                                                                                                                                                                   | `''`                                |
+| `onChange`           | `SelectOnChange<T>`                                 | A function that gets called when the selected value changes. Receives the value (type `T`) as the first argument and the event as the second. See [Typed Values](#typed-values).                                                                                                                                                                                                      | `() => {}`                          |
 | `allowDeselect`      | `boolean`                                           | Enables or disables the option for a user to select a null default value.                                                                                                                                                                                                                                                                                                             | `true`                              |
 | `open`               | `boolean`                                           | Controls whether the dropdown menu is open. When provided, the component becomes a controlled component for the open state.                                                                                                                                                                                                                                                           |                                     |
 | `setOpen`            | `function`                                          | Callback function that is called when the open state should change. Required when `open` prop is provided. Receives a boolean value as the first argument.                                                                                                                                                                                                                            |                                     |

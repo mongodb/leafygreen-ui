@@ -49,6 +49,7 @@ import {
   DismissMode,
   DropdownWidthBasis,
   RenderMode,
+  SelectComponentType,
   SelectProps,
   Size,
   State,
@@ -673,6 +674,6 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       </LeafyGreenProvider>
     );
   },
-);
+) as SelectComponentType;
 
 Select.displayName = 'Select';

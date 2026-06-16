@@ -1363,4 +1363,56 @@ describe('packages/select', () => {
       });
     });
   });
+
+  describe('types behave as expected', () => {
+    type Fruit = 'apple' | 'banana';
+
+    /* eslint-disable jest/no-disabled-tests */
+    test.skip('Select accepts a generic type parameter', () => {
+      const options = [
+        <Option key="apple" value="apple">
+          Apple
+        </Option>,
+        <Option key="banana" value="banana">
+          Banana
+        </Option>,
+      ];
+
+      // Untyped usage is unchanged (T defaults to string)
+      <Select label="Label" value="anything" onChange={(v: string) => v}>
+        {options}
+      </Select>;
+      <Select label="Label" defaultValue="anything">
+        {options}
+      </Select>;
+
+      // Typed controlled & uncontrolled usage
+      <Select<Fruit> label="Label" value="apple" onChange={(v: Fruit) => v}>
+        {options}
+      </Select>;
+      <Select<Fruit> label="Label" defaultValue="banana">
+        {options}
+      </Select>;
+
+      // @ts-expect-error - 'cherry' is not assignable to Fruit
+      <Select<Fruit> label="Label" value="cherry">
+        {options}
+      </Select>;
+      // @ts-expect-error - 'cherry' is not assignable to Fruit
+      <Select<Fruit> label="Label" defaultValue="cherry">
+        {options}
+      </Select>;
+      // @ts-expect-error - handler param must be assignable from Fruit
+      <Select<Fruit> label="Label" value="apple" onChange={(v: number) => v}>
+        {options}
+      </Select>;
+
+      // ref still forwards as HTMLDivElement
+      const ref = createRef<HTMLDivElement>();
+      <Select<Fruit> ref={ref} label="Label" value="apple">
+        {options}
+      </Select>;
+    });
+    /* eslint-enable jest/no-disabled-tests */
+  });
 });
