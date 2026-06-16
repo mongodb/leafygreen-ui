@@ -1,6 +1,14 @@
 import React from 'react';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import {
+  act,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+
+import LeafyGreenProvider from '@leafygreen-ui/leafygreen-provider';
 
 import { CodeEditorCopyButton } from './CodeEditorCopyButton';
 import { CopyButtonVariant } from './CodeEditorCopyButton.types';
@@ -106,6 +114,35 @@ describe('CodeEditorCopyButton', () => {
 
       await waitFor(() => {
         expect(screen.getByText(COPY_TEXT)).toBeInTheDocument();
+      });
+    });
+
+    test('opens tooltip with copied text on keyboard activation after mouse usage', async () => {
+      render(
+        <LeafyGreenProvider>
+          <CodeEditorCopyButton
+            getContentsToCopy={mockgetContentsToCopy}
+            onCopy={mockOnCopy}
+          />
+        </LeafyGreenProvider>,
+      );
+
+      const button = screen.getByRole('button', { name: COPY_TEXT });
+
+      // Mouse usage sets usingKeyboard to false, so the focus from
+      // Enter activation no longer opens the tooltip — the click
+      // handler must open it explicitly
+      await act(async () => {
+        fireEvent.mouseDown(document.body);
+      });
+
+      await act(async () => {
+        button.focus();
+        await userEvent.keyboard('{Enter}');
+      });
+
+      await waitFor(() => {
+        expect(screen.getByRole('tooltip')).toHaveTextContent(COPIED_TEXT);
       });
     });
 
