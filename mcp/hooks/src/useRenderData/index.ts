@@ -1,2 +1,6 @@
 export { useRenderData } from './useRenderData';
-export type { BaseRenderData } from './useRenderData.types';
+export type {
+  BaseRenderData,
+  UseRenderDataOptions,
+  UseRenderDataResult,
+} from './useRenderData.types';
