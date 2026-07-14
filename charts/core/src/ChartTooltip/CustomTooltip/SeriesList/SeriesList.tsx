@@ -36,7 +36,7 @@ export function SeriesList({
 }: SeriesListProps) {
   return (
     <ul className={getSeriesListStyles({ theme, tooltipPinned })} {...rest}>
-      {seriesData
+      {[...seriesData]
         .sort((a, b) => {
           // Extract data arrays from either format (array or object with value property)
           const dataArrayA = getDataArray(a.data) || [];

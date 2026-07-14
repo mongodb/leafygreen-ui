@@ -29,7 +29,6 @@ const baseSeriesData = {
     '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#016BF8;"></span>',
 };
 
-// SeriesList sorts seriesData in place, so each test needs a fresh array
 const getMockSeriesData = (): CustomTooltipProps['seriesData'] => [
   {
     ...baseSeriesData,
