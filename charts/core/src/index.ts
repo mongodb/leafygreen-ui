@@ -21,6 +21,8 @@ export { ChartHeader, type ChartHeaderProps } from './ChartHeader';
 export {
   ChartTooltip,
   type ChartTooltipProps,
+  type CustomRowInfo,
+  type CustomRowSeriesInfo,
   type SeriesInfo,
 } from './ChartTooltip';
 export {

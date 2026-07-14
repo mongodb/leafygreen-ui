@@ -3,6 +3,11 @@ import { SeriesName } from '@lg-charts/series-provider';
 
 import { getDataArray, OptionDataValue } from '../../ChartTooltip.types';
 import { SeriesListItem } from '../SeriesListItem';
+import {
+  containerStyle,
+  nameStyle,
+  valueStyle,
+} from '../SeriesListItem/SeriesListItem.styles';
 
 import { getSeriesListStyles } from './SeriesList.styles';
 import { SeriesListProps } from './SeriesList.types';
@@ -20,6 +25,7 @@ function descendingCompareFn(valueA: OptionDataValue, valueB: OptionDataValue) {
 }
 
 export function SeriesList({
+  customRowInfo,
   seriesData,
   seriesValueFormatter,
   seriesNameFormatter,
@@ -30,7 +36,7 @@ export function SeriesList({
 }: SeriesListProps) {
   return (
     <ul className={getSeriesListStyles({ theme, tooltipPinned })} {...rest}>
-      {seriesData
+      {[...seriesData]
         .sort((a, b) => {
           // Extract data arrays from either format (array or object with value property)
           const dataArrayA = getDataArray(a.data) || [];
@@ -61,6 +67,12 @@ export function SeriesList({
             />
           );
         })}
+      {customRowInfo && (
+        <li className={containerStyle}>
+          <div className={nameStyle}>{customRowInfo.name}</div>
+          <div className={valueStyle}>{customRowInfo.value}</div>
+        </li>
+      )}
     </ul>
   );
 }

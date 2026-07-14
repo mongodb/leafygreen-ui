@@ -57,6 +57,17 @@ export interface SeriesInfo {
   value: OptionDataValue;
 }
 
+export interface CustomRowInfo {
+  name: ReactNode;
+  value: ReactNode;
+}
+
+export interface CustomRowSeriesInfo {
+  name: SeriesName;
+  /** Nullish when the series has no data point at the hovered axis value. */
+  value: OptionDataValue | null | undefined;
+}
+
 export interface ChartTooltipProps {
   sort?: (seriesA: SeriesInfo, seriesB: SeriesInfo) => number;
   seriesValueFormatter?: (value: OptionDataValue) => ReactNode;
@@ -75,6 +86,14 @@ export interface ChartTooltipProps {
    * Useful for applying environment-specific styles like dark mode overrides.
    */
   className?: string;
+  /**
+   * Renders an additional row (e.g. a total) at the bottom of the tooltip's
+   * series list. Receives the hovered series' names and values. Return `null`
+   * to hide the row. Not affected by `sort` and not shown in the `Legend`.
+   */
+  customRow?: (
+    seriesData: Array<CustomRowSeriesInfo>,
+  ) => CustomRowInfo | null | undefined;
 }
 
 export interface CallbackSeriesDataPoint extends CallbackDataParams {

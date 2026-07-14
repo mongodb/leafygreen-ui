@@ -7,6 +7,7 @@ import {
 
 export interface CustomTooltipProps extends DarkModeProps {
   chartId: string;
+  customRow?: ChartTooltipProps['customRow'];
   headerFormatter?: ChartTooltipProps['headerFormatter'];
   seriesData: Array<CallbackSeriesDataPoint>;
   seriesNameFormatter?: ChartTooltipProps['seriesNameFormatter'];
