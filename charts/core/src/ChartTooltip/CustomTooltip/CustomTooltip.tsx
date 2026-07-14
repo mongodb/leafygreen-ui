@@ -72,7 +72,6 @@ export function CustomTooltip({
 
   const customRowInfo = customRow?.(
     seriesData.map<CustomRowSeriesInfo>(({ seriesName, data }) => ({
-      // cast is safe: `name` is a required prop on `Series`
       name: seriesName as SeriesName,
       value: getDataArray(data)?.[1],
     })),
