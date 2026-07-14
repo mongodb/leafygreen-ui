@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import { type SeriesName } from '@lg-charts/series-provider';
 
 import CursorIcon from '@leafygreen-ui/icon/dist/Cursor';
 import XIcon from '@leafygreen-ui/icon/dist/X';
@@ -6,7 +7,7 @@ import { IconButton } from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isDefined } from '@leafygreen-ui/lib';
 
-import { getDataArray } from '../ChartTooltip.types';
+import { getDataArray, SeriesInfo } from '../ChartTooltip.types';
 
 import {
   closeButtonStyles,
@@ -35,6 +36,7 @@ function formatDate(dateTimeStamp: number) {
 
 export function CustomTooltip({
   chartId,
+  customRow,
   darkMode,
   headerFormatter,
   seriesData,
@@ -68,6 +70,14 @@ export function CustomTooltip({
         : seriesData[0].axisValueLabel;
   }
 
+  const seriesInfo: Array<SeriesInfo> = seriesData.map(
+    ({ seriesName, data }) => ({
+      name: seriesName as SeriesName,
+      value: getDataArray(data)?.[1] as SeriesInfo['value'],
+    }),
+  );
+  const customRowInfo = customRow?.(seriesInfo);
+
   return (
     <>
       <div className={getHeaderStyles(theme)}>
@@ -89,6 +99,7 @@ export function CustomTooltip({
         )}
       </div>
       <SeriesList
+        customRowInfo={customRowInfo}
         data-chartid={chartId}
         seriesData={seriesData}
         seriesValueFormatter={seriesValueFormatter}

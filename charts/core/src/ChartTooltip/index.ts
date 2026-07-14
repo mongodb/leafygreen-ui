@@ -1,2 +1,6 @@
 export { ChartTooltip } from './ChartTooltip';
-export type { ChartTooltipProps, SeriesInfo } from './ChartTooltip.types';
+export type {
+  ChartTooltipProps,
+  CustomRowInfo,
+  SeriesInfo,
+} from './ChartTooltip.types';

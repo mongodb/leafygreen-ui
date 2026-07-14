@@ -19,6 +19,7 @@ import {
 import { CustomTooltip } from './CustomTooltip';
 
 export function ChartTooltip({
+  customRow,
   headerFormatter,
   seriesValueFormatter,
   seriesNameFormatter,
@@ -53,6 +54,7 @@ export function ChartTooltip({
       return renderToString(
         <CustomTooltip
           chartId={chartId}
+          customRow={customRow}
           darkMode={darkMode}
           headerFormatter={headerFormatter}
           seriesData={seriesData}
@@ -65,6 +67,7 @@ export function ChartTooltip({
     },
     [
       chartId,
+      customRow,
       darkMode,
       headerFormatter,
       seriesNameFormatter,

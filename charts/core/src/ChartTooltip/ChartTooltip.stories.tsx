@@ -40,6 +40,11 @@ export default {
         disable: true,
       },
     },
+    customRow: {
+      table: {
+        disable: true,
+      },
+    },
     darkMode: storybookArgTypes.darkMode,
     headerFormatter: {
       table: {
@@ -90,6 +95,19 @@ export const Default: StoryObj<CustomTooltipProps> = {
 export const Generated = () => {};
 
 export const LongSeriesNames: StoryObj<CustomTooltipProps> = {};
+
+export const WithCustomRow: StoryObj<CustomTooltipProps> = {
+  args: {
+    seriesData: sampleTooltipParams.map((series, idx) => ({
+      ...series,
+      seriesName: 'Series ' + (idx + 1),
+    })),
+    customRow: seriesData => ({
+      name: 'Total',
+      value: seriesData.reduce((sum, { value }) => sum + Number(value), 0),
+    }),
+  },
+};
 
 export const CustomFormats: StoryObj<CustomTooltipProps> = {
   args: {

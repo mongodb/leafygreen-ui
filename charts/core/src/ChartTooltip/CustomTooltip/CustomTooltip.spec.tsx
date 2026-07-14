@@ -142,6 +142,28 @@ describe('@lg-charts/core/ChartTooltip/CustomTooltip', () => {
     ).toBeInTheDocument();
   });
 
+  test('should render custom row below series list', () => {
+    renderCustomTooltip({
+      customRow: seriesData => ({
+        name: 'Total',
+        value: seriesData.reduce((sum, { value }) => sum + Number(value), 0),
+      }),
+    });
+
+    const listItems = screen.getAllByRole('listitem');
+    expect(listItems[listItems.length - 1]).toHaveTextContent('Total600');
+  });
+
+  test('should not render custom row when customRow returns null', () => {
+    renderCustomTooltip({
+      customRow: () => null,
+    });
+
+    expect(screen.getAllByRole('listitem')).toHaveLength(
+      mockSeriesData.length,
+    );
+  });
+
   test('should properly display zero values', () => {
     const seriesDataWithZero: CustomTooltipProps['seriesData'] = [
       {
