@@ -62,6 +62,15 @@ export interface CustomRowInfo {
   value: ReactNode;
 }
 
+export interface CustomRowSeriesInfo {
+  name: SeriesName;
+  /**
+   * `null`/`undefined` when the series has no data point at the hovered
+   * axis value.
+   */
+  value: OptionDataValue | null | undefined;
+}
+
 export interface ChartTooltipProps {
   sort?: (seriesA: SeriesInfo, seriesB: SeriesInfo) => number;
   seriesValueFormatter?: (value: OptionDataValue) => ReactNode;
@@ -88,7 +97,7 @@ export interface ChartTooltipProps {
    * affected by `sort` and does not appear in the Legend.
    */
   customRow?: (
-    seriesData: Array<SeriesInfo>,
+    seriesData: Array<CustomRowSeriesInfo>,
   ) => CustomRowInfo | null | undefined;
 }
 

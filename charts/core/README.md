@@ -213,9 +213,9 @@ Renders a tooltip onto the chart.
 | `seriesNameFormatter` _(optional)_  | Callback function for formatting the name string for each series.                                      | `(name: string) => string \| ReactNode`                    |                         |
 | `seriesValueFormatter` _(optional)_ | Callback function for formatting the value string for each series.                                     | `(value: number \| string \| Date) => string \| ReactNode` |                         |
 | `headerFormatter` _(optional)_      | Callback function for formatting the header string.                                                    | `(value: number \| string) => string \| ReactNode`         |                         |
-| `customRow` _(optional)_            | Renders an additional row (e.g. a total count) at the bottom of the tooltip's series list. Receives the hovered series' names and values; the caller is responsible for calculating the final aggregation (sum, avg, min, max, etc.). Return `null` to hide the row. The custom row is not affected by `sort` and does not appear in the Legend. | `(seriesData: Array<SeriesInfo>) => CustomRowInfo \| null` |                         |
+| `customRow` _(optional)_            | Renders an additional row (e.g. a total count) at the bottom of the tooltip's series list. Receives the hovered series' names and values; the caller is responsible for calculating the final aggregation (sum, avg, min, max, etc.). Return `null` to hide the row. The custom row is not affected by `sort` and does not appear in the Legend. | `(seriesData: Array<CustomRowSeriesInfo>) => CustomRowInfo \| null` |                         |
 
-Note: `SeriesInfo` is of type `{ name: string; value: string | number | Date; }` and `CustomRowInfo` is of type `{ name: ReactNode; value: ReactNode; }`
+Note: `SeriesInfo` is of type `{ name: string; value: string | number | Date; }`, `CustomRowSeriesInfo` is of type `{ name: string; value: string | number | Date | null | undefined; }` (value is nullish when a series has no data point at the hovered axis value), and `CustomRowInfo` is of type `{ name: ReactNode; value: ReactNode; }`
 
 ### `EventMarkerLine`
 

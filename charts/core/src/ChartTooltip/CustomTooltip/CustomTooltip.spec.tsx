@@ -29,7 +29,9 @@ const baseSeriesData = {
     '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#016BF8;"></span>',
 };
 
-const mockSeriesData: CustomTooltipProps['seriesData'] = [
+// A factory so each test gets a fresh array: SeriesList sorts its
+// seriesData prop in place, which would leak order between tests.
+const getMockSeriesData = (): CustomTooltipProps['seriesData'] => [
   {
     ...baseSeriesData,
     data: ['Series 1', 100],
@@ -70,7 +72,7 @@ function descendingCompareFn(
 
 const renderCustomTooltip = (props: Partial<CustomTooltipProps> = {}) => {
   const resolvedProps: CustomTooltipProps = {
-    seriesData: props.seriesData || mockSeriesData,
+    seriesData: props.seriesData || getMockSeriesData(),
     chartId: props.chartId || 'test-chart',
     tooltipPinned: props.tooltipPinned || false,
     ...props,
@@ -154,13 +156,29 @@ describe('@lg-charts/core/ChartTooltip/CustomTooltip', () => {
     expect(listItems[listItems.length - 1]).toHaveTextContent('Total600');
   });
 
+  test('should pass series data to customRow unaffected by sort', () => {
+    const customRow = jest.fn().mockReturnValue(null);
+
+    renderCustomTooltip({
+      customRow,
+      sort: (seriesA, seriesB) =>
+        descendingCompareFn(seriesA.value, seriesB.value),
+    });
+
+    expect(customRow).toHaveBeenCalledWith([
+      { name: 'Series 1', value: 100 },
+      { name: 'Series 3', value: 300 },
+      { name: 'Series 2', value: 200 },
+    ]);
+  });
+
   test('should not render custom row when customRow returns null', () => {
     renderCustomTooltip({
       customRow: () => null,
     });
 
     expect(screen.getAllByRole('listitem')).toHaveLength(
-      mockSeriesData.length,
+      getMockSeriesData().length,
     );
   });
 

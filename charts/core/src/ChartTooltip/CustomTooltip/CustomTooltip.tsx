@@ -7,7 +7,7 @@ import { IconButton } from '@leafygreen-ui/icon-button';
 import { useDarkMode } from '@leafygreen-ui/leafygreen-provider';
 import { isDefined } from '@leafygreen-ui/lib';
 
-import { getDataArray, SeriesInfo } from '../ChartTooltip.types';
+import { CustomRowSeriesInfo, getDataArray } from '../ChartTooltip.types';
 
 import {
   closeButtonStyles,
@@ -70,13 +70,13 @@ export function CustomTooltip({
         : seriesData[0].axisValueLabel;
   }
 
-  const seriesInfo: Array<SeriesInfo> = seriesData.map(
-    ({ seriesName, data }) => ({
+  const customRowInfo = customRow?.(
+    seriesData.map<CustomRowSeriesInfo>(({ seriesName, data }) => ({
+      // Series always have a name — it's a required prop on `Series`
       name: seriesName as SeriesName,
-      value: getDataArray(data)?.[1] as SeriesInfo['value'],
-    }),
+      value: getDataArray(data)?.[1],
+    })),
   );
-  const customRowInfo = customRow?.(seriesInfo);
 
   return (
     <>
