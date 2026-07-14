@@ -64,10 +64,7 @@ export interface CustomRowInfo {
 
 export interface CustomRowSeriesInfo {
   name: SeriesName;
-  /**
-   * `null`/`undefined` when the series has no data point at the hovered
-   * axis value.
-   */
+  /** Nullish when the series has no data point at the hovered axis value. */
   value: OptionDataValue | null | undefined;
 }
 
@@ -90,11 +87,9 @@ export interface ChartTooltipProps {
    */
   className?: string;
   /**
-   * Renders an additional row at the bottom of the tooltip's series list,
-   * e.g. a total count. Receives the hovered series' names and values; the
-   * caller is responsible for calculating the final aggregation (sum, avg,
-   * min, max, etc.). Return `null` to hide the row. The custom row is not
-   * affected by `sort` and does not appear in the Legend.
+   * Renders an additional row (e.g. a total) at the bottom of the tooltip's
+   * series list. Receives the hovered series' names and values. Return `null`
+   * to hide the row. Not affected by `sort` and not shown in the `Legend`.
    */
   customRow?: (
     seriesData: Array<CustomRowSeriesInfo>,

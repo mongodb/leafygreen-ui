@@ -29,8 +29,7 @@ const baseSeriesData = {
     '<span style="display:inline-block;margin-right:4px;border-radius:10px;width:10px;height:10px;background-color:#016BF8;"></span>',
 };
 
-// A factory so each test gets a fresh array: SeriesList sorts its
-// seriesData prop in place, which would leak order between tests.
+// SeriesList sorts seriesData in place, so each test needs a fresh array
 const getMockSeriesData = (): CustomTooltipProps['seriesData'] => [
   {
     ...baseSeriesData,
