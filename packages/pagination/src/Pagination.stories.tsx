@@ -48,7 +48,9 @@ const meta: StoryMetaType<typeof Pagination> = {
       storyNames: ['FixedItemsPerPage', 'VariableItemsPerPage'],
       combineArgs: {
         darkMode: [false, true],
-        numTotalItems: [undefined, 5, 150], // include case when numTotalItems < itemsPerPage
+        // 0 covers the empty state ("0 - 0 of 0 items" / "0 of 0"); 5 covers
+        // the case when numTotalItems < itemsPerPage.
+        numTotalItems: [undefined, 0, 5, 150],
         currentPage: [undefined, 1, 5, 10],
         shouldDisableBackArrow: [false, true],
         shouldDisableForwardArrow: [false, true],
