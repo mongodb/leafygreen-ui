@@ -62,6 +62,21 @@ describe('PaginationCurrentPageControls', () => {
       );
     });
 
+    test('renders "0 of 0" when numTotalItems is 0', () => {
+      const { getByTestId } = render(
+        <PaginationCurrentPageControls
+          currentPage={1}
+          numTotalItems={0}
+          itemsPerPage={10}
+          onBackArrowClick={onBackArrowClick}
+          onForwardArrowClick={onForwardArrowClick}
+        />,
+      );
+      expect(getByTestId('lg-pagination-page-range').textContent).toBe(
+        '0 of 0',
+      );
+    });
+
     test('renders correct total pages', () => {
       const { getByTestId } = render(
         <PaginationCurrentPageControls
@@ -121,6 +136,25 @@ describe('PaginationCurrentPageControls', () => {
         />,
       );
       expect(queryByTestId('lg-pagination-page-select')).toBeInTheDocument();
+    });
+
+    test('falls back to the text branch (no empty dropdown) when numTotalItems is 0', () => {
+      const { queryByTestId } = render(
+        <PaginationCurrentPageControls
+          currentPage={1}
+          numTotalItems={0}
+          itemsPerPage={10}
+          onCurrentPageOptionChange={jest.fn()}
+          onBackArrowClick={onBackArrowClick}
+          onForwardArrowClick={onForwardArrowClick}
+        />,
+      );
+      expect(
+        queryByTestId('lg-pagination-page-select'),
+      ).not.toBeInTheDocument();
+      expect(queryByTestId('lg-pagination-page-range')?.textContent).toBe(
+        '0 of 0',
+      );
     });
 
     test('page select options are rendered correctly', async () => {
