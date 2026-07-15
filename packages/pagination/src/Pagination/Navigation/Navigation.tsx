@@ -87,8 +87,10 @@ function Navigation<T extends number>({
         </>
       ) : (
         <Body data-testid="lg-pagination-page-range">
-          {currentPage} of{' '}
-          {numTotalItems
+          {/* A known total of 0 is a valid empty state ("0 of 0"); only an
+          unknown total (undefined) renders "many". */}
+          {numTotalItems === 0 ? 0 : currentPage} of{' '}
+          {numTotalItems !== undefined
             ? getTotalNumPages(numTotalItems, itemsPerPage)
             : 'many'}
         </Body>
