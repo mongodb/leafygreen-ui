@@ -13,7 +13,7 @@
  * Usage: republish-to-registry.mjs <registry-url> <published-packages-json>
  */
 import { execFileSync } from 'child_process';
-import { mkdtempSync, writeFileSync } from 'fs';
+import { mkdtempSync, rmSync, writeFileSync } from 'fs';
 import { tmpdir } from 'os';
 import path from 'path';
 
@@ -41,50 +41,54 @@ if (!Array.isArray(packages) || packages.length === 0) {
 
 const workDir = mkdtempSync(path.join(tmpdir(), 'leafygreen-republish-'));
 
-// No scope overrides here, so this can't be redirected toward `registry`.
-const npmjsConfigPath = path.join(workDir, '.npmrc-npmjs-only');
-writeFileSync(npmjsConfigPath, 'registry=https://registry.npmjs.org\n');
+try {
+  // No scope overrides here, so this can't be redirected toward `registry`.
+  const npmjsConfigPath = path.join(workDir, '.npmrc-npmjs-only');
+  writeFileSync(npmjsConfigPath, 'registry=https://registry.npmjs.org\n');
 
-for (const { name, version } of packages) {
-  const spec = `${name}@${version}`;
+  for (const { name, version } of packages) {
+    const spec = `${name}@${version}`;
 
-  console.log(`Fetching the published npmjs tarball for ${spec}...`);
-  const packOutput = execFileSync(
-    'npm',
-    [
-      'pack',
-      spec,
-      '--userconfig',
-      npmjsConfigPath,
-      '--pack-destination',
-      workDir,
-      '--json',
-    ],
-    { encoding: 'utf-8', stdio: ['ignore', 'pipe', 'inherit'] },
-  );
-  const [{ filename }] = JSON.parse(packOutput);
-  const tarballPath = path.join(workDir, filename);
-
-  // Catch a scope login-codeartifact.sh forgot to configure, instead of silently
-  // publishing it somewhere else.
-  const scope = name.startsWith('@') ? name.split('/')[0] : null;
-  if (scope) {
-    const configuredRegistry = execFileSync(
+    console.log(`Fetching the published npmjs tarball for ${spec}...`);
+    const packOutput = execFileSync(
       'npm',
-      ['config', 'get', `${scope}:registry`],
-      { encoding: 'utf-8' },
-    ).trim();
-    if (configuredRegistry !== registry) {
-      throw new Error(
-        `${scope} is configured to publish to "${configuredRegistry}", not the ` +
-          `expected "${registry}". Add ${scope} to login-codeartifact.sh's SCOPES ` +
-          `list before publishing ${spec}.`,
-      );
+      [
+        'pack',
+        spec,
+        '--userconfig',
+        npmjsConfigPath,
+        '--pack-destination',
+        workDir,
+        '--json',
+      ],
+      { encoding: 'utf-8', stdio: ['ignore', 'pipe', 'inherit'] },
+    );
+    const [{ filename }] = JSON.parse(packOutput);
+    const tarballPath = path.join(workDir, filename);
+
+    // Catch a scope login-codeartifact.sh forgot to configure, instead of silently
+    // publishing it somewhere else.
+    const scope = name.startsWith('@') ? name.split('/')[0] : null;
+    if (scope) {
+      const configuredRegistry = execFileSync(
+        'npm',
+        ['config', 'get', `${scope}:registry`],
+        { encoding: 'utf-8' },
+      ).trim();
+      if (configuredRegistry !== registry) {
+        throw new Error(
+          `${scope} is configured to publish to "${configuredRegistry}", not the ` +
+            `expected "${registry}". Add ${scope} to login-codeartifact.sh's SCOPES ` +
+            `list before publishing ${spec}.`,
+        );
+      }
     }
+
+    console.log(`Publishing ${spec} to ${registry}...`);
+    execFileSync('npm', ['publish', tarballPath], { stdio: 'inherit' });
   }
 
-  console.log(`Publishing ${spec} to ${registry}...`);
-  execFileSync('npm', ['publish', tarballPath], { stdio: 'inherit' });
+  console.log(`✔ Republished ${packages.length} package(s) to ${registry}`);
+} finally {
+  rmSync(workDir, { recursive: true, force: true });
 }
-
-console.log(`✔ Republished ${packages.length} package(s) to ${registry}`);
