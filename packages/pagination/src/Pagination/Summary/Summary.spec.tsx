@@ -167,6 +167,19 @@ describe('PaginationRangeView', () => {
   });
 
   describe('edge cases', () => {
+    test('renders "0 - 0 of 0 items" when numTotalItems is 0', () => {
+      const { getByTestId } = render(
+        <PaginationRangeView
+          itemsPerPage={10}
+          currentPage={1}
+          numTotalItems={0}
+        />,
+      );
+      expect(getByTestId('lg-pagination-item-range').textContent).toBe(
+        '0 - 0 of 0 items',
+      );
+    });
+
     test('handles small total items', () => {
       const { getByTestId } = render(
         <PaginationRangeView

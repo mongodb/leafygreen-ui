@@ -48,8 +48,12 @@ const meta: StoryMetaType<typeof Pagination> = {
       storyNames: ['FixedItemsPerPage', 'VariableItemsPerPage'],
       combineArgs: {
         darkMode: [false, true],
-        numTotalItems: [undefined, 5, 150], // include case when numTotalItems < itemsPerPage
-        currentPage: [undefined, 1, 5, 10],
+        // 0 covers the empty state ("0 - 0 of 0 items" / "0 of 0"); 5 covers
+        // the case when numTotalItems < itemsPerPage.
+        numTotalItems: [undefined, 0, 5, 150],
+        // `undefined` is omitted: currentPage defaults to 1, so it would be
+        // visually identical to currentPage: 1.
+        currentPage: [1, 5, 10],
         shouldDisableBackArrow: [false, true],
         shouldDisableForwardArrow: [false, true],
         onCurrentPageOptionChange: [undefined, fn],
@@ -59,14 +63,17 @@ const meta: StoryMetaType<typeof Pagination> = {
           numTotalItems: undefined,
           onCurrentPageOptionChange: fn,
         },
+        // The empty state renders "0 of 0" regardless of currentPage, so
+        // snapshot it once (at currentPage: 1) rather than across every page.
         {
-          currentPage: undefined,
-          onCurrentPageOptionChange: fn,
-        },
-        {
+          numTotalItems: 0,
           currentPage: [5, 10],
+        },
+        // A single page of results (numTotalItems < itemsPerPage) has no
+        // page 5 or 10, so those currentPage values are invalid here.
+        {
           numTotalItems: 5,
-          itemsPerPage: 15,
+          currentPage: [5, 10],
         },
       ],
 

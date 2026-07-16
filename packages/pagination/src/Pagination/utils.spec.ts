@@ -49,6 +49,10 @@ describe('Pagination utils', () => {
     test('returns correct range without numTotalItems (undefined)', () => {
       expect(getCurrentRangeString(10, 3, undefined)).toBe('21 - 30');
     });
+
+    test('returns "0 - 0" when numTotalItems is 0', () => {
+      expect(getCurrentRangeString(10, 1, 0)).toBe('0 - 0');
+    });
   });
 
   describe('getRangeMaxString', () => {
@@ -56,8 +60,8 @@ describe('Pagination utils', () => {
       expect(getRangeMaxString()).toBe('many');
     });
 
-    test('returns "many" when numTotalItems is 0', () => {
-      expect(getRangeMaxString(0)).toBe('many');
+    test('returns "0 items" when numTotalItems is 0', () => {
+      expect(getRangeMaxString(0)).toBe('0 items');
     });
 
     test('returns correct string when numTotalItems is provided', () => {
