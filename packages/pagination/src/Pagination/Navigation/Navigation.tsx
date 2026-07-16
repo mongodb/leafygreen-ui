@@ -44,7 +44,11 @@ function Navigation<T extends number>({
   const shouldDisableBackButton =
     shouldDisableBackArrow !== undefined
       ? shouldDisableBackArrow
-      : numTotalItems !== undefined && currentPage <= 1;
+      : numTotalItems !== undefined &&
+        // The empty state ("0 of 0") has no pages to navigate, so disable the
+        // back arrow regardless of currentPage. The forward arrow is already
+        // disabled here since currentPage >= 0 total pages.
+        (numTotalItems === 0 || currentPage <= 1);
   const shouldDisableForwardButton =
     shouldDisableForwardArrow !== undefined
       ? shouldDisableForwardArrow
