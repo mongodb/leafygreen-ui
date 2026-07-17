@@ -66,26 +66,52 @@ try {
     const [{ filename }] = JSON.parse(packOutput);
     const tarballPath = path.join(workDir, filename);
 
+    // Every LG package is scoped; an unscoped name means the scope-registry check
+    // below can't run, so publish would rely on whatever the default registry is
+    // instead of `registry` — fail loudly rather than silently mis-publish it.
+    if (!name.startsWith('@')) {
+      throw new Error(
+        `${name} is unscoped, so its publish destination can't be verified against ` +
+          `"${registry}". Refusing to publish it.`,
+      );
+    }
+
     // Catch a scope login-codeartifact.sh forgot to configure, instead of silently
     // publishing it somewhere else.
-    const scope = name.startsWith('@') ? name.split('/')[0] : null;
-    if (scope) {
-      const configuredRegistry = execFileSync(
-        'npm',
-        ['config', 'get', `${scope}:registry`],
-        { encoding: 'utf-8' },
-      ).trim();
-      if (configuredRegistry !== registry) {
-        throw new Error(
-          `${scope} is configured to publish to "${configuredRegistry}", not the ` +
-            `expected "${registry}". Add ${scope} to login-codeartifact.sh's SCOPES ` +
-            `list before publishing ${spec}.`,
-        );
-      }
+    const scope = name.split('/')[0];
+    const configuredRegistry = execFileSync(
+      'npm',
+      ['config', 'get', `${scope}:registry`],
+      { encoding: 'utf-8' },
+    ).trim();
+    if (configuredRegistry !== registry) {
+      throw new Error(
+        `${scope} is configured to publish to "${configuredRegistry}", not the ` +
+          `expected "${registry}". Add ${scope} to login-codeartifact.sh's SCOPES ` +
+          `list before publishing ${spec}.`,
+      );
     }
 
     console.log(`Publishing ${spec} to ${registry}...`);
-    execFileSync('npm', ['publish', tarballPath], { stdio: 'inherit' });
+    try {
+      const publishOutput = execFileSync('npm', ['publish', tarballPath], {
+        encoding: 'utf-8',
+        stdio: ['ignore', 'pipe', 'pipe'],
+      });
+      console.log(publishOutput);
+    } catch (err) {
+      const stderr = err.stderr ?? '';
+      // Makes re-runs idempotent: if a prior run already published packages 1..N-1
+      // before failing on N, re-running shouldn't treat 1..N-1 as errors.
+      if (
+        /cannot publish over (the )?previously published version/i.test(stderr)
+      ) {
+        console.log(`${spec} is already published to ${registry} — skipping.`);
+      } else {
+        console.error(stderr);
+        throw err;
+      }
+    }
   }
 
   console.log(`✔ Republished ${packages.length} package(s) to ${registry}`);

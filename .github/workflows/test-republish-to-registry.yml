@@ -3,9 +3,10 @@ name: Test Registry Republish
 # Manual smoke test for scripts/republish-to-registry.mjs, so the CodeArtifact
 # publish path (UXE-477 / LG-6236) can be exercised with real credentials without
 # waiting for an actual release. Pick a package/version already published to both
-# npmjs and CodeArtifact — republishing an existing version fails harmlessly
-# (registries reject re-publishing the same version), which still proves the fetch,
-# auth, and scope-registry check all work end-to-end.
+# npmjs and CodeArtifact — the script treats "already published" as a no-op, so
+# this succeeds (not just "fails harmlessly") while still proving the fetch, auth,
+# and scope-registry check all work end-to-end. A genuine problem (bad auth, pack
+# 404, scope mismatch) still fails the step.
 on:
   workflow_dispatch:
     inputs:
