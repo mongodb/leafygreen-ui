@@ -63,3 +63,9 @@ echo "Updated global ~/.npmrc"
 npm -d ping --registry=$CODEARTIFACT_REGISTRY
 
 echo "✅ Successfully logged into CodeArtifact repository"
+
+# Expose the resolved registry URL to the calling CI step (see LG-6236 / UXE-477 —
+# republish-to-registry.mjs needs it to publish tarballs there explicitly).
+if [ -n "$GITHUB_OUTPUT" ]; then
+  echo "registry=$CODEARTIFACT_REGISTRY" >> "$GITHUB_OUTPUT"
+fi
