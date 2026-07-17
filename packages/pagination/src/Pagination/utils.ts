@@ -3,6 +3,10 @@ export const getCurrentRangeString = (
   currentPage: number,
   numTotalItems?: number,
 ) => {
+  // 0 is a valid total (e.g. a filtered table with no matches); render an empty
+  // range rather than a nonsensical "1 - 0".
+  if (numTotalItems === 0) return '0 - 0';
+
   return `${itemsPerPage * (currentPage - 1) + 1} - ${Math.min(
     itemsPerPage * currentPage,
     numTotalItems ?? itemsPerPage * currentPage,
@@ -10,7 +14,9 @@ export const getCurrentRangeString = (
 };
 
 export const getRangeMaxString = (numTotalItems?: number) => {
-  if (!numTotalItems) return 'many';
+  // Only an unknown total (undefined) renders "many"; a known total of 0 is a
+  // valid empty state and renders "0 items".
+  if (numTotalItems === undefined) return 'many';
 
   return numTotalItems === 1 ? '1 item' : `${numTotalItems} items`;
 };
