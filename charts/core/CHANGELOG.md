@@ -1,5 +1,11 @@
 # @lg-charts/core
 
+## 3.1.0
+
+### Minor Changes
+
+- d88d308: Adds an optional `customRow` prop to `ChartTooltip` for rendering an additional row (e.g. a total) at the bottom of the tooltip's series list.
+
 ## 3.0.0
 
 ### Major Changes
