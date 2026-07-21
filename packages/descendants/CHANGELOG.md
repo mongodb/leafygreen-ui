@@ -1,5 +1,11 @@
 # @leafygreen-ui/descendants
 
+## 3.1.1
+
+### Patch Changes
+
+- a4b24ff: [UXE-495](https://jira.mongodb.org/browse/UXE-495): Fix Tabs (and other descendant components) all appearing selected when rendered inside an iframe.
+
 ## 3.1.0
 
 ### Minor Changes
