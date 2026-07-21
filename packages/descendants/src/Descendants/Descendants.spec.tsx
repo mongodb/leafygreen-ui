@@ -180,7 +180,7 @@ describe('packages/descendants', () => {
       const container = iframeDocument.createElement('div');
       iframeDocument.body.appendChild(container);
 
-      const { queryByText } = render(
+      const { queryByText, unmount } = render(
         <TestParent>
           <TestDescendant>Apple</TestDescendant>
           <TestDescendant>Banana</TestDescendant>
@@ -189,11 +189,14 @@ describe('packages/descendants', () => {
         { container },
       );
 
-      expect(queryByText('Apple')).toHaveAttribute('data-index', '0');
-      expect(queryByText('Banana')).toHaveAttribute('data-index', '1');
-      expect(queryByText('Carrot')).toHaveAttribute('data-index', '2');
-
-      document.body.removeChild(iframe);
+      try {
+        expect(queryByText('Apple')).toHaveAttribute('data-index', '0');
+        expect(queryByText('Banana')).toHaveAttribute('data-index', '1');
+        expect(queryByText('Carrot')).toHaveAttribute('data-index', '2');
+      } finally {
+        unmount();
+        document.body.removeChild(iframe);
+      }
     });
   });
 
