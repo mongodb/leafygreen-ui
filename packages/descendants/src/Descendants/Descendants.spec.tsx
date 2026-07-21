@@ -172,6 +172,29 @@ describe('packages/descendants', () => {
       expect(anaheim).toHaveAttribute('data-index', '0');
       expect(habanero).toHaveAttribute('data-index', '1');
     });
+
+    test('registers descendants rendered inside an iframe', () => {
+      const iframe = document.createElement('iframe');
+      document.body.appendChild(iframe);
+      const iframeDocument = iframe.contentDocument!;
+      const container = iframeDocument.createElement('div');
+      iframeDocument.body.appendChild(container);
+
+      const { queryByText } = render(
+        <TestParent>
+          <TestDescendant>Apple</TestDescendant>
+          <TestDescendant>Banana</TestDescendant>
+          <TestDescendant>Carrot</TestDescendant>
+        </TestParent>,
+        { container },
+      );
+
+      expect(queryByText('Apple')).toHaveAttribute('data-index', '0');
+      expect(queryByText('Banana')).toHaveAttribute('data-index', '1');
+      expect(queryByText('Carrot')).toHaveAttribute('data-index', '2');
+
+      document.body.removeChild(iframe);
+    });
   });
 
   describe('useInitDescendants', () => {
