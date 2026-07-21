@@ -52,8 +52,7 @@ export const useDescendant = <T extends HTMLElement>(
   // On render, register the element as a descendant
   useIsomorphicLayoutEffect(() => {
     const _id = id.current;
-    // Use the element's owning document so containment checks work inside an
-    // iframe, where the global `document` differs from the element's document.
+    // Use ownerDocument so containment checks work when the element is in an iframe.
     const refExists =
       ref.current?.ownerDocument?.contains(ref.current) ?? false;
 

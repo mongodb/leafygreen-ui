@@ -174,9 +174,6 @@ describe('packages/descendants', () => {
     });
 
     test('registers descendants rendered inside an iframe', () => {
-      // Elements inside an iframe belong to a different document than the
-      // top-level `document`, so registration must use the element's
-      // ownerDocument for the containment check. (UXE-495)
       const iframe = document.createElement('iframe');
       document.body.appendChild(iframe);
       const iframeDocument = iframe.contentDocument!;
