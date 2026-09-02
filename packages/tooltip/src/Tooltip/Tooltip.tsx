@@ -15,6 +15,7 @@ import { isComponentGlyph } from '@leafygreen-ui/icon';
 import LeafyGreenProvider, {
   useDarkMode,
 } from '@leafygreen-ui/leafygreen-provider';
+import { consoleOnce } from '@leafygreen-ui/lib';
 import { getPopoverRenderModeProps, Popover } from '@leafygreen-ui/popover';
 import { Body, useUpdatedBaseFontSize } from '@leafygreen-ui/typography';
 
@@ -108,6 +109,17 @@ function Tooltip({
     isControlled && controlledSetOpen ? controlledSetOpen : uncontrolledSetOpen;
 
   const tooltipRef = useRef<HTMLDivElement | null>(null);
+  const defaultTriggerRef = useRef<HTMLElement | null>(null);
+  const triggerRef = refEl ?? defaultTriggerRef;
+
+  // Refs on class components resolve to the instance, not a DOM node; only accept `HTMLElement`s.
+  const setTriggerRef = useCallback(
+    (node: unknown) => {
+      (triggerRef as React.MutableRefObject<HTMLElement | null>).current =
+        node instanceof HTMLElement ? node : null;
+    },
+    [triggerRef],
+  );
 
   const existingId = id ?? tooltipRef.current?.id;
   const tooltipId = useIdAllocator({ prefix: 'tooltip', id: existingId });
@@ -124,6 +136,22 @@ function Tooltip({
 
   const triggerComponent =
     typeof trigger === 'function' ? trigger({}) : trigger;
+
+  const active = enabled && open;
+
+  useEffect(() => {
+    // A plain function component `trigger` can't receive a ref, so positioning will be wrong.
+    if (
+      process.env.NODE_ENV !== 'production' &&
+      active &&
+      triggerComponent &&
+      !triggerRef.current
+    ) {
+      consoleOnce.warn(
+        'Unable to set a ref on the `trigger` element passed to `Tooltip`. This can happen if `trigger` is a plain function component, which cannot receive refs. Wrap the component in `React.forwardRef`, or pass a DOM element (e.g. a `<button>`) as the `trigger`.',
+      );
+    }
+  }, [active, triggerComponent, triggerRef]);
 
   const handleClose = useCallback(() => {
     if (typeof shouldClose !== 'function' || shouldClose()) {
@@ -148,7 +176,7 @@ function Tooltip({
 
   const popoverProps = {
     popoverZIndex,
-    refEl,
+    refEl: triggerRef,
     spacing,
     ...getPopoverRenderModeProps({
       dismissMode: DismissMode.Manual,
@@ -160,7 +188,6 @@ function Tooltip({
     }),
   } as const;
 
-  const active = enabled && open;
   const isLeftOrRightAligned = ['left', 'right'].includes(align);
   const isCompact = variant === TooltipVariant.Compact;
   const showNotch = !isCompact;
@@ -228,17 +255,19 @@ function Tooltip({
   );
 
   if (triggerComponent) {
-    return React.cloneElement(triggerComponent, {
+    const clonedTrigger = React.cloneElement(triggerComponent, {
       ...triggerEventHandlers,
       'aria-describedby': active ? tooltipId : undefined,
-      children: (
-        <>
-          {triggerComponent.props.children}
-          {tooltip}
-        </>
-      ),
+      ref: setTriggerRef,
       className: getTriggerStyles(triggerComponent.props.className),
     });
+
+    return (
+      <>
+        {clonedTrigger}
+        {tooltip}
+      </>
+    );
   }
 
   return tooltip;

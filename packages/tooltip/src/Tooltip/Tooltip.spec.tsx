@@ -541,13 +541,15 @@ describe('packages/tooltip', () => {
       children: React.ReactNode;
     }
 
-    function Button({ children, ...props }: ButtonProps) {
-      return (
-        <button {...props} data-testid="nested-trigger">
-          trigger {children}
-        </button>
-      );
-    }
+    const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+      function Button({ children, ...props }, ref) {
+        return (
+          <button {...props} ref={ref} data-testid="nested-trigger">
+            trigger {children}
+          </button>
+        );
+      },
+    );
 
     function renderNestedTrigger(props = {}) {
       const utils = render(
@@ -570,6 +572,19 @@ describe('packages/tooltip', () => {
     test('renders trigger in document', () => {
       const { button } = renderNestedTrigger();
       expect(button).toBeInTheDocument();
+    });
+  });
+
+  describe('when the tooltip is active', () => {
+    test('the tooltip content is not a DOM descendant of the trigger, and `aria-describedby` links the trigger to the tooltip', async () => {
+      const { getByTestId, button } = renderTooltip({
+        open: true,
+      });
+
+      const tooltip = await waitFor(() => getByTestId(tooltipTestId));
+
+      expect(button.contains(tooltip)).toBe(false);
+      expect(button).toHaveAttribute('aria-describedby', tooltip.id);
     });
   });
 
