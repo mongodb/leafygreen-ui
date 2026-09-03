@@ -147,7 +147,7 @@ function Tooltip({
   const active = enabled && open;
 
   useEffect(() => {
-    // A plain function component `trigger` can't receive a ref, so positioning will be wrong.
+    // If `trigger`'s ref doesn't resolve to an `HTMLElement`, positioning will be wrong.
     if (
       process.env.NODE_ENV !== 'production' &&
       active &&
@@ -155,7 +155,7 @@ function Tooltip({
       !triggerRef.current
     ) {
       consoleOnce.warn(
-        'Unable to set a ref on the `trigger` element passed to `Tooltip`. This can happen if `trigger` is a plain function component, which cannot receive refs. Wrap the component in `React.forwardRef`, or pass a DOM element (e.g. a `<button>`) as the `trigger`.',
+        'Unable to set a ref on the `trigger` element passed to `Tooltip`. This can happen if `trigger` is a plain function component (which cannot receive refs) or a class component that does not forward its ref to a DOM element. Pass a DOM element as `trigger`, or a component that forwards its ref to one via `React.forwardRef`.',
       );
     }
   }, [active, triggerComponent, triggerRef]);
