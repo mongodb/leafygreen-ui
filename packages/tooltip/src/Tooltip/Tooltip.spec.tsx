@@ -586,6 +586,16 @@ describe('packages/tooltip', () => {
       expect(button.contains(tooltip)).toBe(false);
       expect(button).toHaveAttribute('aria-describedby', tooltip.id);
     });
+
+    test('the tooltip content only appears once in the document', async () => {
+      const { getByTestId } = renderTooltip({
+        open: true,
+      });
+
+      await waitFor(() => getByTestId(tooltipTestId));
+
+      expect(screen.getAllByText('Tooltip Contents!')).toHaveLength(1);
+    });
   });
 
   test('accepts a portalRef', () => {
