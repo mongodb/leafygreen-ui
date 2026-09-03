@@ -10,6 +10,7 @@ import {
   useBackdropClick,
   useEscapeKey,
   useIdAllocator,
+  useMergeRefs,
 } from '@leafygreen-ui/hooks';
 import { isComponentGlyph } from '@leafygreen-ui/icon';
 import LeafyGreenProvider, {
@@ -137,6 +138,12 @@ function Tooltip({
   const triggerComponent =
     typeof trigger === 'function' ? trigger({}) : trigger;
 
+  // Preserve any ref the consumer already attached to `trigger`, since we also need our own.
+  const existingTriggerRef = (
+    triggerComponent as unknown as { ref?: React.Ref<HTMLElement> } | null
+  )?.ref;
+  const mergedTriggerRef = useMergeRefs([setTriggerRef, existingTriggerRef]);
+
   const active = enabled && open;
 
   useEffect(() => {
@@ -258,7 +265,7 @@ function Tooltip({
     const clonedTrigger = React.cloneElement(triggerComponent, {
       ...triggerEventHandlers,
       'aria-describedby': active ? tooltipId : undefined,
-      ref: setTriggerRef,
+      ref: mergedTriggerRef,
       className: getTriggerStyles(triggerComponent.props.className),
     });
 
