@@ -1,5 +1,21 @@
 # @leafygreen-ui/wizard
 
+## 0.1.6
+
+### Patch Changes
+
+- b9548f3: [UXE-1153](https://jira.mongodb.org/browse/UXE-1153): Republish so npm and AWS CodeArtifact serve byte-identical tarballs. No code changes.
+- Updated dependencies [b9548f3]
+  - @leafygreen-ui/button@25.2.2
+  - @leafygreen-ui/compound-component@0.3.1
+  - @leafygreen-ui/emotion@5.2.1
+  - @leafygreen-ui/form-footer@9.3.2
+  - @leafygreen-ui/hooks@9.3.2
+  - @leafygreen-ui/lib@15.7.1
+  - @leafygreen-ui/polymorphic@3.1.1
+  - @leafygreen-ui/tokens@4.2.3
+  - @lg-tools/test-harnesses@0.3.5
+
 ## 0.1.5
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @leafygreen-ui/icon
 
+## 14.9.1
+
+### Patch Changes
+
+- b9548f3: [UXE-1153](https://jira.mongodb.org/browse/UXE-1153): Republish so npm and AWS CodeArtifact serve byte-identical tarballs. No code changes.
+- Updated dependencies [b9548f3]
+  - @leafygreen-ui/emotion@5.2.1
+  - @leafygreen-ui/hooks@9.3.2
+
 ## 14.9.0
 
 ### Minor Changes

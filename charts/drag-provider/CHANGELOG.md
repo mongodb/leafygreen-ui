@@ -1,5 +1,15 @@
 # @lg-charts/drag-provider
 
+## 1.0.12
+
+### Patch Changes
+
+- b9548f3: [UXE-1153](https://jira.mongodb.org/browse/UXE-1153): Republish so npm and AWS CodeArtifact serve byte-identical tarballs. No code changes.
+- Updated dependencies [b9548f3]
+  - @leafygreen-ui/leafygreen-provider@5.0.5
+  - @lg-charts/chart-card@1.1.6
+  - @lg-charts/core@3.1.1
+
 ## 1.0.11
 
 ### Patch Changes

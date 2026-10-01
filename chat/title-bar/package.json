@@ -1,6 +1,6 @@
 {
   "name": "@lg-chat/title-bar",
-  "version": "5.0.2",
+  "version": "5.0.3",
   "description": "lg-chat Title Bar",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -21,8 +21,8 @@
     "@leafygreen-ui/typography": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0",
-    "@lg-chat/leafygreen-chat-provider": "workspace:^6.0.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.5",
+    "@lg-chat/leafygreen-chat-provider": "workspace:^6.0.1"
   },
   "devDependencies": {
     "@lg-tools/build": "workspace:^"

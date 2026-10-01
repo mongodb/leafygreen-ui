@@ -1,6 +1,6 @@
 {
   "name": "@leafygreen-ui/code-editor",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "LeafyGreen UI Kit Code Editor",
   "main": "./dist/umd/index.js",
   "module": "./dist/esm/index.js",
@@ -63,7 +63,7 @@
     "@leafygreen-ui/tooltip": "workspace:^",
     "@leafygreen-ui/typography": "workspace:^",
     "@lezer/highlight": "^1.2.1",
-    "@lg-tools/test-harnesses": "^0.3.4",
+    "@lg-tools/test-harnesses": "^0.3.5",
     "@replit/codemirror-lang-csharp": "^6.2.0",
     "@uiw/codemirror-extensions-hyper-link": "^4.23.12",
     "@wasm-fmt/clang-format": "^20.1.7",
@@ -76,7 +76,7 @@
     "@lg-tools/build": "workspace:^"
   },
   "peerDependencies": {
-    "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.0 || ^4.0.0 || ^3.2.0"
+    "@leafygreen-ui/leafygreen-provider": "workspace:^5.0.5"
   },
   "homepage": "https://github.com/mongodb/leafygreen-ui/tree/main/packages/code-editor",
   "repository": {
