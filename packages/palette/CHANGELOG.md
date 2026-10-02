@@ -1,5 +1,11 @@
 # @leafygreen-ui/palette
 
+## 5.0.3
+
+### Patch Changes
+
+- b9548f3: [UXE-1153](https://jira.mongodb.org/browse/UXE-1153): Republish so npm and AWS CodeArtifact serve byte-identical tarballs. No code changes.
+
 ## 5.0.2
 
 ### Patch Changes

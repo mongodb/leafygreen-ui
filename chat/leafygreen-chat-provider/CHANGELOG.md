@@ -1,5 +1,11 @@
 # @lg-chat/leafygreen-chat-provider
 
+## 6.0.1
+
+### Patch Changes
+
+- b9548f3: [UXE-1153](https://jira.mongodb.org/browse/UXE-1153): Republish so npm and AWS CodeArtifact serve byte-identical tarballs. No code changes.
+
 ## 6.0.0
 
 ### Major Changes

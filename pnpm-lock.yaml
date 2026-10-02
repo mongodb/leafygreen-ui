@@ -1458,8 +1458,8 @@ importers:
         specifier: ^1.2.1
         version: 1.2.1
       '@lg-tools/test-harnesses':
-        specifier: ^0.3.4
-        version: 0.3.4
+        specifier: ^0.3.5
+        version: link:../../tools/test-harnesses
       '@replit/codemirror-lang-csharp':
         specifier: ^6.2.0
         version: 6.2.0(@codemirror/autocomplete@6.18.7)(@codemirror/language@6.11.3)(@codemirror/state@6.5.2)(@codemirror/view@6.38.3)(@lezer/common@1.2.3)(@lezer/highlight@1.2.1)(@lezer/lr@1.4.2)
@@ -6241,8 +6241,6 @@ packages:
   '@lezer/rust@1.0.2':
     resolution: {integrity: sha512-Lz5sIPBdF2FUXcWeCu1//ojFAZqzTQNRga0aYv6dYXqJqPfMdCAI0NzajWUd4Xijj1IKJLtjoXRPMvTKWBcqKg==}
 
-  '@lg-tools/test-harnesses@0.3.4':
-    resolution: {integrity: sha512-JfJj2LSMe5vTSDQoLxWUHx2r4wUgKqU1UrgqjvNYM7iebXE0JCE7RvLiEg5SnsRO8xXQbEMjgISErmCDR4DS7Q==}
 
   '@manypkg/find-root@1.1.0':
     resolution: {integrity: sha512-mki5uBvhHzO8kYYix/WRy2WX8S3B5wdVSc9D6KcU5lQNglP2yt58/VfLuAK49glRXChosY8ap2oJ1qgma3GUVA==}
@@ -14496,10 +14494,6 @@ snapshots:
       '@lezer/common': 1.2.3
       '@lezer/highlight': 1.2.1
       '@lezer/lr': 1.4.2
-
-  '@lg-tools/test-harnesses@0.3.4':
-    dependencies:
-      '@testing-library/dom': 9.3.4
 
   '@manypkg/find-root@1.1.0':
     dependencies:

@@ -1,5 +1,23 @@
 # @lg-tools/cli
 
+## 0.12.3
+
+### Patch Changes
+
+- b9548f3: [UXE-1153](https://jira.mongodb.org/browse/UXE-1153): Republish so npm and AWS CodeArtifact serve byte-identical tarballs. No code changes.
+- Updated dependencies [b9548f3]
+  - @lg-tools/build@0.9.2
+  - @lg-tools/codemods@0.7.2
+  - @lg-tools/create@0.6.1
+  - @lg-tools/install@0.4.3
+  - @lg-tools/link@0.3.2
+  - @lg-tools/lint@3.1.2
+  - @lg-tools/prompt-kit@0.3.4
+  - @lg-tools/slackbot@0.2.20
+  - @lg-tools/test@0.5.2
+  - @lg-tools/update@0.1.21
+  - @lg-tools/validate@0.6.2
+
 ## 0.12.2
 
 ### Patch Changes

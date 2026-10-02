@@ -1,5 +1,20 @@
 # @lg-tools/storybook-addon
 
+## 0.6.7
+
+### Patch Changes
+
+- b9548f3: [UXE-1153](https://jira.mongodb.org/browse/UXE-1153): Republish so npm and AWS CodeArtifact serve byte-identical tarballs. No code changes.
+- Updated dependencies [b9548f3]
+  - @leafygreen-ui/lib@15.7.1
+  - @leafygreen-ui/palette@5.0.3
+  - @leafygreen-ui/tokens@4.2.3
+  - @leafygreen-ui/typography@22.2.5
+  - @lg-tools/build@0.9.2
+  - @lg-tools/meta@0.6.4
+  - @lg-tools/storybook-decorators@1.0.8
+  - @lg-tools/storybook-utils@0.3.5
+
 ## 0.6.6
 
 ### Patch Changes
