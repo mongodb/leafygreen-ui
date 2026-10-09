@@ -40,6 +40,7 @@ export default function useIdAllocator({ prefix, id: idOverride }: Params) {
   if (typeof React.useId === 'function') {
     // React's ids look like `:r0:` — valid as an HTML id, but invalid as an
     // unescaped CSS selector — so strip the colons.
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const reactId = React.useId().replace(/:/g, '');
 
     return idOverride ?? `${prefix ?? 'lg'}-${reactId}`;
