@@ -1,6 +1,4 @@
-// Currently using Material UI useId hook until we can upgrade to React 18's useId
-// https://github.com/mui/material-ui/blob/master/packages/mui-utils/src/useId.ts
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface Params {
   prefix?: string;
@@ -9,7 +7,9 @@ interface Params {
 
 let globalId = 0;
 
-function useGlobalId({ id: idOverride, prefix }: Params): string {
+// Legacy fallback for React < 18, from Material UI's useId.
+// https://github.com/mui/material-ui/blob/master/packages/mui-utils/src/useId.ts
+function useLegacyId({ id: idOverride, prefix }: Params): string {
   const [defaultId, setDefaultId] = useState<string | number | undefined>(
     idOverride,
   );
@@ -28,6 +28,19 @@ function useGlobalId({ id: idOverride, prefix }: Params): string {
   return idOverride ? idOverride : `${prefix ?? 'lg'}-${defaultId}`;
 }
 
-export default function useId({ prefix, id: idOverride }: Params): string {
-  return useGlobalId({ id: idOverride, prefix });
+// useId was added in React 18; look it up defensively so this typechecks
+// against older React types.
+const reactUseId = (React as { useId?: () => string }).useId;
+
+export default function useIdAllocator({ prefix, id: idOverride }: Params) {
+  // React 18+: useId returns a stable id synchronously during render.
+  if (typeof reactUseId === 'function') {
+    // useId returns `:r0:`; colons are invalid in CSS selectors.
+    const reactId = reactUseId().replace(/:/g, '');
+
+    return idOverride ?? `${prefix ?? 'lg'}-${reactId}`;
+  }
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  return useLegacyId({ id: idOverride, prefix });
 }
