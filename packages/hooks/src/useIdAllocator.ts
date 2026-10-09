@@ -7,13 +7,8 @@ interface Params {
 
 let globalId = 0;
 
-/**
- * Legacy id allocator, based on Material UI's useId hook.
- * Deferred to a `useEffect`, which under React 18's concurrent scheduler
- * can commit an `undefined` id to the DOM before the re-render lands.
- * Only used when `React.useId` is unavailable (React < 18).
- * https://github.com/mui/material-ui/blob/master/packages/mui-utils/src/useId.ts
- */
+// Legacy fallback for React < 18, from Material UI's useId.
+// https://github.com/mui/material-ui/blob/master/packages/mui-utils/src/useId.ts
 function useLegacyId({ id: idOverride, prefix }: Params): string {
   const [defaultId, setDefaultId] = useState<string | number | undefined>(
     idOverride,
@@ -33,15 +28,15 @@ function useLegacyId({ id: idOverride, prefix }: Params): string {
   return idOverride ? idOverride : `${prefix ?? 'lg'}-${defaultId}`;
 }
 
+// useId was added in React 18; look it up defensively so this typechecks
+// against older React types.
+const reactUseId = (React as { useId?: () => string }).useId;
+
 export default function useIdAllocator({ prefix, id: idOverride }: Params) {
-  // `React.useId` generates a unique, stable id synchronously during render
-  // (and during SSR), avoiding the deferred-effect bug above.
-  // The check is constant for a given React version, so hook order is stable.
-  if (typeof React.useId === 'function') {
-    // React's ids look like `:r0:` — valid as an HTML id, but invalid as an
-    // unescaped CSS selector — so strip the colons.
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const reactId = React.useId().replace(/:/g, '');
+  // React 18+: useId returns a stable id synchronously during render.
+  if (typeof reactUseId === 'function') {
+    // useId returns `:r0:`; colons are invalid in CSS selectors.
+    const reactId = reactUseId().replace(/:/g, '');
 
     return idOverride ?? `${prefix ?? 'lg'}-${reactId}`;
   }
