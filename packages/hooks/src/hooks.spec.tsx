@@ -340,9 +340,7 @@ describe('packages/hooks', () => {
     });
 
     test('returns a defined id synchronously on the first render', () => {
-      // Under React 18, the legacy implementation deferred id generation to a
-      // post-commit effect, so the first render saw `undefined`
-      // https://jira.mongodb.org/browse/CLOUDP-435372
+      // Regression test for CLOUDP-435372: the id must be defined on first render
       const idsRendered: Array<string | undefined> = [];
 
       function TestComponent() {
