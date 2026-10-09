@@ -1,6 +1,4 @@
-// Currently using Material UI useId hook until we can upgrade to React 18's useId
-// https://github.com/mui/material-ui/blob/master/packages/mui-utils/src/useId.ts
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface Params {
   prefix?: string;
@@ -9,7 +7,14 @@ interface Params {
 
 let globalId = 0;
 
-function useGlobalId({ id: idOverride, prefix }: Params): string {
+/**
+ * Legacy id allocator, based on Material UI's useId hook.
+ * Deferred to a `useEffect`, which under React 18's concurrent scheduler
+ * can commit an `undefined` id to the DOM before the re-render lands.
+ * Only used when `React.useId` is unavailable (React < 18).
+ * https://github.com/mui/material-ui/blob/master/packages/mui-utils/src/useId.ts
+ */
+function useLegacyId({ id: idOverride, prefix }: Params): string {
   const [defaultId, setDefaultId] = useState<string | number | undefined>(
     idOverride,
   );
@@ -28,6 +33,18 @@ function useGlobalId({ id: idOverride, prefix }: Params): string {
   return idOverride ? idOverride : `${prefix ?? 'lg'}-${defaultId}`;
 }
 
-export default function useId({ prefix, id: idOverride }: Params): string {
-  return useGlobalId({ id: idOverride, prefix });
+export default function useIdAllocator({ prefix, id: idOverride }: Params) {
+  // `React.useId` generates a unique, stable id synchronously during render
+  // (and during SSR), avoiding the deferred-effect bug above.
+  // The check is constant for a given React version, so hook order is stable.
+  if (typeof React.useId === 'function') {
+    // React's ids look like `:r0:` — valid as an HTML id, but invalid as an
+    // unescaped CSS selector — so strip the colons.
+    const reactId = React.useId().replace(/:/g, '');
+
+    return idOverride ?? `${prefix ?? 'lg'}-${reactId}`;
+  }
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  return useLegacyId({ id: idOverride, prefix });
 }

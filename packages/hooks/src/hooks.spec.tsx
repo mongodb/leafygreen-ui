@@ -1,4 +1,4 @@
-import { waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 
 import { act, renderHook, renderHookServer } from '@leafygreen-ui/testing-lib';
 
@@ -334,7 +334,24 @@ describe('packages/hooks', () => {
       const { result } = renderHook(() =>
         useIdAllocator({ prefix: 'checkbox' }),
       );
-      expect(result.current).toEqual('checkbox-1');
+      expect(result.current).toMatch(/^checkbox-/);
+      expect(result.current).not.toContain('undefined');
+    });
+
+    test('returns a defined id synchronously on the first render', () => {
+      // Under React 18, the legacy implementation deferred id generation to a
+      // post-commit effect, so the first render saw `undefined`
+      // https://jira.mongodb.org/browse/CLOUDP-435372
+      const idsRendered: Array<string | undefined> = [];
+
+      function TestComponent() {
+        idsRendered.push(useIdAllocator({ prefix: 'checkbox' }));
+        return null;
+      }
+
+      render(<TestComponent />);
+
+      expect(idsRendered[0]).toMatch(/^checkbox-/);
     });
 
     test('when two hooks are rendered with the same prefix, they are still uniquely identified', () => {
@@ -344,7 +361,7 @@ describe('packages/hooks', () => {
       const { result: hook2 } = renderHook(() =>
         useIdAllocator({ prefix: 'tester' }),
       );
-      expect(hook1).not.toEqual(hook2);
+      expect(hook1.current).not.toEqual(hook2.current);
     });
 
     test('when a fallback id is provided, hook returns that id', () => {
