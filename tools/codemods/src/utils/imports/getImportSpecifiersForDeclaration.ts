@@ -72,7 +72,7 @@ export function getImportSpecifiersForDeclaration({
       return;
     }
 
-    specifierNames.push(path.node.local.name);
+    specifierNames.push(String(path.node.local.name));
   });
 
   /**
@@ -94,7 +94,7 @@ export function getImportSpecifiersForDeclaration({
      * If the named import is aliased, use the alias name.
      */
     specifierNames.push(
-      path.node.local ? path.node.local.name : namedExportToLookFor,
+      path.node.local ? String(path.node.local.name) : namedExportToLookFor,
     );
   });
 

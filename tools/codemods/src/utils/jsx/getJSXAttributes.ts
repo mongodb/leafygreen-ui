@@ -19,5 +19,5 @@ export function getJSXAttributes(
   const elementCollection = j(element.value.openingElement);
   return elementCollection.find(j.JSXAttribute).filter(attribute => {
     return attribute.value.name.name === propName;
-  });
+  }) as Collection<core.JSXAttribute>;
 }

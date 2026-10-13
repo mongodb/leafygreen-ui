@@ -33,7 +33,7 @@ export default function transformer(
   elements.forEach(element => {
     removeJSXAttributes({
       j,
-      element,
+      element: element as any,
       propName,
     });
   });

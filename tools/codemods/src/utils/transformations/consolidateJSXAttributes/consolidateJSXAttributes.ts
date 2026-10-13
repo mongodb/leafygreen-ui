@@ -159,7 +159,7 @@ export function consolidateJSXAttributes({
 
   // If the propToUpdate does exist then update the value
   if (_propToUpdate) {
-    j(_propToUpdate)
+    j(_propToUpdate as ASTPath<ASTNode>)
       .find(j.StringLiteral)
       .forEach(literal => {
         literal.node.value = newValueMapping;
