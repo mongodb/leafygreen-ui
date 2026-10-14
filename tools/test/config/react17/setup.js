@@ -1,11 +1,6 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
-const { configure } = require('@testing-library/dom');
 const structuredClonePolyfill = require('../polyfills/structuredClone');
-
-// Serial (--runInBand) execution under CI load causes transition-based
-// waitFor assertions to flake at the 1000ms default; raise it here only.
-configure({ asyncUtilTimeout: 5000 });
 
 // As of Jest 24 (https://jestjs.io/blog/2019/01/25/jest-24-refreshing-polished-typescript-friendly#breaking-changes)
 // this is no longer included by default for async tests
