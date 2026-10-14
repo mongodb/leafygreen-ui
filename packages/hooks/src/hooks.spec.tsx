@@ -340,7 +340,6 @@ describe('packages/hooks', () => {
     });
 
     test('returns a defined id synchronously on the first render', () => {
-      // Regression test for CLOUDP-435372: the id must be defined on first render
       const idsRendered: Array<string | undefined> = [];
 
       function TestComponent() {
@@ -351,6 +350,17 @@ describe('packages/hooks', () => {
       render(<TestComponent />);
 
       expect(idsRendered[0]).toMatch(/^checkbox-/);
+    });
+
+    test('returns a defined id during SSR, and the same id after hydration', () => {
+      const { result, hydrate } = renderHookServer(() =>
+        useIdAllocator({ prefix: 'checkbox' }),
+      );
+      expect(result.current).toMatch(/^checkbox-/);
+
+      const serverId = result.current;
+      hydrate();
+      expect(result.current).toBe(serverId);
     });
 
     test('when two hooks are rendered with the same prefix, they are still uniquely identified', () => {
