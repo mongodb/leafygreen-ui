@@ -39,7 +39,9 @@ export function removeJSXAttributes({
   element,
   propName,
 }: RemoveJSXAttributesType) {
-  const allAttributes = element.value.openingElement?.attributes;
+  const allAttributes = element.value.openingElement?.attributes as
+    | Array<ASTNode>
+    | undefined;
 
   const hasSpreadOperator = allAttributes?.some(
     (attr: ASTNode) => attr.type !== 'JSXAttribute',

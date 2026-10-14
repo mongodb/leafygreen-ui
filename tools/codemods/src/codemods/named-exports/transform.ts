@@ -105,7 +105,7 @@ export default function transformer(
       }
 
       // Find default import specifier
-      const defaultSpecifiers = j(importDeclaration).find(
+      const defaultSpecifiers = j(importDeclaration as any).find(
         j.ImportDefaultSpecifier,
       );
 

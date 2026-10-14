@@ -229,7 +229,7 @@ export default function transformer(
         componentPropsToRemoveMap[packageName].forEach(propName => {
           removeJSXAttributes({
             j,
-            element,
+            element: element as any,
             propName,
           });
         });

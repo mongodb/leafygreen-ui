@@ -668,7 +668,9 @@ describe('packages/combobox', () => {
         const { menuContainerEl } = openMenu();
         userEvent.type(inputEl, 'Apple');
         userEvent.tab();
-        await waitForElementToBeRemoved(menuContainerEl);
+        // Serial (--runInBand) R17 CI runs are slow enough to flake at the
+        // default 1000ms timeout; raise it for this assertion only.
+        await waitForElementToBeRemoved(menuContainerEl, { timeout: 5000 });
         if (select === 'multiple') {
           expect(onChange).toHaveBeenCalledWith(['apple'], expect.anything());
         } else {
@@ -890,7 +892,9 @@ describe('packages/combobox', () => {
         const { containerEl, openMenu } = renderCombobox(select, { onChange });
         const { menuContainerEl } = openMenu();
         userEvent.click(containerEl.parentElement!);
-        await waitForElementToBeRemoved(menuContainerEl);
+        // Serial (--runInBand) R17 CI runs are slow enough to flake at the
+        // default 1000ms timeout; raise it for this assertion only.
+        await waitForElementToBeRemoved(menuContainerEl, { timeout: 5000 });
         expect(onChange).not.toHaveBeenCalled();
       });
     });
@@ -927,7 +931,9 @@ describe('packages/combobox', () => {
         const { containerEl, openMenu } = renderCombobox(select, { onFilter });
         const { menuContainerEl } = openMenu();
         userEvent.click(containerEl.parentElement!);
-        await waitForElementToBeRemoved(menuContainerEl);
+        // Serial (--runInBand) R17 CI runs are slow enough to flake at the
+        // default 1000ms timeout; raise it for this assertion only.
+        await waitForElementToBeRemoved(menuContainerEl, { timeout: 5000 });
         expect(onFilter).not.toHaveBeenCalled();
       });
     });

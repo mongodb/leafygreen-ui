@@ -87,7 +87,9 @@ export default function transformer(
           specifier.type === 'ImportSpecifier' &&
           specifier.imported.name === 'Spinner'
         ) {
-          spinnerComponentNames.push(specifier.local?.name || 'Spinner');
+          spinnerComponentNames.push(
+            String(specifier.local?.name || 'Spinner'),
+          );
         }
       });
     }
