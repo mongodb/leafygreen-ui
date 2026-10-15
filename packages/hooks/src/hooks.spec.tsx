@@ -350,6 +350,7 @@ describe('packages/hooks', () => {
       render(<TestComponent />);
 
       expect(idsRendered[0]).toMatch(/^checkbox-/);
+      expect(idsRendered[0]).not.toContain('undefined');
     });
 
     test('returns a defined id during SSR, and the same id after hydration', () => {
@@ -376,6 +377,13 @@ describe('packages/hooks', () => {
     test('when a fallback id is provided, hook returns that id', () => {
       const { result } = renderHook(() => useIdAllocator({ id: 'id' }));
       expect(result.current).toBe('id');
+    });
+
+    test('when an empty string id is provided, hook allocates an id instead', () => {
+      const { result } = renderHook(() =>
+        useIdAllocator({ id: '', prefix: 'checkbox' }),
+      );
+      expect(result.current).toMatch(/^checkbox-/);
     });
   });
 

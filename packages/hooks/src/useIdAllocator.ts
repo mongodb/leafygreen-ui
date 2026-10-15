@@ -38,7 +38,7 @@ export default function useIdAllocator({ prefix, id: idOverride }: Params) {
     // useId returns `:r0:`; colons are invalid in CSS selectors.
     const reactId = reactUseId().replace(/:/g, '');
 
-    return idOverride ?? `${prefix ?? 'lg'}-${reactId}`;
+    return idOverride ? idOverride : `${prefix ?? 'lg'}-${reactId}`;
   }
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
