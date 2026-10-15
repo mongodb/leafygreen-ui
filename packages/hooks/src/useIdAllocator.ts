@@ -7,8 +7,10 @@ interface Params {
 
 let globalId = 0;
 
-// Legacy fallback for React < 18, from Material UI's useId.
-// https://github.com/mui/material-ui/blob/master/packages/mui-utils/src/useId.ts
+/**
+ * Legacy fallback for React < 18, from Material UI's useId.
+ * https://github.com/mui/material-ui/blob/master/packages/mui-utils/src/useId.ts
+ */
 function useLegacyId({ id: idOverride, prefix }: Params): string {
   const [defaultId, setDefaultId] = useState<string | number | undefined>(
     idOverride,
@@ -28,14 +30,16 @@ function useLegacyId({ id: idOverride, prefix }: Params): string {
   return idOverride ? idOverride : `${prefix ?? 'lg'}-${defaultId}`;
 }
 
-// useId was added in React 18; look it up defensively so this typechecks
-// against older React types.
+/**
+ * `useId` was added in React 18; look it up defensively so this
+ * typechecks against older React types.
+ */
 const reactUseId = (React as { useId?: () => string }).useId;
 
 export default function useIdAllocator({ prefix, id: idOverride }: Params) {
-  // React 18+: useId returns a stable id synchronously during render.
+  /** React 18+: `useId` returns a stable id synchronously during render. */
   if (typeof reactUseId === 'function') {
-    // useId returns `:r0:`; colons are invalid in CSS selectors.
+    /** `useId` returns `:r0:`; colons are invalid in CSS selectors. */
     const reactId = reactUseId().replace(/:/g, '');
 
     return idOverride ? idOverride : `${prefix ?? 'lg'}-${reactId}`;
