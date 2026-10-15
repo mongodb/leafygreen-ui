@@ -345,7 +345,8 @@ describe('packages/hooks', () => {
        * The legacy fallback allocates its id in a post-commit effect, so
        * this doesn't apply there — skip if `useId` isn't available.
        */
-      if (typeof React.useId !== 'function') return;
+      const reactUseId = (React as { useId?: () => string }).useId;
+      if (typeof reactUseId !== 'function') return;
 
       const idsRendered: Array<string | undefined> = [];
 
