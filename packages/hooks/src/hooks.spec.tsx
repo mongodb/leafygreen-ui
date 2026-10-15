@@ -1,4 +1,5 @@
-import { waitFor } from '@testing-library/react';
+import React from 'react';
+import { render, waitFor } from '@testing-library/react';
 
 import { act, renderHook, renderHookServer } from '@leafygreen-ui/testing-lib';
 
@@ -334,7 +335,41 @@ describe('packages/hooks', () => {
       const { result } = renderHook(() =>
         useIdAllocator({ prefix: 'checkbox' }),
       );
-      expect(result.current).toEqual('checkbox-1');
+      expect(result.current).toMatch(/^checkbox-/);
+      expect(result.current).not.toContain('undefined');
+    });
+
+    test('returns a defined id synchronously on the first render', () => {
+      /**
+       * Only the React 18+ `useId` path is synchronous on first render.
+       * The legacy fallback allocates its id in a post-commit effect, so
+       * this doesn't apply there — skip if `useId` isn't available.
+       */
+      const reactUseId = (React as { useId?: () => string }).useId;
+      if (typeof reactUseId !== 'function') return;
+
+      const idsRendered: Array<string | undefined> = [];
+
+      function TestComponent() {
+        idsRendered.push(useIdAllocator({ prefix: 'checkbox' }));
+        return null;
+      }
+
+      render(<TestComponent />);
+
+      expect(idsRendered[0]).toMatch(/^checkbox-/);
+      expect(idsRendered[0]).not.toContain('undefined');
+    });
+
+    test('returns a defined id during SSR, and the same id after hydration', () => {
+      const { result, hydrate } = renderHookServer(() =>
+        useIdAllocator({ prefix: 'checkbox' }),
+      );
+      expect(result.current).toMatch(/^checkbox-/);
+
+      const serverId = result.current;
+      hydrate();
+      expect(result.current).toBe(serverId);
     });
 
     test('when two hooks are rendered with the same prefix, they are still uniquely identified', () => {
@@ -344,12 +379,19 @@ describe('packages/hooks', () => {
       const { result: hook2 } = renderHook(() =>
         useIdAllocator({ prefix: 'tester' }),
       );
-      expect(hook1).not.toEqual(hook2);
+      expect(hook1.current).not.toEqual(hook2.current);
     });
 
     test('when a fallback id is provided, hook returns that id', () => {
       const { result } = renderHook(() => useIdAllocator({ id: 'id' }));
       expect(result.current).toBe('id');
+    });
+
+    test('when an empty string id is provided, hook allocates an id instead', () => {
+      const { result } = renderHook(() =>
+        useIdAllocator({ id: '', prefix: 'checkbox' }),
+      );
+      expect(result.current).toMatch(/^checkbox-/);
     });
   });
 
