@@ -1,0 +1,47 @@
+name: Republish to CodeArtifact
+
+# Manually republishes versions that are on npmjs but missing from CodeArtifact
+# (e.g. hand-published versions that skipped release.yml's release-aws job).
+# Same byte-for-byte path as release-aws. See LG-6236 / UXE-477.
+on:
+  workflow_dispatch:
+    inputs:
+      packages:
+        description: 'JSON array of {"name", "version"}, e.g. [{"name":"@leafygreen-ui/emotion","version":"4.1.2"}]'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  republish:
+    name: Republish to AWS CodeArtifact
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_CODEARTIFACT_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_CODEARTIFACT_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Login to CodeArtifact
+        id: login-codeartifact
+        run: scripts/login-codeartifact.sh
+
+      # Passed via env rather than interpolated into the script, so the free-form
+      # input can't inject shell.
+      - name: Publish to CodeArtifact
+        env:
+          REGISTRY: ${{ steps.login-codeartifact.outputs.registry }}
+          PACKAGES: ${{ inputs.packages }}
+        run: node scripts/republish-to-registry.mjs "$REGISTRY" "$PACKAGES"
