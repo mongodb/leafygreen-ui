@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react",
+    "strict": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "types": [],
+    "lib": ["DOM", "DOM.Iterable", "ES2020"],
+    "baseUrl": "../..",
+    "paths": {
+      "react": ["node_modules/@types/react/index.d.ts"]
+    }
+  },
+  "include": ["*.tsx"]
+}

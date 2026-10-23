@@ -1,12 +1,11 @@
 import React, {
   ComponentPropsWithRef,
-  ForwardedRef,
   PropsWithoutRef,
   ReactElement,
   RefAttributes,
-  WeakValidationMap,
 } from 'react';
 import { Header } from '@tanstack/react-table';
+import type { WeakValidationMap } from 'prop-types';
 
 import { LGRowData } from '../../useLeafyGreenTable';
 
@@ -42,10 +41,7 @@ export interface HeaderCellProps<T extends LGRowData>
  * Type definition for `Header` that works with generics.
  */
 export interface HeaderCellComponentType {
-  <T extends LGRowData>(
-    props: HeaderCellProps<T>,
-    ref: ForwardedRef<HTMLTableCellElement>,
-  ): ReactElement | null;
+  <T extends LGRowData>(props: HeaderCellProps<T>): ReactElement | null;
   displayName?: string;
   propTypes?:
     | WeakValidationMap<

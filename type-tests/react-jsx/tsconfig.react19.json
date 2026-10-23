@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "react": ["node_modules/react19-types/index.d.ts"]
+    }
+  }
+}

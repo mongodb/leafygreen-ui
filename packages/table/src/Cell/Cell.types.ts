@@ -1,11 +1,10 @@
 import {
   ComponentPropsWithRef,
-  ForwardedRef,
   PropsWithoutRef,
   ReactElement,
   RefAttributes,
-  WeakValidationMap,
 } from 'react';
+import type { WeakValidationMap } from 'prop-types';
 
 import { LeafyGreenTableCell, LGRowData } from '../useLeafyGreenTable';
 
@@ -53,10 +52,7 @@ export interface InternalCellWithRTProps<T extends LGRowData>
  * cell is optional
  */
 export interface CellComponentType {
-  <T extends LGRowData>(
-    props: CellProps<T>,
-    ref: ForwardedRef<HTMLTableCellElement>,
-  ): ReactElement | null;
+  <T extends LGRowData>(props: CellProps<T>): ReactElement | null;
   displayName?: string;
   propTypes?:
     | WeakValidationMap<
@@ -70,10 +66,7 @@ export interface CellComponentType {
  * cell is required
  */
 export interface InternalCellWithRTComponentType {
-  <T extends LGRowData>(
-    props: InternalCellWithRTProps<T>,
-    ref: ForwardedRef<HTMLTableCellElement>,
-  ): ReactElement | null;
+  <T extends LGRowData>(props: InternalCellWithRTProps<T>): ReactElement | null;
   displayName?: string;
   propTypes?:
     | WeakValidationMap<

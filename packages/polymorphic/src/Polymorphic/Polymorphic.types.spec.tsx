@@ -8,10 +8,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars, jest/no-disabled-tests */
 import React, { ReactElement } from 'react';
 
+import { Polymorphic } from './Polymorphic';
 import {
   InheritedProps,
   PolymorphicAs,
+  PolymorphicComponentType,
   PolymorphicProps,
+  PolymorphicPropsWithRef,
+  PolymorphicRenderFunction,
+  PolymorphicReturnType,
 } from './Polymorphic.types';
 
 const TestAnchorLike = (_props: { href: string }) => <></>;
@@ -216,4 +221,31 @@ test.skip('Polymorphic types', () => {
       href: 'mongodb.design',
     };
   }
+});
+
+test.skip('public JSX callables accept props without a second ref', () => {
+  const render: PolymorphicRenderFunction<{}, 'button'> = (_props, _ref) =>
+    null;
+  render satisfies PolymorphicComponentType<{}, 'button'>;
+  render({}, null);
+  // @ts-expect-error - render functions still require the forwarded ref argument
+  render({});
+
+  const Component = Polymorphic<{}, 'button'>(render);
+  Component satisfies (
+    props: PolymorphicPropsWithRef<'button'>,
+  ) => PolymorphicReturnType;
+  <Component />;
+  <Component ref={React.createRef<HTMLButtonElement>()} type="submit" />;
+  <Component
+    as="a"
+    href="https://mongodb.design"
+    ref={React.createRef<HTMLAnchorElement>()}
+  />;
+  // @ts-expect-error - anchors require href
+  <Component as="a" />;
+  // @ts-expect-error - button refs cannot point to anchors
+  <Component<'button'> ref={React.createRef<HTMLAnchorElement>()} />;
+  // @ts-expect-error - explicit buttons do not accept href
+  <Component as="button" href="https://mongodb.design" />;
 });

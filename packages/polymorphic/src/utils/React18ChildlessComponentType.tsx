@@ -1,9 +1,5 @@
-import {
-  ComponentClass,
-  ReactElement,
-  ValidationMap,
-  WeakValidationMap,
-} from 'react';
+import { ComponentClass, ReactElement } from 'react';
+import type { ValidationMap, WeakValidationMap } from 'prop-types';
 
 interface React18FunctionComponent<P = {}> {
   (props: P, context?: any): ReactElement<any, any> | null;

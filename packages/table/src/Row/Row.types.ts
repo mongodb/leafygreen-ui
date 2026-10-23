@@ -1,13 +1,12 @@
 import {
   ComponentPropsWithoutRef,
   ComponentPropsWithRef,
-  ForwardedRef,
   PropsWithoutRef,
   ReactElement,
   RefAttributes,
-  WeakValidationMap,
 } from 'react';
 import { VirtualItem, Virtualizer } from '@tanstack/react-virtual';
+import type { WeakValidationMap } from 'prop-types';
 
 import { Theme } from '@leafygreen-ui/lib';
 
@@ -90,10 +89,7 @@ export type RowProps<T extends LGRowData> = ComponentPropsWithRef<'tr'> &
  * row is optional
  */
 export interface RowComponentType {
-  <T extends LGRowData>(
-    props: RowProps<T>,
-    ref: ForwardedRef<HTMLTableRowElement>,
-  ): ReactElement | null;
+  <T extends LGRowData>(props: RowProps<T>): ReactElement | null;
   displayName?: string;
   propTypes?:
     | WeakValidationMap<
@@ -107,10 +103,7 @@ export interface RowComponentType {
  * row is required
  */
 export interface RowComponentWithRTType {
-  <T extends LGRowData>(
-    props: InternalRowWithRTProps<T>,
-    ref: ForwardedRef<HTMLTableRowElement>,
-  ): ReactElement | null;
+  <T extends LGRowData>(props: InternalRowWithRTProps<T>): ReactElement | null;
   displayName?: string;
   propTypes?:
     | WeakValidationMap<

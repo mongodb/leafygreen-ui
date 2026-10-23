@@ -59,6 +59,6 @@ export type LoosePolymorphicProps<XP = {}> = PropsWithChildren<
   XP & AsProp<PolymorphicAs>
 > &
   // All attributes of any Intrinsic element
-  Omit<Partial<JSX.IntrinsicElements[keyof JSX.IntrinsicElements]>, 'href'> & {
+  Omit<Partial<ComponentProps<Extract<PolymorphicAs, string>>>, 'href'> & {
     href?: string | NodeUrlLike;
   };

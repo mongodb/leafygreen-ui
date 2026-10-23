@@ -7,15 +7,10 @@ import {
   ElementType,
   FunctionComponent,
   PropsWithChildren,
-  WeakValidationMap,
 } from 'react';
+import type { WeakValidationMap } from 'prop-types';
 
-export type IntrinsicElements<P = any> =
-  | {
-      [K in keyof JSX.IntrinsicElements]: P extends JSX.IntrinsicElements[K]
-        ? K
-        : never;
-    }[keyof JSX.IntrinsicElements];
+export type IntrinsicElements<P = any> = Extract<ElementType<P>, string>;
 
 export type PolymorphicAs = ElementType;
 
@@ -112,7 +107,7 @@ export interface PolymorphicComponentType<
 > {
   <T extends PolymorphicAs = DefaultAs>(
     props: PolymorphicPropsWithRef<T, XP>,
-    ref: PolymorphicRef<T>,
+    ref?: PolymorphicRef<T>,
   ): PolymorphicReturnType;
   displayName?: string;
   propTypes?: WeakValidationMap<PolymorphicProps<DefaultAs, XP>>;
@@ -121,7 +116,7 @@ export interface PolymorphicComponentType<
 /**
  * An explicit definition of the component render function
  *
- * Differs from `PolymorphicComponentType` only by the `propTypes` attribute.
+ * Receives the forwarded ref as a required second argument.
  *
  */
 export interface PolymorphicRenderFunction<

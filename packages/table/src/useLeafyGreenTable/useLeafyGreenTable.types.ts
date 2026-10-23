@@ -12,7 +12,7 @@ import {
 export type LGRowData = RowData;
 
 export type LGTableDataType<T extends LGRowData> = T & {
-  renderExpandedContent?: (row: LeafyGreenTableRow<T>) => JSX.Element;
+  renderExpandedContent?: (row: LeafyGreenTableRow<T>) => React.ReactElement;
   subRows?: Array<LGTableDataType<T>>;
 };
 

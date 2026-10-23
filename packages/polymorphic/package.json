@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@leafygreen-ui/lib": "workspace:^",
+    "@types/prop-types": "^15.7.15",
     "lodash": "^4.17.21"
   },
   "exports": {

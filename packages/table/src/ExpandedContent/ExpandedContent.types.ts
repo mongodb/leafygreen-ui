@@ -1,13 +1,12 @@
 import {
   ComponentPropsWithRef,
-  ForwardedRef,
   PropsWithoutRef,
   ReactElement,
   RefAttributes,
-  WeakValidationMap,
 } from 'react';
 import { RowData } from '@tanstack/react-table';
 import { VirtualItem } from '@tanstack/react-virtual';
+import type { WeakValidationMap } from 'prop-types';
 
 import { LeafyGreenTableRow } from '../useLeafyGreenTable';
 export interface ExpandedContentProps<T extends RowData>
@@ -27,10 +26,7 @@ export interface ExpandedContentProps<T extends RowData>
  *
  */
 export interface ExpandedContentComponentType {
-  <T extends RowData>(
-    props: ExpandedContentProps<T>,
-    ref: ForwardedRef<HTMLTableRowElement>,
-  ): ReactElement | null;
+  <T extends RowData>(props: ExpandedContentProps<T>): ReactElement | null;
   displayName?: string;
   propTypes?:
     | WeakValidationMap<

@@ -20,7 +20,9 @@ import { InferredPolymorphic } from './InferredPolymorphic';
 import {
   AnchorLike,
   AnchorLikeProps,
+  InferredPolymorphicComponentType,
   InferredPolymorphicProps,
+  InferredPolymorphicPropsWithRef,
   InferredPolymorphicRenderFunction,
 } from './InferredPolymorphic.types';
 
@@ -635,4 +637,35 @@ describe.skip('Inferred Polymorphic types', () => {
       },
     );
   });
+});
+
+test.skip('inferred JSX callables preserve required render refs', () => {
+  const render: InferredPolymorphicRenderFunction<{}, 'button'> = (
+    _props,
+    _ref,
+  ) => null;
+  render satisfies InferredPolymorphicComponentType<{}, 'button'>;
+  render({}, null);
+  // @ts-expect-error - render functions still require the forwarded ref argument
+  render({});
+
+  const Component = InferredPolymorphic<{}, 'button'>(render);
+  Component satisfies (
+    props: InferredPolymorphicPropsWithRef<'button'>,
+  ) => React.ReactElement | null;
+  <Component />;
+  <Component ref={React.createRef<HTMLButtonElement>()} />;
+  <Component
+    as="a"
+    href="https://mongodb.design"
+    ref={React.createRef<HTMLAnchorElement>()}
+  />;
+  <Component href="https://mongodb.design" />;
+  // @ts-expect-error - explicit anchors require href
+  <Component as="a" />;
+  <Component<'button'>
+    as="button"
+    // @ts-expect-error - button refs cannot point to anchors
+    ref={React.createRef<HTMLAnchorElement>()}
+  />;
 });

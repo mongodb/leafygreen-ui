@@ -57,9 +57,9 @@ export type { DarkModeProps, LgIdProps, LgIdString };
  * @deprecated - Prefer the built-in React type {@link React.ComponentProps}
  * */
 export type HTMLElementProps<
-  Element extends keyof JSX.IntrinsicElements,
+  Element extends Extract<React.ElementType, string>,
   RefType extends HTMLElement = never,
-> = React.PropsWithChildren<Omit<JSX.IntrinsicElements[Element], 'ref'>> & {
+> = React.PropsWithChildren<Omit<React.ComponentProps<Element>, 'ref'>> & {
   ref?: [RefType] extends [never] ? never : React.Ref<RefType>;
   key?: React.Key | null;
 };

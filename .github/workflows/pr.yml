@@ -210,6 +210,9 @@ jobs:
             tools/*/dist/*
           key: ${{needs.build.outputs.cache-primary-key}}
 
+      - name: Check public JSX types with React 17, 18, and 19
+        run: pnpm run test:public-jsx
+
       - name: tests
         run: pnpm run test --ci
         env:
