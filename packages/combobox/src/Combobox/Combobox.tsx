@@ -159,7 +159,12 @@ export function Combobox<M extends boolean>({
   const inputRef = useRef<HTMLInputElement | null>(null);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
-  const [isOpen, setOpen] = useState(false);
+  const [requestedOpen, setOpen] = useState(false);
+  const isOpen = requestedOpen && !disabled;
+
+  useEffect(() => {
+    if (disabled) setOpen(false);
+  }, [disabled]);
   const wasOpen = usePrevious(isOpen);
   const [highlightedOption, setHighlightedOption] = useState<string | null>(
     null,
@@ -223,7 +228,9 @@ export function Combobox<M extends boolean>({
       : placeholder;
 
   const closeMenu = () => setOpen(false);
-  const openMenu = () => setOpen(true);
+  const openMenu = () => {
+    if (!disabled) setOpen(true);
+  };
 
   /**
    * Utility function that tells Typescript whether selection is multiselect
@@ -656,7 +663,12 @@ export function Combobox<M extends boolean>({
         const { value, displayName } = getNameAndValue(child.props);
 
         if (shouldOptionBeVisible(value)) {
-          const { className, glyph, disabled, ...rest } = child.props;
+          const {
+            className,
+            glyph,
+            disabled: optionDisabled,
+            ...rest
+          } = child.props;
           const index = allOptions.findIndex(opt => opt.value === value);
 
           const isFocused = highlightedOption === value;
@@ -683,7 +695,7 @@ export function Combobox<M extends boolean>({
               displayName={displayName}
               isFocused={isFocused}
               isSelected={isSelected}
-              disabled={disabled}
+              disabled={disabled || optionDisabled}
               setSelected={setSelected}
               glyph={glyph}
               className={className}
@@ -712,6 +724,7 @@ export function Combobox<M extends boolean>({
     },
     [
       allOptions,
+      disabled,
       getOptionRef,
       highlightedOption,
       isMultiselect,

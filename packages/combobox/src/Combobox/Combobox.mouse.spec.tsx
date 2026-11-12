@@ -3,6 +3,7 @@
 import React from 'react';
 import {
   act,
+  fireEvent,
   render,
   waitFor,
   waitForElementToBeRemoved,
@@ -59,6 +60,21 @@ describe('packages/combobox', () => {
         const { menuContainerEl } = getMenuElements();
         expect(menuContainerEl).not.toBeNull();
         expect(menuContainerEl).toBeInTheDocument();
+      });
+
+      test('Disabling an open combobox prevents selecting an option during exit', () => {
+        const onChange = jest.fn();
+        const { comboboxEl, openMenu, getByRole, rerenderCombobox } =
+          renderCombobox(select, { onChange });
+        openMenu();
+        const option = getByRole('option', { name: /Apple/ });
+        onChange.mockClear();
+
+        rerenderCombobox({ disabled: true });
+        fireEvent.click(option);
+
+        expect(comboboxEl).toHaveAttribute('aria-expanded', 'false');
+        expect(onChange).not.toHaveBeenCalled();
       });
 
       test('Clicking an option sets selection', () => {
