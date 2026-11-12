@@ -43,7 +43,7 @@ import { DatePickerMenuHeader } from './DatePickerMenuHeader';
 
 export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
   ({ onKeyDown, onExited, ...rest }: DatePickerMenuProps, fwdRef) => {
-    const { min, max, isInRange, isOpen, setIsDirty, timeZone } =
+    const { disabled, min, max, isInRange, isOpen, setIsDirty, timeZone } =
       useSharedDatePickerContext();
     const {
       refs,
@@ -72,7 +72,7 @@ export const DatePickerMenu = forwardRef<HTMLDivElement, DatePickerMenuProps>(
 
     /** Returns the current state of the cell */
     const getCellState = (cellDay: Date | null): CalendarCellState => {
-      if (isInRange(cellDay)) {
+      if (!disabled && isInRange(cellDay)) {
         if (isSameUTCDay(cellDay, value)) {
           return CalendarCellState.Active;
         }
