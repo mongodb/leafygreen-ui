@@ -131,4 +131,30 @@ describe('@lg-charts/core/ChartTooltip', () => {
       expect(mockChart.updateOptions).toHaveBeenCalled();
     });
   });
+
+  describe('positioning', () => {
+    const getTooltipOptions = (mockChart: ChartInstance) =>
+      (mockChart.updateOptions as jest.Mock).mock.calls[0][0].tooltip;
+
+    test('confines the tooltip to the chart by default', () => {
+      const mockChart = createMockChartInstance();
+
+      render(<ChartTooltip />, { wrapper: createWrapper(mockChart) });
+
+      expect(getTooltipOptions(mockChart).confine).toBe(true);
+      expect(getTooltipOptions(mockChart)).not.toHaveProperty('position');
+    });
+
+    test('passes confine and position through to the tooltip options', () => {
+      const mockChart = createMockChartInstance();
+      const position = jest.fn(() => [0, 0]);
+
+      render(<ChartTooltip confine={false} position={position} />, {
+        wrapper: createWrapper(mockChart),
+      });
+
+      expect(getTooltipOptions(mockChart).confine).toBe(false);
+      expect(getTooltipOptions(mockChart).position).toBe(position);
+    });
+  });
 });
