@@ -1,5 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 
 import {
   getISODate,
@@ -42,9 +42,15 @@ const renderDatePickerMenu = (
   const rerenderDatePickerMenu = (
     newProps?: Partial<DatePickerMenuProps> | null,
     newSingleContext?: Partial<DatePickerProviderProps> | null,
+    newContext?: Partial<SharedDatePickerProviderProps>,
   ) =>
     result.rerender(
-      <SharedDatePickerProvider label="" {...context} initialOpen={true}>
+      <SharedDatePickerProvider
+        label=""
+        {...context}
+        {...newContext}
+        initialOpen={true}
+      >
         <DatePickerProvider
           value={null}
           setValue={() => {}}
@@ -110,6 +116,19 @@ describe('packages/date-picker/date-picker-menu', () => {
   beforeEach(() => {
     // Set the current time to midnight UTC on 2023-09-10
     jest.useFakeTimers().setSystemTime(testToday);
+  });
+
+  test('A disabled calendar cell cannot change the date during exit', () => {
+    const setValue = jest.fn();
+    const { getCellWithISOString, rerenderDatePickerMenu } =
+      renderDatePickerMenu(null, { setValue });
+    const cell = getCellWithISOString('2023-09-11')!;
+
+    rerenderDatePickerMenu(null, null, { disabled: true });
+    fireEvent.click(cell);
+
+    expect(cell).toHaveAttribute('aria-disabled', 'true');
+    expect(setValue).not.toHaveBeenCalled();
   });
 
   describe('Rendering', () => {
