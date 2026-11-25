@@ -3,6 +3,7 @@ import { render } from '@testing-library/react';
 
 import { ChartInstance } from '../Chart/hooks/useChart.types';
 import { ChartContext } from '../ChartContext/ChartContext';
+import { updateOptions } from '../Echart/updateUtils';
 
 import { XAxis } from './XAxis';
 
@@ -44,6 +45,12 @@ const createWrapper = (chartInstance: ChartInstance) => {
   return Wrapper;
 };
 
+const getMergedAxisLabelOptions = (mockChart: ChartInstance) =>
+  (mockChart.updateOptions as jest.Mock).mock.calls.reduce(
+    (merged, [options]) => updateOptions(merged, options),
+    {},
+  ).xAxis.axisLabel;
+
 const getAxisLabelOptions = (mockChart: ChartInstance) =>
   (mockChart.updateOptions as jest.Mock).mock.calls[0][0].xAxis.axisLabel;
 
@@ -54,7 +61,12 @@ describe('@lg-charts/core/XAxis', () => {
     render(<XAxis type="time" />, { wrapper: createWrapper(mockChart) });
 
     expect(getAxisLabelOptions(mockChart)).toMatchObject({ align: 'center' });
-    expect(getAxisLabelOptions(mockChart)).not.toHaveProperty('alignMaxLabel');
+    expect(getAxisLabelOptions(mockChart)).toMatchObject({
+      alignMinLabel: undefined,
+      alignMaxLabel: undefined,
+      showMinLabel: undefined,
+      showMaxLabel: undefined,
+    });
   });
 
   test('aligns and always shows the edge labels when alignEdgeLabels is set', () => {
@@ -70,6 +82,24 @@ describe('@lg-charts/core/XAxis', () => {
       alignMaxLabel: 'right',
       showMinLabel: true,
       showMaxLabel: true,
+    });
+  });
+
+  test('restores default edge labels when alignEdgeLabels is turned off', () => {
+    const mockChart = createMockChartInstance();
+    const wrapper = createWrapper(mockChart);
+
+    const { rerender } = render(<XAxis type="time" alignEdgeLabels />, {
+      wrapper,
+    });
+    rerender(<XAxis type="time" />);
+
+    expect(getMergedAxisLabelOptions(mockChart)).toMatchObject({
+      align: 'center',
+      alignMinLabel: undefined,
+      alignMaxLabel: undefined,
+      showMinLabel: undefined,
+      showMaxLabel: undefined,
     });
   });
 });

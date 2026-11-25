@@ -157,7 +157,7 @@ export function ChartTooltip({
         /* LOGIC PROPERTIES */
         alwaysShowContent,
         confine,
-        ...(position ? { position } : {}),
+        position,
         enterable: tooltipPinned,
         renderMode: 'html',
         showContent,
