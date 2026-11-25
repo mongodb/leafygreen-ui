@@ -26,6 +26,8 @@ export function ChartTooltip({
   sort,
   axisPointer = 'line',
   className,
+  confine = true,
+  position,
 }: ChartTooltipProps) {
   const { isSomeChartHovered } = useChartGroupHoverContext() || {};
   const { enableTooltipSync } = useChartGroupStableContext() || {};
@@ -154,7 +156,8 @@ export function ChartTooltip({
       tooltip: {
         /* LOGIC PROPERTIES */
         alwaysShowContent,
-        confine: true,
+        confine,
+        position,
         enterable: tooltipPinned,
         renderMode: 'html',
         showContent,
@@ -211,6 +214,8 @@ export function ChartTooltip({
     updateOptions,
     axisPointer,
     className,
+    confine,
+    position,
   ]);
 
   return null;

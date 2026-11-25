@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import { type SeriesName } from '@lg-charts/series-provider';
+import type { TooltipComponentOption } from 'echarts';
 import { type CallbackDataParams } from 'echarts/types/dist/shared';
 
 /**
@@ -94,6 +95,15 @@ export interface ChartTooltipProps {
   customRow?: (
     seriesData: Array<CustomRowSeriesInfo>,
   ) => CustomRowInfo | null | undefined;
+  /**
+   * Set to false to allow the tooltip to overflow the chart, typically set along with position. Default to true.
+   */
+  confine?: boolean;
+  /**
+   * Custom positioning callback for the tooltip. Passed through to the ECharts tooltip option.
+   * (point, params, dom, rect, size) => [x, y].
+   */
+  position?: TooltipComponentOption['position'];
 }
 
 export interface CallbackSeriesDataPoint extends CallbackDataParams {

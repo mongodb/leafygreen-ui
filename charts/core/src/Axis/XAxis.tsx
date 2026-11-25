@@ -20,6 +20,10 @@ const getXAxisOptions = (
     axisLabel: {
       align: 'center',
       margin: spacing[400],
+      alignMinLabel: props.alignEdgeLabels ? 'left' : undefined,
+      alignMaxLabel: props.alignEdgeLabels ? 'right' : undefined,
+      showMinLabel: props.alignEdgeLabels ? true : undefined,
+      showMaxLabel: props.alignEdgeLabels ? true : undefined,
     },
     nameTextStyle: {
       lineHeight: spacing[400],
