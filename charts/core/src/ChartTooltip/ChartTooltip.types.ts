@@ -100,7 +100,7 @@ export interface ChartTooltipProps {
    */
   confine?: boolean;
   /**
-   * Custom positioning callback for the tooltip. Passed through to the ECharts tooltip option. 
+   * Custom positioning callback for the tooltip. Passed through to the ECharts tooltip option.
    * (point, params, dom, rect, size) => [x, y].
    */
   position?: TooltipComponentOption['position'];
